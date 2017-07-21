@@ -174,6 +174,8 @@
 <span class="kn">from</span> <span class="nn">distutils.spawn</span> <span class="k">import</span> <span class="n">find_executable</span>
 <span class="kn">from</span> <span class="nn">subprocess</span> <span class="k">import</span> <span class="n">Popen</span><span class="p">,</span> <span class="n">PIPE</span>
 
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
 <span class="kn">from</span> <span class="nn">mbuild.compound</span> <span class="k">import</span> <span class="n">Compound</span>
 <span class="kn">from</span> <span class="nn">mbuild.exceptions</span> <span class="k">import</span> <span class="n">MBuildError</span>
 <span class="kn">from</span> <span class="nn">mbuild.box</span> <span class="k">import</span> <span class="n">Box</span>
@@ -204,20 +206,35 @@
 <span class="s2">&quot;&quot;&quot;</span>
 
 
-<div class="viewcode-block" id="fill_box"><a class="viewcode-back" href="../../recipes.html#mbuild.packing.fill_box">[docs]</a><span class="k">def</span> <span class="nf">fill_box</span><span class="p">(</span><span class="n">compound</span><span class="p">,</span> <span class="n">n_compounds</span><span class="p">,</span> <span class="n">box</span><span class="p">,</span> <span class="n">overlap</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">12345</span><span class="p">):</span>
+<div class="viewcode-block" id="fill_box"><a class="viewcode-back" href="../../recipes.html#mbuild.packing.fill_box">[docs]</a><span class="k">def</span> <span class="nf">fill_box</span><span class="p">(</span><span class="n">compound</span><span class="p">,</span> <span class="n">n_compounds</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">box</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">overlap</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">12345</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Fill a box with a compound using packmol.</span>
+
+<span class="sd">    Two arguments of `n_compounds, box, and density` must be specified.</span>
+
+<span class="sd">    If `n_compounds` and `box` are not None, the specified number of</span>
+<span class="sd">    n_compounds will be inserted into a box of the specified size.</span>
+
+<span class="sd">    If `n_compounds` and `density` are not None, the corresponding box</span>
+<span class="sd">    size will be calculated internally. In this case, `n_compounds`</span>
+<span class="sd">    must be an int and not a list of int.</span>
+
+<span class="sd">    If `box` and `density` are not None, the corresponding number of</span>
+<span class="sd">    compounds will be calculated internally.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    compound : mb.Compound or list of mb.Compound</span>
 <span class="sd">    n_compounds : int or list of int</span>
 <span class="sd">    box : mb.Box</span>
-<span class="sd">    overlap : float</span>
+<span class="sd">    overlap : float, units nm</span>
+<span class="sd">    density : float, units kg/m^3</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    filled : mb.Compound</span>
-
+<span class="sd">    </span>
+<span class="sd">    TODO : Support aspect ratios in generated boxes</span>
+<span class="sd">    TODO : Support ratios of n_compounds</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">PACKMOL</span><span class="p">:</span>
         <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Packmol not found.&quot;</span>
@@ -226,11 +243,36 @@
                          <span class="s2">&quot;packmol.exe is on the path.&quot;</span><span class="p">)</span>
         <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
 
-    <span class="n">box</span> <span class="o">=</span> <span class="n">_validate_box</span><span class="p">(</span><span class="n">box</span><span class="p">)</span>
+    <span class="n">arg_count</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">-</span> <span class="p">[</span><span class="n">n_compounds</span><span class="p">,</span> <span class="n">box</span><span class="p">,</span> <span class="n">density</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">arg_count</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;Exactly 2 of `n_compounds`, `box`, and `density` &quot;</span>
+            <span class="s2">&quot;must be specified. </span><span class="si">{}</span><span class="s2"> were given.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">arg_count</span><span class="p">))</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">box</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">box</span> <span class="o">=</span> <span class="n">_validate_box</span><span class="p">(</span><span class="n">box</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">compound</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">set</span><span class="p">)):</span>
         <span class="n">compound</span> <span class="o">=</span> <span class="p">[</span><span class="n">compound</span><span class="p">]</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">n_compounds</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">set</span><span class="p">)):</span>
+    <span class="k">if</span> <span class="n">n_compounds</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">n_compounds</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">set</span><span class="p">)):</span>
         <span class="n">n_compounds</span> <span class="o">=</span> <span class="p">[</span><span class="n">n_compounds</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">density</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">box</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">n_compounds</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">total_mass</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">([</span><span class="n">n</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">([</span><span class="n">a</span><span class="o">.</span><span class="n">mass</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">c</span><span class="o">.</span><span class="n">to_parmed</span><span class="p">()</span><span class="o">.</span><span class="n">atoms</span><span class="p">])</span>
+                <span class="k">for</span> <span class="n">c</span><span class="p">,</span><span class="n">n</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">compound</span><span class="p">,</span> <span class="n">n_compounds</span><span class="p">)])</span>
+            <span class="c1"># Conversion from (amu/(kg/m^3))**(1/3) to nm</span>
+            <span class="n">L</span> <span class="o">=</span> <span class="p">(</span><span class="n">total_mass</span><span class="o">/</span><span class="n">density</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span><span class="o">*</span><span class="mf">1.1841763</span>
+            <span class="n">box</span> <span class="o">=</span> <span class="n">_validate_box</span><span class="p">(</span><span class="n">Box</span><span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="p">[</span><span class="n">L</span><span class="p">]))</span>
+        <span class="k">if</span> <span class="n">n_compounds</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">box</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">compound</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;Determing `n_compounds` from `density` and `box` &quot;</span>
+                    <span class="s2">&quot;currently only supported for systems with one &quot;</span>
+                    <span class="s2">&quot;compound type.&quot;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">compound_mass</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">([</span><span class="n">a</span><span class="o">.</span><span class="n">mass</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">compound</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">to_parmed</span><span class="p">()</span><span class="o">.</span><span class="n">atoms</span><span class="p">])</span>
+                <span class="c1"># Conversion from kg/m^3 / amu * nm^3 to dimensionless units</span>
+                <span class="n">n_compounds</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">density</span><span class="o">/</span><span class="n">compound_mass</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="n">box</span><span class="o">.</span><span class="n">lengths</span><span class="p">)</span><span class="o">*.</span><span class="mi">60224</span><span class="p">)]</span>
 
     <span class="c1"># In angstroms for packmol.</span>
     <span class="n">box_mins</span> <span class="o">=</span> <span class="n">box</span><span class="o">.</span><span class="n">mins</span> <span class="o">*</span> <span class="mi">10</span>
@@ -260,6 +302,7 @@
         <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m_compounds</span><span class="p">):</span>
             <span class="n">filled</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">clone</span><span class="p">(</span><span class="n">comp</span><span class="p">))</span>
     <span class="n">filled</span><span class="o">.</span><span class="n">update_coordinates</span><span class="p">(</span><span class="n">filled_pdb</span><span class="p">)</span>
+    <span class="n">filled</span><span class="o">.</span><span class="n">periodicity</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">box</span><span class="o">.</span><span class="n">lengths</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">filled</span></div>
 
 

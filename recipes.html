@@ -4979,8 +4979,16 @@ returned to the user.</p>
 <span id="packing"></span><h2>Packing<a class="headerlink" href="#module-mbuild.packing" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="mbuild.packing.fill_box">
-<code class="descclassname">mbuild.packing.</code><code class="descname">fill_box</code><span class="sig-paren">(</span><em>compound</em>, <em>n_compounds</em>, <em>box</em>, <em>overlap=0.2</em>, <em>seed=12345</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/packing.html#fill_box"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.packing.fill_box" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">mbuild.packing.</code><code class="descname">fill_box</code><span class="sig-paren">(</span><em>compound</em>, <em>n_compounds=None</em>, <em>box=None</em>, <em>density=None</em>, <em>overlap=0.2</em>, <em>seed=12345</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/packing.html#fill_box"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.packing.fill_box" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fill a box with a compound using packmol.</p>
+<p>Two arguments of <cite>n_compounds, box, and density</cite> must be specified.</p>
+<p>If <cite>n_compounds</cite> and <cite>box</cite> are not None, the specified number of
+n_compounds will be inserted into a box of the specified size.</p>
+<p>If <cite>n_compounds</cite> and <cite>density</cite> are not None, the corresponding box
+size will be calculated internally. In this case, <cite>n_compounds</cite>
+must be an int and not a list of int.</p>
+<p>If <cite>box</cite> and <cite>density</cite> are not None, the corresponding number of
+compounds will be calculated internally.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -4988,10 +4996,13 @@ returned to the user.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>compound</strong> : mb.Compound or list of mb.Compound</p>
 <p><strong>n_compounds</strong> : int or list of int</p>
 <p><strong>box</strong> : mb.Box</p>
-<p><strong>overlap</strong> : float</p>
+<p><strong>overlap</strong> : float, units nm</p>
+<p><strong>density</strong> : float, units kg/m^3</p>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><strong>filled</strong> : mb.Compound</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>filled</strong> : mb.Compound</p>
+<p><strong>TODO</strong> : Support aspect ratios in generated boxes</p>
+<p class="last"><strong>TODO</strong> : Support ratios of n_compounds</p>
 </td>
 </tr>
 </tbody>
