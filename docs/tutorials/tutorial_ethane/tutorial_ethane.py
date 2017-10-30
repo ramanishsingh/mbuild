@@ -155,9 +155,3 @@ ethane.visualize()
 # Save to .mol2
 ethane.save('ethane.mol2', overwrite=True)
 
-
-# In[ ]:
-
-
-
-
