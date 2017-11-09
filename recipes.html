@@ -1005,7 +1005,7 @@ particle with a matching rigid_id if specified</p>
 
 <dl class="method">
 <dt id="mbuild.recipes.monolayer.Monolayer.save">
-<code class="descname">save</code><span class="sig-paren">(</span><em>filename</em>, <em>show_ports=False</em>, <em>forcefield_name=None</em>, <em>forcefield_files=None</em>, <em>box=None</em>, <em>overwrite=False</em>, <em>residues=None</em>, <em>references_file=None</em>, <em>combining_rule='lorentz'</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.recipes.monolayer.Monolayer.save" title="Permalink to this definition">¶</a></dt>
+<code class="descname">save</code><span class="sig-paren">(</span><em>filename</em>, <em>show_ports=False</em>, <em>forcefield_name=None</em>, <em>forcefield_files=None</em>, <em>forcefield_debug=False</em>, <em>box=None</em>, <em>overwrite=False</em>, <em>residues=None</em>, <em>references_file=None</em>, <em>combining_rule='lorentz'</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.recipes.monolayer.Monolayer.save" title="Permalink to this definition">¶</a></dt>
 <dd><p>Save the Compound to a file.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1031,6 +1031,12 @@ by the <cite>foyer</cite> package.</p>
 <div><p>Apply a named forcefield to the output file using the <cite>foyer</cite>
 package, e.g. ‘oplsaa’. Forcefields listed here:
 <a class="reference external" href="https://github.com/mosdef-hub/foyer/tree/master/foyer/forcefields">https://github.com/mosdef-hub/foyer/tree/master/foyer/forcefields</a></p>
+</div></blockquote>
+<p><strong>forcefield_debug</strong> : bool, optional, default=False</p>
+<blockquote>
+<div><p>Choose level of verbosity when applying a forcefield through <cite>foyer</cite>.
+Specifically, when missing atom types in the forcefield xml file,
+determine if the warning is condensed or verbose.</p>
 </div></blockquote>
 <p><strong>box</strong> : mb.Box, optional, default=self.boundingbox (with buffer)</p>
 <blockquote>
@@ -2161,7 +2167,7 @@ particle with a matching rigid_id if specified</p>
 
 <dl class="method">
 <dt id="mbuild.recipes.polymer.Polymer.save">
-<code class="descname">save</code><span class="sig-paren">(</span><em>filename</em>, <em>show_ports=False</em>, <em>forcefield_name=None</em>, <em>forcefield_files=None</em>, <em>box=None</em>, <em>overwrite=False</em>, <em>residues=None</em>, <em>references_file=None</em>, <em>combining_rule='lorentz'</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.recipes.polymer.Polymer.save" title="Permalink to this definition">¶</a></dt>
+<code class="descname">save</code><span class="sig-paren">(</span><em>filename</em>, <em>show_ports=False</em>, <em>forcefield_name=None</em>, <em>forcefield_files=None</em>, <em>forcefield_debug=False</em>, <em>box=None</em>, <em>overwrite=False</em>, <em>residues=None</em>, <em>references_file=None</em>, <em>combining_rule='lorentz'</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.recipes.polymer.Polymer.save" title="Permalink to this definition">¶</a></dt>
 <dd><p>Save the Compound to a file.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -2187,6 +2193,12 @@ by the <cite>foyer</cite> package.</p>
 <div><p>Apply a named forcefield to the output file using the <cite>foyer</cite>
 package, e.g. ‘oplsaa’. Forcefields listed here:
 <a class="reference external" href="https://github.com/mosdef-hub/foyer/tree/master/foyer/forcefields">https://github.com/mosdef-hub/foyer/tree/master/foyer/forcefields</a></p>
+</div></blockquote>
+<p><strong>forcefield_debug</strong> : bool, optional, default=False</p>
+<blockquote>
+<div><p>Choose level of verbosity when applying a forcefield through <cite>foyer</cite>.
+Specifically, when missing atom types in the forcefield xml file,
+determine if the warning is condensed or verbose.</p>
 </div></blockquote>
 <p><strong>box</strong> : mb.Box, optional, default=self.boundingbox (with buffer)</p>
 <blockquote>
@@ -3313,7 +3325,7 @@ particle with a matching rigid_id if specified</p>
 
 <dl class="method">
 <dt id="mbuild.recipes.tiled_compound.TiledCompound.save">
-<code class="descname">save</code><span class="sig-paren">(</span><em>filename</em>, <em>show_ports=False</em>, <em>forcefield_name=None</em>, <em>forcefield_files=None</em>, <em>box=None</em>, <em>overwrite=False</em>, <em>residues=None</em>, <em>references_file=None</em>, <em>combining_rule='lorentz'</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.recipes.tiled_compound.TiledCompound.save" title="Permalink to this definition">¶</a></dt>
+<code class="descname">save</code><span class="sig-paren">(</span><em>filename</em>, <em>show_ports=False</em>, <em>forcefield_name=None</em>, <em>forcefield_files=None</em>, <em>forcefield_debug=False</em>, <em>box=None</em>, <em>overwrite=False</em>, <em>residues=None</em>, <em>references_file=None</em>, <em>combining_rule='lorentz'</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.recipes.tiled_compound.TiledCompound.save" title="Permalink to this definition">¶</a></dt>
 <dd><p>Save the Compound to a file.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -3339,6 +3351,12 @@ by the <cite>foyer</cite> package.</p>
 <div><p>Apply a named forcefield to the output file using the <cite>foyer</cite>
 package, e.g. ‘oplsaa’. Forcefields listed here:
 <a class="reference external" href="https://github.com/mosdef-hub/foyer/tree/master/foyer/forcefields">https://github.com/mosdef-hub/foyer/tree/master/foyer/forcefields</a></p>
+</div></blockquote>
+<p><strong>forcefield_debug</strong> : bool, optional, default=False</p>
+<blockquote>
+<div><p>Choose level of verbosity when applying a forcefield through <cite>foyer</cite>.
+Specifically, when missing atom types in the forcefield xml file,
+determine if the warning is condensed or verbose.</p>
 </div></blockquote>
 <p><strong>box</strong> : mb.Box, optional, default=self.boundingbox (with buffer)</p>
 <blockquote>
@@ -4489,7 +4507,7 @@ particle with a matching rigid_id if specified</p>
 
 <dl class="method">
 <dt id="mbuild.recipes.silica_interface.SilicaInterface.save">
-<code class="descname">save</code><span class="sig-paren">(</span><em>filename</em>, <em>show_ports=False</em>, <em>forcefield_name=None</em>, <em>forcefield_files=None</em>, <em>box=None</em>, <em>overwrite=False</em>, <em>residues=None</em>, <em>references_file=None</em>, <em>combining_rule='lorentz'</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.recipes.silica_interface.SilicaInterface.save" title="Permalink to this definition">¶</a></dt>
+<code class="descname">save</code><span class="sig-paren">(</span><em>filename</em>, <em>show_ports=False</em>, <em>forcefield_name=None</em>, <em>forcefield_files=None</em>, <em>forcefield_debug=False</em>, <em>box=None</em>, <em>overwrite=False</em>, <em>residues=None</em>, <em>references_file=None</em>, <em>combining_rule='lorentz'</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.recipes.silica_interface.SilicaInterface.save" title="Permalink to this definition">¶</a></dt>
 <dd><p>Save the Compound to a file.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -4515,6 +4533,12 @@ by the <cite>foyer</cite> package.</p>
 <div><p>Apply a named forcefield to the output file using the <cite>foyer</cite>
 package, e.g. ‘oplsaa’. Forcefields listed here:
 <a class="reference external" href="https://github.com/mosdef-hub/foyer/tree/master/foyer/forcefields">https://github.com/mosdef-hub/foyer/tree/master/foyer/forcefields</a></p>
+</div></blockquote>
+<p><strong>forcefield_debug</strong> : bool, optional, default=False</p>
+<blockquote>
+<div><p>Choose level of verbosity when applying a forcefield through <cite>foyer</cite>.
+Specifically, when missing atom types in the forcefield xml file,
+determine if the warning is condensed or verbose.</p>
 </div></blockquote>
 <p><strong>box</strong> : mb.Box, optional, default=self.boundingbox (with buffer)</p>
 <blockquote>
