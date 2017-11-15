@@ -4857,135 +4857,148 @@ the orientation of Ports with respect to the molecule as a whole.</p>
 <h2>Lattice<a class="headerlink" href="#lattice" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="mbuild.lattice.Lattice">
-<em class="property">class </em><code class="descclassname">mbuild.lattice.</code><code class="descname">Lattice</code><span class="sig-paren">(</span><em>lattice_spacings</em>, <em>dimension=None</em>, <em>lattice_vectors=None</em>, <em>basis_atoms=None</em>, <em>angles=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/lattice.html#Lattice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.lattice.Lattice" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">mbuild.lattice.</code><code class="descname">Lattice</code><span class="sig-paren">(</span><em>lattice_spacing=None</em>, <em>lattice_vectors=None</em>, <em>lattice_points=None</em>, <em>angles=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/lattice.html#Lattice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.lattice.Lattice" title="Permalink to this definition">¶</a></dt>
 <dd><p>Develop crystal structure from user defined inputs.</p>
 <p>Lattice, the abstract building block of a crystal cell.
-Once defined by the user, the crystal is returned as
-a single Compound that can be either replicated through its class
-methods or through a similar replicate Compound method.</p>
-<p>Lattice is defined through the standard bravais lattices, which have been
-accepted by the International Union of Crystallography.
-A Lattice can be fully described with its lattice vectors and lattice
-spacings. Also, the Lattice can be fully defined by its lattice parameters:
-the lattice spacings and its set of coordinate angles will then
-generate the lattice vectors. Lattice expects a right handed lattice and
-cell edges defined by vectors all originating from the origin in
-Cartesian space.</p>
+Once defined by the user, the lattice can then be populated with
+Compounds and replicated as many cell lengths desired in 3D space.</p>
+<p>A Lattice is defined through the Bravais lattice definitions. With edge
+vectors a1, a2, a3; lattice spacing a,b,c; and lattice points at unique
+fractional positions between 0-1 in 3 dimensions. This encapsulates
+distance, area, volume, depending on the parameters defined.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>dimension</strong> : int, optional, default=3</p>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>lattice_spacing</strong> : array-like, shape=(3,), required, dtype=float</p>
 <blockquote>
-<div><p>Dimension of the system of interest.</p>
+<div><p>Array of lattice spacings a,b,c for the cell.</p>
 </div></blockquote>
-<p><strong>lattice_vectors</strong> : numpy array, shape=(dimension, dimension), optional</p>
-<blockquote>
-<div><blockquote>
-<div><p>default=([1,0,0], [0,1,0], [0,0,1])</p>
-</div></blockquote>
-<p>Vectors that define edges of unit cell corresponding to dimension.</p>
-</div></blockquote>
-<p><strong>lattice_spacings</strong> : list-like, shape=(dimension,), optional, default=None</p>
-<blockquote>
-<div><p>Length of unit cell edges.</p>
-</div></blockquote>
-<p><strong>basis_atoms</strong> : dictionary, shape={‘id’:[nested list of coordinate pairs]}</p>
+<p><strong>lattice_vectors</strong> : array-like, shape=(3, 3), optional</p>
 <blockquote>
 <div><blockquote>
-<div><p>default={‘default’:[[0., 0., 0.]]</p>
+<div><p>default=[[1,0,0], [0,1,0], [0,0,1]]</p>
 </div></blockquote>
-<p>Location of all basis Compounds in unit cell.</p>
+<p>Vectors that encase the unit cell corresponding to dimension. Will
+only default to these values if no angles were defined as well.</p>
 </div></blockquote>
-<p><strong>angles</strong> : list-like,  shape=(dimension,), optional, default=None</p>
+<p><strong>lattice_points</strong> : dictionary, shape={‘id’: [[nested list of positions]]</p>
+<blockquote>
+<div><p>optional, default={‘default’: [[0.,0.,0.]]}
+Locations of all lattice points in cell using fractional coordinates.</p>
+</div></blockquote>
+<p><strong>angles</strong> : array-like, shape=(3,), optional, dtype=float</p>
 <blockquote class="last">
-<div><p>Interplanar angles describing unit cell.</p>
+<div><p>Array of inter-planar Bravais angles in degrees.</p>
 </div></blockquote>
 </td>
 </tr>
 </tbody>
 </table>
 <p class="rubric">Examples</p>
-<p>Generating a triclinc lattice for cholesterol.</p>
+<p>Generating a triclinic lattice for cholesterol.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">mbuild</span> <span class="k">as</span> <span class="nn">mb</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">mbuild.utils.io</span> <span class="k">import</span> <span class="n">get_fn</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># reading in the lattice parameters for crystalline cholesterol</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">angle_values</span> <span class="o">=</span> <span class="p">[</span><span class="mf">94.64</span><span class="p">,</span> <span class="mf">90.67</span><span class="p">,</span> <span class="mf">96.32</span><span class="p">]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">spacings</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1.4172</span><span class="p">,</span> <span class="mf">3.4209</span><span class="p">,</span> <span class="mf">1.0481</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">spacing</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1.4172</span><span class="p">,</span> <span class="mf">3.4209</span><span class="p">,</span> <span class="mf">1.0481</span><span class="p">]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">basis</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;cholesterol&#39;</span><span class="p">:[[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">]]}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">cholesterol_lattice</span> <span class="o">=</span> <span class="n">mb</span><span class="o">.</span><span class="n">Lattice</span><span class="p">(</span><span class="n">spacings</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cholesterol_lattice</span> <span class="o">=</span> <span class="n">mb</span><span class="o">.</span><span class="n">Lattice</span><span class="p">(</span><span class="n">spacing</span><span class="p">,</span>
 <span class="gp">... </span>                                 <span class="n">angles</span><span class="o">=</span><span class="n">angle_values</span><span class="p">,</span>
-<span class="gp">... </span>                                 <span class="n">basis_atoms</span><span class="o">=</span><span class="n">basis</span><span class="p">,</span>
-<span class="gp">... </span>                                 <span class="n">dimension</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="gp">... </span>                                 <span class="n">lattice_points</span><span class="o">=</span><span class="n">basis</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>The lattice based on the bravais lattice parameters of crystalline
-cholesterol was generated.</p>
-<p>Replicating the triclinic unit cell out 3 in x,y,z directions.
-&gt;&gt;&gt; cholesterol_unit = mb.Compound()
-&gt;&gt;&gt; cholesterol_unit = mb.load(get_fn(‘cholesterol.pdb’))
-&gt;&gt;&gt; # associate basis vector with id ‘cholesterol’ to cholesterol Compound
-&gt;&gt;&gt; basis_dictionary = {‘cholesterol’ : cholesterol_unit}
-&gt;&gt;&gt; expanded_cell = cholesterol_lattice.populate(x=3, y=3, z=3,
-…                              compound_dict=basis_dictionary)</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># The lattice based on the bravais lattice parameters of crystalline</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># cholesterol was generated.</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Replicating the triclinic unit cell out 3 replications</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># in x,y,z directions.</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">cholesterol_unit</span> <span class="o">=</span> <span class="n">mb</span><span class="o">.</span><span class="n">Compound</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cholesterol_unit</span> <span class="o">=</span> <span class="n">mb</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">get_fn</span><span class="p">(</span><span class="s1">&#39;cholesterol.pdb&#39;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># associate basis vector with id &#39;cholesterol&#39; to cholesterol Compound</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">basis_dictionary</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;cholesterol&#39;</span> <span class="p">:</span> <span class="n">cholesterol_unit</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">expanded_cell</span> <span class="o">=</span> <span class="n">cholesterol_lattice</span><span class="o">.</span><span class="n">populate</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+<span class="gp">... </span>                             <span class="n">compound_dict</span><span class="o">=</span><span class="n">basis_dictionary</span><span class="p">)</span>
+</pre></div>
+</div>
 <p>The unit cell of cholesterol was associated with a Compound that contains
 the connectivity data and spatial arrangements of a cholesterol molecule.
 The unit cell was then expanded out in x,y,z directions and cholesterol
 Compounds were populated.</p>
-<p>Generating BCC CsCl crystal structure
-&gt;&gt;&gt; import mbuild as mb
-&gt;&gt;&gt; chlorine = mb.Compound(name=’Cl’)
-&gt;&gt;&gt; # angles not needed, when not provided, defaults to 90,90,90
-&gt;&gt;&gt; cesium = mb.Compound(name=’Cs’)
-&gt;&gt;&gt; spacings = [.4123, .4123, .4123]
-&gt;&gt;&gt; basis = {‘Cl’ : [[0., 0., 0.]], ‘Cs’ : [[.5, .5, .5]]}
-&gt;&gt;&gt; cscl_lattice = mb.Lattice(spacings, basis_atoms=basis,
-…                           dimension=3)</p>
-<p>Now associate id with Compounds for basis atoms and replicate 3x3x3
-&gt;&gt;&gt; cscl_dict = {‘Cl’ : chlorine, ‘Cs’ : cesium}
-&gt;&gt;&gt; cscl_compound = cscl_lattice.populate(x=3, y=3, z=3,
-…                                       compound_dict=cscl_dict)</p>
+<p>Generating BCC CsCl crystal structure</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">mbuild</span> <span class="k">as</span> <span class="nn">mb</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">chlorine</span> <span class="o">=</span> <span class="n">mb</span><span class="o">.</span><span class="n">Compound</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;Cl&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># angles not needed, when not provided, defaults to 90,90,90</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cesium</span> <span class="o">=</span> <span class="n">mb</span><span class="o">.</span><span class="n">Compound</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;Cs&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">spacing</span> <span class="o">=</span> <span class="p">[</span><span class="o">.</span><span class="mi">4123</span><span class="p">,</span> <span class="o">.</span><span class="mi">4123</span><span class="p">,</span> <span class="o">.</span><span class="mi">4123</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">basis</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Cl&#39;</span> <span class="p">:</span> <span class="p">[[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">]],</span> <span class="s1">&#39;Cs&#39;</span> <span class="p">:</span> <span class="p">[[</span><span class="o">.</span><span class="mi">5</span><span class="p">,</span> <span class="o">.</span><span class="mi">5</span><span class="p">,</span> <span class="o">.</span><span class="mi">5</span><span class="p">]]}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cscl_lattice</span> <span class="o">=</span> <span class="n">mb</span><span class="o">.</span><span class="n">Lattice</span><span class="p">(</span><span class="n">spacing</span><span class="p">,</span> <span class="n">lattice_points</span><span class="o">=</span><span class="n">basis</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Now associate id with Compounds for lattice points and replicate 3x</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">cscl_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Cl&#39;</span> <span class="p">:</span> <span class="n">chlorine</span><span class="p">,</span> <span class="s1">&#39;Cs&#39;</span> <span class="p">:</span> <span class="n">cesium</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cscl_compound</span> <span class="o">=</span> <span class="n">cscl_lattice</span><span class="o">.</span><span class="n">populate</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+<span class="gp">... </span>                                      <span class="n">compound_dict</span><span class="o">=</span><span class="n">cscl_dict</span><span class="p">)</span>
+</pre></div>
+</div>
 <p>A multi-Compound basis was created and replicated. For each unique basis
 atom position, a separate entry must be completed for the basis_atom
 input.</p>
-<p>Generating FCC Copper cell with lattice_vectors instead of angles
-&gt;&gt;&gt; import mbuild as mb
-&gt;&gt;&gt; copper = mb.Compound(name=’Cu’)
-&gt;&gt;&gt; lattice_vector = ( [1, 0, 0], [0, 1, 0], [0, 0, 1])
-&gt;&gt;&gt; spacings = [.36149, .36149, .36149]
-&gt;&gt;&gt; copper_locations = [[0., 0., 0.], [.5, .5, 0.],
-…                     [.5, 0., .5], [0., .5, .5]]
-&gt;&gt;&gt; basis = {‘Cu’ : copper_locations}
-&gt;&gt;&gt; copper_lattice = mb.Lattice(spacings, dimension=3,
-…                           lattice_vectors=lattice_vector,
-…                           basis_atoms=basis)
-&gt;&gt;&gt; copper_dict = {‘Cu’ : copper}
-&gt;&gt;&gt; copper_cell = copper_lattice.populate(x=3, y=3, z=20,
-…                                       compound_dict=copper_dict)</p>
-<p>TODO(Justin Gilmer) : Print function to display info about Lattice (repr)
-TODO(Justin Gilmer) : inheritance(Cubic, orthorhombic, hexangonal)
-TODO(Justin Gilmer) : orientation functionality</p>
+<p>Generating FCC Copper cell with lattice_vectors instead of angles</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">mbuild</span> <span class="k">as</span> <span class="nn">mb</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">copper</span> <span class="o">=</span> <span class="n">mb</span><span class="o">.</span><span class="n">Compound</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;Cu&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lattice_vector</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">spacing</span> <span class="o">=</span> <span class="p">[</span><span class="o">.</span><span class="mi">36149</span><span class="p">,</span> <span class="o">.</span><span class="mi">36149</span><span class="p">,</span> <span class="o">.</span><span class="mi">36149</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">copper_locations</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">],</span> <span class="p">[</span><span class="o">.</span><span class="mi">5</span><span class="p">,</span> <span class="o">.</span><span class="mi">5</span><span class="p">,</span> <span class="mf">0.</span><span class="p">],</span>
+<span class="gp">... </span>                    <span class="p">[</span><span class="o">.</span><span class="mi">5</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="o">.</span><span class="mi">5</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.</span><span class="p">,</span> <span class="o">.</span><span class="mi">5</span><span class="p">,</span> <span class="o">.</span><span class="mi">5</span><span class="p">]]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">basis</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Cu&#39;</span> <span class="p">:</span> <span class="n">copper_locations</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">copper_lattice</span> <span class="o">=</span> <span class="n">mb</span><span class="o">.</span><span class="n">Lattice</span><span class="p">(</span><span class="n">lattice_spacing</span> <span class="o">=</span> <span class="n">spacing</span><span class="p">,</span>
+<span class="gp">... </span>                            <span class="n">lattice_vectors</span><span class="o">=</span><span class="n">lattice_vector</span><span class="p">,</span>
+<span class="gp">... </span>                            <span class="n">lattice_points</span><span class="o">=</span><span class="n">basis</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">copper_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Cu&#39;</span> <span class="p">:</span> <span class="n">copper</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">copper_pillar</span> <span class="o">=</span> <span class="n">copper_lattice</span><span class="o">.</span><span class="n">populate</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
+<span class="gp">... </span>                                      <span class="n">compound_dict</span><span class="o">=</span><span class="n">copper_dict</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Generating the 2d Structure Graphene carbon backbone</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">mbuild</span> <span class="k">as</span> <span class="nn">mb</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">carbon</span> <span class="o">=</span> <span class="n">mb</span><span class="o">.</span><span class="n">Compound</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;C&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">angles</span> <span class="o">=</span> <span class="p">[</span><span class="mi">90</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">120</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">carbon_locations</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="o">/</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">basis</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;C&#39;</span> <span class="p">:</span> <span class="n">carbon_locations</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">graphene</span> <span class="o">=</span> <span class="n">mb</span><span class="o">.</span><span class="n">Lattice</span><span class="p">(</span><span class="n">lattice_spacing</span><span class="o">=</span><span class="p">[</span><span class="o">.</span><span class="mi">2456</span><span class="p">,</span> <span class="o">.</span><span class="mi">2456</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+<span class="gp">... </span>                       <span class="n">angles</span><span class="o">=</span><span class="n">angles</span><span class="p">,</span> <span class="n">lattice_points</span><span class="o">=</span><span class="n">basis</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">carbon_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;C&#39;</span> <span class="p">:</span> <span class="n">carbon</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">graphene_cell</span> <span class="o">=</span> <span class="n">graphene</span><span class="o">.</span><span class="n">populate</span><span class="p">(</span><span class="n">compound_dict</span><span class="o">=</span><span class="n">carbon_dict</span><span class="p">,</span>
+<span class="gp">... </span>                                  <span class="n">x</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
 <p class="rubric">Attributes</p>
 <table border="1" class="docutils">
 <colgroup>
-<col width="11%" />
-<col width="89%" />
+<col width="9%" />
+<col width="91%" />
 </colgroup>
 <tbody valign="top">
 <tr class="row-odd"><td><strong>dimension</strong></td>
-<td>(int, optional, default=3) Dimension of system of interest</td>
+<td>(int, 3) Default dimensionality within mBuild. If choosing a lower dimension, pad the relevant arrays with zeroes.</td>
 </tr>
-<tr class="row-even"><td><strong>lattice_vectors</strong></td>
-<td>(numpy array, shape=(dimension, dimension), optional) default=([1,0,0], [0,1,0], [0,0,1]) Vectors that define edges of unit cell corresponding to dimension.</td>
+<tr class="row-even"><td><strong>lattice_spacing</strong></td>
+<td>(numpy array, shape=(3,), required, dtype=float) Array of lattice spacings a,b,c for the cell.</td>
 </tr>
-<tr class="row-odd"><td><strong>lattice_spacings</strong></td>
-<td>(list-like, shape=(dimension,), required, default=None) Length of unit cell edges.</td>
+<tr class="row-odd"><td><strong>lattice_vectors</strong></td>
+<td>(numpy array, shape=(3, 3), optional) default=[[1,0,0], [0,1,0], [0,0,1]] Vectors that encase the unit cell corresponding to dimension. Will only default to these values if no angles were defined as well.</td>
 </tr>
-<tr class="row-even"><td><strong>basis_atoms</strong></td>
-<td>(list-like, shape=([‘id’,[dimension,]], … ,) optional) default={(‘default’,([0,0,0]))} Location of all basis Compounds in unit cell.</td>
+<tr class="row-even"><td><strong>lattice_points</strong></td>
+<td>(dictionary, shape={‘id’: [[nested list of positions]]) optional, default={‘default’: [[0.,0.,0.]]} Locations of all lattice points in cell using fractional coordinates.</td>
 </tr>
 <tr class="row-odd"><td><strong>angles</strong></td>
-<td>(list-like, optional, default=None) Lattice angles to define Bravais Lattice.</td>
+<td>(numpy array, shape=(3,), optional, dtype=float) Array of inter-planar Bravais angles</td>
 </tr>
 </tbody>
 </table>
