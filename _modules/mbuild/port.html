@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>mbuild.port &mdash; mbuild 0.7.3 documentation</title>
+  <title>mbuild.port &mdash; mbuild 0.8.0 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="mbuild 0.7.3 documentation" href="../../index.html"/>
+    <link rel="top" title="mbuild 0.8.0 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                0.7.3
+                0.8.0
               </div>
             
           
@@ -167,7 +167,9 @@
            <div itemprop="articleBody">
             
   <h1>Source code for mbuild.port</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span></span><span class="kn">import</span> <span class="nn">itertools</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="kn">from</span> <span class="nn">mbuild.compound</span> <span class="k">import</span> <span class="n">Compound</span><span class="p">,</span> <span class="n">Particle</span>
 <span class="kn">from</span> <span class="nn">mbuild.coordinate_transform</span> <span class="k">import</span> <span class="n">unit_vector</span><span class="p">,</span> <span class="n">angle</span>
@@ -181,6 +183,12 @@
 <span class="sd">    ----------</span>
 <span class="sd">    anchor : mb.Particle, optional, default=None</span>
 <span class="sd">        A Particle associated with the port. Used to form bonds.</span>
+<span class="sd">    orientation : array-like, shape=(3,), optional, default=[0, 1, 0]</span>
+<span class="sd">        Vector along which to orient the port</span>
+<span class="sd">    separation : float, optional, default=0</span>
+<span class="sd">        Distance to shift port along the orientation vector from the anchor</span>
+<span class="sd">        particle position. If no anchor is provided, the port will be shifted</span>
+<span class="sd">        from the origin.</span>
 
 <span class="sd">    Attributes</span>
 <span class="sd">    ----------</span>
@@ -201,6 +209,11 @@
         <span class="nb">super</span><span class="p">(</span><span class="n">Port</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;Port&#39;</span><span class="p">,</span> <span class="n">port_particle</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">anchor</span> <span class="o">=</span> <span class="n">anchor</span>
 
+        <span class="n">default_direction</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">orientation</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">orientation</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="n">orientation</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">orientation</span><span class="p">)</span>
+
         <span class="n">up</span> <span class="o">=</span> <span class="n">Compound</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;subport&#39;</span><span class="p">,</span> <span class="n">port_particle</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="n">up</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Particle</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;G&#39;</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="p">[</span><span class="mf">0.005</span><span class="p">,</span> <span class="mf">0.0025</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.0025</span><span class="p">],</span>
                         <span class="n">port_particle</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="s1">&#39;middle&#39;</span><span class="p">)</span>
@@ -212,25 +225,21 @@
                         <span class="n">port_particle</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="s1">&#39;right&#39;</span><span class="p">)</span>
 
         <span class="n">down</span> <span class="o">=</span> <span class="n">clone</span><span class="p">(</span><span class="n">up</span><span class="p">)</span>
-        <span class="n">down</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
-
         <span class="bp">self</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">up</span><span class="p">,</span> <span class="s1">&#39;up&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">down</span><span class="p">,</span> <span class="s1">&#39;down&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">used</span> <span class="o">=</span> <span class="kc">False</span>
 
-        <span class="k">if</span> <span class="n">orientation</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">orientation</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
-
-        <span class="n">default_direction</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
-        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">array_equal</span><span class="p">(</span>
-                <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">default_direction</span><span class="p">),</span> <span class="n">unit_vector</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">orientation</span><span class="p">))):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
-        <span class="k">elif</span> <span class="n">np</span><span class="o">.</span><span class="n">array_equal</span><span class="p">(</span>
-                <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">default_direction</span><span class="p">),</span> <span class="n">unit_vector</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">orientation</span><span class="p">))):</span>
-            <span class="k">pass</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span>
+                <span class="n">default_direction</span><span class="p">,</span> <span class="n">unit_vector</span><span class="p">(</span><span class="o">-</span><span class="n">orientation</span><span class="p">)):</span>
+            <span class="n">down</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+        <span class="k">elif</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span>
+                <span class="n">default_direction</span><span class="p">,</span> <span class="n">unit_vector</span><span class="p">(</span><span class="n">orientation</span><span class="p">)):</span>
+            <span class="n">down</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">normal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cross</span><span class="p">(</span><span class="n">default_direction</span><span class="p">,</span> <span class="n">orientation</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span><span class="n">angle</span><span class="p">(</span><span class="n">default_direction</span><span class="p">,</span> <span class="n">orientation</span><span class="p">),</span> <span class="n">normal</span><span class="p">)</span>
+            <span class="n">down</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">normal</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">anchor</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">translate_to</span><span class="p">(</span><span class="n">anchor</span><span class="o">.</span><span class="n">pos</span><span class="p">)</span>
@@ -252,7 +261,44 @@
     <span class="k">def</span> <span class="nf">direction</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;The unit vector pointing in the &#39;direction&#39; of the Port</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">unit_vector</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xyz_with_ports</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">xyz_with_ports</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span></div>
+        <span class="k">return</span> <span class="n">unit_vector</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xyz_with_ports</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">xyz_with_ports</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">access_labels</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;List of labels used to access the Port</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        list of str</span>
+<span class="sd">            Strings that can be used to access this Port relative to self.root</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">access_labels</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">referrer</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">referrers</span><span class="p">:</span>
+            <span class="n">referrer_labels</span> <span class="o">=</span> <span class="p">[</span><span class="n">key</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">labels</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+                               <span class="k">if</span> <span class="n">val</span> <span class="o">==</span> <span class="n">referrer</span><span class="p">]</span>
+            <span class="n">port_labels</span> <span class="o">=</span> <span class="p">[</span><span class="n">key</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">referrer</span><span class="o">.</span><span class="n">labels</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+                           <span class="k">if</span> <span class="n">val</span> <span class="o">==</span> <span class="bp">self</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">referrer</span> <span class="ow">is</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">port_labels</span><span class="p">:</span>
+                    <span class="n">access_labels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;[&#39;</span><span class="si">{}</span><span class="s2">&#39;]&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">label</span><span class="p">))</span>
+            <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="n">referrer_labels</span><span class="p">,</span> <span class="n">port_labels</span><span class="p">):</span>
+                <span class="n">access_labels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;[&#39;</span><span class="si">{}</span><span class="s2">&#39;]&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;&#39;][&#39;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">label</span><span class="p">)))</span>
+
+        <span class="k">return</span> <span class="n">access_labels</span>
+
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">descr</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="s1">&#39;&lt;&#39;</span><span class="p">)</span>
+        <span class="n">descr</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s1">&#39;, &#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">anchor</span><span class="p">:</span>
+            <span class="n">descr</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;anchor: &#39;</span><span class="si">{}</span><span class="s2">&#39;, &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">anchor</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">descr</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;anchor: None, &#39;</span><span class="p">)</span>
+
+        <span class="n">descr</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;labels: </span><span class="si">{}</span><span class="s1">, &#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">access_labels</span><span class="p">)))</span>
+
+        <span class="n">descr</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;id: </span><span class="si">{}</span><span class="s1">&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="bp">self</span><span class="p">)))</span>
+        <span class="k">return</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">descr</span><span class="p">)</span></div>
 </pre></div>
 
            </div>
@@ -289,7 +335,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'0.7.3',
+            VERSION:'0.8.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

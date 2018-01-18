@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Data Structure &mdash; mbuild 0.7.3 documentation</title>
+  <title>Data Structure &mdash; mbuild 0.8.0 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="mbuild 0.7.3 documentation" href="index.html"/>
+    <link rel="top" title="mbuild 0.8.0 documentation" href="index.html"/>
         <link rel="next" title="Coordinate transformations" href="coordinate_transforms.html"/>
         <link rel="prev" title="Building a Simple Alkane" href="tutorials/tutorial_polymers.html"/> 
 
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0.7.3
+                0.8.0
               </div>
             
           
@@ -1447,8 +1447,18 @@ the orientation of Ports with respect to the molecule as a whole.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>anchor</strong> : mb.Particle, optional, default=None</p>
-<blockquote class="last">
+<blockquote>
 <div><p>A Particle associated with the port. Used to form bonds.</p>
+</div></blockquote>
+<p><strong>orientation</strong> : array-like, shape=(3,), optional, default=[0, 1, 0]</p>
+<blockquote>
+<div><p>Vector along which to orient the port</p>
+</div></blockquote>
+<p><strong>separation</strong> : float, optional, default=0</p>
+<blockquote class="last">
+<div><p>Distance to shift port along the orientation vector from the anchor
+particle position. If no anchor is provided, the port will be shifted
+from the origin.</p>
 </div></blockquote>
 </td>
 </tr>
@@ -1475,6 +1485,24 @@ the orientation of Ports with respect to the molecule as a whole.</p>
 </tr>
 </tbody>
 </table>
+<dl class="attribute">
+<dt id="mbuild.port.Port.access_labels">
+<code class="descname">access_labels</code><a class="headerlink" href="#mbuild.port.Port.access_labels" title="Permalink to this definition">¶</a></dt>
+<dd><p>List of labels used to access the Port</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">list of str</p>
+<blockquote class="last">
+<div><p>Strings that can be used to access this Port relative to self.root</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 <dl class="method">
 <dt id="mbuild.port.Port.add">
 <code class="descname">add</code><span class="sig-paren">(</span><em>new_child</em>, <em>label=None</em>, <em>containment=True</em>, <em>replace=False</em>, <em>inherit_periodicity=True</em>, <em>reset_rigid_ids=True</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.port.Port.add" title="Permalink to this definition">¶</a></dt>
@@ -2645,7 +2673,7 @@ the orientation of Ports with respect to the molecule as a whole.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.7.3',
+            VERSION:'0.8.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,
