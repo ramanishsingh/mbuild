@@ -346,8 +346,8 @@
         <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m_compounds</span><span class="p">):</span>
             <span class="n">filled</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">clone</span><span class="p">(</span><span class="n">comp</span><span class="p">))</span>
     <span class="n">filled</span><span class="o">.</span><span class="n">update_coordinates</span><span class="p">(</span><span class="n">filled_pdb</span><span class="p">)</span>
-    <span class="n">filled</span><span class="o">.</span><span class="n">periodicity</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">box</span><span class="o">.</span><span class="n">lengths</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">filled</span></div>
+    <span class="n">filled</span><span class="o">.</span><span class="n">periodicity</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">box</span><span class="o">.</span><span class="n">lengths</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">filled</span>
 
 
 <div class="viewcode-block" id="fill_region"><a class="viewcode-back" href="../../recipes.html#mbuild.packing.fill_region">[docs]</a><span class="k">def</span> <span class="nf">fill_region</span><span class="p">(</span><span class="n">compound</span><span class="p">,</span> <span class="n">n_compounds</span><span class="p">,</span> <span class="n">region</span><span class="p">,</span> <span class="n">overlap</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span>
@@ -424,8 +424,8 @@
     <span class="k">for</span> <span class="n">comp</span><span class="p">,</span> <span class="n">m_compounds</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">compound</span><span class="p">,</span> <span class="n">n_compounds</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m_compounds</span><span class="p">):</span>
             <span class="n">filled</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">clone</span><span class="p">(</span><span class="n">comp</span><span class="p">))</span>
-    <span class="n">filled</span><span class="o">.</span><span class="n">update_coordinates</span><span class="p">(</span><span class="n">filled_pdb</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">filled</span></div>
+    <span class="n">filled</span><span class="o">.</span><span class="n">update_coordinates</span><span class="p">(</span><span class="n">filled_pdb</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">filled</span>
 
 
 <div class="viewcode-block" id="solvate"><a class="viewcode-back" href="../../recipes.html#mbuild.packing.solvate">[docs]</a><span class="k">def</span> <span class="nf">solvate</span><span class="p">(</span><span class="n">solute</span><span class="p">,</span> <span class="n">solvent</span><span class="p">,</span> <span class="n">n_solvent</span><span class="p">,</span> <span class="n">box</span><span class="p">,</span> <span class="n">overlap</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span>
@@ -502,8 +502,8 @@
     <span class="k">for</span> <span class="n">solv</span><span class="p">,</span> <span class="n">m_solvent</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">solvent</span><span class="p">,</span> <span class="n">n_solvent</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m_solvent</span><span class="p">):</span>
             <span class="n">solvated</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">clone</span><span class="p">(</span><span class="n">solv</span><span class="p">))</span>
-    <span class="n">solvated</span><span class="o">.</span><span class="n">update_coordinates</span><span class="p">(</span><span class="n">solvated_pdb</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">solvated</span></div>
+    <span class="n">solvated</span><span class="o">.</span><span class="n">update_coordinates</span><span class="p">(</span><span class="n">solvated_pdb</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">solvated</span>
 
 
 <span class="k">def</span> <span class="nf">_validate_box</span><span class="p">(</span><span class="n">box</span><span class="p">):</span>

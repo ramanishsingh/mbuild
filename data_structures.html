@@ -174,21 +174,21 @@
   <div class="section" id="data-structure">
 <h1>Data Structure<a class="headerlink" href="#data-structure" title="Permalink to this headline">¶</a></h1>
 <p>The primary building blocks in an mBuild hierarchy inherit from the
-<code class="docutils literal"><span class="pre">Compound</span></code> class.  <code class="docutils literal"><span class="pre">Compounds</span></code> maintain an ordered set of <code class="docutils literal"><span class="pre">children</span></code>
-which are other <code class="docutils literal"><span class="pre">Compounds</span></code>.  In addition, an independent, ordered dictionary
-of <code class="docutils literal"><span class="pre">labels</span></code> is maintained through which users can reference any other
-<code class="docutils literal"><span class="pre">Compound</span></code> in the hierarchy via descriptive strings.  Every <code class="docutils literal"><span class="pre">Compound</span></code>
-knows its parent <code class="docutils literal"><span class="pre">Compound</span></code>, one step up in the hierarchy, and knows which
-<code class="docutils literal"><span class="pre">Compounds</span></code> reference it in their <code class="docutils literal"><span class="pre">labels</span></code>.  <code class="docutils literal"><span class="pre">Ports</span></code> are a special type
-of <code class="docutils literal"><span class="pre">Compound</span></code> which are used internally to connect different <code class="docutils literal"><span class="pre">Compounds</span></code>
+<code class="docutils literal notranslate"><span class="pre">Compound</span></code> class.  <code class="docutils literal notranslate"><span class="pre">Compounds</span></code> maintain an ordered set of <code class="docutils literal notranslate"><span class="pre">children</span></code>
+which are other <code class="docutils literal notranslate"><span class="pre">Compounds</span></code>.  In addition, an independent, ordered dictionary
+of <code class="docutils literal notranslate"><span class="pre">labels</span></code> is maintained through which users can reference any other
+<code class="docutils literal notranslate"><span class="pre">Compound</span></code> in the hierarchy via descriptive strings.  Every <code class="docutils literal notranslate"><span class="pre">Compound</span></code>
+knows its parent <code class="docutils literal notranslate"><span class="pre">Compound</span></code>, one step up in the hierarchy, and knows which
+<code class="docutils literal notranslate"><span class="pre">Compounds</span></code> reference it in their <code class="docutils literal notranslate"><span class="pre">labels</span></code>.  <code class="docutils literal notranslate"><span class="pre">Ports</span></code> are a special type
+of <code class="docutils literal notranslate"><span class="pre">Compound</span></code> which are used internally to connect different <code class="docutils literal notranslate"><span class="pre">Compounds</span></code>
 using the equivalence transformations described below.</p>
-<p><code class="docutils literal"><span class="pre">Compounds</span></code> at the bottom of an mBuild hierarchy, the leafs of the tree, are
-referred to as <code class="docutils literal"><span class="pre">Particles</span></code> and can be instantiated as <code class="docutils literal"><span class="pre">foo</span> <span class="pre">=</span>
+<p><code class="docutils literal notranslate"><span class="pre">Compounds</span></code> at the bottom of an mBuild hierarchy, the leafs of the tree, are
+referred to as <code class="docutils literal notranslate"><span class="pre">Particles</span></code> and can be instantiated as <code class="docutils literal notranslate"><span class="pre">foo</span> <span class="pre">=</span>
 <span class="pre">mb.Particle(name='bar')</span></code>. Note however, that this merely serves to illustrate
-that this <code class="docutils literal"><span class="pre">Compound</span></code> is at the bottom of the hierarchy; <code class="docutils literal"><span class="pre">Particle</span></code> is simply
-an alias for <code class="docutils literal"><span class="pre">Compound</span></code> which can be used to clarify the intended role of an
-object you are creating. The method <code class="docutils literal"><span class="pre">Compound.particles()</span></code> traverses the
-hierarchy to the bottom and yields those <code class="docutils literal"><span class="pre">Compounds</span></code>. <code class="docutils literal"><span class="pre">Compound.root()</span></code>
+that this <code class="docutils literal notranslate"><span class="pre">Compound</span></code> is at the bottom of the hierarchy; <code class="docutils literal notranslate"><span class="pre">Particle</span></code> is simply
+an alias for <code class="docutils literal notranslate"><span class="pre">Compound</span></code> which can be used to clarify the intended role of an
+object you are creating. The method <code class="docutils literal notranslate"><span class="pre">Compound.particles()</span></code> traverses the
+hierarchy to the bottom and yields those <code class="docutils literal notranslate"><span class="pre">Compounds</span></code>. <code class="docutils literal notranslate"><span class="pre">Compound.root()</span></code>
 returns the compound at the top of the hierarchy.</p>
 <div class="section" id="compound">
 <h2>Compound<a class="headerlink" href="#compound" title="Permalink to this headline">¶</a></h2>
@@ -251,31 +251,31 @@ Defaults to zeros which is treated as non-periodic.</p>
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="#mbuild.compound.Compound.boundingbox" title="mbuild.compound.Compound.boundingbox"><code class="xref py py-obj docutils literal"><span class="pre">boundingbox</span></code></a></td>
+<tr class="row-odd"><td><a class="reference internal" href="#mbuild.compound.Compound.boundingbox" title="mbuild.compound.Compound.boundingbox"><code class="xref py py-obj docutils literal notranslate"><span class="pre">boundingbox</span></code></a></td>
 <td>Compute the bounding box of the compound.</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#mbuild.compound.Compound.center" title="mbuild.compound.Compound.center"><code class="xref py py-obj docutils literal"><span class="pre">center</span></code></a></td>
+<tr class="row-even"><td><a class="reference internal" href="#mbuild.compound.Compound.center" title="mbuild.compound.Compound.center"><code class="xref py py-obj docutils literal notranslate"><span class="pre">center</span></code></a></td>
 <td>The cartesian center of the Compound based on its Particles.</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#mbuild.compound.Compound.contains_rigid" title="mbuild.compound.Compound.contains_rigid"><code class="xref py py-obj docutils literal"><span class="pre">contains_rigid</span></code></a></td>
+<tr class="row-odd"><td><a class="reference internal" href="#mbuild.compound.Compound.contains_rigid" title="mbuild.compound.Compound.contains_rigid"><code class="xref py py-obj docutils literal notranslate"><span class="pre">contains_rigid</span></code></a></td>
 <td>Returns True if the Compound contains rigid bodies</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#mbuild.compound.Compound.max_rigid_id" title="mbuild.compound.Compound.max_rigid_id"><code class="xref py py-obj docutils literal"><span class="pre">max_rigid_id</span></code></a></td>
+<tr class="row-even"><td><a class="reference internal" href="#mbuild.compound.Compound.max_rigid_id" title="mbuild.compound.Compound.max_rigid_id"><code class="xref py py-obj docutils literal notranslate"><span class="pre">max_rigid_id</span></code></a></td>
 <td>Returns the maximum rigid body ID contained in the Compound.</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#mbuild.compound.Compound.n_particles" title="mbuild.compound.Compound.n_particles"><code class="xref py py-obj docutils literal"><span class="pre">n_particles</span></code></a></td>
+<tr class="row-odd"><td><a class="reference internal" href="#mbuild.compound.Compound.n_particles" title="mbuild.compound.Compound.n_particles"><code class="xref py py-obj docutils literal notranslate"><span class="pre">n_particles</span></code></a></td>
 <td>Return the number of Particles in the Compound.</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#mbuild.compound.Compound.n_bonds" title="mbuild.compound.Compound.n_bonds"><code class="xref py py-obj docutils literal"><span class="pre">n_bonds</span></code></a></td>
+<tr class="row-even"><td><a class="reference internal" href="#mbuild.compound.Compound.n_bonds" title="mbuild.compound.Compound.n_bonds"><code class="xref py py-obj docutils literal notranslate"><span class="pre">n_bonds</span></code></a></td>
 <td>Return the number of bonds in the Compound.</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#mbuild.compound.Compound.root" title="mbuild.compound.Compound.root"><code class="xref py py-obj docutils literal"><span class="pre">root</span></code></a></td>
+<tr class="row-odd"><td><a class="reference internal" href="#mbuild.compound.Compound.root" title="mbuild.compound.Compound.root"><code class="xref py py-obj docutils literal notranslate"><span class="pre">root</span></code></a></td>
 <td>The Compound at the top of self’s hierarchy.</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#mbuild.compound.Compound.xyz" title="mbuild.compound.Compound.xyz"><code class="xref py py-obj docutils literal"><span class="pre">xyz</span></code></a></td>
+<tr class="row-even"><td><a class="reference internal" href="#mbuild.compound.Compound.xyz" title="mbuild.compound.Compound.xyz"><code class="xref py py-obj docutils literal notranslate"><span class="pre">xyz</span></code></a></td>
 <td>Return all particle coordinates in this compound.</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#mbuild.compound.Compound.xyz_with_ports" title="mbuild.compound.Compound.xyz_with_ports"><code class="xref py py-obj docutils literal"><span class="pre">xyz_with_ports</span></code></a></td>
+<tr class="row-odd"><td><a class="reference internal" href="#mbuild.compound.Compound.xyz_with_ports" title="mbuild.compound.Compound.xyz_with_ports"><code class="xref py py-obj docutils literal notranslate"><span class="pre">xyz_with_ports</span></code></a></td>
 <td>Return all particle coordinates in this compound including ports.</td>
 </tr>
 </tbody>
@@ -445,7 +445,7 @@ to add Compounds to an existing rigid body.</p>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
 <dl class="last docutils">
-<dt><code class="xref py py-obj docutils literal"><span class="pre">bond_graph.edges_iter</span></code></dt>
+<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">bond_graph.edges_iter</span></code></dt>
 <dd>Iterates over all edges in a BondGraph</dd>
 </dl>
 </div>
@@ -551,75 +551,75 @@ your choice of force field.</p>
 </tbody>
 </table>
 <p class="rubric">References</p>
-<table class="docutils citation" frame="void" id="r11122" rules="none">
+<table class="docutils citation" frame="void" id="r1" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id1">[R11122]</a></td><td>O’Boyle, N.M.; Banck, M.; James, C.A.; Morley, C.;
+<tr><td class="label"><a class="fn-backref" href="#id1">[R1]</a></td><td>O’Boyle, N.M.; Banck, M.; James, C.A.; Morley, C.;
 Vandermeersch, T.; Hutchison, G.R. “Open Babel: An open
 chemical toolbox.” (2011) J. Cheminf. 3, 33</td></tr>
 </tbody>
 </table>
-<table class="docutils citation" frame="void" id="r21122" rules="none">
+<table class="docutils citation" frame="void" id="r2" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id2">[R21122]</a></td><td>Open Babel, version X.X.X <a class="reference external" href="http://openbabel.org">http://openbabel.org</a>, (installed
+<tr><td class="label"><a class="fn-backref" href="#id2">[R2]</a></td><td>Open Babel, version X.X.X <a class="reference external" href="http://openbabel.org">http://openbabel.org</a>, (installed
 Month Year)</td></tr>
 </tbody>
 </table>
 <p>If using the ‘MMFF94’ force field please also cite the following:
-.. [R31122] T.A. Halgren, “Merck molecular force field. I. Basis, form,</p>
+.. [R3] T.A. Halgren, “Merck molecular force field. I. Basis, form,</p>
 <blockquote>
 <div>scope, parameterization, and performance of MMFF94.” (1996)
 J. Comput. Chem. 17, 490-519</div></blockquote>
-<table class="docutils citation" frame="void" id="r41122" rules="none">
+<table class="docutils citation" frame="void" id="r4" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id4">[R41122]</a></td><td>T.A. Halgren, “Merck molecular force field. II. MMFF94 van der
+<tr><td class="label"><a class="fn-backref" href="#id4">[R4]</a></td><td>T.A. Halgren, “Merck molecular force field. II. MMFF94 van der
 Waals and electrostatic parameters for intermolecular
 interactions.” (1996) J. Comput. Chem. 17, 520-552</td></tr>
 </tbody>
 </table>
-<table class="docutils citation" frame="void" id="r51122" rules="none">
+<table class="docutils citation" frame="void" id="r5" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id5">[R51122]</a></td><td>T.A. Halgren, “Merck molecular force field. III. Molecular
+<tr><td class="label"><a class="fn-backref" href="#id5">[R5]</a></td><td>T.A. Halgren, “Merck molecular force field. III. Molecular
 geometries and vibrational frequencies for MMFF94.” (1996)
 J. Comput. Chem. 17, 553-586</td></tr>
 </tbody>
 </table>
-<table class="docutils citation" frame="void" id="r61122" rules="none">
+<table class="docutils citation" frame="void" id="r6" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id6">[R61122]</a></td><td>T.A. Halgren and R.B. Nachbar, “Merck molecular force field.
+<tr><td class="label"><a class="fn-backref" href="#id6">[R6]</a></td><td>T.A. Halgren and R.B. Nachbar, “Merck molecular force field.
 IV. Conformational energies and geometries for MMFF94.” (1996)
 J. Comput. Chem. 17, 587-615</td></tr>
 </tbody>
 </table>
-<table class="docutils citation" frame="void" id="r71122" rules="none">
+<table class="docutils citation" frame="void" id="r7" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id7">[R71122]</a></td><td>T.A. Halgren, “Merck molecular force field. V. Extension of
+<tr><td class="label"><a class="fn-backref" href="#id7">[R7]</a></td><td>T.A. Halgren, “Merck molecular force field. V. Extension of
 MMFF94 using experimental data, additional computational data,
 and empirical rules.” (1996) J. Comput. Chem. 17, 616-641</td></tr>
 </tbody>
 </table>
 <p>If using the ‘MMFF94s’ force field please cite the above along with:
-.. [R81122] T.A. Halgren, “MMFF VI. MMFF94s option for energy minimization</p>
+.. [R8] T.A. Halgren, “MMFF VI. MMFF94s option for energy minimization</p>
 <blockquote>
 <div>studies.” (1999) J. Comput. Chem. 20, 720-729</div></blockquote>
 <p>If using the ‘UFF’ force field please cite the following:
-.. [R31122] Rappe, A.K., Casewit, C.J., Colwell, K.S., Goddard, W.A. III,</p>
+.. [R3] Rappe, A.K., Casewit, C.J., Colwell, K.S., Goddard, W.A. III,</p>
 <blockquote>
 <div>Skiff, W.M. “UFF, a full periodic table force field for
 molecular mechanics and molecular dynamics simulations.” (1992)
 J. Am. Chem. Soc. 114, 10024-10039</div></blockquote>
 <p>If using the ‘GAFF’ force field please cite the following:
-.. [R31122] Wang, J., Wolf, R.M., Caldwell, J.W., Kollman, P.A., Case, D.A.</p>
+.. [R3] Wang, J., Wolf, R.M., Caldwell, J.W., Kollman, P.A., Case, D.A.</p>
 <blockquote>
 <div>“Development and testing of a general AMBER force field” (2004)
 J. Comput. Chem. 25, 1157-1174</div></blockquote>
 <p>If using the ‘Ghemical’ force field please cite the following:
-.. [R31122] T. Hassinen and M. Perakyla, “New energy terms for reduced</p>
+.. [R3] T. Hassinen and M. Perakyla, “New energy terms for reduced</p>
 <blockquote>
 <div>protein models implemented in an off-lattice force field” (2001)
 J. Comput. Chem. 22, 1229-1242</div></blockquote>
@@ -741,7 +741,7 @@ match the rigid body number.</p>
 </table>
 <p class="rubric">Examples</p>
 <p>Creating a rigid benzene</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">mbuild</span> <span class="k">as</span> <span class="nn">mb</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">mbuild</span> <span class="k">as</span> <span class="nn">mb</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">mbuild.utils.io</span> <span class="k">import</span> <span class="n">get_fn</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">benzene</span> <span class="o">=</span> <span class="n">mb</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">get_fn</span><span class="p">(</span><span class="s1">&#39;benzene.mol2&#39;</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">benzene</span><span class="o">.</span><span class="n">label_rigid_bodies</span><span class="p">()</span>
@@ -749,7 +749,7 @@ match the rigid body number.</p>
 </div>
 <p>Creating a semi-rigid benzene, where only the carbons are treated as
 a rigid body</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">mbuild</span> <span class="k">as</span> <span class="nn">mb</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">mbuild</span> <span class="k">as</span> <span class="nn">mb</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">mbuild.utils.io</span> <span class="k">import</span> <span class="n">get_fn</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">benzene</span> <span class="o">=</span> <span class="n">mb</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">get_fn</span><span class="p">(</span><span class="s1">&#39;benzene.mol2&#39;</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">benzene</span><span class="o">.</span><span class="n">label_rigid_bodies</span><span class="p">(</span><span class="n">rigid_particles</span><span class="o">=</span><span class="s1">&#39;C&#39;</span><span class="p">)</span>
@@ -757,7 +757,7 @@ a rigid body</p>
 </div>
 <p>Create a box of rigid benzenes, where each benzene has a unique rigid
 body ID.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">mbuild</span> <span class="k">as</span> <span class="nn">mb</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">mbuild</span> <span class="k">as</span> <span class="nn">mb</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">mbuild.utils.io</span> <span class="k">import</span> <span class="n">get_fn</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">benzene</span> <span class="o">=</span> <span class="n">mb</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">get_fn</span><span class="p">(</span><span class="s1">&#39;benzene.mol2&#39;</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">benzene</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Benzene&#39;</span>
@@ -769,7 +769,7 @@ body ID.</p>
 </div>
 <p>Create a box of semi-rigid benzenes, where each benzene has a unique
 rigid body ID and only the carbon portion is treated as rigid.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">mbuild</span> <span class="k">as</span> <span class="nn">mb</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">mbuild</span> <span class="k">as</span> <span class="nn">mb</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">mbuild.utils.io</span> <span class="k">import</span> <span class="n">get_fn</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">benzene</span> <span class="o">=</span> <span class="n">mb</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">get_fn</span><span class="p">(</span><span class="s1">&#39;benzene.mol2&#39;</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">benzene</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Benzene&#39;</span>
@@ -959,9 +959,9 @@ provided, this defaults to all Particles in self</p>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
 <dl class="last docutils">
-<dt><code class="xref py py-obj docutils literal"><span class="pre">periodic_kdtree.PerioidicCKDTree</span></code></dt>
+<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">periodic_kdtree.PerioidicCKDTree</span></code></dt>
 <dd>mBuild implementation of kd-trees</dd>
-<dt><code class="xref py py-obj docutils literal"><span class="pre">scipy.spatial.ckdtree</span></code></dt>
+<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">scipy.spatial.ckdtree</span></code></dt>
 <dd>Further details on kd-trees</dd>
 </dl>
 </div>
@@ -1175,11 +1175,11 @@ for converting mass values to reduced units.</p>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
 <dl class="last docutils">
-<dt><code class="xref py py-obj docutils literal"><span class="pre">formats.gsdwrite.write_gsd</span></code></dt>
+<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">formats.gsdwrite.write_gsd</span></code></dt>
 <dd>Write to GSD format</dd>
-<dt><code class="xref py py-obj docutils literal"><span class="pre">formats.hoomdxml.write_hoomdxml</span></code></dt>
+<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">formats.hoomdxml.write_hoomdxml</span></code></dt>
 <dd>Write to Hoomd XML format</dd>
-<dt><code class="xref py py-obj docutils literal"><span class="pre">formats.lammpsdata.write_lammpsdata</span></code></dt>
+<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">formats.lammpsdata.write_lammpsdata</span></code></dt>
 <dd>Write to LAMMPS data format</dd>
 </dl>
 </div>
@@ -1271,7 +1271,7 @@ checking against Compound.name.</p>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
 <dl class="last docutils">
-<dt><code class="xref py py-obj docutils literal"><span class="pre">parmed.structure.Structure</span></code></dt>
+<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">parmed.structure.Structure</span></code></dt>
 <dd>Details on the ParmEd Structure object</dd>
 </dl>
 </div>
@@ -1307,7 +1307,7 @@ checking against Compound.name.</p>
 </table>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
-<p class="last"><code class="xref py py-obj docutils literal"><span class="pre">_to_topology</span></code></p>
+<p class="last"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_to_topology</span></code></p>
 </div>
 </dd></dl>
 
@@ -1372,7 +1372,7 @@ the orientation of Ports with respect to the molecule as a whole.</p>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
 <dl class="last docutils">
-<dt><code class="xref py py-obj docutils literal"><span class="pre">load</span></code></dt>
+<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">load</span></code></dt>
 <dd>Load coordinates from a file</dd>
 </dl>
 </div>
@@ -1642,7 +1642,7 @@ to add Compounds to an existing rigid body.</p>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
 <dl class="last docutils">
-<dt><code class="xref py py-obj docutils literal"><span class="pre">bond_graph.edges_iter</span></code></dt>
+<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">bond_graph.edges_iter</span></code></dt>
 <dd>Iterates over all edges in a BondGraph</dd>
 </dl>
 </div>
@@ -1742,75 +1742,75 @@ your choice of force field.</p>
 </tbody>
 </table>
 <p class="rubric">References</p>
-<table class="docutils citation" frame="void" id="r344455" rules="none">
+<table class="docutils citation" frame="void" id="r12" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id12">[R344455]</a></td><td>O’Boyle, N.M.; Banck, M.; James, C.A.; Morley, C.;
+<tr><td class="label"><a class="fn-backref" href="#id12">[R12]</a></td><td>O’Boyle, N.M.; Banck, M.; James, C.A.; Morley, C.;
 Vandermeersch, T.; Hutchison, G.R. “Open Babel: An open
 chemical toolbox.” (2011) J. Cheminf. 3, 33</td></tr>
 </tbody>
 </table>
-<table class="docutils citation" frame="void" id="r354455" rules="none">
+<table class="docutils citation" frame="void" id="r13" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id13">[R354455]</a></td><td>Open Babel, version X.X.X <a class="reference external" href="http://openbabel.org">http://openbabel.org</a>, (installed
+<tr><td class="label"><a class="fn-backref" href="#id13">[R13]</a></td><td>Open Babel, version X.X.X <a class="reference external" href="http://openbabel.org">http://openbabel.org</a>, (installed
 Month Year)</td></tr>
 </tbody>
 </table>
 <p>If using the ‘MMFF94’ force field please also cite the following:
-.. [R364455] T.A. Halgren, “Merck molecular force field. I. Basis, form,</p>
+.. [R14] T.A. Halgren, “Merck molecular force field. I. Basis, form,</p>
 <blockquote>
 <div>scope, parameterization, and performance of MMFF94.” (1996)
 J. Comput. Chem. 17, 490-519</div></blockquote>
-<table class="docutils citation" frame="void" id="r374455" rules="none">
+<table class="docutils citation" frame="void" id="r15" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id15">[R374455]</a></td><td>T.A. Halgren, “Merck molecular force field. II. MMFF94 van der
+<tr><td class="label"><a class="fn-backref" href="#id15">[R15]</a></td><td>T.A. Halgren, “Merck molecular force field. II. MMFF94 van der
 Waals and electrostatic parameters for intermolecular
 interactions.” (1996) J. Comput. Chem. 17, 520-552</td></tr>
 </tbody>
 </table>
-<table class="docutils citation" frame="void" id="r384455" rules="none">
+<table class="docutils citation" frame="void" id="r16" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id16">[R384455]</a></td><td>T.A. Halgren, “Merck molecular force field. III. Molecular
+<tr><td class="label"><a class="fn-backref" href="#id16">[R16]</a></td><td>T.A. Halgren, “Merck molecular force field. III. Molecular
 geometries and vibrational frequencies for MMFF94.” (1996)
 J. Comput. Chem. 17, 553-586</td></tr>
 </tbody>
 </table>
-<table class="docutils citation" frame="void" id="r394455" rules="none">
+<table class="docutils citation" frame="void" id="r17" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id17">[R394455]</a></td><td>T.A. Halgren and R.B. Nachbar, “Merck molecular force field.
+<tr><td class="label"><a class="fn-backref" href="#id17">[R17]</a></td><td>T.A. Halgren and R.B. Nachbar, “Merck molecular force field.
 IV. Conformational energies and geometries for MMFF94.” (1996)
 J. Comput. Chem. 17, 587-615</td></tr>
 </tbody>
 </table>
-<table class="docutils citation" frame="void" id="r404455" rules="none">
+<table class="docutils citation" frame="void" id="r18" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id18">[R404455]</a></td><td>T.A. Halgren, “Merck molecular force field. V. Extension of
+<tr><td class="label"><a class="fn-backref" href="#id18">[R18]</a></td><td>T.A. Halgren, “Merck molecular force field. V. Extension of
 MMFF94 using experimental data, additional computational data,
 and empirical rules.” (1996) J. Comput. Chem. 17, 616-641</td></tr>
 </tbody>
 </table>
 <p>If using the ‘MMFF94s’ force field please cite the above along with:
-.. [R414455] T.A. Halgren, “MMFF VI. MMFF94s option for energy minimization</p>
+.. [R19] T.A. Halgren, “MMFF VI. MMFF94s option for energy minimization</p>
 <blockquote>
 <div>studies.” (1999) J. Comput. Chem. 20, 720-729</div></blockquote>
 <p>If using the ‘UFF’ force field please cite the following:
-.. [R364455] Rappe, A.K., Casewit, C.J., Colwell, K.S., Goddard, W.A. III,</p>
+.. [R14] Rappe, A.K., Casewit, C.J., Colwell, K.S., Goddard, W.A. III,</p>
 <blockquote>
 <div>Skiff, W.M. “UFF, a full periodic table force field for
 molecular mechanics and molecular dynamics simulations.” (1992)
 J. Am. Chem. Soc. 114, 10024-10039</div></blockquote>
 <p>If using the ‘GAFF’ force field please cite the following:
-.. [R364455] Wang, J., Wolf, R.M., Caldwell, J.W., Kollman, P.A., Case, D.A.</p>
+.. [R14] Wang, J., Wolf, R.M., Caldwell, J.W., Kollman, P.A., Case, D.A.</p>
 <blockquote>
 <div>“Development and testing of a general AMBER force field” (2004)
 J. Comput. Chem. 25, 1157-1174</div></blockquote>
 <p>If using the ‘Ghemical’ force field please cite the following:
-.. [R364455] T. Hassinen and M. Perakyla, “New energy terms for reduced</p>
+.. [R14] T. Hassinen and M. Perakyla, “New energy terms for reduced</p>
 <blockquote>
 <div>protein models implemented in an off-lattice force field” (2001)
 J. Comput. Chem. 22, 1229-1242</div></blockquote>
@@ -1932,7 +1932,7 @@ match the rigid body number.</p>
 </table>
 <p class="rubric">Examples</p>
 <p>Creating a rigid benzene</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">mbuild</span> <span class="k">as</span> <span class="nn">mb</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">mbuild</span> <span class="k">as</span> <span class="nn">mb</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">mbuild.utils.io</span> <span class="k">import</span> <span class="n">get_fn</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">benzene</span> <span class="o">=</span> <span class="n">mb</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">get_fn</span><span class="p">(</span><span class="s1">&#39;benzene.mol2&#39;</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">benzene</span><span class="o">.</span><span class="n">label_rigid_bodies</span><span class="p">()</span>
@@ -1940,7 +1940,7 @@ match the rigid body number.</p>
 </div>
 <p>Creating a semi-rigid benzene, where only the carbons are treated as
 a rigid body</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">mbuild</span> <span class="k">as</span> <span class="nn">mb</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">mbuild</span> <span class="k">as</span> <span class="nn">mb</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">mbuild.utils.io</span> <span class="k">import</span> <span class="n">get_fn</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">benzene</span> <span class="o">=</span> <span class="n">mb</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">get_fn</span><span class="p">(</span><span class="s1">&#39;benzene.mol2&#39;</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">benzene</span><span class="o">.</span><span class="n">label_rigid_bodies</span><span class="p">(</span><span class="n">rigid_particles</span><span class="o">=</span><span class="s1">&#39;C&#39;</span><span class="p">)</span>
@@ -1948,7 +1948,7 @@ a rigid body</p>
 </div>
 <p>Create a box of rigid benzenes, where each benzene has a unique rigid
 body ID.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">mbuild</span> <span class="k">as</span> <span class="nn">mb</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">mbuild</span> <span class="k">as</span> <span class="nn">mb</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">mbuild.utils.io</span> <span class="k">import</span> <span class="n">get_fn</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">benzene</span> <span class="o">=</span> <span class="n">mb</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">get_fn</span><span class="p">(</span><span class="s1">&#39;benzene.mol2&#39;</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">benzene</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Benzene&#39;</span>
@@ -1960,7 +1960,7 @@ body ID.</p>
 </div>
 <p>Create a box of semi-rigid benzenes, where each benzene has a unique
 rigid body ID and only the carbon portion is treated as rigid.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">mbuild</span> <span class="k">as</span> <span class="nn">mb</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">mbuild</span> <span class="k">as</span> <span class="nn">mb</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">mbuild.utils.io</span> <span class="k">import</span> <span class="n">get_fn</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">benzene</span> <span class="o">=</span> <span class="n">mb</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">get_fn</span><span class="p">(</span><span class="s1">&#39;benzene.mol2&#39;</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">benzene</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Benzene&#39;</span>
@@ -2150,9 +2150,9 @@ provided, this defaults to all Particles in self</p>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
 <dl class="last docutils">
-<dt><code class="xref py py-obj docutils literal"><span class="pre">periodic_kdtree.PerioidicCKDTree</span></code></dt>
+<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">periodic_kdtree.PerioidicCKDTree</span></code></dt>
 <dd>mBuild implementation of kd-trees</dd>
-<dt><code class="xref py py-obj docutils literal"><span class="pre">scipy.spatial.ckdtree</span></code></dt>
+<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">scipy.spatial.ckdtree</span></code></dt>
 <dd>Further details on kd-trees</dd>
 </dl>
 </div>
@@ -2366,11 +2366,11 @@ for converting mass values to reduced units.</p>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
 <dl class="last docutils">
-<dt><code class="xref py py-obj docutils literal"><span class="pre">formats.gsdwrite.write_gsd</span></code></dt>
+<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">formats.gsdwrite.write_gsd</span></code></dt>
 <dd>Write to GSD format</dd>
-<dt><code class="xref py py-obj docutils literal"><span class="pre">formats.hoomdxml.write_hoomdxml</span></code></dt>
+<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">formats.hoomdxml.write_hoomdxml</span></code></dt>
 <dd>Write to Hoomd XML format</dd>
-<dt><code class="xref py py-obj docutils literal"><span class="pre">formats.lammpsdata.write_lammpsdata</span></code></dt>
+<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">formats.lammpsdata.write_lammpsdata</span></code></dt>
 <dd>Write to LAMMPS data format</dd>
 </dl>
 </div>
@@ -2462,7 +2462,7 @@ checking against Compound.name.</p>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
 <dl class="last docutils">
-<dt><code class="xref py py-obj docutils literal"><span class="pre">parmed.structure.Structure</span></code></dt>
+<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">parmed.structure.Structure</span></code></dt>
 <dd>Details on the ParmEd Structure object</dd>
 </dl>
 </div>
@@ -2498,7 +2498,7 @@ checking against Compound.name.</p>
 </table>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
-<p class="last"><code class="xref py py-obj docutils literal"><span class="pre">_to_topology</span></code></p>
+<p class="last"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_to_topology</span></code></p>
 </div>
 </dd></dl>
 
@@ -2563,7 +2563,7 @@ the orientation of Ports with respect to the molecule as a whole.</p>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
 <dl class="last docutils">
-<dt><code class="xref py py-obj docutils literal"><span class="pre">load</span></code></dt>
+<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">load</span></code></dt>
 <dd>Load coordinates from a file</dd>
 </dl>
 </div>

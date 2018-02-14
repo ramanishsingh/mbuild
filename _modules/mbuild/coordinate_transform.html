@@ -225,8 +225,8 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">from_positions</span><span class="o">.</span><span class="n">anchor</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">add_bond</span><span class="p">((</span><span class="n">from_positions</span><span class="o">.</span><span class="n">anchor</span><span class="p">,</span> <span class="n">to_positions</span><span class="o">.</span><span class="n">anchor</span><span class="p">))</span>
                 <span class="n">to_positions</span><span class="o">.</span><span class="n">anchor</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">add_bond</span><span class="p">((</span><span class="n">from_positions</span><span class="o">.</span><span class="n">anchor</span><span class="p">,</span> <span class="n">to_positions</span><span class="o">.</span><span class="n">anchor</span><span class="p">))</span>
-                <span class="n">from_positions</span><span class="o">.</span><span class="n">anchor</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">from_positions</span><span class="p">)</span>
-                <span class="n">to_positions</span><span class="o">.</span><span class="n">anchor</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">to_positions</span><span class="p">)</span></div>
+                <span class="n">from_positions</span><span class="o">.</span><span class="n">anchor</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">from_positions</span><span class="p">)</span></div>
+                <span class="n">to_positions</span><span class="o">.</span><span class="n">anchor</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">to_positions</span><span class="p">)</span>
 
 
 <span class="k">class</span> <span class="nc">CoordinateTransform</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -868,8 +868,8 @@
     <span class="n">transform</span> <span class="o">=</span> <span class="n">AxisTransform</span><span class="p">(</span><span class="n">new_origin</span><span class="o">=</span><span class="n">new_origin</span><span class="p">,</span>
                               <span class="n">point_on_x_axis</span><span class="o">=</span><span class="n">point_on_x_axis</span><span class="p">,</span>
                               <span class="n">point_on_xy_plane</span><span class="o">=</span><span class="n">point_on_xy_plane</span><span class="p">)</span>
-    <span class="n">atom_positions</span> <span class="o">=</span> <span class="n">transform</span><span class="o">.</span><span class="n">apply_to</span><span class="p">(</span><span class="n">atom_positions</span><span class="p">)</span>
-    <span class="n">compound</span><span class="o">.</span><span class="n">xyz_with_ports</span> <span class="o">=</span> <span class="n">atom_positions</span></div>
+    <span class="n">atom_positions</span> <span class="o">=</span> <span class="n">transform</span><span class="o">.</span><span class="n">apply_to</span><span class="p">(</span><span class="n">atom_positions</span><span class="p">)</span></div>
+    <span class="n">compound</span><span class="o">.</span><span class="n">xyz_with_ports</span> <span class="o">=</span> <span class="n">atom_positions</span>
 
 
 <div class="viewcode-block" id="y_axis_transform"><a class="viewcode-back" href="../../coordinate_transforms.html#mbuild.coordinate_transform.y_axis_transform">[docs]</a><span class="k">def</span> <span class="nf">y_axis_transform</span><span class="p">(</span><span class="n">compound</span><span class="p">,</span> <span class="n">new_origin</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -891,8 +891,8 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">x_axis_transform</span><span class="p">(</span><span class="n">compound</span><span class="p">,</span> <span class="n">new_origin</span><span class="o">=</span><span class="n">new_origin</span><span class="p">,</span>
                      <span class="n">point_on_x_axis</span><span class="o">=</span><span class="n">point_on_y_axis</span><span class="p">,</span>
-                     <span class="n">point_on_xy_plane</span><span class="o">=</span><span class="n">point_on_xy_plane</span><span class="p">)</span>
-    <span class="n">rotate_around_z</span><span class="p">(</span><span class="n">compound</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span></div>
+                     <span class="n">point_on_xy_plane</span><span class="o">=</span><span class="n">point_on_xy_plane</span><span class="p">)</span></div>
+    <span class="n">rotate_around_z</span><span class="p">(</span><span class="n">compound</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="z_axis_transform"><a class="viewcode-back" href="../../coordinate_transforms.html#mbuild.coordinate_transform.z_axis_transform">[docs]</a><span class="k">def</span> <span class="nf">z_axis_transform</span><span class="p">(</span><span class="n">compound</span><span class="p">,</span> <span class="n">new_origin</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -914,8 +914,8 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">x_axis_transform</span><span class="p">(</span><span class="n">compound</span><span class="p">,</span> <span class="n">new_origin</span><span class="o">=</span><span class="n">new_origin</span><span class="p">,</span>
                      <span class="n">point_on_x_axis</span><span class="o">=</span><span class="n">point_on_z_axis</span><span class="p">,</span>
-                     <span class="n">point_on_xy_plane</span><span class="o">=</span><span class="n">point_on_zx_plane</span><span class="p">)</span>
-    <span class="n">rotate_around_y</span><span class="p">(</span><span class="n">compound</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="mi">3</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span></div>
+                     <span class="n">point_on_xy_plane</span><span class="o">=</span><span class="n">point_on_zx_plane</span><span class="p">)</span></div>
+    <span class="n">rotate_around_y</span><span class="p">(</span><span class="n">compound</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="mi">3</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
 </pre></div>
 
            </div>
