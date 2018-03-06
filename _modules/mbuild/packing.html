@@ -204,13 +204,20 @@
 <span class="s2">structure </span><span class="si">{0}</span><span class="s2"></span>
 <span class="s2">    number </span><span class="si">{1:d}</span><span class="s2"></span>
 <span class="s2">    inside box </span><span class="si">{2:.3f}</span><span class="s2"> </span><span class="si">{3:.3f}</span><span class="s2"> </span><span class="si">{4:.3f}</span><span class="s2"> </span><span class="si">{5:.3f}</span><span class="s2"> </span><span class="si">{6:.3f}</span><span class="s2"> </span><span class="si">{7:.3f}</span><span class="s2"></span>
+<span class="s2">    </span><span class="si">{8}</span><span class="s2"></span>
 <span class="s2">end structure</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+<span class="n">PACKMOL_CONSTRAIN</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">constrain_rotation x 0. 0.</span>
+<span class="s2">constrain_rotation y 0. 0.</span>
+<span class="s2">constrain_rotation z 0. 0.</span>
 <span class="s2">&quot;&quot;&quot;</span>
 
 
 <div class="viewcode-block" id="fill_box"><a class="viewcode-back" href="../../recipes.html#mbuild.packing.fill_box">[docs]</a><span class="k">def</span> <span class="nf">fill_box</span><span class="p">(</span><span class="n">compound</span><span class="p">,</span> <span class="n">n_compounds</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">box</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">overlap</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span>
              <span class="n">seed</span><span class="o">=</span><span class="mi">12345</span><span class="p">,</span> <span class="n">edge</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">compound_ratio</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-             <span class="n">aspect_ratio</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">temp_file</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+             <span class="n">aspect_ratio</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">fix_orientation</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">temp_file</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Fill a box with a compound using packmol.</span>
 
 <span class="sd">    Two arguments of `n_compounds, box, and density` must be specified.</span>
@@ -255,13 +262,16 @@
 <span class="sd">    aspect_ratio : list of float</span>
 <span class="sd">        If a non-cubic box is desired, the ratio of box lengths in the x, y,</span>
 <span class="sd">        and z directions.</span>
+<span class="sd">    fix_orientation : bool or list of bools</span>
+<span class="sd">        Specify that compounds should not be rotated when filling the box,</span>
+<span class="sd">        default=False.</span>
 <span class="sd">    temp_file : str, default=None</span>
 <span class="sd">        File name to write PACKMOL&#39;s raw output to.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    filled : mb.Compound</span>
-<span class="sd">    </span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">_check_packmol</span><span class="p">(</span><span class="n">PACKMOL</span><span class="p">)</span>
 
@@ -277,11 +287,19 @@
         <span class="n">compound</span> <span class="o">=</span> <span class="p">[</span><span class="n">compound</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">n_compounds</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">n_compounds</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">set</span><span class="p">)):</span>
         <span class="n">n_compounds</span> <span class="o">=</span> <span class="p">[</span><span class="n">n_compounds</span><span class="p">]</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">fix_orientation</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">set</span><span class="p">)):</span>
+        <span class="n">fix_orientation</span> <span class="o">=</span> <span class="p">[</span><span class="n">fix_orientation</span><span class="p">]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">compound</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">compound</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">n_compounds</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">compound</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">n_compounds</span><span class="p">):</span>
             <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;`compound` and `n_compounds` must be of equal length.&quot;</span><span class="p">)</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">compound</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">compound</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">fix_orientation</span><span class="p">):</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;`compound`, `n_compounds`, and `fix_orientation` must be of equal length.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+
 
     <span class="k">if</span> <span class="n">density</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">box</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">n_compounds</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -322,21 +340,22 @@
     <span class="n">box_mins</span> <span class="o">=</span> <span class="n">box</span><span class="o">.</span><span class="n">mins</span> <span class="o">*</span> <span class="mi">10</span>
     <span class="n">box_maxs</span> <span class="o">=</span> <span class="n">box</span><span class="o">.</span><span class="n">maxs</span> <span class="o">*</span> <span class="mi">10</span>
     <span class="n">overlap</span> <span class="o">*=</span> <span class="mi">10</span>
-    
-    <span class="c1"># Apply edge buffer </span>
+
+    <span class="c1"># Apply edge buffer</span>
     <span class="n">box_maxs</span> <span class="o">-=</span> <span class="n">edge</span> <span class="o">*</span> <span class="mi">10</span>
 
     <span class="c1"># Build the input file for each compound and call packmol.</span>
     <span class="n">filled_pdb</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">mkstemp</span><span class="p">(</span><span class="n">suffix</span><span class="o">=</span><span class="s1">&#39;.pdb&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
     <span class="n">input_text</span> <span class="o">=</span> <span class="n">PACKMOL_HEADER</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">overlap</span><span class="p">,</span> <span class="n">filled_pdb</span><span class="p">,</span> <span class="n">seed</span><span class="p">)</span>
 
-    <span class="k">for</span> <span class="n">comp</span><span class="p">,</span> <span class="n">m_compounds</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">compound</span><span class="p">,</span> <span class="n">n_compounds</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">comp</span><span class="p">,</span> <span class="n">m_compounds</span><span class="p">,</span> <span class="n">rotate</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">compound</span><span class="p">,</span> <span class="n">n_compounds</span><span class="p">,</span> <span class="n">fix_orientation</span><span class="p">):</span>
         <span class="n">m_compounds</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">m_compounds</span><span class="p">)</span>
         <span class="n">compound_pdb</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">mkstemp</span><span class="p">(</span><span class="n">suffix</span><span class="o">=</span><span class="s1">&#39;.pdb&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
         <span class="n">comp</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">compound_pdb</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="n">input_text</span> <span class="o">+=</span> <span class="n">PACKMOL_BOX</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">compound_pdb</span><span class="p">,</span> <span class="n">m_compounds</span><span class="p">,</span>
                            <span class="n">box_mins</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">box_mins</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">box_mins</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
-                           <span class="n">box_maxs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">box_maxs</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">box_maxs</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+                           <span class="n">box_maxs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">box_maxs</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">box_maxs</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
+                           <span class="n">PACKMOL_CONSTRAIN</span> <span class="k">if</span> <span class="n">rotate</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
 
     <span class="n">_run_packmol</span><span class="p">(</span><span class="n">input_text</span><span class="p">,</span> <span class="n">filled_pdb</span><span class="p">,</span> <span class="n">temp_file</span><span class="p">)</span>
 
@@ -351,7 +370,7 @@
 
 
 <div class="viewcode-block" id="fill_region"><a class="viewcode-back" href="../../recipes.html#mbuild.packing.fill_region">[docs]</a><span class="k">def</span> <span class="nf">fill_region</span><span class="p">(</span><span class="n">compound</span><span class="p">,</span> <span class="n">n_compounds</span><span class="p">,</span> <span class="n">region</span><span class="p">,</span> <span class="n">overlap</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span>
-                <span class="n">seed</span><span class="o">=</span><span class="mi">12345</span><span class="p">,</span> <span class="n">edge</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">temp_file</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+                <span class="n">seed</span><span class="o">=</span><span class="mi">12345</span><span class="p">,</span> <span class="n">edge</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">fix_orientation</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">temp_file</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Fill a region of a box with a compound using packmol.</span>
 
 <span class="sd">    Parameters</span>
@@ -370,6 +389,9 @@
 <span class="sd">        Buffer at the edge of the region to not place molecules. This is</span>
 <span class="sd">        necessary in some systems because PACKMOL does not account for</span>
 <span class="sd">        periodic boundary conditions in its optimization.</span>
+<span class="sd">    fix_orientation : bool or list of bools</span>
+<span class="sd">        Specify that compounds should not be rotated when filling the box,</span>
+<span class="sd">        default=False.</span>
 <span class="sd">    temp_file : str, default=None</span>
 <span class="sd">        File name to write PACKMOL&#39;s raw output to.</span>
 
@@ -386,11 +408,18 @@
         <span class="n">compound</span> <span class="o">=</span> <span class="p">[</span><span class="n">compound</span><span class="p">]</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">n_compounds</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">set</span><span class="p">)):</span>
         <span class="n">n_compounds</span> <span class="o">=</span> <span class="p">[</span><span class="n">n_compounds</span><span class="p">]</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">fix_orientation</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">set</span><span class="p">)):</span>
+        <span class="n">fix_orientation</span> <span class="o">=</span> <span class="p">[</span><span class="n">fix_orientation</span><span class="p">]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">compound</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">compound</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">n_compounds</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">compound</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">n_compounds</span><span class="p">):</span>
             <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;`compound` and `n_compounds` must be of equal length.&quot;</span><span class="p">)</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">compound</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">compound</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">fix_orientation</span><span class="p">):</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;`compound`, `n_compounds`, and `fix_orientation` must be of equal length.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+
 
     <span class="c1"># See if region is a single region or list</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">region</span><span class="p">,</span> <span class="n">Box</span><span class="p">):</span> <span class="c1"># Cannot iterate over boxes</span>
@@ -406,7 +435,7 @@
     <span class="n">filled_pdb</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">mkstemp</span><span class="p">(</span><span class="n">suffix</span><span class="o">=</span><span class="s1">&#39;.pdb&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
     <span class="n">input_text</span> <span class="o">=</span> <span class="n">PACKMOL_HEADER</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">overlap</span><span class="p">,</span> <span class="n">filled_pdb</span><span class="p">,</span> <span class="n">seed</span><span class="p">)</span>
 
-    <span class="k">for</span> <span class="n">comp</span><span class="p">,</span> <span class="n">m_compounds</span><span class="p">,</span> <span class="n">reg</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">compound</span><span class="p">,</span> <span class="n">n_compounds</span><span class="p">,</span> <span class="n">region</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">comp</span><span class="p">,</span> <span class="n">m_compounds</span><span class="p">,</span> <span class="n">reg</span><span class="p">,</span> <span class="n">rotate</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">compound</span><span class="p">,</span> <span class="n">n_compounds</span><span class="p">,</span> <span class="n">region</span><span class="p">,</span> <span class="n">fix_orientation</span><span class="p">):</span>
         <span class="n">m_compounds</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">m_compounds</span><span class="p">)</span>
         <span class="n">compound_pdb</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">mkstemp</span><span class="p">(</span><span class="n">suffix</span><span class="o">=</span><span class="s1">&#39;.pdb&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
         <span class="n">comp</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">compound_pdb</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -415,7 +444,8 @@
         <span class="n">reg_maxs</span> <span class="o">-=</span> <span class="n">edge</span> <span class="o">*</span> <span class="mi">10</span> <span class="c1"># Apply edge buffer</span>
         <span class="n">input_text</span> <span class="o">+=</span> <span class="n">PACKMOL_BOX</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">compound_pdb</span><span class="p">,</span> <span class="n">m_compounds</span><span class="p">,</span>
                                         <span class="n">reg_mins</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">reg_mins</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">reg_mins</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
-                                        <span class="n">reg_maxs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">reg_maxs</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">reg_maxs</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+                                        <span class="n">reg_maxs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">reg_maxs</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">reg_maxs</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
+                                        <span class="n">PACKMOL_CONSTRAIN</span> <span class="k">if</span> <span class="n">rotate</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
 
     <span class="n">_run_packmol</span><span class="p">(</span><span class="n">input_text</span><span class="p">,</span> <span class="n">filled_pdb</span><span class="p">,</span> <span class="n">temp_file</span><span class="p">)</span>
 
@@ -429,7 +459,7 @@
 
 
 <div class="viewcode-block" id="solvate"><a class="viewcode-back" href="../../recipes.html#mbuild.packing.solvate">[docs]</a><span class="k">def</span> <span class="nf">solvate</span><span class="p">(</span><span class="n">solute</span><span class="p">,</span> <span class="n">solvent</span><span class="p">,</span> <span class="n">n_solvent</span><span class="p">,</span> <span class="n">box</span><span class="p">,</span> <span class="n">overlap</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span>
-            <span class="n">seed</span><span class="o">=</span><span class="mi">12345</span><span class="p">,</span> <span class="n">edge</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">temp_file</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+            <span class="n">seed</span><span class="o">=</span><span class="mi">12345</span><span class="p">,</span> <span class="n">edge</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">fix_orientation</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">temp_file</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Solvate a compound in a box of solvent using packmol.</span>
 
 <span class="sd">    Parameters</span>
@@ -450,6 +480,9 @@
 <span class="sd">        Buffer at the edge of the box to not place molecules. This is necessary</span>
 <span class="sd">        in some systems because PACKMOL does not account for periodic boundary</span>
 <span class="sd">        conditions in its optimization.</span>
+<span class="sd">    fix_orientation : bool</span>
+<span class="sd">        Specify if solvent should not be rotated when filling box,</span>
+<span class="sd">        default=False.</span>
 <span class="sd">    temp_file : str, default=None</span>
 <span class="sd">        File name to write PACKMOL&#39;s raw output to.</span>
 
@@ -465,18 +498,21 @@
         <span class="n">solvent</span> <span class="o">=</span> <span class="p">[</span><span class="n">solvent</span><span class="p">]</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">n_solvent</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">set</span><span class="p">)):</span>
         <span class="n">n_solvent</span> <span class="o">=</span> <span class="p">[</span><span class="n">n_solvent</span><span class="p">]</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">fix_orientation</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">set</span><span class="p">)):</span>
+        <span class="n">fix_orientation</span> <span class="o">=</span> <span class="p">[</span><span class="n">fix_orientation</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">solvent</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">solvent</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">n_solvent</span><span class="p">):</span>
         <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;`n_solvent` and `n_solvent` must be of equal length.&quot;</span><span class="p">)</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+
 
     <span class="c1"># In angstroms for packmol.</span>
     <span class="n">box_mins</span> <span class="o">=</span> <span class="n">box</span><span class="o">.</span><span class="n">mins</span> <span class="o">*</span> <span class="mi">10</span>
     <span class="n">box_maxs</span> <span class="o">=</span> <span class="n">box</span><span class="o">.</span><span class="n">maxs</span> <span class="o">*</span> <span class="mi">10</span>
     <span class="n">overlap</span> <span class="o">*=</span> <span class="mi">10</span>
     <span class="n">center_solute</span> <span class="o">=</span> <span class="p">(</span><span class="n">box_maxs</span> <span class="o">+</span> <span class="n">box_mins</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
-    
-    <span class="c1"># Apply edge buffer </span>
+
+    <span class="c1"># Apply edge buffer</span>
     <span class="n">box_maxs</span> <span class="o">-=</span> <span class="n">edge</span> <span class="o">*</span> <span class="mi">10</span>
 
     <span class="c1"># Build the input file for each compound and call packmol.</span>
@@ -486,14 +522,14 @@
     <span class="n">input_text</span> <span class="o">=</span> <span class="p">(</span><span class="n">PACKMOL_HEADER</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">overlap</span><span class="p">,</span> <span class="n">solvated_pdb</span><span class="p">,</span> <span class="n">seed</span><span class="p">)</span> <span class="o">+</span>
                   <span class="n">PACKMOL_SOLUTE</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">solute_pdb</span><span class="p">,</span> <span class="o">*</span><span class="n">center_solute</span><span class="p">))</span>
 
-    <span class="k">for</span> <span class="n">solv</span><span class="p">,</span> <span class="n">m_solvent</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">solvent</span><span class="p">,</span> <span class="n">n_solvent</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">solv</span><span class="p">,</span> <span class="n">m_solvent</span><span class="p">,</span> <span class="n">rotate</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">solvent</span><span class="p">,</span> <span class="n">n_solvent</span><span class="p">,</span> <span class="n">fix_orientation</span><span class="p">):</span>
         <span class="n">m_solvent</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">m_solvent</span><span class="p">)</span>
         <span class="n">solvent_pdb</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">mkstemp</span><span class="p">(</span><span class="n">suffix</span><span class="o">=</span><span class="s1">&#39;.pdb&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
         <span class="n">solv</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">solvent_pdb</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="n">input_text</span> <span class="o">+=</span> <span class="n">PACKMOL_BOX</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">solvent_pdb</span><span class="p">,</span> <span class="n">m_solvent</span><span class="p">,</span>
                            <span class="n">box_mins</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">box_mins</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">box_mins</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
-                           <span class="n">box_maxs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">box_maxs</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">box_maxs</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
-
+                           <span class="n">box_maxs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">box_maxs</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">box_maxs</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
+                           <span class="n">PACKMOL_CONSTRAIN</span> <span class="k">if</span> <span class="n">rotate</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
     <span class="n">_run_packmol</span><span class="p">(</span><span class="n">input_text</span><span class="p">,</span> <span class="n">solvated_pdb</span><span class="p">,</span> <span class="n">temp_file</span><span class="p">)</span>
 
     <span class="c1"># Create the topology and update the coordinates.</span>
