@@ -25,24 +25,17 @@
   
 
   
-  
     <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  
-
-  
-
-  
-        <link rel="index" title="Index"
-              href="genindex.html"/>
-        <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="mbuild 0.8.0 documentation" href="index.html"/> 
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
@@ -113,7 +106,7 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+      <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="index.html">mbuild</a>
@@ -121,9 +114,10 @@
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
+        
           
 
 
@@ -192,33 +186,29 @@ field.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>structure</strong> : parmed.Structure</p>
-<blockquote>
-<div><p>ParmEd Structure object</p>
-</div></blockquote>
-<p><strong>filename</strong> : str</p>
-<blockquote>
-<div><p>Path of the output file.</p>
-</div></blockquote>
-<p><strong>ref_distance</strong> : float, optional, default=1.0</p>
-<blockquote>
-<div><p>Reference distance for conversion to reduced units</p>
-</div></blockquote>
-<p><strong>ref_mass</strong> : float, optional, default=1.0</p>
-<blockquote>
-<div><p>Reference mass for conversion to reduced units</p>
-</div></blockquote>
-<p><strong>ref_energy</strong> : float, optional, default=1.0</p>
-<blockquote>
-<div><p>Reference energy for conversion to reduced units</p>
-</div></blockquote>
-<p><strong>rigid_bodies</strong> : list of int, optional, default=None</p>
-<blockquote class="last">
-<div><p>List of rigid body information. An integer value is required for
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>structure</strong> <span class="classifier-delimiter">:</span> <span class="classifier">parmed.Structure</span></dt>
+<dd><p class="first last">ParmEd Structure object</p>
+</dd>
+<dt><strong>filename</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
+<dd><p class="first last">Path of the output file.</p>
+</dd>
+<dt><strong>ref_distance</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float, optional, default=1.0</span></dt>
+<dd><p class="first last">Reference distance for conversion to reduced units</p>
+</dd>
+<dt><strong>ref_mass</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float, optional, default=1.0</span></dt>
+<dd><p class="first last">Reference mass for conversion to reduced units</p>
+</dd>
+<dt><strong>ref_energy</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float, optional, default=1.0</span></dt>
+<dd><p class="first last">Reference energy for conversion to reduced units</p>
+</dd>
+<dt><strong>rigid_bodies</strong> <span class="classifier-delimiter">:</span> <span class="classifier">list of int, optional, default=None</span></dt>
+<dd><p class="first last">List of rigid body information. An integer value is required for
 each atom corresponding to the index of the rigid body the particle
 is to be associated with. A value of None indicates the atom is not
 part of a rigid body.</p>
-</div></blockquote>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -243,33 +233,29 @@ read force field parameters from a Foyer XML file.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>structure</strong> : parmed.Structure</p>
-<blockquote>
-<div><p>ParmEd structure object</p>
-</div></blockquote>
-<p><strong>filename</strong> : str</p>
-<blockquote>
-<div><p>Path of the output file.</p>
-</div></blockquote>
-<p><strong>ref_distance</strong> : float, optional, default=1.0, units=angstroms</p>
-<blockquote>
-<div><p>Reference distance for conversion to reduced units</p>
-</div></blockquote>
-<p><strong>ref_mass</strong> : float, optional, default=1.0, units=amu</p>
-<blockquote>
-<div><p>Reference mass for conversion to reduced units</p>
-</div></blockquote>
-<p><strong>ref_energy</strong> : float, optional, default=1.0, units=kcal/mol</p>
-<blockquote>
-<div><p>Reference energy for conversion to reduced units</p>
-</div></blockquote>
-<p><strong>rigid_bodies</strong> : list</p>
-<blockquote class="last">
-<div><p>List of rigid body information. An integer value is required
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>structure</strong> <span class="classifier-delimiter">:</span> <span class="classifier">parmed.Structure</span></dt>
+<dd><p class="first last">ParmEd structure object</p>
+</dd>
+<dt><strong>filename</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
+<dd><p class="first last">Path of the output file.</p>
+</dd>
+<dt><strong>ref_distance</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float, optional, default=1.0, units=angstroms</span></dt>
+<dd><p class="first last">Reference distance for conversion to reduced units</p>
+</dd>
+<dt><strong>ref_mass</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float, optional, default=1.0, units=amu</span></dt>
+<dd><p class="first last">Reference mass for conversion to reduced units</p>
+</dd>
+<dt><strong>ref_energy</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float, optional, default=1.0, units=kcal/mol</span></dt>
+<dd><p class="first last">Reference energy for conversion to reduced units</p>
+</dd>
+<dt><strong>rigid_bodies</strong> <span class="classifier-delimiter">:</span> <span class="classifier">list</span></dt>
+<dd><p class="first last">List of rigid body information. An integer value is required
 for each particle corresponding to the number of the rigid body with
 which the particle should be included. A value of None indicates the
 particle is not part of any rigid body.</p>
-</div></blockquote>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -338,7 +324,7 @@ particle is not part of any rigid body.</p>
 <span id="default-data-file-format-for-lammps"></span><h3>Default data file format for LAMMPS<a class="headerlink" href="#module-mbuild.formats.lammpsdata" title="Permalink to this headline">¶</a></h3>
 <dl class="function">
 <dt id="mbuild.formats.lammpsdata.write_lammpsdata">
-<code class="descclassname">mbuild.formats.lammpsdata.</code><code class="descname">write_lammpsdata</code><span class="sig-paren">(</span><em>structure</em>, <em>filename</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/formats/lammpsdata.html#write_lammpsdata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.formats.lammpsdata.write_lammpsdata" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">mbuild.formats.lammpsdata.</code><code class="descname">write_lammpsdata</code><span class="sig-paren">(</span><em>structure</em>, <em>filename</em>, <em>atom_style='full'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/formats/lammpsdata.html#write_lammpsdata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.formats.lammpsdata.write_lammpsdata" title="Permalink to this definition">¶</a></dt>
 <dd><p>Output a LAMMPS data file.</p>
 <p>Outputs a LAMMPS data file in the ‘full’ atom style format. Assumes use
 of ‘real’ units. See <a class="reference external" href="http://lammps.sandia.gov/doc/atom_style.html">http://lammps.sandia.gov/doc/atom_style.html</a> for
@@ -347,14 +333,20 @@ more information on atom styles.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>structure</strong> : parmed.Structure</p>
-<blockquote>
-<div><p>ParmEd structure object</p>
-</div></blockquote>
-<p><strong>filename</strong> : str</p>
-<blockquote class="last">
-<div><p>Path of the output file</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>structure</strong> <span class="classifier-delimiter">:</span> <span class="classifier">parmed.Structure</span></dt>
+<dd><p class="first last">ParmEd structure object</p>
+</dd>
+<dt><strong>filename</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
+<dd><p class="first last">Path of the output file</p>
+</dd>
+<dt><strong>atom_style: str</strong></dt>
+<dd><p class="first last">Defines the style of atoms to be saved in a LAMMPS data file. The following atom
+styles are currently supported: ‘full’, ‘atomic’, ‘charge’, ‘molecular’
+see <a class="reference external" href="http://lammps.sandia.gov/doc/atom_style.html">http://lammps.sandia.gov/doc/atom_style.html</a> for more
+information on atom styles.</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -372,9 +364,7 @@ Coeffs</em>, <em>Dihedral Coeffs</em>, <em>Atoms</em>, <em>Bonds</em>, <em>Angle
 
 
            </div>
-           <div class="articleComments">
-            
-           </div>
+           
           </div>
           <footer>
   
@@ -387,7 +377,7 @@ Coeffs</em>, <em>Dihedral Coeffs</em>, <em>Atoms</em>, <em>Bonds</em>, <em>Angle
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -406,6 +396,7 @@ Coeffs</em>, <em>Dihedral Coeffs</em>, <em>Atoms</em>, <em>Bonds</em>, <em>Angle
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
             VERSION:'0.8.0',
+            LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,
@@ -424,14 +415,13 @@ Coeffs</em>, <em>Dihedral Coeffs</em>, <em>Atoms</em>, <em>Bonds</em>, <em>Angle
     <script type="text/javascript" src="_static/js/theme.js"></script>
   
 
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          
+          SphinxRtdTheme.Navigation.enableSticky();
+          
       });
-  </script>
-   
+  </script> 
 
 </body>
 </html>

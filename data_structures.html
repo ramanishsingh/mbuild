@@ -25,26 +25,19 @@
   
 
   
-  
     <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  
-
-  
-
-  
-        <link rel="index" title="Index"
-              href="genindex.html"/>
-        <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="mbuild 0.8.0 documentation" href="index.html"/>
-        <link rel="next" title="Coordinate transformations" href="coordinate_transforms.html"/>
-        <link rel="prev" title="Building a Simple Alkane" href="tutorials/tutorial_polymers.html"/> 
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Coordinate transformations" href="coordinate_transforms.html" />
+    <link rel="prev" title="Building a Simple Alkane" href="tutorials/tutorial_polymers.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
@@ -119,7 +112,7 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+      <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="index.html">mbuild</a>
@@ -127,9 +120,10 @@
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
+        
           
 
 
@@ -215,94 +209,82 @@ number of other convenience methods.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>subcompounds</strong> : mb.Compound or list of mb.Compound, optional, default=None</p>
-<blockquote>
-<div><p>One or more compounds to be added to self.</p>
-</div></blockquote>
-<p><strong>name</strong> : str, optional, default=self.__class__.__name__</p>
-<blockquote>
-<div><p>The type of Compound.</p>
-</div></blockquote>
-<p><strong>pos</strong> : np.ndarray, shape=(3,), dtype=float, optional, default=[0, 0, 0]</p>
-<blockquote>
-<div><p>The position of the Compound in Cartestian space</p>
-</div></blockquote>
-<p><strong>charge</strong> : float, optional, default=0.0</p>
-<blockquote>
-<div><p>Currently not used. Likely removed in next release.</p>
-</div></blockquote>
-<p><strong>periodicity</strong> : np.ndarray, shape=(3,), dtype=float, optional, default=[0, 0, 0]</p>
-<blockquote>
-<div><p>The periodic lengths of the Compound in the x, y and z directions.
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>subcompounds</strong> <span class="classifier-delimiter">:</span> <span class="classifier">mb.Compound or list of mb.Compound, optional, default=None</span></dt>
+<dd><p class="first last">One or more compounds to be added to self.</p>
+</dd>
+<dt><strong>name</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str, optional, default=self.__class__.__name__</span></dt>
+<dd><p class="first last">The type of Compound.</p>
+</dd>
+<dt><strong>pos</strong> <span class="classifier-delimiter">:</span> <span class="classifier">np.ndarray, shape=(3,), dtype=float, optional, default=[0, 0, 0]</span></dt>
+<dd><p class="first last">The position of the Compound in Cartestian space</p>
+</dd>
+<dt><strong>charge</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float, optional, default=0.0</span></dt>
+<dd><p class="first last">Currently not used. Likely removed in next release.</p>
+</dd>
+<dt><strong>periodicity</strong> <span class="classifier-delimiter">:</span> <span class="classifier">np.ndarray, shape=(3,), dtype=float, optional, default=[0, 0, 0]</span></dt>
+<dd><p class="first last">The periodic lengths of the Compound in the x, y and z directions.
 Defaults to zeros which is treated as non-periodic.</p>
-</div></blockquote>
-<p><strong>port_particle</strong> : bool, optional, default=False</p>
-<blockquote class="last">
-<div><p>Whether or not this Compound is part of a Port</p>
-</div></blockquote>
+</dd>
+<dt><strong>port_particle</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool, optional, default=False</span></dt>
+<dd><p class="first last">Whether or not this Compound is part of a Port</p>
+</dd>
+</dl>
 </td>
 </tr>
-</tbody>
-</table>
-<p class="rubric">Attributes</p>
-<table border="1" class="longtable docutils">
-<colgroup>
-<col width="10%" />
-<col width="90%" />
-</colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="#mbuild.compound.Compound.boundingbox" title="mbuild.compound.Compound.boundingbox"><code class="xref py py-obj docutils literal notranslate"><span class="pre">boundingbox</span></code></a></td>
-<td>Compute the bounding box of the compound.</td>
-</tr>
-<tr class="row-even"><td><a class="reference internal" href="#mbuild.compound.Compound.center" title="mbuild.compound.Compound.center"><code class="xref py py-obj docutils literal notranslate"><span class="pre">center</span></code></a></td>
-<td>The cartesian center of the Compound based on its Particles.</td>
-</tr>
-<tr class="row-odd"><td><a class="reference internal" href="#mbuild.compound.Compound.contains_rigid" title="mbuild.compound.Compound.contains_rigid"><code class="xref py py-obj docutils literal notranslate"><span class="pre">contains_rigid</span></code></a></td>
-<td>Returns True if the Compound contains rigid bodies</td>
-</tr>
-<tr class="row-even"><td><a class="reference internal" href="#mbuild.compound.Compound.max_rigid_id" title="mbuild.compound.Compound.max_rigid_id"><code class="xref py py-obj docutils literal notranslate"><span class="pre">max_rigid_id</span></code></a></td>
-<td>Returns the maximum rigid body ID contained in the Compound.</td>
-</tr>
-<tr class="row-odd"><td><a class="reference internal" href="#mbuild.compound.Compound.n_particles" title="mbuild.compound.Compound.n_particles"><code class="xref py py-obj docutils literal notranslate"><span class="pre">n_particles</span></code></a></td>
-<td>Return the number of Particles in the Compound.</td>
-</tr>
-<tr class="row-even"><td><a class="reference internal" href="#mbuild.compound.Compound.n_bonds" title="mbuild.compound.Compound.n_bonds"><code class="xref py py-obj docutils literal notranslate"><span class="pre">n_bonds</span></code></a></td>
-<td>Return the number of bonds in the Compound.</td>
-</tr>
-<tr class="row-odd"><td><a class="reference internal" href="#mbuild.compound.Compound.root" title="mbuild.compound.Compound.root"><code class="xref py py-obj docutils literal notranslate"><span class="pre">root</span></code></a></td>
-<td>The Compound at the top of self’s hierarchy.</td>
-</tr>
-<tr class="row-even"><td><a class="reference internal" href="#mbuild.compound.Compound.xyz" title="mbuild.compound.Compound.xyz"><code class="xref py py-obj docutils literal notranslate"><span class="pre">xyz</span></code></a></td>
-<td>Return all particle coordinates in this compound.</td>
-</tr>
-<tr class="row-odd"><td><a class="reference internal" href="#mbuild.compound.Compound.xyz_with_ports" title="mbuild.compound.Compound.xyz_with_ports"><code class="xref py py-obj docutils literal notranslate"><span class="pre">xyz_with_ports</span></code></a></td>
-<td>Return all particle coordinates in this compound including ports.</td>
-</tr>
-</tbody>
-</table>
-<table border="1" class="docutils">
-<colgroup>
-<col width="5%" />
-<col width="95%" />
-</colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td><strong>bond_graph</strong></td>
-<td>(mb.BondGraph) Graph-like object that stores bond information for this Compound</td>
-</tr>
-<tr class="row-even"><td><strong>children</strong></td>
-<td>(OrderedSet) Contains all children (other Compounds).</td>
-</tr>
-<tr class="row-odd"><td><strong>labels</strong></td>
-<td>(OrderedDict) Labels to Compound/Atom mappings. These do not necessarily need not be in self.children.</td>
-</tr>
-<tr class="row-even"><td><strong>parent</strong></td>
-<td>(mb.Compound) The parent Compound that contains this part. Can be None if this compound is the root of the containment hierarchy.</td>
-</tr>
-<tr class="row-odd"><td><strong>referrers</strong></td>
-<td>(set) Other compounds that reference this part with labels.</td>
-</tr>
-<tr class="row-even"><td><strong>rigid_id</strong></td>
-<td>(int, default=None) The ID of the rigid body that this Compound belongs to.  Only Particles (the bottom of the containment hierarchy) can have integer values for <cite>rigid_id</cite>. Compounds containing rigid particles will always have <cite>rigid_id == None</cite>. See also <cite>contains_rigid</cite>.</td>
+<tr class="field-even field"><th class="field-name">Attributes:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>bond_graph</strong> <span class="classifier-delimiter">:</span> <span class="classifier">mb.BondGraph</span></dt>
+<dd><p class="first last">Graph-like object that stores bond information for this Compound</p>
+</dd>
+<dt><strong>children</strong> <span class="classifier-delimiter">:</span> <span class="classifier">OrderedSet</span></dt>
+<dd><p class="first last">Contains all children (other Compounds).</p>
+</dd>
+<dt><strong>labels</strong> <span class="classifier-delimiter">:</span> <span class="classifier">OrderedDict</span></dt>
+<dd><p class="first last">Labels to Compound/Atom mappings. These do not necessarily need not be
+in self.children.</p>
+</dd>
+<dt><strong>parent</strong> <span class="classifier-delimiter">:</span> <span class="classifier">mb.Compound</span></dt>
+<dd><p class="first last">The parent Compound that contains this part. Can be None if this
+compound is the root of the containment hierarchy.</p>
+</dd>
+<dt><strong>referrers</strong> <span class="classifier-delimiter">:</span> <span class="classifier">set</span></dt>
+<dd><p class="first last">Other compounds that reference this part with labels.</p>
+</dd>
+<dt><strong>rigid_id</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int, default=None</span></dt>
+<dd><p class="first last">The ID of the rigid body that this Compound belongs to.  Only Particles
+(the bottom of the containment hierarchy) can have integer values for
+<cite>rigid_id</cite>. Compounds containing rigid particles will always have
+<cite>rigid_id == None</cite>. See also <cite>contains_rigid</cite>.</p>
+</dd>
+<dt><a class="reference internal" href="#mbuild.compound.Compound.boundingbox" title="mbuild.compound.Compound.boundingbox"><code class="xref py py-obj docutils literal notranslate"><span class="pre">boundingbox</span></code></a></dt>
+<dd><p class="first last">Compute the bounding box of the compound.</p>
+</dd>
+<dt><a class="reference internal" href="#mbuild.compound.Compound.center" title="mbuild.compound.Compound.center"><code class="xref py py-obj docutils literal notranslate"><span class="pre">center</span></code></a></dt>
+<dd><p class="first last">The cartesian center of the Compound based on its Particles.</p>
+</dd>
+<dt><a class="reference internal" href="#mbuild.compound.Compound.contains_rigid" title="mbuild.compound.Compound.contains_rigid"><code class="xref py py-obj docutils literal notranslate"><span class="pre">contains_rigid</span></code></a></dt>
+<dd><p class="first last">Returns True if the Compound contains rigid bodies</p>
+</dd>
+<dt><a class="reference internal" href="#mbuild.compound.Compound.max_rigid_id" title="mbuild.compound.Compound.max_rigid_id"><code class="xref py py-obj docutils literal notranslate"><span class="pre">max_rigid_id</span></code></a></dt>
+<dd><p class="first last">Returns the maximum rigid body ID contained in the Compound.</p>
+</dd>
+<dt><a class="reference internal" href="#mbuild.compound.Compound.n_particles" title="mbuild.compound.Compound.n_particles"><code class="xref py py-obj docutils literal notranslate"><span class="pre">n_particles</span></code></a></dt>
+<dd><p class="first last">Return the number of Particles in the Compound.</p>
+</dd>
+<dt><a class="reference internal" href="#mbuild.compound.Compound.n_bonds" title="mbuild.compound.Compound.n_bonds"><code class="xref py py-obj docutils literal notranslate"><span class="pre">n_bonds</span></code></a></dt>
+<dd><p class="first last">Return the number of bonds in the Compound.</p>
+</dd>
+<dt><a class="reference internal" href="#mbuild.compound.Compound.root" title="mbuild.compound.Compound.root"><code class="xref py py-obj docutils literal notranslate"><span class="pre">root</span></code></a></dt>
+<dd><p class="first last">The Compound at the top of self’s hierarchy.</p>
+</dd>
+<dt><a class="reference internal" href="#mbuild.compound.Compound.xyz" title="mbuild.compound.Compound.xyz"><code class="xref py py-obj docutils literal notranslate"><span class="pre">xyz</span></code></a></dt>
+<dd><p class="first last">Return all particle coordinates in this compound.</p>
+</dd>
+<dt><a class="reference internal" href="#mbuild.compound.Compound.xyz_with_ports" title="mbuild.compound.Compound.xyz_with_ports"><code class="xref py py-obj docutils literal notranslate"><span class="pre">xyz_with_ports</span></code></a></dt>
+<dd><p class="first last">Return all particle coordinates in this compound including ports.</p>
+</dd>
+</dl>
+</td>
 </tr>
 </tbody>
 </table>
@@ -320,34 +302,30 @@ instead be used to add a reference to the part to self.labels. See
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>new_child</strong> : mb.Compound or list-like of mb.Compound</p>
-<blockquote>
-<div><p>The object(s) to be added to this Compound.</p>
-</div></blockquote>
-<p><strong>label</strong> : str, optional</p>
-<blockquote>
-<div><p>A descriptive string for the part.</p>
-</div></blockquote>
-<p><strong>containment</strong> : bool, optional, default=True</p>
-<blockquote>
-<div><p>Add the part to self.children.</p>
-</div></blockquote>
-<p><strong>replace</strong> : bool, optional, default=True</p>
-<blockquote>
-<div><p>Replace the label if it already exists.</p>
-</div></blockquote>
-<p><strong>inherit_periodicity</strong> : bool, optional, default=True</p>
-<blockquote>
-<div><p>Replace the periodicity of self with the periodicity of the
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>new_child</strong> <span class="classifier-delimiter">:</span> <span class="classifier">mb.Compound or list-like of mb.Compound</span></dt>
+<dd><p class="first last">The object(s) to be added to this Compound.</p>
+</dd>
+<dt><strong>label</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str, optional</span></dt>
+<dd><p class="first last">A descriptive string for the part.</p>
+</dd>
+<dt><strong>containment</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool, optional, default=True</span></dt>
+<dd><p class="first last">Add the part to self.children.</p>
+</dd>
+<dt><strong>replace</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool, optional, default=True</span></dt>
+<dd><p class="first last">Replace the label if it already exists.</p>
+</dd>
+<dt><strong>inherit_periodicity</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool, optional, default=True</span></dt>
+<dd><p class="first last">Replace the periodicity of self with the periodicity of the
 Compound being added</p>
-</div></blockquote>
-<p><strong>reset_rigid_ids</strong> : bool, optional, default=True</p>
-<blockquote class="last">
-<div><p>If the Compound to be added contains rigid bodies, reset the
+</dd>
+<dt><strong>reset_rigid_ids</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool, optional, default=True</span></dt>
+<dd><p class="first last">If the Compound to be added contains rigid bodies, reset the
 rigid_ids such that values remain distinct from rigid_ids
 already present in <cite>self</cite>. Can be set to False if attempting
 to add Compounds to an existing rigid body.</p>
-</div></blockquote>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -362,10 +340,11 @@ to add Compounds to an existing rigid body.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>particle_pair</strong> : indexable object, length=2, dtype=mb.Compound</p>
-<blockquote class="last">
-<div><p>The pair of Particles to add a bond between</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>particle_pair</strong> <span class="classifier-delimiter">:</span> <span class="classifier">indexable object, length=2, dtype=mb.Compound</span></dt>
+<dd><p class="first last">The pair of Particles to add a bond between</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -380,10 +359,11 @@ to add Compounds to an existing rigid body.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">list of mb.Compound</p>
-<blockquote class="last">
-<div><p>A list of all Ports referenced by this Compound and its successors</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>list of mb.Compound</strong></dt>
+<dd><p class="first last">A list of all Ports referenced by this Compound and its successors</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -398,10 +378,11 @@ to add Compounds to an existing rigid body.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Yields:</th><td class="field-body"><p class="first">mb.Compound</p>
-<blockquote class="last">
-<div><p>The next Compound above self in the hierarchy</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Yields:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>mb.Compound</strong></dt>
+<dd><p class="first last">The next Compound above self in the hierarchy</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -416,10 +397,11 @@ to add Compounds to an existing rigid body.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">list of mb.Compound</p>
-<blockquote class="last">
-<div><p>A list of all unoccupied ports referenced by the Compound</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>list of mb.Compound</strong></dt>
+<dd><p class="first last">A list of all unoccupied ports referenced by the Compound</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -434,10 +416,11 @@ to add Compounds to an existing rigid body.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Yields:</th><td class="field-body"><p class="first">tuple of mb.Compound</p>
-<blockquote class="last">
-<div><p>The next bond in the Compound</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Yields:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>tuple of mb.Compound</strong></dt>
+<dd><p class="first last">The next bond in the Compound</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -459,10 +442,11 @@ to add Compounds to an existing rigid body.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">mb.Box</p>
-<blockquote class="last">
-<div><p>The bounding box for this Compound</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>mb.Box</strong></dt>
+<dd><p class="first last">The bounding box for this Compound</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -477,10 +461,11 @@ to add Compounds to an existing rigid body.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">np.ndarray, shape=(3,), dtype=float</p>
-<blockquote class="last">
-<div><p>The cartesian center of the Compound based on its Particles</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>np.ndarray, shape=(3,), dtype=float</strong></dt>
+<dd><p class="first last">The cartesian center of the Compound based on its Particles</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -499,10 +484,11 @@ hierarchy) then contains_rigid will return False.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">bool</p>
-<blockquote class="last">
-<div><p>True if the Compound contains any particle with a rigid_id != None</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>bool</strong></dt>
+<dd><p class="first last">True if the Compound contains any particle with a rigid_id != None</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -528,98 +514,97 @@ minimization scales poorly with the number of particles.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>steps</strong> : int, optionl, default=1000</p>
-<blockquote>
-<div><p>The number of optimization iterations</p>
-</div></blockquote>
-<p><strong>algorithm</strong> : str, optional, default=’cg’</p>
-<blockquote>
-<div><p>The energy minimization algorithm.  Valid options are ‘steep’,
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>steps</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int, optionl, default=1000</span></dt>
+<dd><p class="first last">The number of optimization iterations</p>
+</dd>
+<dt><strong>algorithm</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str, optional, default=’cg’</span></dt>
+<dd><p class="first last">The energy minimization algorithm.  Valid options are ‘steep’,
 ‘cg’, and ‘md’, corresponding to steepest descent, conjugate
 gradient, and equilibrium molecular dynamics respectively.</p>
-</div></blockquote>
-<p><strong>forcefield</strong> : str, optional, default=’UFF’</p>
-<blockquote class="last">
-<div><p>The generic force field to apply to the Compound for minimization.
+</dd>
+<dt><strong>forcefield</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str, optional, default=’UFF’</span></dt>
+<dd><p class="first last">The generic force field to apply to the Compound for minimization.
 Valid options are ‘MMFF94’, ‘MMFF94s’, ‘’UFF’, ‘GAFF’, and ‘Ghemical’.
 Please refer to the Open Babel documentation (<a class="reference external" href="http://open-babel">http://open-babel</a>.
 readthedocs.io/en/latest/Forcefields/Overview.html) when considering
 your choice of force field.</p>
-</div></blockquote>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
 </table>
 <p class="rubric">References</p>
-<table class="docutils citation" frame="void" id="r1" rules="none">
+<table class="docutils citation" frame="void" id="r9f332d0ecfbb-1" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id1">[R1]</a></td><td>O’Boyle, N.M.; Banck, M.; James, C.A.; Morley, C.;
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>O’Boyle, N.M.; Banck, M.; James, C.A.; Morley, C.;
 Vandermeersch, T.; Hutchison, G.R. “Open Babel: An open
 chemical toolbox.” (2011) J. Cheminf. 3, 33</td></tr>
 </tbody>
 </table>
-<table class="docutils citation" frame="void" id="r2" rules="none">
+<table class="docutils citation" frame="void" id="r9f332d0ecfbb-2" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id2">[R2]</a></td><td>Open Babel, version X.X.X <a class="reference external" href="http://openbabel.org">http://openbabel.org</a>, (installed
+<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td>Open Babel, version X.X.X <a class="reference external" href="http://openbabel.org">http://openbabel.org</a>, (installed
 Month Year)</td></tr>
 </tbody>
 </table>
 <p>If using the ‘MMFF94’ force field please also cite the following:
-.. [R3] T.A. Halgren, “Merck molecular force field. I. Basis, form,</p>
+.. [R9f332d0ecfbb-3] T.A. Halgren, “Merck molecular force field. I. Basis, form,</p>
 <blockquote>
 <div>scope, parameterization, and performance of MMFF94.” (1996)
 J. Comput. Chem. 17, 490-519</div></blockquote>
-<table class="docutils citation" frame="void" id="r4" rules="none">
+<table class="docutils citation" frame="void" id="r9f332d0ecfbb-4" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id4">[R4]</a></td><td>T.A. Halgren, “Merck molecular force field. II. MMFF94 van der
+<tr><td class="label"><a class="fn-backref" href="#id4">[4]</a></td><td>T.A. Halgren, “Merck molecular force field. II. MMFF94 van der
 Waals and electrostatic parameters for intermolecular
 interactions.” (1996) J. Comput. Chem. 17, 520-552</td></tr>
 </tbody>
 </table>
-<table class="docutils citation" frame="void" id="r5" rules="none">
+<table class="docutils citation" frame="void" id="r9f332d0ecfbb-5" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id5">[R5]</a></td><td>T.A. Halgren, “Merck molecular force field. III. Molecular
+<tr><td class="label"><a class="fn-backref" href="#id5">[5]</a></td><td>T.A. Halgren, “Merck molecular force field. III. Molecular
 geometries and vibrational frequencies for MMFF94.” (1996)
 J. Comput. Chem. 17, 553-586</td></tr>
 </tbody>
 </table>
-<table class="docutils citation" frame="void" id="r6" rules="none">
+<table class="docutils citation" frame="void" id="r9f332d0ecfbb-6" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id6">[R6]</a></td><td>T.A. Halgren and R.B. Nachbar, “Merck molecular force field.
+<tr><td class="label"><a class="fn-backref" href="#id6">[6]</a></td><td>T.A. Halgren and R.B. Nachbar, “Merck molecular force field.
 IV. Conformational energies and geometries for MMFF94.” (1996)
 J. Comput. Chem. 17, 587-615</td></tr>
 </tbody>
 </table>
-<table class="docutils citation" frame="void" id="r7" rules="none">
+<table class="docutils citation" frame="void" id="r9f332d0ecfbb-7" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id7">[R7]</a></td><td>T.A. Halgren, “Merck molecular force field. V. Extension of
+<tr><td class="label"><a class="fn-backref" href="#id7">[7]</a></td><td>T.A. Halgren, “Merck molecular force field. V. Extension of
 MMFF94 using experimental data, additional computational data,
 and empirical rules.” (1996) J. Comput. Chem. 17, 616-641</td></tr>
 </tbody>
 </table>
 <p>If using the ‘MMFF94s’ force field please cite the above along with:
-.. [R8] T.A. Halgren, “MMFF VI. MMFF94s option for energy minimization</p>
+.. [R9f332d0ecfbb-8] T.A. Halgren, “MMFF VI. MMFF94s option for energy minimization</p>
 <blockquote>
 <div>studies.” (1999) J. Comput. Chem. 20, 720-729</div></blockquote>
 <p>If using the ‘UFF’ force field please cite the following:
-.. [R3] Rappe, A.K., Casewit, C.J., Colwell, K.S., Goddard, W.A. III,</p>
+.. [R9f332d0ecfbb-3] Rappe, A.K., Casewit, C.J., Colwell, K.S., Goddard, W.A. III,</p>
 <blockquote>
 <div>Skiff, W.M. “UFF, a full periodic table force field for
 molecular mechanics and molecular dynamics simulations.” (1992)
 J. Am. Chem. Soc. 114, 10024-10039</div></blockquote>
 <p>If using the ‘GAFF’ force field please cite the following:
-.. [R3] Wang, J., Wolf, R.M., Caldwell, J.W., Kollman, P.A., Case, D.A.</p>
+.. [R9f332d0ecfbb-3] Wang, J., Wolf, R.M., Caldwell, J.W., Kollman, P.A., Case, D.A.</p>
 <blockquote>
 <div>“Development and testing of a general AMBER force field” (2004)
 J. Comput. Chem. 25, 1157-1174</div></blockquote>
 <p>If using the ‘Ghemical’ force field please cite the following:
-.. [R3] T. Hassinen and M. Perakyla, “New energy terms for reduced</p>
+.. [R9f332d0ecfbb-3] T. Hassinen and M. Perakyla, “New energy terms for reduced</p>
 <blockquote>
 <div>protein models implemented in an off-lattice force field” (2001)
 J. Comput. Chem. 22, 1229-1242</div></blockquote>
@@ -635,14 +620,14 @@ and sub-sub-compounds for every residue.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>structure</strong> : pmd.Structure</p>
-<blockquote>
-<div><p>The structure to load.</p>
-</div></blockquote>
-<p><strong>coords_only</strong> : bool</p>
-<blockquote class="last">
-<div><p>Set preexisting atoms in compound to coordinates given by structure.</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>structure</strong> <span class="classifier-delimiter">:</span> <span class="classifier">pmd.Structure</span></dt>
+<dd><p class="first last">The structure to load.</p>
+</dd>
+<dt><strong>coords_only</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool</span></dt>
+<dd><p class="first last">Set preexisting atoms in compound to coordinates given by structure.</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -659,18 +644,17 @@ and sub-sub-compounds for every residue.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>traj</strong> : mdtraj.Trajectory</p>
-<blockquote>
-<div><p>The trajectory to load.</p>
-</div></blockquote>
-<p><strong>frame</strong> : int, optional, default=-1 (last)</p>
-<blockquote>
-<div><p>The frame to take coordinates from.</p>
-</div></blockquote>
-<p><strong>coords_only</strong> : bool, optional, default=False</p>
-<blockquote class="last">
-<div><p>Only read coordinate information</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>traj</strong> <span class="classifier-delimiter">:</span> <span class="classifier">mdtraj.Trajectory</span></dt>
+<dd><p class="first last">The trajectory to load.</p>
+</dd>
+<dt><strong>frame</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int, optional, default=-1 (last)</span></dt>
+<dd><p class="first last">The frame to take coordinates from.</p>
+</dd>
+<dt><strong>coords_only</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool, optional, default=False</span></dt>
+<dd><p class="first last">Only read coordinate information</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -685,22 +669,20 @@ and sub-sub-compounds for every residue.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>name_a</strong> : str</p>
-<blockquote>
-<div><p>The name of one of the Particles to be in each bond</p>
-</div></blockquote>
-<p><strong>name_b</strong> : str</p>
-<blockquote>
-<div><p>The name of the other Particle to be in each bond</p>
-</div></blockquote>
-<p><strong>dmin</strong> : float</p>
-<blockquote>
-<div><p>The minimum distance between Particles for considering a bond</p>
-</div></blockquote>
-<p><strong>dmax</strong> : float</p>
-<blockquote class="last">
-<div><p>The maximum distance between Particles for considering a bond</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>name_a</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
+<dd><p class="first last">The name of one of the Particles to be in each bond</p>
+</dd>
+<dt><strong>name_b</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
+<dd><p class="first last">The name of the other Particle to be in each bond</p>
+</dd>
+<dt><strong>dmin</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
+<dd><p class="first last">The minimum distance between Particles for considering a bond</p>
+</dd>
+<dt><strong>dmax</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
+<dd><p class="first last">The maximum distance between Particles for considering a bond</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -722,19 +704,19 @@ will be considered part of the rigid body.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>discrete_bodies</strong> : str or list of str, optional, default=None</p>
-<blockquote>
-<div><p>Name(s) of Compound instances to be treated as unique rigid bodies.
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>discrete_bodies</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str or list of str, optional, default=None</span></dt>
+<dd><p class="first last">Name(s) of Compound instances to be treated as unique rigid bodies.
 Compound instances matching this (these) name(s) will be provided
 with unique rigid_ids</p>
-</div></blockquote>
-<p><strong>rigid_particles</strong> : str or list of str, optional, default=None</p>
-<blockquote class="last">
-<div><p>Name(s) of Compound instances at the bottom of the containment
+</dd>
+<dt><strong>rigid_particles</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str or list of str, optional, default=None</span></dt>
+<dd><p class="first last">Name(s) of Compound instances at the bottom of the containment
 hierarchy (Particles) to be included in rigid bodies. Only Particles
 matching this (these) name(s) will have their rigid_ids altered to
 match the rigid body number.</p>
-</div></blockquote>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -792,11 +774,12 @@ rigid_id in the containment hierarchy.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">int or None</p>
-<blockquote class="last">
-<div><p>The maximum rigid body ID contained in the Compound. If no
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>int or None</strong></dt>
+<dd><p class="first last">The maximum rigid body ID contained in the Compound. If no
 rigid body IDs are found, None is returned</p>
-</div></blockquote>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -811,21 +794,22 @@ rigid body IDs are found, None is returned</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>xyz0</strong> : np.ndarray, shape=(3,), dtype=float</p>
-<blockquote>
-<div><p>Coordinates of first point</p>
-</div></blockquote>
-<p><strong>xyz1</strong> : np.ndarray, shape=(3,), dtype=float</p>
-<blockquote>
-<div><p>Coordinates of second point</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>xyz0</strong> <span class="classifier-delimiter">:</span> <span class="classifier">np.ndarray, shape=(3,), dtype=float</span></dt>
+<dd><p class="first last">Coordinates of first point</p>
+</dd>
+<dt><strong>xyz1</strong> <span class="classifier-delimiter">:</span> <span class="classifier">np.ndarray, shape=(3,), dtype=float</span></dt>
+<dd><p class="first last">Coordinates of second point</p>
+</dd>
+</dl>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">float</p>
-<blockquote class="last">
-<div><p>Vectorized distance between the two points following minimum
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>float</strong></dt>
+<dd><p class="first last">Vectorized distance between the two points following minimum
 image convention</p>
-</div></blockquote>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -840,10 +824,11 @@ image convention</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">int</p>
-<blockquote class="last">
-<div><p>The number of bonds in the Compound</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>int</strong></dt>
+<dd><p class="first last">The number of bonds in the Compound</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -858,10 +843,11 @@ image convention</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">int</p>
-<blockquote class="last">
-<div><p>The number of Particles in the Compound</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>int</strong></dt>
+<dd><p class="first last">The number of Particles in the Compound</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -876,16 +862,18 @@ image convention</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>include_ports</strong> : bool, optional, default=False</p>
-<blockquote>
-<div><p>Include port particles</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>include_ports</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool, optional, default=False</span></dt>
+<dd><p class="first last">Include port particles</p>
+</dd>
+</dl>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Yields:</th><td class="field-body"><p class="first">mb.Compound</p>
-<blockquote class="last">
-<div><p>The next Particle in the Compound</p>
-</div></blockquote>
+<tr class="field-even field"><th class="field-name">Yields:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>mb.Compound</strong></dt>
+<dd><p class="first last">The next Particle in the Compound</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -900,16 +888,18 @@ image convention</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>name</strong> : str</p>
-<blockquote>
-<div><p>Only particles with this name are returned</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>name</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
+<dd><p class="first last">Only particles with this name are returned</p>
+</dd>
+</dl>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Yields:</th><td class="field-body"><p class="first">mb.Compound</p>
-<blockquote class="last">
-<div><p>The next Particle in the Compound with the user-specified name</p>
-</div></blockquote>
+<tr class="field-even field"><th class="field-name">Yields:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>mb.Compound</strong></dt>
+<dd><p class="first last">The next Particle in the Compound with the user-specified name</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -924,34 +914,32 @@ image convention</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>compound</strong> : mb.Compound</p>
-<blockquote>
-<div><p>Reference particle to find other particles in range of</p>
-</div></blockquote>
-<p><strong>dmax</strong> : float</p>
-<blockquote>
-<div><p>Maximum distance from ‘compound’ to look for Particles</p>
-</div></blockquote>
-<p><strong>max_particles</strong> : int, optional, default=20</p>
-<blockquote>
-<div><p>Maximum number of Particles to return</p>
-</div></blockquote>
-<p><strong>particle_kdtree</strong> : mb.PeriodicCKDTree, optional</p>
-<blockquote>
-<div><p>KD-tree for looking up nearest neighbors. If not provided, a KD-
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>compound</strong> <span class="classifier-delimiter">:</span> <span class="classifier">mb.Compound</span></dt>
+<dd><p class="first last">Reference particle to find other particles in range of</p>
+</dd>
+<dt><strong>dmax</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
+<dd><p class="first last">Maximum distance from ‘compound’ to look for Particles</p>
+</dd>
+<dt><strong>max_particles</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int, optional, default=20</span></dt>
+<dd><p class="first last">Maximum number of Particles to return</p>
+</dd>
+<dt><strong>particle_kdtree</strong> <span class="classifier-delimiter">:</span> <span class="classifier">mb.PeriodicCKDTree, optional</span></dt>
+<dd><p class="first last">KD-tree for looking up nearest neighbors. If not provided, a KD-
 tree will be generated from all Particles in self</p>
-</div></blockquote>
-<p><strong>particle_array</strong> : np.ndarray, shape=(n,), dtype=mb.Compound, optional</p>
-<blockquote>
-<div><p>Array of possible particles to consider for return. If not
+</dd>
+<dt><strong>particle_array</strong> <span class="classifier-delimiter">:</span> <span class="classifier">np.ndarray, shape=(n,), dtype=mb.Compound, optional</span></dt>
+<dd><p class="first last">Array of possible particles to consider for return. If not
 provided, this defaults to all Particles in self</p>
-</div></blockquote>
+</dd>
+</dl>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">np.ndarray, shape=(n,), dtype=mb.Compound</p>
-<blockquote class="last">
-<div><p>Particles in range of compound according to user-defined limits</p>
-</div></blockquote>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>np.ndarray, shape=(n,), dtype=mb.Compound</strong></dt>
+<dd><p class="first last">Particles in range of compound according to user-defined limits</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -975,10 +963,11 @@ provided, this defaults to all Particles in self</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">list of mb.Compound</p>
-<blockquote class="last">
-<div><p>A list of all ports referenced by the Compound</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>list of mb.Compound</strong></dt>
+<dd><p class="first last">A list of all ports referenced by the Compound</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -993,10 +982,11 @@ provided, this defaults to all Particles in self</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>objs_to_remove</strong> : mb.Compound or list of mb.Compound</p>
-<blockquote class="last">
-<div><p>The Compound(s) to be removed from self</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>objs_to_remove</strong> <span class="classifier-delimiter">:</span> <span class="classifier">mb.Compound or list of mb.Compound</span></dt>
+<dd><p class="first last">The Compound(s) to be removed from self</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -1011,10 +1001,11 @@ provided, this defaults to all Particles in self</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>particle_pair</strong> : indexable object, length=2, dtype=mb.Compound</p>
-<blockquote class="last">
-<div><p>The pair of Particles to remove the bond between</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>particle_pair</strong> <span class="classifier-delimiter">:</span> <span class="classifier">indexable object, length=2, dtype=mb.Compound</span></dt>
+<dd><p class="first last">The pair of Particles to remove the bond between</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -1031,17 +1022,19 @@ with a matching rigid_id.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>rigid_id</strong> : int, optional</p>
-<blockquote>
-<div><p>Include only particles with this rigid body ID</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>rigid_id</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int, optional</span></dt>
+<dd><p class="first last">Include only particles with this rigid body ID</p>
+</dd>
+</dl>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Yields:</th><td class="field-body"><p class="first">mb.Compound</p>
-<blockquote class="last">
-<div><p>The next particle with a rigid_id that is not None, or the next
+<tr class="field-even field"><th class="field-name">Yields:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>mb.Compound</strong></dt>
+<dd><p class="first last">The next particle with a rigid_id that is not None, or the next
 particle with a matching rigid_id if specified</p>
-</div></blockquote>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -1056,10 +1049,11 @@ particle with a matching rigid_id if specified</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">mb.Compound</p>
-<blockquote class="last">
-<div><p>The Compound at the top of self’s hierarchy</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>mb.Compound</strong></dt>
+<dd><p class="first last">The Compound at the top of self’s hierarchy</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -1074,14 +1068,14 @@ particle with a matching rigid_id if specified</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>theta</strong> : float</p>
-<blockquote>
-<div><p>The angle by which to rotate the Compound, in radians.</p>
-</div></blockquote>
-<p><strong>around</strong> : np.ndarray, shape=(3,), dtype=float</p>
-<blockquote class="last">
-<div><p>The vector about which to rotate the Compound.</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>theta</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
+<dd><p class="first last">The angle by which to rotate the Compound, in radians.</p>
+</dd>
+<dt><strong>around</strong> <span class="classifier-delimiter">:</span> <span class="classifier">np.ndarray, shape=(3,), dtype=float</span></dt>
+<dd><p class="first last">The vector about which to rotate the Compound.</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -1096,78 +1090,75 @@ particle with a matching rigid_id if specified</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>filename</strong> : str</p>
-<blockquote>
-<div><p>Filesystem path in which to save the trajectory. The extension or
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>filename</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
+<dd><p class="first last">Filesystem path in which to save the trajectory. The extension or
 prefix will be parsed and control the format. Supported
 extensions are: ‘hoomdxml’, ‘gsd’, ‘gro’, ‘top’, ‘lammps’, ‘lmp’</p>
-</div></blockquote>
-<p><strong>show_ports</strong> : bool, optional, default=False</p>
-<blockquote>
-<div><p>Save ports contained within the compound.</p>
-</div></blockquote>
-<p><strong>forcefield_file</strong> : str, optional, default=None</p>
-<blockquote>
-<div><p>Apply a forcefield to the output file using a forcefield provided
+</dd>
+<dt><strong>show_ports</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool, optional, default=False</span></dt>
+<dd><p class="first last">Save ports contained within the compound.</p>
+</dd>
+<dt><strong>forcefield_file</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str, optional, default=None</span></dt>
+<dd><p class="first last">Apply a forcefield to the output file using a forcefield provided
 by the <cite>foyer</cite> package.</p>
-</div></blockquote>
-<p><strong>forcefield_name</strong> : str, optional, default=None</p>
-<blockquote>
-<div><p>Apply a named forcefield to the output file using the <cite>foyer</cite>
+</dd>
+<dt><strong>forcefield_name</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str, optional, default=None</span></dt>
+<dd><p class="first last">Apply a named forcefield to the output file using the <cite>foyer</cite>
 package, e.g. ‘oplsaa’. Forcefields listed here:
 <a class="reference external" href="https://github.com/mosdef-hub/foyer/tree/master/foyer/forcefields">https://github.com/mosdef-hub/foyer/tree/master/foyer/forcefields</a></p>
-</div></blockquote>
-<p><strong>forcefield_debug</strong> : bool, optional, default=False</p>
-<blockquote>
-<div><p>Choose level of verbosity when applying a forcefield through <cite>foyer</cite>.
+</dd>
+<dt><strong>forcefield_debug</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool, optional, default=False</span></dt>
+<dd><p class="first last">Choose level of verbosity when applying a forcefield through <cite>foyer</cite>.
 Specifically, when missing atom types in the forcefield xml file,
 determine if the warning is condensed or verbose.</p>
-</div></blockquote>
-<p><strong>box</strong> : mb.Box, optional, default=self.boundingbox (with buffer)</p>
-<blockquote>
-<div><p>Box information to be written to the output file. If ‘None’, a
+</dd>
+<dt><strong>box</strong> <span class="classifier-delimiter">:</span> <span class="classifier">mb.Box, optional, default=self.boundingbox (with buffer)</span></dt>
+<dd><p class="first last">Box information to be written to the output file. If ‘None’, a
 bounding box is used with 0.25nm buffers at each face to avoid
 overlapping atoms.</p>
-</div></blockquote>
-<p><strong>overwrite</strong> : bool, optional, default=False</p>
-<blockquote>
-<div><p>Overwrite if the filename already exists</p>
-</div></blockquote>
-<p><strong>residues</strong> : str of list of str</p>
-<blockquote>
-<div><p>Labels of residues in the Compound. Residues are assigned by
+</dd>
+<dt><strong>overwrite</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool, optional, default=False</span></dt>
+<dd><p class="first last">Overwrite if the filename already exists</p>
+</dd>
+<dt><strong>residues</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str of list of str</span></dt>
+<dd><p class="first last">Labels of residues in the Compound. Residues are assigned by
 checking against Compound.name.</p>
-</div></blockquote>
-<p><strong>references_file</strong> : str, optional, default=None</p>
-<blockquote>
-<div><p>Specify a filename to write references for the forcefield that is
+</dd>
+<dt><strong>references_file</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str, optional, default=None</span></dt>
+<dd><p class="first last">Specify a filename to write references for the forcefield that is
 to be applied. References are written in BiBTeX format.</p>
-</div></blockquote>
-<p><strong>combining_rule</strong> : str, optional, default=’lorentz’</p>
-<blockquote>
-<div><p>Specify the combining rule for nonbonded interactions. Only relevant
+</dd>
+<dt><strong>combining_rule</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str, optional, default=’lorentz’</span></dt>
+<dd><p class="first last">Specify the combining rule for nonbonded interactions. Only relevant
 when the <cite>foyer</cite> package is used to apply a forcefield. Valid
 options are ‘lorentz’ and ‘geometric’, specifying Lorentz-Berthelot
 and geometric combining rules respectively.</p>
-</div></blockquote>
+</dd>
+</dl>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name" colspan="2">Other Parameters:</th></tr>
-<tr class="field-even field"><td>&#160;</td><td class="field-body"><p class="first"><strong>ref_distance</strong> : float, optional, default=1.0</p>
-<blockquote>
-<div><p>Normalization factor used when saving to .gsd and .hoomdxml formats
+<tr class="field-even field"><td>&#160;</td><td class="field-body"><dl class="first last docutils">
+<dt><strong>ref_distance</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float, optional, default=1.0</span></dt>
+<dd><p class="first last">Normalization factor used when saving to .gsd and .hoomdxml formats
 for converting distance values to reduced units.</p>
-</div></blockquote>
-<p><strong>ref_energy</strong> : float, optional, default=1.0</p>
-<blockquote>
-<div><p>Normalization factor used when saving to .gsd and .hoomdxml formats
+</dd>
+<dt><strong>ref_energy</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float, optional, default=1.0</span></dt>
+<dd><p class="first last">Normalization factor used when saving to .gsd and .hoomdxml formats
 for converting energy values to reduced units.</p>
-</div></blockquote>
-<p><strong>ref_mass</strong> : float, optional, default=1.0</p>
-<blockquote class="last">
-<div><p>Normalization factor used when saving to .gsd and .hoomdxml formats
+</dd>
+<dt><strong>ref_mass</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float, optional, default=1.0</span></dt>
+<dd><p class="first last">Normalization factor used when saving to .gsd and .hoomdxml formats
 for converting mass values to reduced units.</p>
-</div></blockquote>
+</dd>
+<dt><strong>atom_style: str, default=’full’</strong></dt>
+<dd><p class="first last">Defines the style of atoms to be saved in a LAMMPS data file. The following atom
+styles are currently supported: ‘full’, ‘atomic’, ‘charge’, ‘molecular’
+see <a class="reference external" href="http://lammps.sandia.gov/doc/atom_style.html">http://lammps.sandia.gov/doc/atom_style.html</a> for more
+information on atom styles.</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -1193,14 +1184,14 @@ for converting mass values to reduced units.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>theta</strong> : float</p>
-<blockquote>
-<div><p>The angle by which to rotate the Compound, in radians.</p>
-</div></blockquote>
-<p><strong>around</strong> : np.ndarray, shape=(3,), dtype=float</p>
-<blockquote class="last">
-<div><p>The axis about which to spin the Compound.</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>theta</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
+<dd><p class="first last">The angle by which to rotate the Compound, in radians.</p>
+</dd>
+<dt><strong>around</strong> <span class="classifier-delimiter">:</span> <span class="classifier">np.ndarray, shape=(3,), dtype=float</span></dt>
+<dd><p class="first last">The axis about which to spin the Compound.</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -1215,10 +1206,11 @@ for converting mass values to reduced units.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Yields:</th><td class="field-body"><p class="first">mb.Compound</p>
-<blockquote class="last">
-<div><p>The next Particle below self in the hierarchy</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Yields:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>mb.Compound</strong></dt>
+<dd><p class="first last">The next Particle below self in the hierarchy</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -1233,9 +1225,17 @@ for converting mass values to reduced units.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>molecule_types</strong> : list or tuple of subclasses of Compound</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>molecule_types</strong> <span class="classifier-delimiter">:</span> <span class="classifier">list or tuple of subclasses of Compound</span></dt>
+<dd></dd>
+</dl>
+</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>intermol_system</strong> : intermol.system.System</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>intermol_system</strong> <span class="classifier-delimiter">:</span> <span class="classifier">intermol.system.System</span></dt>
+<dd></dd>
+</dl>
+</td>
 </tr>
 </tbody>
 </table>
@@ -1249,21 +1249,22 @@ for converting mass values to reduced units.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>title</strong> : str, optional, default=self.name</p>
-<blockquote>
-<div><p>Title/name of the ParmEd Structure</p>
-</div></blockquote>
-<p><strong>residues</strong> : str of list of str</p>
-<blockquote>
-<div><p>Labels of residues in the Compound. Residues are assigned by
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>title</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str, optional, default=self.name</span></dt>
+<dd><p class="first last">Title/name of the ParmEd Structure</p>
+</dd>
+<dt><strong>residues</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str of list of str</span></dt>
+<dd><p class="first last">Labels of residues in the Compound. Residues are assigned by
 checking against Compound.name.</p>
-</div></blockquote>
+</dd>
+</dl>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">parmed.structure.Structure</p>
-<blockquote class="last">
-<div><p>ParmEd Structure object converted from self</p>
-</div></blockquote>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>parmed.structure.Structure</strong></dt>
+<dd><p class="first last">ParmEd Structure object converted from self</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -1285,22 +1286,24 @@ checking against Compound.name.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>show_ports</strong> : bool, optional, default=False</p>
-<blockquote>
-<div><p>Include all port atoms when converting to trajectory.</p>
-</div></blockquote>
-<p><strong>chains</strong> : mb.Compound or list of mb.Compound</p>
-<blockquote>
-<div><p>Chain types to add to the topology</p>
-</div></blockquote>
-<p><strong>residues</strong> : str of list of str</p>
-<blockquote>
-<div><p>Labels of residues in the Compound. Residues are assigned by
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>show_ports</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool, optional, default=False</span></dt>
+<dd><p class="first last">Include all port atoms when converting to trajectory.</p>
+</dd>
+<dt><strong>chains</strong> <span class="classifier-delimiter">:</span> <span class="classifier">mb.Compound or list of mb.Compound</span></dt>
+<dd><p class="first last">Chain types to add to the topology</p>
+</dd>
+<dt><strong>residues</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str of list of str</span></dt>
+<dd><p class="first last">Labels of residues in the Compound. Residues are assigned by
 checking against Compound.name.</p>
-</div></blockquote>
+</dd>
+</dl>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><strong>trajectory</strong> : md.Trajectory</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>trajectory</strong> <span class="classifier-delimiter">:</span> <span class="classifier">md.Trajectory</span></dt>
+<dd></dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -1319,7 +1322,11 @@ checking against Compound.name.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>by</strong> : np.ndarray, shape=(3,), dtype=float</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>by</strong> <span class="classifier-delimiter">:</span> <span class="classifier">np.ndarray, shape=(3,), dtype=float</span></dt>
+<dd></dd>
+</dl>
+</td>
 </tr>
 </tbody>
 </table>
@@ -1333,7 +1340,11 @@ checking against Compound.name.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>pos</strong> : np.ndarray, shape=3(,), dtype=float</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>pos</strong> <span class="classifier-delimiter">:</span> <span class="classifier">np.ndarray, shape=3(,), dtype=float</span></dt>
+<dd></dd>
+</dl>
+</td>
 </tr>
 </tbody>
 </table>
@@ -1353,18 +1364,18 @@ checking against Compound.name.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>filename</strong> : str</p>
-<blockquote>
-<div><p>Name of file from which to load coordinates. Supported file types
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>filename</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
+<dd><p class="first last">Name of file from which to load coordinates. Supported file types
 are the same as those supported by load()</p>
-</div></blockquote>
-<p><strong>update_port_locations</strong> : bool, optional, default=True</p>
-<blockquote class="last">
-<div><p>Update the locations of Ports so that they are shifted along with
+</dd>
+<dt><strong>update_port_locations</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool, optional, default=True</span></dt>
+<dd><p class="first last">Update the locations of Ports so that they are shifted along with
 their anchor particles.  Note: This conserves the location of
 Ports with respect to the anchor Particle, but does not conserve
 the orientation of Ports with respect to the molecule as a whole.</p>
-</div></blockquote>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -1387,10 +1398,11 @@ the orientation of Ports with respect to the molecule as a whole.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>show_ports</strong> : bool, optional, default=False</p>
-<blockquote class="last">
-<div><p>Visualize Ports in addition to Particles</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>show_ports</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool, optional, default=False</span></dt>
+<dd><p class="first last">Visualize Ports in addition to Particles</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -1405,10 +1417,11 @@ the orientation of Ports with respect to the molecule as a whole.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>pos</strong> : np.ndarray, shape=(n, 3), dtype=float</p>
-<blockquote class="last">
-<div><p>Array with the positions of all particles.</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>pos</strong> <span class="classifier-delimiter">:</span> <span class="classifier">np.ndarray, shape=(n, 3), dtype=float</span></dt>
+<dd><p class="first last">Array with the positions of all particles.</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -1423,10 +1436,11 @@ the orientation of Ports with respect to the molecule as a whole.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>pos</strong> : np.ndarray, shape=(n, 3), dtype=float</p>
-<blockquote class="last">
-<div><p>Array with the positions of all particles and ports.</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>pos</strong> <span class="classifier-delimiter">:</span> <span class="classifier">np.ndarray, shape=(n, 3), dtype=float</span></dt>
+<dd><p class="first last">Array with the positions of all particles and ports.</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -1446,42 +1460,39 @@ the orientation of Ports with respect to the molecule as a whole.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>anchor</strong> : mb.Particle, optional, default=None</p>
-<blockquote>
-<div><p>A Particle associated with the port. Used to form bonds.</p>
-</div></blockquote>
-<p><strong>orientation</strong> : array-like, shape=(3,), optional, default=[0, 1, 0]</p>
-<blockquote>
-<div><p>Vector along which to orient the port</p>
-</div></blockquote>
-<p><strong>separation</strong> : float, optional, default=0</p>
-<blockquote class="last">
-<div><p>Distance to shift port along the orientation vector from the anchor
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>anchor</strong> <span class="classifier-delimiter">:</span> <span class="classifier">mb.Particle, optional, default=None</span></dt>
+<dd><p class="first last">A Particle associated with the port. Used to form bonds.</p>
+</dd>
+<dt><strong>orientation</strong> <span class="classifier-delimiter">:</span> <span class="classifier">array-like, shape=(3,), optional, default=[0, 1, 0]</span></dt>
+<dd><p class="first last">Vector along which to orient the port</p>
+</dd>
+<dt><strong>separation</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float, optional, default=0</span></dt>
+<dd><p class="first last">Distance to shift port along the orientation vector from the anchor
 particle position. If no anchor is provided, the port will be shifted
 from the origin.</p>
-</div></blockquote>
+</dd>
+</dl>
 </td>
 </tr>
-</tbody>
-</table>
-<p class="rubric">Attributes</p>
-<table border="1" class="docutils">
-<colgroup>
-<col width="7%" />
-<col width="93%" />
-</colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td><strong>anchor</strong></td>
-<td>(mb.Particle, optional, default=None) A Particle associated with the port. Used to form bonds.</td>
-</tr>
-<tr class="row-even"><td><strong>up</strong></td>
-<td>(mb.Compound) Collection of 4 ghost particles used to perform equivalence transforms. Faces the opposite direction as self[‘down’].</td>
-</tr>
-<tr class="row-odd"><td><strong>down</strong></td>
-<td>(mb.Compound) Collection of 4 ghost particles used to perform equivalence transforms. Faces the opposite direction as self[‘up’].</td>
-</tr>
-<tr class="row-even"><td><strong>used</strong></td>
-<td>(bool) Status of whether a port has been occupied following an equivalence transform.</td>
+<tr class="field-even field"><th class="field-name">Attributes:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>anchor</strong> <span class="classifier-delimiter">:</span> <span class="classifier">mb.Particle, optional, default=None</span></dt>
+<dd><p class="first last">A Particle associated with the port. Used to form bonds.</p>
+</dd>
+<dt><strong>up</strong> <span class="classifier-delimiter">:</span> <span class="classifier">mb.Compound</span></dt>
+<dd><p class="first last">Collection of 4 ghost particles used to perform equivalence transforms.
+Faces the opposite direction as self[‘down’].</p>
+</dd>
+<dt><strong>down</strong> <span class="classifier-delimiter">:</span> <span class="classifier">mb.Compound</span></dt>
+<dd><p class="first last">Collection of 4 ghost particles used to perform equivalence transforms.
+Faces the opposite direction as self[‘up’].</p>
+</dd>
+<dt><strong>used</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool</span></dt>
+<dd><p class="first last">Status of whether a port has been occupied following an equivalence
+transform.</p>
+</dd>
+</dl>
+</td>
 </tr>
 </tbody>
 </table>
@@ -1493,10 +1504,11 @@ from the origin.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">list of str</p>
-<blockquote class="last">
-<div><p>Strings that can be used to access this Port relative to self.root</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>list of str</strong></dt>
+<dd><p class="first last">Strings that can be used to access this Port relative to self.root</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -1517,34 +1529,30 @@ instead be used to add a reference to the part to self.labels. See
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>new_child</strong> : mb.Compound or list-like of mb.Compound</p>
-<blockquote>
-<div><p>The object(s) to be added to this Compound.</p>
-</div></blockquote>
-<p><strong>label</strong> : str, optional</p>
-<blockquote>
-<div><p>A descriptive string for the part.</p>
-</div></blockquote>
-<p><strong>containment</strong> : bool, optional, default=True</p>
-<blockquote>
-<div><p>Add the part to self.children.</p>
-</div></blockquote>
-<p><strong>replace</strong> : bool, optional, default=True</p>
-<blockquote>
-<div><p>Replace the label if it already exists.</p>
-</div></blockquote>
-<p><strong>inherit_periodicity</strong> : bool, optional, default=True</p>
-<blockquote>
-<div><p>Replace the periodicity of self with the periodicity of the
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>new_child</strong> <span class="classifier-delimiter">:</span> <span class="classifier">mb.Compound or list-like of mb.Compound</span></dt>
+<dd><p class="first last">The object(s) to be added to this Compound.</p>
+</dd>
+<dt><strong>label</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str, optional</span></dt>
+<dd><p class="first last">A descriptive string for the part.</p>
+</dd>
+<dt><strong>containment</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool, optional, default=True</span></dt>
+<dd><p class="first last">Add the part to self.children.</p>
+</dd>
+<dt><strong>replace</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool, optional, default=True</span></dt>
+<dd><p class="first last">Replace the label if it already exists.</p>
+</dd>
+<dt><strong>inherit_periodicity</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool, optional, default=True</span></dt>
+<dd><p class="first last">Replace the periodicity of self with the periodicity of the
 Compound being added</p>
-</div></blockquote>
-<p><strong>reset_rigid_ids</strong> : bool, optional, default=True</p>
-<blockquote class="last">
-<div><p>If the Compound to be added contains rigid bodies, reset the
+</dd>
+<dt><strong>reset_rigid_ids</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool, optional, default=True</span></dt>
+<dd><p class="first last">If the Compound to be added contains rigid bodies, reset the
 rigid_ids such that values remain distinct from rigid_ids
 already present in <cite>self</cite>. Can be set to False if attempting
 to add Compounds to an existing rigid body.</p>
-</div></blockquote>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -1559,10 +1567,11 @@ to add Compounds to an existing rigid body.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>particle_pair</strong> : indexable object, length=2, dtype=mb.Compound</p>
-<blockquote class="last">
-<div><p>The pair of Particles to add a bond between</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>particle_pair</strong> <span class="classifier-delimiter">:</span> <span class="classifier">indexable object, length=2, dtype=mb.Compound</span></dt>
+<dd><p class="first last">The pair of Particles to add a bond between</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -1577,10 +1586,11 @@ to add Compounds to an existing rigid body.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">list of mb.Compound</p>
-<blockquote class="last">
-<div><p>A list of all Ports referenced by this Compound and its successors</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>list of mb.Compound</strong></dt>
+<dd><p class="first last">A list of all Ports referenced by this Compound and its successors</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -1595,10 +1605,11 @@ to add Compounds to an existing rigid body.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Yields:</th><td class="field-body"><p class="first">mb.Compound</p>
-<blockquote class="last">
-<div><p>The next Compound above self in the hierarchy</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Yields:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>mb.Compound</strong></dt>
+<dd><p class="first last">The next Compound above self in the hierarchy</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -1613,10 +1624,11 @@ to add Compounds to an existing rigid body.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">list of mb.Compound</p>
-<blockquote class="last">
-<div><p>A list of all unoccupied ports referenced by the Compound</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>list of mb.Compound</strong></dt>
+<dd><p class="first last">A list of all unoccupied ports referenced by the Compound</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -1631,10 +1643,11 @@ to add Compounds to an existing rigid body.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Yields:</th><td class="field-body"><p class="first">tuple of mb.Compound</p>
-<blockquote class="last">
-<div><p>The next bond in the Compound</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Yields:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>tuple of mb.Compound</strong></dt>
+<dd><p class="first last">The next bond in the Compound</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -1656,10 +1669,11 @@ to add Compounds to an existing rigid body.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">mb.Box</p>
-<blockquote class="last">
-<div><p>The bounding box for this Compound</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>mb.Box</strong></dt>
+<dd><p class="first last">The bounding box for this Compound</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -1684,10 +1698,11 @@ hierarchy) then contains_rigid will return False.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">bool</p>
-<blockquote class="last">
-<div><p>True if the Compound contains any particle with a rigid_id != None</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>bool</strong></dt>
+<dd><p class="first last">True if the Compound contains any particle with a rigid_id != None</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -1719,98 +1734,97 @@ minimization scales poorly with the number of particles.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>steps</strong> : int, optionl, default=1000</p>
-<blockquote>
-<div><p>The number of optimization iterations</p>
-</div></blockquote>
-<p><strong>algorithm</strong> : str, optional, default=’cg’</p>
-<blockquote>
-<div><p>The energy minimization algorithm.  Valid options are ‘steep’,
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>steps</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int, optionl, default=1000</span></dt>
+<dd><p class="first last">The number of optimization iterations</p>
+</dd>
+<dt><strong>algorithm</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str, optional, default=’cg’</span></dt>
+<dd><p class="first last">The energy minimization algorithm.  Valid options are ‘steep’,
 ‘cg’, and ‘md’, corresponding to steepest descent, conjugate
 gradient, and equilibrium molecular dynamics respectively.</p>
-</div></blockquote>
-<p><strong>forcefield</strong> : str, optional, default=’UFF’</p>
-<blockquote class="last">
-<div><p>The generic force field to apply to the Compound for minimization.
+</dd>
+<dt><strong>forcefield</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str, optional, default=’UFF’</span></dt>
+<dd><p class="first last">The generic force field to apply to the Compound for minimization.
 Valid options are ‘MMFF94’, ‘MMFF94s’, ‘’UFF’, ‘GAFF’, and ‘Ghemical’.
 Please refer to the Open Babel documentation (<a class="reference external" href="http://open-babel">http://open-babel</a>.
 readthedocs.io/en/latest/Forcefields/Overview.html) when considering
 your choice of force field.</p>
-</div></blockquote>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
 </table>
 <p class="rubric">References</p>
-<table class="docutils citation" frame="void" id="r12" rules="none">
+<table class="docutils citation" frame="void" id="re149932566f2-1" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id12">[R12]</a></td><td>O’Boyle, N.M.; Banck, M.; James, C.A.; Morley, C.;
+<tr><td class="label"><a class="fn-backref" href="#id12">[1]</a></td><td>O’Boyle, N.M.; Banck, M.; James, C.A.; Morley, C.;
 Vandermeersch, T.; Hutchison, G.R. “Open Babel: An open
 chemical toolbox.” (2011) J. Cheminf. 3, 33</td></tr>
 </tbody>
 </table>
-<table class="docutils citation" frame="void" id="r13" rules="none">
+<table class="docutils citation" frame="void" id="re149932566f2-2" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id13">[R13]</a></td><td>Open Babel, version X.X.X <a class="reference external" href="http://openbabel.org">http://openbabel.org</a>, (installed
+<tr><td class="label"><a class="fn-backref" href="#id13">[2]</a></td><td>Open Babel, version X.X.X <a class="reference external" href="http://openbabel.org">http://openbabel.org</a>, (installed
 Month Year)</td></tr>
 </tbody>
 </table>
 <p>If using the ‘MMFF94’ force field please also cite the following:
-.. [R14] T.A. Halgren, “Merck molecular force field. I. Basis, form,</p>
+.. [Re149932566f2-3] T.A. Halgren, “Merck molecular force field. I. Basis, form,</p>
 <blockquote>
 <div>scope, parameterization, and performance of MMFF94.” (1996)
 J. Comput. Chem. 17, 490-519</div></blockquote>
-<table class="docutils citation" frame="void" id="r15" rules="none">
+<table class="docutils citation" frame="void" id="re149932566f2-4" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id15">[R15]</a></td><td>T.A. Halgren, “Merck molecular force field. II. MMFF94 van der
+<tr><td class="label"><a class="fn-backref" href="#id15">[4]</a></td><td>T.A. Halgren, “Merck molecular force field. II. MMFF94 van der
 Waals and electrostatic parameters for intermolecular
 interactions.” (1996) J. Comput. Chem. 17, 520-552</td></tr>
 </tbody>
 </table>
-<table class="docutils citation" frame="void" id="r16" rules="none">
+<table class="docutils citation" frame="void" id="re149932566f2-5" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id16">[R16]</a></td><td>T.A. Halgren, “Merck molecular force field. III. Molecular
+<tr><td class="label"><a class="fn-backref" href="#id16">[5]</a></td><td>T.A. Halgren, “Merck molecular force field. III. Molecular
 geometries and vibrational frequencies for MMFF94.” (1996)
 J. Comput. Chem. 17, 553-586</td></tr>
 </tbody>
 </table>
-<table class="docutils citation" frame="void" id="r17" rules="none">
+<table class="docutils citation" frame="void" id="re149932566f2-6" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id17">[R17]</a></td><td>T.A. Halgren and R.B. Nachbar, “Merck molecular force field.
+<tr><td class="label"><a class="fn-backref" href="#id17">[6]</a></td><td>T.A. Halgren and R.B. Nachbar, “Merck molecular force field.
 IV. Conformational energies and geometries for MMFF94.” (1996)
 J. Comput. Chem. 17, 587-615</td></tr>
 </tbody>
 </table>
-<table class="docutils citation" frame="void" id="r18" rules="none">
+<table class="docutils citation" frame="void" id="re149932566f2-7" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id18">[R18]</a></td><td>T.A. Halgren, “Merck molecular force field. V. Extension of
+<tr><td class="label"><a class="fn-backref" href="#id18">[7]</a></td><td>T.A. Halgren, “Merck molecular force field. V. Extension of
 MMFF94 using experimental data, additional computational data,
 and empirical rules.” (1996) J. Comput. Chem. 17, 616-641</td></tr>
 </tbody>
 </table>
 <p>If using the ‘MMFF94s’ force field please cite the above along with:
-.. [R19] T.A. Halgren, “MMFF VI. MMFF94s option for energy minimization</p>
+.. [Re149932566f2-8] T.A. Halgren, “MMFF VI. MMFF94s option for energy minimization</p>
 <blockquote>
 <div>studies.” (1999) J. Comput. Chem. 20, 720-729</div></blockquote>
 <p>If using the ‘UFF’ force field please cite the following:
-.. [R14] Rappe, A.K., Casewit, C.J., Colwell, K.S., Goddard, W.A. III,</p>
+.. [Re149932566f2-3] Rappe, A.K., Casewit, C.J., Colwell, K.S., Goddard, W.A. III,</p>
 <blockquote>
 <div>Skiff, W.M. “UFF, a full periodic table force field for
 molecular mechanics and molecular dynamics simulations.” (1992)
 J. Am. Chem. Soc. 114, 10024-10039</div></blockquote>
 <p>If using the ‘GAFF’ force field please cite the following:
-.. [R14] Wang, J., Wolf, R.M., Caldwell, J.W., Kollman, P.A., Case, D.A.</p>
+.. [Re149932566f2-3] Wang, J., Wolf, R.M., Caldwell, J.W., Kollman, P.A., Case, D.A.</p>
 <blockquote>
 <div>“Development and testing of a general AMBER force field” (2004)
 J. Comput. Chem. 25, 1157-1174</div></blockquote>
 <p>If using the ‘Ghemical’ force field please cite the following:
-.. [R14] T. Hassinen and M. Perakyla, “New energy terms for reduced</p>
+.. [Re149932566f2-3] T. Hassinen and M. Perakyla, “New energy terms for reduced</p>
 <blockquote>
 <div>protein models implemented in an off-lattice force field” (2001)
 J. Comput. Chem. 22, 1229-1242</div></blockquote>
@@ -1826,14 +1840,14 @@ and sub-sub-compounds for every residue.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>structure</strong> : pmd.Structure</p>
-<blockquote>
-<div><p>The structure to load.</p>
-</div></blockquote>
-<p><strong>coords_only</strong> : bool</p>
-<blockquote class="last">
-<div><p>Set preexisting atoms in compound to coordinates given by structure.</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>structure</strong> <span class="classifier-delimiter">:</span> <span class="classifier">pmd.Structure</span></dt>
+<dd><p class="first last">The structure to load.</p>
+</dd>
+<dt><strong>coords_only</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool</span></dt>
+<dd><p class="first last">Set preexisting atoms in compound to coordinates given by structure.</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -1850,18 +1864,17 @@ and sub-sub-compounds for every residue.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>traj</strong> : mdtraj.Trajectory</p>
-<blockquote>
-<div><p>The trajectory to load.</p>
-</div></blockquote>
-<p><strong>frame</strong> : int, optional, default=-1 (last)</p>
-<blockquote>
-<div><p>The frame to take coordinates from.</p>
-</div></blockquote>
-<p><strong>coords_only</strong> : bool, optional, default=False</p>
-<blockquote class="last">
-<div><p>Only read coordinate information</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>traj</strong> <span class="classifier-delimiter">:</span> <span class="classifier">mdtraj.Trajectory</span></dt>
+<dd><p class="first last">The trajectory to load.</p>
+</dd>
+<dt><strong>frame</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int, optional, default=-1 (last)</span></dt>
+<dd><p class="first last">The frame to take coordinates from.</p>
+</dd>
+<dt><strong>coords_only</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool, optional, default=False</span></dt>
+<dd><p class="first last">Only read coordinate information</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -1876,22 +1889,20 @@ and sub-sub-compounds for every residue.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>name_a</strong> : str</p>
-<blockquote>
-<div><p>The name of one of the Particles to be in each bond</p>
-</div></blockquote>
-<p><strong>name_b</strong> : str</p>
-<blockquote>
-<div><p>The name of the other Particle to be in each bond</p>
-</div></blockquote>
-<p><strong>dmin</strong> : float</p>
-<blockquote>
-<div><p>The minimum distance between Particles for considering a bond</p>
-</div></blockquote>
-<p><strong>dmax</strong> : float</p>
-<blockquote class="last">
-<div><p>The maximum distance between Particles for considering a bond</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>name_a</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
+<dd><p class="first last">The name of one of the Particles to be in each bond</p>
+</dd>
+<dt><strong>name_b</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
+<dd><p class="first last">The name of the other Particle to be in each bond</p>
+</dd>
+<dt><strong>dmin</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
+<dd><p class="first last">The minimum distance between Particles for considering a bond</p>
+</dd>
+<dt><strong>dmax</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
+<dd><p class="first last">The maximum distance between Particles for considering a bond</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -1913,19 +1924,19 @@ will be considered part of the rigid body.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>discrete_bodies</strong> : str or list of str, optional, default=None</p>
-<blockquote>
-<div><p>Name(s) of Compound instances to be treated as unique rigid bodies.
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>discrete_bodies</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str or list of str, optional, default=None</span></dt>
+<dd><p class="first last">Name(s) of Compound instances to be treated as unique rigid bodies.
 Compound instances matching this (these) name(s) will be provided
 with unique rigid_ids</p>
-</div></blockquote>
-<p><strong>rigid_particles</strong> : str or list of str, optional, default=None</p>
-<blockquote class="last">
-<div><p>Name(s) of Compound instances at the bottom of the containment
+</dd>
+<dt><strong>rigid_particles</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str or list of str, optional, default=None</span></dt>
+<dd><p class="first last">Name(s) of Compound instances at the bottom of the containment
 hierarchy (Particles) to be included in rigid bodies. Only Particles
 matching this (these) name(s) will have their rigid_ids altered to
 match the rigid body number.</p>
-</div></blockquote>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -1983,11 +1994,12 @@ rigid_id in the containment hierarchy.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">int or None</p>
-<blockquote class="last">
-<div><p>The maximum rigid body ID contained in the Compound. If no
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>int or None</strong></dt>
+<dd><p class="first last">The maximum rigid body ID contained in the Compound. If no
 rigid body IDs are found, None is returned</p>
-</div></blockquote>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -2002,21 +2014,22 @@ rigid body IDs are found, None is returned</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>xyz0</strong> : np.ndarray, shape=(3,), dtype=float</p>
-<blockquote>
-<div><p>Coordinates of first point</p>
-</div></blockquote>
-<p><strong>xyz1</strong> : np.ndarray, shape=(3,), dtype=float</p>
-<blockquote>
-<div><p>Coordinates of second point</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>xyz0</strong> <span class="classifier-delimiter">:</span> <span class="classifier">np.ndarray, shape=(3,), dtype=float</span></dt>
+<dd><p class="first last">Coordinates of first point</p>
+</dd>
+<dt><strong>xyz1</strong> <span class="classifier-delimiter">:</span> <span class="classifier">np.ndarray, shape=(3,), dtype=float</span></dt>
+<dd><p class="first last">Coordinates of second point</p>
+</dd>
+</dl>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">float</p>
-<blockquote class="last">
-<div><p>Vectorized distance between the two points following minimum
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>float</strong></dt>
+<dd><p class="first last">Vectorized distance between the two points following minimum
 image convention</p>
-</div></blockquote>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -2031,10 +2044,11 @@ image convention</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">int</p>
-<blockquote class="last">
-<div><p>The number of bonds in the Compound</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>int</strong></dt>
+<dd><p class="first last">The number of bonds in the Compound</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -2049,10 +2063,11 @@ image convention</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">int</p>
-<blockquote class="last">
-<div><p>The number of Particles in the Compound</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>int</strong></dt>
+<dd><p class="first last">The number of Particles in the Compound</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -2067,16 +2082,18 @@ image convention</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>include_ports</strong> : bool, optional, default=False</p>
-<blockquote>
-<div><p>Include port particles</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>include_ports</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool, optional, default=False</span></dt>
+<dd><p class="first last">Include port particles</p>
+</dd>
+</dl>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Yields:</th><td class="field-body"><p class="first">mb.Compound</p>
-<blockquote class="last">
-<div><p>The next Particle in the Compound</p>
-</div></blockquote>
+<tr class="field-even field"><th class="field-name">Yields:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>mb.Compound</strong></dt>
+<dd><p class="first last">The next Particle in the Compound</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -2091,16 +2108,18 @@ image convention</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>name</strong> : str</p>
-<blockquote>
-<div><p>Only particles with this name are returned</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>name</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
+<dd><p class="first last">Only particles with this name are returned</p>
+</dd>
+</dl>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Yields:</th><td class="field-body"><p class="first">mb.Compound</p>
-<blockquote class="last">
-<div><p>The next Particle in the Compound with the user-specified name</p>
-</div></blockquote>
+<tr class="field-even field"><th class="field-name">Yields:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>mb.Compound</strong></dt>
+<dd><p class="first last">The next Particle in the Compound with the user-specified name</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -2115,34 +2134,32 @@ image convention</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>compound</strong> : mb.Compound</p>
-<blockquote>
-<div><p>Reference particle to find other particles in range of</p>
-</div></blockquote>
-<p><strong>dmax</strong> : float</p>
-<blockquote>
-<div><p>Maximum distance from ‘compound’ to look for Particles</p>
-</div></blockquote>
-<p><strong>max_particles</strong> : int, optional, default=20</p>
-<blockquote>
-<div><p>Maximum number of Particles to return</p>
-</div></blockquote>
-<p><strong>particle_kdtree</strong> : mb.PeriodicCKDTree, optional</p>
-<blockquote>
-<div><p>KD-tree for looking up nearest neighbors. If not provided, a KD-
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>compound</strong> <span class="classifier-delimiter">:</span> <span class="classifier">mb.Compound</span></dt>
+<dd><p class="first last">Reference particle to find other particles in range of</p>
+</dd>
+<dt><strong>dmax</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
+<dd><p class="first last">Maximum distance from ‘compound’ to look for Particles</p>
+</dd>
+<dt><strong>max_particles</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int, optional, default=20</span></dt>
+<dd><p class="first last">Maximum number of Particles to return</p>
+</dd>
+<dt><strong>particle_kdtree</strong> <span class="classifier-delimiter">:</span> <span class="classifier">mb.PeriodicCKDTree, optional</span></dt>
+<dd><p class="first last">KD-tree for looking up nearest neighbors. If not provided, a KD-
 tree will be generated from all Particles in self</p>
-</div></blockquote>
-<p><strong>particle_array</strong> : np.ndarray, shape=(n,), dtype=mb.Compound, optional</p>
-<blockquote>
-<div><p>Array of possible particles to consider for return. If not
+</dd>
+<dt><strong>particle_array</strong> <span class="classifier-delimiter">:</span> <span class="classifier">np.ndarray, shape=(n,), dtype=mb.Compound, optional</span></dt>
+<dd><p class="first last">Array of possible particles to consider for return. If not
 provided, this defaults to all Particles in self</p>
-</div></blockquote>
+</dd>
+</dl>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">np.ndarray, shape=(n,), dtype=mb.Compound</p>
-<blockquote class="last">
-<div><p>Particles in range of compound according to user-defined limits</p>
-</div></blockquote>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>np.ndarray, shape=(n,), dtype=mb.Compound</strong></dt>
+<dd><p class="first last">Particles in range of compound according to user-defined limits</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -2166,10 +2183,11 @@ provided, this defaults to all Particles in self</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">list of mb.Compound</p>
-<blockquote class="last">
-<div><p>A list of all ports referenced by the Compound</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>list of mb.Compound</strong></dt>
+<dd><p class="first last">A list of all ports referenced by the Compound</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -2184,10 +2202,11 @@ provided, this defaults to all Particles in self</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>objs_to_remove</strong> : mb.Compound or list of mb.Compound</p>
-<blockquote class="last">
-<div><p>The Compound(s) to be removed from self</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>objs_to_remove</strong> <span class="classifier-delimiter">:</span> <span class="classifier">mb.Compound or list of mb.Compound</span></dt>
+<dd><p class="first last">The Compound(s) to be removed from self</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -2202,10 +2221,11 @@ provided, this defaults to all Particles in self</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>particle_pair</strong> : indexable object, length=2, dtype=mb.Compound</p>
-<blockquote class="last">
-<div><p>The pair of Particles to remove the bond between</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>particle_pair</strong> <span class="classifier-delimiter">:</span> <span class="classifier">indexable object, length=2, dtype=mb.Compound</span></dt>
+<dd><p class="first last">The pair of Particles to remove the bond between</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -2222,17 +2242,19 @@ with a matching rigid_id.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>rigid_id</strong> : int, optional</p>
-<blockquote>
-<div><p>Include only particles with this rigid body ID</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>rigid_id</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int, optional</span></dt>
+<dd><p class="first last">Include only particles with this rigid body ID</p>
+</dd>
+</dl>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Yields:</th><td class="field-body"><p class="first">mb.Compound</p>
-<blockquote class="last">
-<div><p>The next particle with a rigid_id that is not None, or the next
+<tr class="field-even field"><th class="field-name">Yields:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>mb.Compound</strong></dt>
+<dd><p class="first last">The next particle with a rigid_id that is not None, or the next
 particle with a matching rigid_id if specified</p>
-</div></blockquote>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -2247,10 +2269,11 @@ particle with a matching rigid_id if specified</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">mb.Compound</p>
-<blockquote class="last">
-<div><p>The Compound at the top of self’s hierarchy</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>mb.Compound</strong></dt>
+<dd><p class="first last">The Compound at the top of self’s hierarchy</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -2265,14 +2288,14 @@ particle with a matching rigid_id if specified</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>theta</strong> : float</p>
-<blockquote>
-<div><p>The angle by which to rotate the Compound, in radians.</p>
-</div></blockquote>
-<p><strong>around</strong> : np.ndarray, shape=(3,), dtype=float</p>
-<blockquote class="last">
-<div><p>The vector about which to rotate the Compound.</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>theta</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
+<dd><p class="first last">The angle by which to rotate the Compound, in radians.</p>
+</dd>
+<dt><strong>around</strong> <span class="classifier-delimiter">:</span> <span class="classifier">np.ndarray, shape=(3,), dtype=float</span></dt>
+<dd><p class="first last">The vector about which to rotate the Compound.</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -2287,78 +2310,75 @@ particle with a matching rigid_id if specified</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>filename</strong> : str</p>
-<blockquote>
-<div><p>Filesystem path in which to save the trajectory. The extension or
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>filename</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
+<dd><p class="first last">Filesystem path in which to save the trajectory. The extension or
 prefix will be parsed and control the format. Supported
 extensions are: ‘hoomdxml’, ‘gsd’, ‘gro’, ‘top’, ‘lammps’, ‘lmp’</p>
-</div></blockquote>
-<p><strong>show_ports</strong> : bool, optional, default=False</p>
-<blockquote>
-<div><p>Save ports contained within the compound.</p>
-</div></blockquote>
-<p><strong>forcefield_file</strong> : str, optional, default=None</p>
-<blockquote>
-<div><p>Apply a forcefield to the output file using a forcefield provided
+</dd>
+<dt><strong>show_ports</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool, optional, default=False</span></dt>
+<dd><p class="first last">Save ports contained within the compound.</p>
+</dd>
+<dt><strong>forcefield_file</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str, optional, default=None</span></dt>
+<dd><p class="first last">Apply a forcefield to the output file using a forcefield provided
 by the <cite>foyer</cite> package.</p>
-</div></blockquote>
-<p><strong>forcefield_name</strong> : str, optional, default=None</p>
-<blockquote>
-<div><p>Apply a named forcefield to the output file using the <cite>foyer</cite>
+</dd>
+<dt><strong>forcefield_name</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str, optional, default=None</span></dt>
+<dd><p class="first last">Apply a named forcefield to the output file using the <cite>foyer</cite>
 package, e.g. ‘oplsaa’. Forcefields listed here:
 <a class="reference external" href="https://github.com/mosdef-hub/foyer/tree/master/foyer/forcefields">https://github.com/mosdef-hub/foyer/tree/master/foyer/forcefields</a></p>
-</div></blockquote>
-<p><strong>forcefield_debug</strong> : bool, optional, default=False</p>
-<blockquote>
-<div><p>Choose level of verbosity when applying a forcefield through <cite>foyer</cite>.
+</dd>
+<dt><strong>forcefield_debug</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool, optional, default=False</span></dt>
+<dd><p class="first last">Choose level of verbosity when applying a forcefield through <cite>foyer</cite>.
 Specifically, when missing atom types in the forcefield xml file,
 determine if the warning is condensed or verbose.</p>
-</div></blockquote>
-<p><strong>box</strong> : mb.Box, optional, default=self.boundingbox (with buffer)</p>
-<blockquote>
-<div><p>Box information to be written to the output file. If ‘None’, a
+</dd>
+<dt><strong>box</strong> <span class="classifier-delimiter">:</span> <span class="classifier">mb.Box, optional, default=self.boundingbox (with buffer)</span></dt>
+<dd><p class="first last">Box information to be written to the output file. If ‘None’, a
 bounding box is used with 0.25nm buffers at each face to avoid
 overlapping atoms.</p>
-</div></blockquote>
-<p><strong>overwrite</strong> : bool, optional, default=False</p>
-<blockquote>
-<div><p>Overwrite if the filename already exists</p>
-</div></blockquote>
-<p><strong>residues</strong> : str of list of str</p>
-<blockquote>
-<div><p>Labels of residues in the Compound. Residues are assigned by
+</dd>
+<dt><strong>overwrite</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool, optional, default=False</span></dt>
+<dd><p class="first last">Overwrite if the filename already exists</p>
+</dd>
+<dt><strong>residues</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str of list of str</span></dt>
+<dd><p class="first last">Labels of residues in the Compound. Residues are assigned by
 checking against Compound.name.</p>
-</div></blockquote>
-<p><strong>references_file</strong> : str, optional, default=None</p>
-<blockquote>
-<div><p>Specify a filename to write references for the forcefield that is
+</dd>
+<dt><strong>references_file</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str, optional, default=None</span></dt>
+<dd><p class="first last">Specify a filename to write references for the forcefield that is
 to be applied. References are written in BiBTeX format.</p>
-</div></blockquote>
-<p><strong>combining_rule</strong> : str, optional, default=’lorentz’</p>
-<blockquote>
-<div><p>Specify the combining rule for nonbonded interactions. Only relevant
+</dd>
+<dt><strong>combining_rule</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str, optional, default=’lorentz’</span></dt>
+<dd><p class="first last">Specify the combining rule for nonbonded interactions. Only relevant
 when the <cite>foyer</cite> package is used to apply a forcefield. Valid
 options are ‘lorentz’ and ‘geometric’, specifying Lorentz-Berthelot
 and geometric combining rules respectively.</p>
-</div></blockquote>
+</dd>
+</dl>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name" colspan="2">Other Parameters:</th></tr>
-<tr class="field-even field"><td>&#160;</td><td class="field-body"><p class="first"><strong>ref_distance</strong> : float, optional, default=1.0</p>
-<blockquote>
-<div><p>Normalization factor used when saving to .gsd and .hoomdxml formats
+<tr class="field-even field"><td>&#160;</td><td class="field-body"><dl class="first last docutils">
+<dt><strong>ref_distance</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float, optional, default=1.0</span></dt>
+<dd><p class="first last">Normalization factor used when saving to .gsd and .hoomdxml formats
 for converting distance values to reduced units.</p>
-</div></blockquote>
-<p><strong>ref_energy</strong> : float, optional, default=1.0</p>
-<blockquote>
-<div><p>Normalization factor used when saving to .gsd and .hoomdxml formats
+</dd>
+<dt><strong>ref_energy</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float, optional, default=1.0</span></dt>
+<dd><p class="first last">Normalization factor used when saving to .gsd and .hoomdxml formats
 for converting energy values to reduced units.</p>
-</div></blockquote>
-<p><strong>ref_mass</strong> : float, optional, default=1.0</p>
-<blockquote class="last">
-<div><p>Normalization factor used when saving to .gsd and .hoomdxml formats
+</dd>
+<dt><strong>ref_mass</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float, optional, default=1.0</span></dt>
+<dd><p class="first last">Normalization factor used when saving to .gsd and .hoomdxml formats
 for converting mass values to reduced units.</p>
-</div></blockquote>
+</dd>
+<dt><strong>atom_style: str, default=’full’</strong></dt>
+<dd><p class="first last">Defines the style of atoms to be saved in a LAMMPS data file. The following atom
+styles are currently supported: ‘full’, ‘atomic’, ‘charge’, ‘molecular’
+see <a class="reference external" href="http://lammps.sandia.gov/doc/atom_style.html">http://lammps.sandia.gov/doc/atom_style.html</a> for more
+information on atom styles.</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -2384,14 +2404,14 @@ for converting mass values to reduced units.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>theta</strong> : float</p>
-<blockquote>
-<div><p>The angle by which to rotate the Compound, in radians.</p>
-</div></blockquote>
-<p><strong>around</strong> : np.ndarray, shape=(3,), dtype=float</p>
-<blockquote class="last">
-<div><p>The axis about which to spin the Compound.</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>theta</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
+<dd><p class="first last">The angle by which to rotate the Compound, in radians.</p>
+</dd>
+<dt><strong>around</strong> <span class="classifier-delimiter">:</span> <span class="classifier">np.ndarray, shape=(3,), dtype=float</span></dt>
+<dd><p class="first last">The axis about which to spin the Compound.</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -2406,10 +2426,11 @@ for converting mass values to reduced units.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Yields:</th><td class="field-body"><p class="first">mb.Compound</p>
-<blockquote class="last">
-<div><p>The next Particle below self in the hierarchy</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Yields:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>mb.Compound</strong></dt>
+<dd><p class="first last">The next Particle below self in the hierarchy</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -2424,9 +2445,17 @@ for converting mass values to reduced units.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>molecule_types</strong> : list or tuple of subclasses of Compound</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>molecule_types</strong> <span class="classifier-delimiter">:</span> <span class="classifier">list or tuple of subclasses of Compound</span></dt>
+<dd></dd>
+</dl>
+</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>intermol_system</strong> : intermol.system.System</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>intermol_system</strong> <span class="classifier-delimiter">:</span> <span class="classifier">intermol.system.System</span></dt>
+<dd></dd>
+</dl>
+</td>
 </tr>
 </tbody>
 </table>
@@ -2440,21 +2469,22 @@ for converting mass values to reduced units.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>title</strong> : str, optional, default=self.name</p>
-<blockquote>
-<div><p>Title/name of the ParmEd Structure</p>
-</div></blockquote>
-<p><strong>residues</strong> : str of list of str</p>
-<blockquote>
-<div><p>Labels of residues in the Compound. Residues are assigned by
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>title</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str, optional, default=self.name</span></dt>
+<dd><p class="first last">Title/name of the ParmEd Structure</p>
+</dd>
+<dt><strong>residues</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str of list of str</span></dt>
+<dd><p class="first last">Labels of residues in the Compound. Residues are assigned by
 checking against Compound.name.</p>
-</div></blockquote>
+</dd>
+</dl>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">parmed.structure.Structure</p>
-<blockquote class="last">
-<div><p>ParmEd Structure object converted from self</p>
-</div></blockquote>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>parmed.structure.Structure</strong></dt>
+<dd><p class="first last">ParmEd Structure object converted from self</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -2476,22 +2506,24 @@ checking against Compound.name.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>show_ports</strong> : bool, optional, default=False</p>
-<blockquote>
-<div><p>Include all port atoms when converting to trajectory.</p>
-</div></blockquote>
-<p><strong>chains</strong> : mb.Compound or list of mb.Compound</p>
-<blockquote>
-<div><p>Chain types to add to the topology</p>
-</div></blockquote>
-<p><strong>residues</strong> : str of list of str</p>
-<blockquote>
-<div><p>Labels of residues in the Compound. Residues are assigned by
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>show_ports</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool, optional, default=False</span></dt>
+<dd><p class="first last">Include all port atoms when converting to trajectory.</p>
+</dd>
+<dt><strong>chains</strong> <span class="classifier-delimiter">:</span> <span class="classifier">mb.Compound or list of mb.Compound</span></dt>
+<dd><p class="first last">Chain types to add to the topology</p>
+</dd>
+<dt><strong>residues</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str of list of str</span></dt>
+<dd><p class="first last">Labels of residues in the Compound. Residues are assigned by
 checking against Compound.name.</p>
-</div></blockquote>
+</dd>
+</dl>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><strong>trajectory</strong> : md.Trajectory</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>trajectory</strong> <span class="classifier-delimiter">:</span> <span class="classifier">md.Trajectory</span></dt>
+<dd></dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -2510,7 +2542,11 @@ checking against Compound.name.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>by</strong> : np.ndarray, shape=(3,), dtype=float</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>by</strong> <span class="classifier-delimiter">:</span> <span class="classifier">np.ndarray, shape=(3,), dtype=float</span></dt>
+<dd></dd>
+</dl>
+</td>
 </tr>
 </tbody>
 </table>
@@ -2524,7 +2560,11 @@ checking against Compound.name.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>pos</strong> : np.ndarray, shape=3(,), dtype=float</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>pos</strong> <span class="classifier-delimiter">:</span> <span class="classifier">np.ndarray, shape=3(,), dtype=float</span></dt>
+<dd></dd>
+</dl>
+</td>
 </tr>
 </tbody>
 </table>
@@ -2544,18 +2584,18 @@ checking against Compound.name.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>filename</strong> : str</p>
-<blockquote>
-<div><p>Name of file from which to load coordinates. Supported file types
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>filename</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
+<dd><p class="first last">Name of file from which to load coordinates. Supported file types
 are the same as those supported by load()</p>
-</div></blockquote>
-<p><strong>update_port_locations</strong> : bool, optional, default=True</p>
-<blockquote class="last">
-<div><p>Update the locations of Ports so that they are shifted along with
+</dd>
+<dt><strong>update_port_locations</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool, optional, default=True</span></dt>
+<dd><p class="first last">Update the locations of Ports so that they are shifted along with
 their anchor particles.  Note: This conserves the location of
 Ports with respect to the anchor Particle, but does not conserve
 the orientation of Ports with respect to the molecule as a whole.</p>
-</div></blockquote>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -2578,10 +2618,11 @@ the orientation of Ports with respect to the molecule as a whole.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>show_ports</strong> : bool, optional, default=False</p>
-<blockquote class="last">
-<div><p>Visualize Ports in addition to Particles</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>show_ports</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool, optional, default=False</span></dt>
+<dd><p class="first last">Visualize Ports in addition to Particles</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -2596,10 +2637,11 @@ the orientation of Ports with respect to the molecule as a whole.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>pos</strong> : np.ndarray, shape=(n, 3), dtype=float</p>
-<blockquote class="last">
-<div><p>Array with the positions of all particles.</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>pos</strong> <span class="classifier-delimiter">:</span> <span class="classifier">np.ndarray, shape=(n, 3), dtype=float</span></dt>
+<dd><p class="first last">Array with the positions of all particles.</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -2614,10 +2656,11 @@ the orientation of Ports with respect to the molecule as a whole.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>pos</strong> : np.ndarray, shape=(n, 3), dtype=float</p>
-<blockquote class="last">
-<div><p>Array with the positions of all particles and ports.</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>pos</strong> <span class="classifier-delimiter">:</span> <span class="classifier">np.ndarray, shape=(n, 3), dtype=float</span></dt>
+<dd><p class="first last">Array with the positions of all particles and ports.</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -2631,9 +2674,7 @@ the orientation of Ports with respect to the molecule as a whole.</p>
 
 
            </div>
-           <div class="articleComments">
-            
-           </div>
+           
           </div>
           <footer>
   
@@ -2655,7 +2696,7 @@ the orientation of Ports with respect to the molecule as a whole.</p>
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -2674,6 +2715,7 @@ the orientation of Ports with respect to the molecule as a whole.</p>
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
             VERSION:'0.8.0',
+            LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,
@@ -2692,14 +2734,13 @@ the orientation of Ports with respect to the molecule as a whole.</p>
     <script type="text/javascript" src="_static/js/theme.js"></script>
   
 
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          
+          SphinxRtdTheme.Navigation.enableSticky();
+          
       });
-  </script>
-   
+  </script> 
 
 </body>
 </html>
