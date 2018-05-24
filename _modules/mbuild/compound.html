@@ -194,7 +194,7 @@
 
 
 <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">relative_to_module</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">compound</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">coords_only</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-         <span class="n">rigid</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">use_parmed</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+         <span class="n">rigid</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">use_parmed</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">smiles</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Load a file into an mbuild compound.</span>
 
 <span class="sd">    Files are read using the MDTraj package unless the `use_parmed` argument is</span>
@@ -219,6 +219,9 @@
 <span class="sd">        Treat the compound as a rigid body</span>
 <span class="sd">    use_parmed : bool, optional, default=False</span>
 <span class="sd">        Use readers from ParmEd instead of MDTraj.</span>
+<span class="sd">    smiles: bool, optional, default=False</span>
+<span class="sd">        Use Open Babel to parse filename as a SMILES string</span>
+<span class="sd">        or file containing a SMILES string</span>
 <span class="sd">    **kwargs : keyword arguments</span>
 <span class="sd">        Key word arguments passed to mdTraj for loading.</span>
 
@@ -243,6 +246,34 @@
              <span class="s2">&quot;distances and standard residue templates!&quot;</span><span class="p">)</span>
         <span class="n">structure</span> <span class="o">=</span> <span class="n">pmd</span><span class="o">.</span><span class="n">load_file</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">structure</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="n">compound</span><span class="o">.</span><span class="n">from_parmed</span><span class="p">(</span><span class="n">structure</span><span class="p">,</span> <span class="n">coords_only</span><span class="o">=</span><span class="n">coords_only</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">smiles</span><span class="p">:</span>
+        <span class="n">pybel</span> <span class="o">=</span> <span class="n">import_</span><span class="p">(</span><span class="s1">&#39;pybel&#39;</span><span class="p">)</span>
+        <span class="c1"># First we try treating filename as a SMILES string</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">mymol</span> <span class="o">=</span> <span class="n">pybel</span><span class="o">.</span><span class="n">readstring</span><span class="p">(</span><span class="s2">&quot;smi&quot;</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+        <span class="c1"># Now we treat it as a filename</span>
+        <span class="k">except</span><span class="p">(</span><span class="ne">OSError</span><span class="p">,</span> <span class="ne">IOError</span><span class="p">):</span>
+            <span class="c1"># For now, we only support reading in a single smiles molecule,</span>
+            <span class="c1"># but pybel returns a generator, so we get the first molecule</span>
+            <span class="c1"># and warn the user if there is more</span>
+
+            <span class="n">mymol_generator</span> <span class="o">=</span> <span class="n">pybel</span><span class="o">.</span><span class="n">readfile</span><span class="p">(</span><span class="s2">&quot;smi&quot;</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+            <span class="n">mymol_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">mymol_generator</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">mymol_list</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">mymol</span> <span class="o">=</span> <span class="n">mymol_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">mymol</span> <span class="o">=</span> <span class="n">mymol_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">warn</span><span class="p">(</span><span class="s2">&quot;More than one SMILES string in file, more than one SMILES &quot;</span>
+                     <span class="s2">&quot;string is not supported, using </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">mymol</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;smi&quot;</span><span class="p">)))</span>
+
+        <span class="n">tmp_dir</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">mkdtemp</span><span class="p">()</span>
+        <span class="n">temp_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tmp_dir</span><span class="p">,</span> <span class="s1">&#39;smiles_to_mol2_intermediate.mol2&#39;</span><span class="p">)</span>
+        <span class="n">mymol</span><span class="o">.</span><span class="n">make3D</span><span class="p">()</span>
+        <span class="n">mymol</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;MOL2&quot;</span><span class="p">,</span> <span class="n">temp_file</span><span class="p">)</span>
+        <span class="n">structure</span> <span class="o">=</span> <span class="n">pmd</span><span class="o">.</span><span class="n">load_file</span><span class="p">(</span><span class="n">temp_file</span><span class="p">,</span> <span class="n">structure</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">compound</span><span class="o">.</span><span class="n">from_parmed</span><span class="p">(</span><span class="n">structure</span><span class="p">,</span> <span class="n">coords_only</span><span class="o">=</span><span class="n">coords_only</span><span class="p">)</span>
+
     <span class="k">else</span><span class="p">:</span>
         <span class="n">traj</span> <span class="o">=</span> <span class="n">md</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="n">compound</span><span class="o">.</span><span class="n">from_trajectory</span><span class="p">(</span><span class="n">traj</span><span class="p">,</span> <span class="n">frame</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">coords_only</span><span class="o">=</span><span class="n">coords_only</span><span class="p">)</span>
