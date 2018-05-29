@@ -185,6 +185,7 @@
 <span class="kn">from</span> <span class="nn">mbuild.bond_graph</span> <span class="k">import</span> <span class="n">BondGraph</span>
 <span class="kn">from</span> <span class="nn">mbuild.box</span> <span class="k">import</span> <span class="n">Box</span>
 <span class="kn">from</span> <span class="nn">mbuild.exceptions</span> <span class="k">import</span> <span class="n">MBuildError</span>
+<span class="kn">from</span> <span class="nn">mbuild.formats.xyz</span> <span class="k">import</span> <span class="n">read_xyz</span>
 <span class="kn">from</span> <span class="nn">mbuild.formats.hoomdxml</span> <span class="k">import</span> <span class="n">write_hoomdxml</span>
 <span class="kn">from</span> <span class="nn">mbuild.formats.lammpsdata</span> <span class="k">import</span> <span class="n">write_lammpsdata</span>
 <span class="kn">from</span> <span class="nn">mbuild.formats.gsdwriter</span> <span class="k">import</span> <span class="n">write_gsd</span>
@@ -240,6 +241,12 @@
 
     <span class="k">if</span> <span class="n">compound</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">compound</span> <span class="o">=</span> <span class="n">Compound</span><span class="p">()</span>
+
+    <span class="c1"># Handle the case of a xyz file, which must use an internal reader</span>
+    <span class="n">extension</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">filename</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">extension</span> <span class="o">==</span> <span class="s1">&#39;.xyz&#39;</span> <span class="ow">and</span> <span class="ow">not</span> <span class="s1">&#39;top&#39;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+        <span class="n">compound</span> <span class="o">=</span> <span class="n">read_xyz</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">compound</span>
 
     <span class="k">if</span> <span class="n">use_parmed</span><span class="p">:</span>
         <span class="n">warn</span><span class="p">(</span><span class="s2">&quot;use_parmed set to True.  Bonds may be inferred from inter-particle &quot;</span>
