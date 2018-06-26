@@ -24,8 +24,7 @@
 
   
 
-  
-    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -427,12 +426,16 @@ and the particle tree is not traversed, boosting performance.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="mbuild.recipes.monolayer.Monolayer.energy_minimization">
-<code class="descname">energy_minimization</code><span class="sig-paren">(</span><em>steps=2500</em>, <em>algorithm='cg'</em>, <em>forcefield='UFF'</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.recipes.monolayer.Monolayer.energy_minimization" title="Permalink to this definition">¶</a></dt>
+<dt id="mbuild.recipes.monolayer.Monolayer.energy_minimize">
+<code class="descname">energy_minimize</code><span class="sig-paren">(</span><em>forcefield='UFF'</em>, <em>steps=1000</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.recipes.monolayer.Monolayer.energy_minimize" title="Permalink to this definition">¶</a></dt>
 <dd><p>Perform an energy minimization on a Compound</p>
-<p>Utilizes Open Babel (<a class="reference external" href="http://openbabel.org/docs/dev/">http://openbabel.org/docs/dev/</a>) to perform an
-energy minimization/geometry optimization on a Compound by applying
-a generic force field.</p>
+<p>Default beahvior utilizes Open Babel (<a class="reference external" href="http://openbabel.org/docs/dev/">http://openbabel.org/docs/dev/</a>)
+to perform an energy minimization/geometry optimization on a
+Compound by applying a generic force field</p>
+<p>Can also utilize OpenMM (<a class="reference external" href="http://openmm.org/">http://openmm.org/</a>) to energy minimize
+after atomtyping a Compound using
+Foyer (<a class="reference external" href="https://github.com/mosdef-hub/foyer">https://github.com/mosdef-hub/foyer</a>) to apply a forcefield
+XML file that contains valid SMARTS strings.</p>
 <p>This function is primarily intended to be used on smaller components,
 with sizes on the order of 10’s to 100’s of particles, as the energy
 minimization scales poorly with the number of particles.</p>
@@ -441,20 +444,46 @@ minimization scales poorly with the number of particles.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
-<dt><strong>steps</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int, optionl, default=1000</span></dt>
+<dt><strong>steps</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int, optional, default=1000</span></dt>
 <dd><p class="first last">The number of optimization iterations</p>
-</dd>
-<dt><strong>algorithm</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str, optional, default=’cg’</span></dt>
-<dd><p class="first last">The energy minimization algorithm.  Valid options are ‘steep’,
-‘cg’, and ‘md’, corresponding to steepest descent, conjugate
-gradient, and equilibrium molecular dynamics respectively.</p>
 </dd>
 <dt><strong>forcefield</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str, optional, default=’UFF’</span></dt>
 <dd><p class="first last">The generic force field to apply to the Compound for minimization.
 Valid options are ‘MMFF94’, ‘MMFF94s’, ‘’UFF’, ‘GAFF’, and ‘Ghemical’.
 Please refer to the Open Babel documentation (<a class="reference external" href="http://open-babel">http://open-babel</a>.
 readthedocs.io/en/latest/Forcefields/Overview.html) when considering
-your choice of force field.</p>
+your choice of force field.
+Utilizing OpenMM for energy minimization requires a forcefield
+XML file with valid SMARTS strings. Please refer to (<a class="reference external" href="http://docs">http://docs</a>.
+openmm.org/7.0.0/userguide/application.html#creating-force-fields)
+for more information.</p>
+</dd>
+<dt><strong>Keyword Arguments</strong></dt>
+<dd></dd>
+<dt><strong>————</strong></dt>
+<dd></dd>
+<dt><strong>algorithm</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str, optional, default=’cg’</span></dt>
+<dd><p class="first last">The energy minimization algorithm.  Valid options are ‘steep’,
+‘cg’, and ‘md’, corresponding to steepest descent, conjugate
+gradient, and equilibrium molecular dynamics respectively.
+For _energy_minimize_openbabel</p>
+</dd>
+<dt><strong>scale_bonds</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float, optional, default=1</span></dt>
+<dd><p class="first last">Scales the bond force constant (1 is completely on).
+For _energy_minimize_openmm</p>
+</dd>
+<dt><strong>scale_angles</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float, optional, default=1</span></dt>
+<dd><p class="first last">Scales the angle force constant (1 is completely on)
+For _energy_minimize_openmm</p>
+</dd>
+<dt><strong>scale_torsions</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float, optional, default=1</span></dt>
+<dd><p class="first last">Scales the torsional force constants (1 is completely on)
+For _energy_minimize_openmm
+Note: Only Ryckaert-Bellemans style torsions are currently supported</p>
+</dd>
+<dt><strong>scale_nonbonded</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float, optional, default=1</span></dt>
+<dd><p class="first last">Scales epsilon (1 is completely on)
+For _energy_minimize_openmm</p>
 </dd>
 </dl>
 </td>
@@ -462,75 +491,81 @@ your choice of force field.</p>
 </tbody>
 </table>
 <p class="rubric">References</p>
-<table class="docutils citation" frame="void" id="rd48dafd89919-1" rules="none">
+<p>If using _energy_minimize_openmm(), please cite:
+.. [R734ef6a9e6a1-1] P. Eastman, M. S. Friedrichs, J. D. Chodera, R. J. Radmer,</p>
+<blockquote>
+<div>C. M. Bruns, J. P. Ku, K. A. Beauchamp, T. J. Lane,
+L.-P. Wang, D. Shukla, T. Tye, M. Houston, T. Stich,
+C. Klein, M. R. Shirts, and V. S. Pande.
+“OpenMM 4: A Reusable, Extensible, Hardware Independent
+Library for High Performance Molecular Simulation.”
+J. Chem. Theor. Comput. 9(1): 461-469. (2013).</div></blockquote>
+<p>If using _energy_minimize_openbabel(), please cite:
+.. [R734ef6a9e6a1-1] O’Boyle, N.M.; Banck, M.; James, C.A.; Morley, C.;</p>
+<blockquote>
+<div>Vandermeersch, T.; Hutchison, G.R. “Open Babel: An open
+chemical toolbox.” (2011) J. Cheminf. 3, 33</div></blockquote>
+<table class="docutils citation" frame="void" id="r734ef6a9e6a1-2" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>O’Boyle, N.M.; Banck, M.; James, C.A.; Morley, C.;
-Vandermeersch, T.; Hutchison, G.R. “Open Babel: An open
-chemical toolbox.” (2011) J. Cheminf. 3, 33</td></tr>
-</tbody>
-</table>
-<table class="docutils citation" frame="void" id="rd48dafd89919-2" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td>Open Babel, version X.X.X <a class="reference external" href="http://openbabel.org">http://openbabel.org</a>, (installed
+<tr><td class="label"><a class="fn-backref" href="#id3">[2]</a></td><td>Open Babel, version X.X.X <a class="reference external" href="http://openbabel.org">http://openbabel.org</a>, (installed
 Month Year)</td></tr>
 </tbody>
 </table>
 <p>If using the ‘MMFF94’ force field please also cite the following:
-.. [Rd48dafd89919-3] T.A. Halgren, “Merck molecular force field. I. Basis, form,</p>
+.. [R734ef6a9e6a1-3] T.A. Halgren, “Merck molecular force field. I. Basis, form,</p>
 <blockquote>
 <div>scope, parameterization, and performance of MMFF94.” (1996)
 J. Comput. Chem. 17, 490-519</div></blockquote>
-<table class="docutils citation" frame="void" id="rd48dafd89919-4" rules="none">
+<table class="docutils citation" frame="void" id="r734ef6a9e6a1-4" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id4">[4]</a></td><td>T.A. Halgren, “Merck molecular force field. II. MMFF94 van der
+<tr><td class="label"><a class="fn-backref" href="#id5">[4]</a></td><td>T.A. Halgren, “Merck molecular force field. II. MMFF94 van der
 Waals and electrostatic parameters for intermolecular
 interactions.” (1996) J. Comput. Chem. 17, 520-552</td></tr>
 </tbody>
 </table>
-<table class="docutils citation" frame="void" id="rd48dafd89919-5" rules="none">
+<table class="docutils citation" frame="void" id="r734ef6a9e6a1-5" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id5">[5]</a></td><td>T.A. Halgren, “Merck molecular force field. III. Molecular
+<tr><td class="label"><a class="fn-backref" href="#id6">[5]</a></td><td>T.A. Halgren, “Merck molecular force field. III. Molecular
 geometries and vibrational frequencies for MMFF94.” (1996)
 J. Comput. Chem. 17, 553-586</td></tr>
 </tbody>
 </table>
-<table class="docutils citation" frame="void" id="rd48dafd89919-6" rules="none">
+<table class="docutils citation" frame="void" id="r734ef6a9e6a1-6" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id6">[6]</a></td><td>T.A. Halgren and R.B. Nachbar, “Merck molecular force field.
+<tr><td class="label"><a class="fn-backref" href="#id7">[6]</a></td><td>T.A. Halgren and R.B. Nachbar, “Merck molecular force field.
 IV. Conformational energies and geometries for MMFF94.” (1996)
 J. Comput. Chem. 17, 587-615</td></tr>
 </tbody>
 </table>
-<table class="docutils citation" frame="void" id="rd48dafd89919-7" rules="none">
+<table class="docutils citation" frame="void" id="r734ef6a9e6a1-7" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id7">[7]</a></td><td>T.A. Halgren, “Merck molecular force field. V. Extension of
+<tr><td class="label"><a class="fn-backref" href="#id8">[7]</a></td><td>T.A. Halgren, “Merck molecular force field. V. Extension of
 MMFF94 using experimental data, additional computational data,
 and empirical rules.” (1996) J. Comput. Chem. 17, 616-641</td></tr>
 </tbody>
 </table>
 <p>If using the ‘MMFF94s’ force field please cite the above along with:
-.. [Rd48dafd89919-8] T.A. Halgren, “MMFF VI. MMFF94s option for energy minimization</p>
+.. [R734ef6a9e6a1-8] T.A. Halgren, “MMFF VI. MMFF94s option for energy minimization</p>
 <blockquote>
 <div>studies.” (1999) J. Comput. Chem. 20, 720-729</div></blockquote>
 <p>If using the ‘UFF’ force field please cite the following:
-.. [Rd48dafd89919-3] Rappe, A.K., Casewit, C.J., Colwell, K.S., Goddard, W.A. III,</p>
+.. [R734ef6a9e6a1-3] Rappe, A.K., Casewit, C.J., Colwell, K.S., Goddard, W.A. III,</p>
 <blockquote>
 <div>Skiff, W.M. “UFF, a full periodic table force field for
 molecular mechanics and molecular dynamics simulations.” (1992)
 J. Am. Chem. Soc. 114, 10024-10039</div></blockquote>
 <p>If using the ‘GAFF’ force field please cite the following:
-.. [Rd48dafd89919-3] Wang, J., Wolf, R.M., Caldwell, J.W., Kollman, P.A., Case, D.A.</p>
+.. [R734ef6a9e6a1-3] Wang, J., Wolf, R.M., Caldwell, J.W., Kollman, P.A., Case, D.A.</p>
 <blockquote>
 <div>“Development and testing of a general AMBER force field” (2004)
 J. Comput. Chem. 25, 1157-1174</div></blockquote>
 <p>If using the ‘Ghemical’ force field please cite the following:
-.. [Rd48dafd89919-3] T. Hassinen and M. Perakyla, “New energy terms for reduced</p>
+.. [R734ef6a9e6a1-3] T. Hassinen and M. Perakyla, “New energy terms for reduced</p>
 <blockquote>
 <div>protein models implemented in an off-lattice force field” (2001)
 J. Comput. Chem. 22, 1229-1242</div></blockquote>
@@ -1619,12 +1654,16 @@ and the particle tree is not traversed, boosting performance.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="mbuild.recipes.polymer.Polymer.energy_minimization">
-<code class="descname">energy_minimization</code><span class="sig-paren">(</span><em>steps=2500</em>, <em>algorithm='cg'</em>, <em>forcefield='UFF'</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.recipes.polymer.Polymer.energy_minimization" title="Permalink to this definition">¶</a></dt>
+<dt id="mbuild.recipes.polymer.Polymer.energy_minimize">
+<code class="descname">energy_minimize</code><span class="sig-paren">(</span><em>forcefield='UFF'</em>, <em>steps=1000</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.recipes.polymer.Polymer.energy_minimize" title="Permalink to this definition">¶</a></dt>
 <dd><p>Perform an energy minimization on a Compound</p>
-<p>Utilizes Open Babel (<a class="reference external" href="http://openbabel.org/docs/dev/">http://openbabel.org/docs/dev/</a>) to perform an
-energy minimization/geometry optimization on a Compound by applying
-a generic force field.</p>
+<p>Default beahvior utilizes Open Babel (<a class="reference external" href="http://openbabel.org/docs/dev/">http://openbabel.org/docs/dev/</a>)
+to perform an energy minimization/geometry optimization on a
+Compound by applying a generic force field</p>
+<p>Can also utilize OpenMM (<a class="reference external" href="http://openmm.org/">http://openmm.org/</a>) to energy minimize
+after atomtyping a Compound using
+Foyer (<a class="reference external" href="https://github.com/mosdef-hub/foyer">https://github.com/mosdef-hub/foyer</a>) to apply a forcefield
+XML file that contains valid SMARTS strings.</p>
 <p>This function is primarily intended to be used on smaller components,
 with sizes on the order of 10’s to 100’s of particles, as the energy
 minimization scales poorly with the number of particles.</p>
@@ -1633,20 +1672,46 @@ minimization scales poorly with the number of particles.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
-<dt><strong>steps</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int, optionl, default=1000</span></dt>
+<dt><strong>steps</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int, optional, default=1000</span></dt>
 <dd><p class="first last">The number of optimization iterations</p>
-</dd>
-<dt><strong>algorithm</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str, optional, default=’cg’</span></dt>
-<dd><p class="first last">The energy minimization algorithm.  Valid options are ‘steep’,
-‘cg’, and ‘md’, corresponding to steepest descent, conjugate
-gradient, and equilibrium molecular dynamics respectively.</p>
 </dd>
 <dt><strong>forcefield</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str, optional, default=’UFF’</span></dt>
 <dd><p class="first last">The generic force field to apply to the Compound for minimization.
 Valid options are ‘MMFF94’, ‘MMFF94s’, ‘’UFF’, ‘GAFF’, and ‘Ghemical’.
 Please refer to the Open Babel documentation (<a class="reference external" href="http://open-babel">http://open-babel</a>.
 readthedocs.io/en/latest/Forcefields/Overview.html) when considering
-your choice of force field.</p>
+your choice of force field.
+Utilizing OpenMM for energy minimization requires a forcefield
+XML file with valid SMARTS strings. Please refer to (<a class="reference external" href="http://docs">http://docs</a>.
+openmm.org/7.0.0/userguide/application.html#creating-force-fields)
+for more information.</p>
+</dd>
+<dt><strong>Keyword Arguments</strong></dt>
+<dd></dd>
+<dt><strong>————</strong></dt>
+<dd></dd>
+<dt><strong>algorithm</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str, optional, default=’cg’</span></dt>
+<dd><p class="first last">The energy minimization algorithm.  Valid options are ‘steep’,
+‘cg’, and ‘md’, corresponding to steepest descent, conjugate
+gradient, and equilibrium molecular dynamics respectively.
+For _energy_minimize_openbabel</p>
+</dd>
+<dt><strong>scale_bonds</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float, optional, default=1</span></dt>
+<dd><p class="first last">Scales the bond force constant (1 is completely on).
+For _energy_minimize_openmm</p>
+</dd>
+<dt><strong>scale_angles</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float, optional, default=1</span></dt>
+<dd><p class="first last">Scales the angle force constant (1 is completely on)
+For _energy_minimize_openmm</p>
+</dd>
+<dt><strong>scale_torsions</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float, optional, default=1</span></dt>
+<dd><p class="first last">Scales the torsional force constants (1 is completely on)
+For _energy_minimize_openmm
+Note: Only Ryckaert-Bellemans style torsions are currently supported</p>
+</dd>
+<dt><strong>scale_nonbonded</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float, optional, default=1</span></dt>
+<dd><p class="first last">Scales epsilon (1 is completely on)
+For _energy_minimize_openmm</p>
 </dd>
 </dl>
 </td>
@@ -1654,75 +1719,81 @@ your choice of force field.</p>
 </tbody>
 </table>
 <p class="rubric">References</p>
-<table class="docutils citation" frame="void" id="rd02ce8a89e91-1" rules="none">
+<p>If using _energy_minimize_openmm(), please cite:
+.. [Raf7507511f76-1] P. Eastman, M. S. Friedrichs, J. D. Chodera, R. J. Radmer,</p>
+<blockquote>
+<div>C. M. Bruns, J. P. Ku, K. A. Beauchamp, T. J. Lane,
+L.-P. Wang, D. Shukla, T. Tye, M. Houston, T. Stich,
+C. Klein, M. R. Shirts, and V. S. Pande.
+“OpenMM 4: A Reusable, Extensible, Hardware Independent
+Library for High Performance Molecular Simulation.”
+J. Chem. Theor. Comput. 9(1): 461-469. (2013).</div></blockquote>
+<p>If using _energy_minimize_openbabel(), please cite:
+.. [Raf7507511f76-1] O’Boyle, N.M.; Banck, M.; James, C.A.; Morley, C.;</p>
+<blockquote>
+<div>Vandermeersch, T.; Hutchison, G.R. “Open Babel: An open
+chemical toolbox.” (2011) J. Cheminf. 3, 33</div></blockquote>
+<table class="docutils citation" frame="void" id="raf7507511f76-2" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id12">[1]</a></td><td>O’Boyle, N.M.; Banck, M.; James, C.A.; Morley, C.;
-Vandermeersch, T.; Hutchison, G.R. “Open Babel: An open
-chemical toolbox.” (2011) J. Cheminf. 3, 33</td></tr>
-</tbody>
-</table>
-<table class="docutils citation" frame="void" id="rd02ce8a89e91-2" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id13">[2]</a></td><td>Open Babel, version X.X.X <a class="reference external" href="http://openbabel.org">http://openbabel.org</a>, (installed
+<tr><td class="label"><a class="fn-backref" href="#id15">[2]</a></td><td>Open Babel, version X.X.X <a class="reference external" href="http://openbabel.org">http://openbabel.org</a>, (installed
 Month Year)</td></tr>
 </tbody>
 </table>
 <p>If using the ‘MMFF94’ force field please also cite the following:
-.. [Rd02ce8a89e91-3] T.A. Halgren, “Merck molecular force field. I. Basis, form,</p>
+.. [Raf7507511f76-3] T.A. Halgren, “Merck molecular force field. I. Basis, form,</p>
 <blockquote>
 <div>scope, parameterization, and performance of MMFF94.” (1996)
 J. Comput. Chem. 17, 490-519</div></blockquote>
-<table class="docutils citation" frame="void" id="rd02ce8a89e91-4" rules="none">
+<table class="docutils citation" frame="void" id="raf7507511f76-4" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id15">[4]</a></td><td>T.A. Halgren, “Merck molecular force field. II. MMFF94 van der
+<tr><td class="label"><a class="fn-backref" href="#id17">[4]</a></td><td>T.A. Halgren, “Merck molecular force field. II. MMFF94 van der
 Waals and electrostatic parameters for intermolecular
 interactions.” (1996) J. Comput. Chem. 17, 520-552</td></tr>
 </tbody>
 </table>
-<table class="docutils citation" frame="void" id="rd02ce8a89e91-5" rules="none">
+<table class="docutils citation" frame="void" id="raf7507511f76-5" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id16">[5]</a></td><td>T.A. Halgren, “Merck molecular force field. III. Molecular
+<tr><td class="label"><a class="fn-backref" href="#id18">[5]</a></td><td>T.A. Halgren, “Merck molecular force field. III. Molecular
 geometries and vibrational frequencies for MMFF94.” (1996)
 J. Comput. Chem. 17, 553-586</td></tr>
 </tbody>
 </table>
-<table class="docutils citation" frame="void" id="rd02ce8a89e91-6" rules="none">
+<table class="docutils citation" frame="void" id="raf7507511f76-6" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id17">[6]</a></td><td>T.A. Halgren and R.B. Nachbar, “Merck molecular force field.
+<tr><td class="label"><a class="fn-backref" href="#id19">[6]</a></td><td>T.A. Halgren and R.B. Nachbar, “Merck molecular force field.
 IV. Conformational energies and geometries for MMFF94.” (1996)
 J. Comput. Chem. 17, 587-615</td></tr>
 </tbody>
 </table>
-<table class="docutils citation" frame="void" id="rd02ce8a89e91-7" rules="none">
+<table class="docutils citation" frame="void" id="raf7507511f76-7" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id18">[7]</a></td><td>T.A. Halgren, “Merck molecular force field. V. Extension of
+<tr><td class="label"><a class="fn-backref" href="#id20">[7]</a></td><td>T.A. Halgren, “Merck molecular force field. V. Extension of
 MMFF94 using experimental data, additional computational data,
 and empirical rules.” (1996) J. Comput. Chem. 17, 616-641</td></tr>
 </tbody>
 </table>
 <p>If using the ‘MMFF94s’ force field please cite the above along with:
-.. [Rd02ce8a89e91-8] T.A. Halgren, “MMFF VI. MMFF94s option for energy minimization</p>
+.. [Raf7507511f76-8] T.A. Halgren, “MMFF VI. MMFF94s option for energy minimization</p>
 <blockquote>
 <div>studies.” (1999) J. Comput. Chem. 20, 720-729</div></blockquote>
 <p>If using the ‘UFF’ force field please cite the following:
-.. [Rd02ce8a89e91-3] Rappe, A.K., Casewit, C.J., Colwell, K.S., Goddard, W.A. III,</p>
+.. [Raf7507511f76-3] Rappe, A.K., Casewit, C.J., Colwell, K.S., Goddard, W.A. III,</p>
 <blockquote>
 <div>Skiff, W.M. “UFF, a full periodic table force field for
 molecular mechanics and molecular dynamics simulations.” (1992)
 J. Am. Chem. Soc. 114, 10024-10039</div></blockquote>
 <p>If using the ‘GAFF’ force field please cite the following:
-.. [Rd02ce8a89e91-3] Wang, J., Wolf, R.M., Caldwell, J.W., Kollman, P.A., Case, D.A.</p>
+.. [Raf7507511f76-3] Wang, J., Wolf, R.M., Caldwell, J.W., Kollman, P.A., Case, D.A.</p>
 <blockquote>
 <div>“Development and testing of a general AMBER force field” (2004)
 J. Comput. Chem. 25, 1157-1174</div></blockquote>
 <p>If using the ‘Ghemical’ force field please cite the following:
-.. [Rd02ce8a89e91-3] T. Hassinen and M. Perakyla, “New energy terms for reduced</p>
+.. [Raf7507511f76-3] T. Hassinen and M. Perakyla, “New energy terms for reduced</p>
 <blockquote>
 <div>protein models implemented in an off-lattice force field” (2001)
 J. Comput. Chem. 22, 1229-1242</div></blockquote>
@@ -2808,12 +2879,16 @@ and the particle tree is not traversed, boosting performance.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="mbuild.recipes.tiled_compound.TiledCompound.energy_minimization">
-<code class="descname">energy_minimization</code><span class="sig-paren">(</span><em>steps=2500</em>, <em>algorithm='cg'</em>, <em>forcefield='UFF'</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.recipes.tiled_compound.TiledCompound.energy_minimization" title="Permalink to this definition">¶</a></dt>
+<dt id="mbuild.recipes.tiled_compound.TiledCompound.energy_minimize">
+<code class="descname">energy_minimize</code><span class="sig-paren">(</span><em>forcefield='UFF'</em>, <em>steps=1000</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.recipes.tiled_compound.TiledCompound.energy_minimize" title="Permalink to this definition">¶</a></dt>
 <dd><p>Perform an energy minimization on a Compound</p>
-<p>Utilizes Open Babel (<a class="reference external" href="http://openbabel.org/docs/dev/">http://openbabel.org/docs/dev/</a>) to perform an
-energy minimization/geometry optimization on a Compound by applying
-a generic force field.</p>
+<p>Default beahvior utilizes Open Babel (<a class="reference external" href="http://openbabel.org/docs/dev/">http://openbabel.org/docs/dev/</a>)
+to perform an energy minimization/geometry optimization on a
+Compound by applying a generic force field</p>
+<p>Can also utilize OpenMM (<a class="reference external" href="http://openmm.org/">http://openmm.org/</a>) to energy minimize
+after atomtyping a Compound using
+Foyer (<a class="reference external" href="https://github.com/mosdef-hub/foyer">https://github.com/mosdef-hub/foyer</a>) to apply a forcefield
+XML file that contains valid SMARTS strings.</p>
 <p>This function is primarily intended to be used on smaller components,
 with sizes on the order of 10’s to 100’s of particles, as the energy
 minimization scales poorly with the number of particles.</p>
@@ -2822,20 +2897,46 @@ minimization scales poorly with the number of particles.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
-<dt><strong>steps</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int, optionl, default=1000</span></dt>
+<dt><strong>steps</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int, optional, default=1000</span></dt>
 <dd><p class="first last">The number of optimization iterations</p>
-</dd>
-<dt><strong>algorithm</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str, optional, default=’cg’</span></dt>
-<dd><p class="first last">The energy minimization algorithm.  Valid options are ‘steep’,
-‘cg’, and ‘md’, corresponding to steepest descent, conjugate
-gradient, and equilibrium molecular dynamics respectively.</p>
 </dd>
 <dt><strong>forcefield</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str, optional, default=’UFF’</span></dt>
 <dd><p class="first last">The generic force field to apply to the Compound for minimization.
 Valid options are ‘MMFF94’, ‘MMFF94s’, ‘’UFF’, ‘GAFF’, and ‘Ghemical’.
 Please refer to the Open Babel documentation (<a class="reference external" href="http://open-babel">http://open-babel</a>.
 readthedocs.io/en/latest/Forcefields/Overview.html) when considering
-your choice of force field.</p>
+your choice of force field.
+Utilizing OpenMM for energy minimization requires a forcefield
+XML file with valid SMARTS strings. Please refer to (<a class="reference external" href="http://docs">http://docs</a>.
+openmm.org/7.0.0/userguide/application.html#creating-force-fields)
+for more information.</p>
+</dd>
+<dt><strong>Keyword Arguments</strong></dt>
+<dd></dd>
+<dt><strong>————</strong></dt>
+<dd></dd>
+<dt><strong>algorithm</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str, optional, default=’cg’</span></dt>
+<dd><p class="first last">The energy minimization algorithm.  Valid options are ‘steep’,
+‘cg’, and ‘md’, corresponding to steepest descent, conjugate
+gradient, and equilibrium molecular dynamics respectively.
+For _energy_minimize_openbabel</p>
+</dd>
+<dt><strong>scale_bonds</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float, optional, default=1</span></dt>
+<dd><p class="first last">Scales the bond force constant (1 is completely on).
+For _energy_minimize_openmm</p>
+</dd>
+<dt><strong>scale_angles</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float, optional, default=1</span></dt>
+<dd><p class="first last">Scales the angle force constant (1 is completely on)
+For _energy_minimize_openmm</p>
+</dd>
+<dt><strong>scale_torsions</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float, optional, default=1</span></dt>
+<dd><p class="first last">Scales the torsional force constants (1 is completely on)
+For _energy_minimize_openmm
+Note: Only Ryckaert-Bellemans style torsions are currently supported</p>
+</dd>
+<dt><strong>scale_nonbonded</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float, optional, default=1</span></dt>
+<dd><p class="first last">Scales epsilon (1 is completely on)
+For _energy_minimize_openmm</p>
 </dd>
 </dl>
 </td>
@@ -2843,75 +2944,81 @@ your choice of force field.</p>
 </tbody>
 </table>
 <p class="rubric">References</p>
-<table class="docutils citation" frame="void" id="r3a4e07bc7326-1" rules="none">
+<p>If using _energy_minimize_openmm(), please cite:
+.. [R3dfbea0e586c-1] P. Eastman, M. S. Friedrichs, J. D. Chodera, R. J. Radmer,</p>
+<blockquote>
+<div>C. M. Bruns, J. P. Ku, K. A. Beauchamp, T. J. Lane,
+L.-P. Wang, D. Shukla, T. Tye, M. Houston, T. Stich,
+C. Klein, M. R. Shirts, and V. S. Pande.
+“OpenMM 4: A Reusable, Extensible, Hardware Independent
+Library for High Performance Molecular Simulation.”
+J. Chem. Theor. Comput. 9(1): 461-469. (2013).</div></blockquote>
+<p>If using _energy_minimize_openbabel(), please cite:
+.. [R3dfbea0e586c-1] O’Boyle, N.M.; Banck, M.; James, C.A.; Morley, C.;</p>
+<blockquote>
+<div>Vandermeersch, T.; Hutchison, G.R. “Open Babel: An open
+chemical toolbox.” (2011) J. Cheminf. 3, 33</div></blockquote>
+<table class="docutils citation" frame="void" id="r3dfbea0e586c-2" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id23">[1]</a></td><td>O’Boyle, N.M.; Banck, M.; James, C.A.; Morley, C.;
-Vandermeersch, T.; Hutchison, G.R. “Open Babel: An open
-chemical toolbox.” (2011) J. Cheminf. 3, 33</td></tr>
-</tbody>
-</table>
-<table class="docutils citation" frame="void" id="r3a4e07bc7326-2" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id24">[2]</a></td><td>Open Babel, version X.X.X <a class="reference external" href="http://openbabel.org">http://openbabel.org</a>, (installed
+<tr><td class="label"><a class="fn-backref" href="#id27">[2]</a></td><td>Open Babel, version X.X.X <a class="reference external" href="http://openbabel.org">http://openbabel.org</a>, (installed
 Month Year)</td></tr>
 </tbody>
 </table>
 <p>If using the ‘MMFF94’ force field please also cite the following:
-.. [R3a4e07bc7326-3] T.A. Halgren, “Merck molecular force field. I. Basis, form,</p>
+.. [R3dfbea0e586c-3] T.A. Halgren, “Merck molecular force field. I. Basis, form,</p>
 <blockquote>
 <div>scope, parameterization, and performance of MMFF94.” (1996)
 J. Comput. Chem. 17, 490-519</div></blockquote>
-<table class="docutils citation" frame="void" id="r3a4e07bc7326-4" rules="none">
+<table class="docutils citation" frame="void" id="r3dfbea0e586c-4" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id26">[4]</a></td><td>T.A. Halgren, “Merck molecular force field. II. MMFF94 van der
+<tr><td class="label"><a class="fn-backref" href="#id29">[4]</a></td><td>T.A. Halgren, “Merck molecular force field. II. MMFF94 van der
 Waals and electrostatic parameters for intermolecular
 interactions.” (1996) J. Comput. Chem. 17, 520-552</td></tr>
 </tbody>
 </table>
-<table class="docutils citation" frame="void" id="r3a4e07bc7326-5" rules="none">
+<table class="docutils citation" frame="void" id="r3dfbea0e586c-5" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id27">[5]</a></td><td>T.A. Halgren, “Merck molecular force field. III. Molecular
+<tr><td class="label"><a class="fn-backref" href="#id30">[5]</a></td><td>T.A. Halgren, “Merck molecular force field. III. Molecular
 geometries and vibrational frequencies for MMFF94.” (1996)
 J. Comput. Chem. 17, 553-586</td></tr>
 </tbody>
 </table>
-<table class="docutils citation" frame="void" id="r3a4e07bc7326-6" rules="none">
+<table class="docutils citation" frame="void" id="r3dfbea0e586c-6" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id28">[6]</a></td><td>T.A. Halgren and R.B. Nachbar, “Merck molecular force field.
+<tr><td class="label"><a class="fn-backref" href="#id31">[6]</a></td><td>T.A. Halgren and R.B. Nachbar, “Merck molecular force field.
 IV. Conformational energies and geometries for MMFF94.” (1996)
 J. Comput. Chem. 17, 587-615</td></tr>
 </tbody>
 </table>
-<table class="docutils citation" frame="void" id="r3a4e07bc7326-7" rules="none">
+<table class="docutils citation" frame="void" id="r3dfbea0e586c-7" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id29">[7]</a></td><td>T.A. Halgren, “Merck molecular force field. V. Extension of
+<tr><td class="label"><a class="fn-backref" href="#id32">[7]</a></td><td>T.A. Halgren, “Merck molecular force field. V. Extension of
 MMFF94 using experimental data, additional computational data,
 and empirical rules.” (1996) J. Comput. Chem. 17, 616-641</td></tr>
 </tbody>
 </table>
 <p>If using the ‘MMFF94s’ force field please cite the above along with:
-.. [R3a4e07bc7326-8] T.A. Halgren, “MMFF VI. MMFF94s option for energy minimization</p>
+.. [R3dfbea0e586c-8] T.A. Halgren, “MMFF VI. MMFF94s option for energy minimization</p>
 <blockquote>
 <div>studies.” (1999) J. Comput. Chem. 20, 720-729</div></blockquote>
 <p>If using the ‘UFF’ force field please cite the following:
-.. [R3a4e07bc7326-3] Rappe, A.K., Casewit, C.J., Colwell, K.S., Goddard, W.A. III,</p>
+.. [R3dfbea0e586c-3] Rappe, A.K., Casewit, C.J., Colwell, K.S., Goddard, W.A. III,</p>
 <blockquote>
 <div>Skiff, W.M. “UFF, a full periodic table force field for
 molecular mechanics and molecular dynamics simulations.” (1992)
 J. Am. Chem. Soc. 114, 10024-10039</div></blockquote>
 <p>If using the ‘GAFF’ force field please cite the following:
-.. [R3a4e07bc7326-3] Wang, J., Wolf, R.M., Caldwell, J.W., Kollman, P.A., Case, D.A.</p>
+.. [R3dfbea0e586c-3] Wang, J., Wolf, R.M., Caldwell, J.W., Kollman, P.A., Case, D.A.</p>
 <blockquote>
 <div>“Development and testing of a general AMBER force field” (2004)
 J. Comput. Chem. 25, 1157-1174</div></blockquote>
 <p>If using the ‘Ghemical’ force field please cite the following:
-.. [R3a4e07bc7326-3] T. Hassinen and M. Perakyla, “New energy terms for reduced</p>
+.. [R3dfbea0e586c-3] T. Hassinen and M. Perakyla, “New energy terms for reduced</p>
 <blockquote>
 <div>protein models implemented in an off-lattice force field” (2001)
 J. Comput. Chem. 22, 1229-1242</div></blockquote>
@@ -3794,7 +3901,7 @@ including oxygen layers on the top and bottom of the surface)</p>
 <table class="docutils citation" frame="void" id="rf610960ab19e-1" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id34">[1]</a></td><td>Hartkamp, R., Siboulet, B., Dufreche, J.-F., Boasne, B.
+<tr><td class="label"><a class="fn-backref" href="#id37">[1]</a></td><td>Hartkamp, R., Siboulet, B., Dufreche, J.-F., Boasne, B.
 “Ion-specific adsorption and electroosmosis in charged
 amorphous porous silica.” (2015) Phys. Chem. Chem. Phys.
 17, 24683-24695</td></tr>
@@ -3803,7 +3910,7 @@ amorphous porous silica.” (2015) Phys. Chem. Chem. Phys.
 <table class="docutils citation" frame="void" id="rf610960ab19e-2" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id35">[2]</a></td><td>L.T. Zhuravlev, “The surface chemistry of amorphous silica.
+<tr><td class="label"><a class="fn-backref" href="#id38">[2]</a></td><td>L.T. Zhuravlev, “The surface chemistry of amorphous silica.
 Zhuravlev model.” (2000) Colloids Surf., A. 10, 1-38</td></tr>
 </tbody>
 </table>
@@ -4020,12 +4127,16 @@ and the particle tree is not traversed, boosting performance.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="mbuild.recipes.silica_interface.SilicaInterface.energy_minimization">
-<code class="descname">energy_minimization</code><span class="sig-paren">(</span><em>steps=2500</em>, <em>algorithm='cg'</em>, <em>forcefield='UFF'</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.recipes.silica_interface.SilicaInterface.energy_minimization" title="Permalink to this definition">¶</a></dt>
+<dt id="mbuild.recipes.silica_interface.SilicaInterface.energy_minimize">
+<code class="descname">energy_minimize</code><span class="sig-paren">(</span><em>forcefield='UFF'</em>, <em>steps=1000</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.recipes.silica_interface.SilicaInterface.energy_minimize" title="Permalink to this definition">¶</a></dt>
 <dd><p>Perform an energy minimization on a Compound</p>
-<p>Utilizes Open Babel (<a class="reference external" href="http://openbabel.org/docs/dev/">http://openbabel.org/docs/dev/</a>) to perform an
-energy minimization/geometry optimization on a Compound by applying
-a generic force field.</p>
+<p>Default beahvior utilizes Open Babel (<a class="reference external" href="http://openbabel.org/docs/dev/">http://openbabel.org/docs/dev/</a>)
+to perform an energy minimization/geometry optimization on a
+Compound by applying a generic force field</p>
+<p>Can also utilize OpenMM (<a class="reference external" href="http://openmm.org/">http://openmm.org/</a>) to energy minimize
+after atomtyping a Compound using
+Foyer (<a class="reference external" href="https://github.com/mosdef-hub/foyer">https://github.com/mosdef-hub/foyer</a>) to apply a forcefield
+XML file that contains valid SMARTS strings.</p>
 <p>This function is primarily intended to be used on smaller components,
 with sizes on the order of 10’s to 100’s of particles, as the energy
 minimization scales poorly with the number of particles.</p>
@@ -4034,20 +4145,46 @@ minimization scales poorly with the number of particles.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
-<dt><strong>steps</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int, optionl, default=1000</span></dt>
+<dt><strong>steps</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int, optional, default=1000</span></dt>
 <dd><p class="first last">The number of optimization iterations</p>
-</dd>
-<dt><strong>algorithm</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str, optional, default=’cg’</span></dt>
-<dd><p class="first last">The energy minimization algorithm.  Valid options are ‘steep’,
-‘cg’, and ‘md’, corresponding to steepest descent, conjugate
-gradient, and equilibrium molecular dynamics respectively.</p>
 </dd>
 <dt><strong>forcefield</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str, optional, default=’UFF’</span></dt>
 <dd><p class="first last">The generic force field to apply to the Compound for minimization.
 Valid options are ‘MMFF94’, ‘MMFF94s’, ‘’UFF’, ‘GAFF’, and ‘Ghemical’.
 Please refer to the Open Babel documentation (<a class="reference external" href="http://open-babel">http://open-babel</a>.
 readthedocs.io/en/latest/Forcefields/Overview.html) when considering
-your choice of force field.</p>
+your choice of force field.
+Utilizing OpenMM for energy minimization requires a forcefield
+XML file with valid SMARTS strings. Please refer to (<a class="reference external" href="http://docs">http://docs</a>.
+openmm.org/7.0.0/userguide/application.html#creating-force-fields)
+for more information.</p>
+</dd>
+<dt><strong>Keyword Arguments</strong></dt>
+<dd></dd>
+<dt><strong>————</strong></dt>
+<dd></dd>
+<dt><strong>algorithm</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str, optional, default=’cg’</span></dt>
+<dd><p class="first last">The energy minimization algorithm.  Valid options are ‘steep’,
+‘cg’, and ‘md’, corresponding to steepest descent, conjugate
+gradient, and equilibrium molecular dynamics respectively.
+For _energy_minimize_openbabel</p>
+</dd>
+<dt><strong>scale_bonds</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float, optional, default=1</span></dt>
+<dd><p class="first last">Scales the bond force constant (1 is completely on).
+For _energy_minimize_openmm</p>
+</dd>
+<dt><strong>scale_angles</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float, optional, default=1</span></dt>
+<dd><p class="first last">Scales the angle force constant (1 is completely on)
+For _energy_minimize_openmm</p>
+</dd>
+<dt><strong>scale_torsions</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float, optional, default=1</span></dt>
+<dd><p class="first last">Scales the torsional force constants (1 is completely on)
+For _energy_minimize_openmm
+Note: Only Ryckaert-Bellemans style torsions are currently supported</p>
+</dd>
+<dt><strong>scale_nonbonded</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float, optional, default=1</span></dt>
+<dd><p class="first last">Scales epsilon (1 is completely on)
+For _energy_minimize_openmm</p>
 </dd>
 </dl>
 </td>
@@ -4055,75 +4192,81 @@ your choice of force field.</p>
 </tbody>
 </table>
 <p class="rubric">References</p>
-<table class="docutils citation" frame="void" id="r61dfc5a86c2f-1" rules="none">
+<p>If using _energy_minimize_openmm(), please cite:
+.. [Rd802fe3f8fe7-1] P. Eastman, M. S. Friedrichs, J. D. Chodera, R. J. Radmer,</p>
+<blockquote>
+<div>C. M. Bruns, J. P. Ku, K. A. Beauchamp, T. J. Lane,
+L.-P. Wang, D. Shukla, T. Tye, M. Houston, T. Stich,
+C. Klein, M. R. Shirts, and V. S. Pande.
+“OpenMM 4: A Reusable, Extensible, Hardware Independent
+Library for High Performance Molecular Simulation.”
+J. Chem. Theor. Comput. 9(1): 461-469. (2013).</div></blockquote>
+<p>If using _energy_minimize_openbabel(), please cite:
+.. [Rd802fe3f8fe7-1] O’Boyle, N.M.; Banck, M.; James, C.A.; Morley, C.;</p>
+<blockquote>
+<div>Vandermeersch, T.; Hutchison, G.R. “Open Babel: An open
+chemical toolbox.” (2011) J. Cheminf. 3, 33</div></blockquote>
+<table class="docutils citation" frame="void" id="rd802fe3f8fe7-2" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id36">[1]</a></td><td>O’Boyle, N.M.; Banck, M.; James, C.A.; Morley, C.;
-Vandermeersch, T.; Hutchison, G.R. “Open Babel: An open
-chemical toolbox.” (2011) J. Cheminf. 3, 33</td></tr>
-</tbody>
-</table>
-<table class="docutils citation" frame="void" id="r61dfc5a86c2f-2" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id37">[2]</a></td><td>Open Babel, version X.X.X <a class="reference external" href="http://openbabel.org">http://openbabel.org</a>, (installed
+<tr><td class="label"><a class="fn-backref" href="#id41">[2]</a></td><td>Open Babel, version X.X.X <a class="reference external" href="http://openbabel.org">http://openbabel.org</a>, (installed
 Month Year)</td></tr>
 </tbody>
 </table>
 <p>If using the ‘MMFF94’ force field please also cite the following:
-.. [R61dfc5a86c2f-3] T.A. Halgren, “Merck molecular force field. I. Basis, form,</p>
+.. [Rd802fe3f8fe7-3] T.A. Halgren, “Merck molecular force field. I. Basis, form,</p>
 <blockquote>
 <div>scope, parameterization, and performance of MMFF94.” (1996)
 J. Comput. Chem. 17, 490-519</div></blockquote>
-<table class="docutils citation" frame="void" id="r61dfc5a86c2f-4" rules="none">
+<table class="docutils citation" frame="void" id="rd802fe3f8fe7-4" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id39">[4]</a></td><td>T.A. Halgren, “Merck molecular force field. II. MMFF94 van der
+<tr><td class="label"><a class="fn-backref" href="#id43">[4]</a></td><td>T.A. Halgren, “Merck molecular force field. II. MMFF94 van der
 Waals and electrostatic parameters for intermolecular
 interactions.” (1996) J. Comput. Chem. 17, 520-552</td></tr>
 </tbody>
 </table>
-<table class="docutils citation" frame="void" id="r61dfc5a86c2f-5" rules="none">
+<table class="docutils citation" frame="void" id="rd802fe3f8fe7-5" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id40">[5]</a></td><td>T.A. Halgren, “Merck molecular force field. III. Molecular
+<tr><td class="label"><a class="fn-backref" href="#id44">[5]</a></td><td>T.A. Halgren, “Merck molecular force field. III. Molecular
 geometries and vibrational frequencies for MMFF94.” (1996)
 J. Comput. Chem. 17, 553-586</td></tr>
 </tbody>
 </table>
-<table class="docutils citation" frame="void" id="r61dfc5a86c2f-6" rules="none">
+<table class="docutils citation" frame="void" id="rd802fe3f8fe7-6" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id41">[6]</a></td><td>T.A. Halgren and R.B. Nachbar, “Merck molecular force field.
+<tr><td class="label"><a class="fn-backref" href="#id45">[6]</a></td><td>T.A. Halgren and R.B. Nachbar, “Merck molecular force field.
 IV. Conformational energies and geometries for MMFF94.” (1996)
 J. Comput. Chem. 17, 587-615</td></tr>
 </tbody>
 </table>
-<table class="docutils citation" frame="void" id="r61dfc5a86c2f-7" rules="none">
+<table class="docutils citation" frame="void" id="rd802fe3f8fe7-7" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id42">[7]</a></td><td>T.A. Halgren, “Merck molecular force field. V. Extension of
+<tr><td class="label"><a class="fn-backref" href="#id46">[7]</a></td><td>T.A. Halgren, “Merck molecular force field. V. Extension of
 MMFF94 using experimental data, additional computational data,
 and empirical rules.” (1996) J. Comput. Chem. 17, 616-641</td></tr>
 </tbody>
 </table>
 <p>If using the ‘MMFF94s’ force field please cite the above along with:
-.. [R61dfc5a86c2f-8] T.A. Halgren, “MMFF VI. MMFF94s option for energy minimization</p>
+.. [Rd802fe3f8fe7-8] T.A. Halgren, “MMFF VI. MMFF94s option for energy minimization</p>
 <blockquote>
 <div>studies.” (1999) J. Comput. Chem. 20, 720-729</div></blockquote>
 <p>If using the ‘UFF’ force field please cite the following:
-.. [R61dfc5a86c2f-3] Rappe, A.K., Casewit, C.J., Colwell, K.S., Goddard, W.A. III,</p>
+.. [Rd802fe3f8fe7-3] Rappe, A.K., Casewit, C.J., Colwell, K.S., Goddard, W.A. III,</p>
 <blockquote>
 <div>Skiff, W.M. “UFF, a full periodic table force field for
 molecular mechanics and molecular dynamics simulations.” (1992)
 J. Am. Chem. Soc. 114, 10024-10039</div></blockquote>
 <p>If using the ‘GAFF’ force field please cite the following:
-.. [R61dfc5a86c2f-3] Wang, J., Wolf, R.M., Caldwell, J.W., Kollman, P.A., Case, D.A.</p>
+.. [Rd802fe3f8fe7-3] Wang, J., Wolf, R.M., Caldwell, J.W., Kollman, P.A., Case, D.A.</p>
 <blockquote>
 <div>“Development and testing of a general AMBER force field” (2004)
 J. Comput. Chem. 25, 1157-1174</div></blockquote>
 <p>If using the ‘Ghemical’ force field please cite the following:
-.. [R61dfc5a86c2f-3] T. Hassinen and M. Perakyla, “New energy terms for reduced</p>
+.. [Rd802fe3f8fe7-3] T. Hassinen and M. Perakyla, “New energy terms for reduced</p>
 <blockquote>
 <div>protein models implemented in an off-lattice force field” (2001)
 J. Comput. Chem. 22, 1229-1242</div></blockquote>
@@ -5574,10 +5717,7 @@ If np.ndarray, scale each direction independently.</p>
 
   
 
-  
-  
-    <script type="text/javascript" src="_static/js/theme.js"></script>
-  
+  <script type="text/javascript" src="_static/js/theme.js"></script>
 
   <script type="text/javascript">
       jQuery(function () {
