@@ -1281,19 +1281,29 @@ information on atom styles.</p>
 
 <dl class="method">
 <dt id="mbuild.compound.Compound.to_parmed">
-<code class="descname">to_parmed</code><span class="sig-paren">(</span><em>box=None</em>, <em>title=''</em>, <em>residues=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/compound.html#Compound.to_parmed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.compound.Compound.to_parmed" title="Permalink to this definition">¶</a></dt>
+<code class="descname">to_parmed</code><span class="sig-paren">(</span><em>box=None</em>, <em>title=''</em>, <em>residues=None</em>, <em>show_ports=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/compound.html#Compound.to_parmed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.compound.Compound.to_parmed" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a ParmEd Structure from a Compound.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>box</strong> <span class="classifier-delimiter">:</span> <span class="classifier">mb.Box, optional, default=self.boundingbox (with buffer)</span></dt>
+<dd><p class="first last">Box information to be used when converting to a <cite>Structure</cite>.
+If ‘None’, a bounding box is used with 0.25nm buffers at
+each face to avoid overlapping atoms, unless <cite>self.periodicity</cite>
+is not None, in which case those values are used for the
+box lengths.</p>
+</dd>
 <dt><strong>title</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str, optional, default=self.name</span></dt>
 <dd><p class="first last">Title/name of the ParmEd Structure</p>
 </dd>
 <dt><strong>residues</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str of list of str</span></dt>
 <dd><p class="first last">Labels of residues in the Compound. Residues are assigned by
 checking against Compound.name.</p>
+</dd>
+<dt><strong>show_ports</strong> <span class="classifier-delimiter">:</span> <span class="classifier">boolean, optional, default=False</span></dt>
+<dd><p class="first last">Include all port atoms when converting to a <cite>Structure</cite>.</p>
 </dd>
 </dl>
 </td>
@@ -2537,19 +2547,29 @@ information on atom styles.</p>
 
 <dl class="method">
 <dt id="mbuild.port.Port.to_parmed">
-<code class="descname">to_parmed</code><span class="sig-paren">(</span><em>box=None</em>, <em>title=''</em>, <em>residues=None</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.port.Port.to_parmed" title="Permalink to this definition">¶</a></dt>
+<code class="descname">to_parmed</code><span class="sig-paren">(</span><em>box=None</em>, <em>title=''</em>, <em>residues=None</em>, <em>show_ports=False</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.port.Port.to_parmed" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a ParmEd Structure from a Compound.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>box</strong> <span class="classifier-delimiter">:</span> <span class="classifier">mb.Box, optional, default=self.boundingbox (with buffer)</span></dt>
+<dd><p class="first last">Box information to be used when converting to a <cite>Structure</cite>.
+If ‘None’, a bounding box is used with 0.25nm buffers at
+each face to avoid overlapping atoms, unless <cite>self.periodicity</cite>
+is not None, in which case those values are used for the
+box lengths.</p>
+</dd>
 <dt><strong>title</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str, optional, default=self.name</span></dt>
 <dd><p class="first last">Title/name of the ParmEd Structure</p>
 </dd>
 <dt><strong>residues</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str of list of str</span></dt>
 <dd><p class="first last">Labels of residues in the Compound. Residues are assigned by
 checking against Compound.name.</p>
+</dd>
+<dt><strong>show_ports</strong> <span class="classifier-delimiter">:</span> <span class="classifier">boolean, optional, default=False</span></dt>
+<dd><p class="first last">Include all port atoms when converting to a <cite>Structure</cite>.</p>
 </dd>
 </dl>
 </td>
