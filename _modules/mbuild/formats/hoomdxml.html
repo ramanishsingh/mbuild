@@ -168,12 +168,13 @@
 
 <span class="kn">from</span> <span class="nn">mbuild</span> <span class="k">import</span> <span class="n">Box</span>
 <span class="kn">from</span> <span class="nn">mbuild.utils.conversion</span> <span class="k">import</span> <span class="n">RB_to_OPLS</span>
+<span class="kn">from</span> <span class="nn">mbuild.utils.geometry</span> <span class="k">import</span> <span class="n">coord_shift</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;write_hoomdxml&#39;</span><span class="p">]</span>
 
 
-<div class="viewcode-block" id="write_hoomdxml"><a class="viewcode-back" href="../../../writers.html#mbuild.formats.hoomdxml.write_hoomdxml">[docs]</a><span class="k">def</span> <span class="nf">write_hoomdxml</span><span class="p">(</span><span class="n">structure</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">ref_distance</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">ref_mass</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> 
-                   <span class="n">ref_energy</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">rigid_bodies</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="write_hoomdxml"><a class="viewcode-back" href="../../../writers.html#mbuild.formats.hoomdxml.write_hoomdxml">[docs]</a><span class="k">def</span> <span class="nf">write_hoomdxml</span><span class="p">(</span><span class="n">structure</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">ref_distance</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">ref_mass</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+                   <span class="n">ref_energy</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">rigid_bodies</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">shift_coords</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Output a HOOMD XML file.</span>
 
 <span class="sd">    Parameters</span>
@@ -193,6 +194,8 @@
 <span class="sd">        for each particle corresponding to the number of the rigid body with</span>
 <span class="sd">        which the particle should be included. A value of None indicates the</span>
 <span class="sd">        particle is not part of any rigid body.</span>
+<span class="sd">    shift_coords : bool, optional, default=True</span>
+<span class="sd">        Shift coordinates from (0, L) to (-L/2, L/2) if necessary.</span>
 
 <span class="sd">    Notes</span>
 <span class="sd">    -----</span>
@@ -239,6 +242,8 @@
     <span class="k">if</span> <span class="n">structure</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
         <span class="n">forcefield</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="n">xyz</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">atom</span><span class="o">.</span><span class="n">xx</span><span class="p">,</span> <span class="n">atom</span><span class="o">.</span><span class="n">xy</span><span class="p">,</span> <span class="n">atom</span><span class="o">.</span><span class="n">xz</span><span class="p">]</span> <span class="k">for</span> <span class="n">atom</span> <span class="ow">in</span> <span class="n">structure</span><span class="o">.</span><span class="n">atoms</span><span class="p">])</span>
+    <span class="k">if</span> <span class="n">shift_coords</span><span class="p">:</span>
+        <span class="n">xyz</span> <span class="o">=</span> <span class="n">coord_shift</span><span class="p">(</span><span class="n">xyz</span><span class="p">,</span> <span class="n">structure</span><span class="o">.</span><span class="n">box</span><span class="p">[:</span><span class="mi">3</span><span class="p">])</span>
 
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">xml_file</span><span class="p">:</span>
         <span class="n">xml_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;&lt;?xml version=&quot;1.2&quot; encoding=&quot;UTF-8&quot;?&gt;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
