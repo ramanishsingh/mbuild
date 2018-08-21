@@ -1251,7 +1251,7 @@ checking against Compound.name.</p>
 
 <dl class="method">
 <dt id="mbuild.recipes.monolayer.Monolayer.to_trajectory">
-<code class="descname">to_trajectory</code><span class="sig-paren">(</span><em>show_ports=False</em>, <em>chains=None</em>, <em>residues=None</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.recipes.monolayer.Monolayer.to_trajectory" title="Permalink to this definition">¶</a></dt>
+<code class="descname">to_trajectory</code><span class="sig-paren">(</span><em>show_ports=False</em>, <em>chains=None</em>, <em>residues=None</em>, <em>box=None</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.recipes.monolayer.Monolayer.to_trajectory" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert to an md.Trajectory and flatten the compound.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1267,6 +1267,13 @@ checking against Compound.name.</p>
 <dt><strong>residues</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str of list of str</span></dt>
 <dd><p class="first last">Labels of residues in the Compound. Residues are assigned by
 checking against Compound.name.</p>
+</dd>
+<dt><strong>box</strong> <span class="classifier-delimiter">:</span> <span class="classifier">mb.Box, optional, default=self.boundingbox (with buffer)</span></dt>
+<dd><p class="first last">Box information to be used when converting to a <cite>Trajectory</cite>.
+If ‘None’, a bounding box is used with a 0.5nm buffer in each
+dimension. to avoid overlapping atoms, unless <cite>self.periodicity</cite>
+is not None, in which case those values are used for the
+box lengths.</p>
 </dd>
 </dl>
 </td>
@@ -2489,7 +2496,7 @@ checking against Compound.name.</p>
 
 <dl class="method">
 <dt id="mbuild.recipes.polymer.Polymer.to_trajectory">
-<code class="descname">to_trajectory</code><span class="sig-paren">(</span><em>show_ports=False</em>, <em>chains=None</em>, <em>residues=None</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.recipes.polymer.Polymer.to_trajectory" title="Permalink to this definition">¶</a></dt>
+<code class="descname">to_trajectory</code><span class="sig-paren">(</span><em>show_ports=False</em>, <em>chains=None</em>, <em>residues=None</em>, <em>box=None</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.recipes.polymer.Polymer.to_trajectory" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert to an md.Trajectory and flatten the compound.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -2505,6 +2512,13 @@ checking against Compound.name.</p>
 <dt><strong>residues</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str of list of str</span></dt>
 <dd><p class="first last">Labels of residues in the Compound. Residues are assigned by
 checking against Compound.name.</p>
+</dd>
+<dt><strong>box</strong> <span class="classifier-delimiter">:</span> <span class="classifier">mb.Box, optional, default=self.boundingbox (with buffer)</span></dt>
+<dd><p class="first last">Box information to be used when converting to a <cite>Trajectory</cite>.
+If ‘None’, a bounding box is used with a 0.5nm buffer in each
+dimension. to avoid overlapping atoms, unless <cite>self.periodicity</cite>
+is not None, in which case those values are used for the
+box lengths.</p>
 </dd>
 </dl>
 </td>
@@ -3724,7 +3738,7 @@ checking against Compound.name.</p>
 
 <dl class="method">
 <dt id="mbuild.recipes.tiled_compound.TiledCompound.to_trajectory">
-<code class="descname">to_trajectory</code><span class="sig-paren">(</span><em>show_ports=False</em>, <em>chains=None</em>, <em>residues=None</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.recipes.tiled_compound.TiledCompound.to_trajectory" title="Permalink to this definition">¶</a></dt>
+<code class="descname">to_trajectory</code><span class="sig-paren">(</span><em>show_ports=False</em>, <em>chains=None</em>, <em>residues=None</em>, <em>box=None</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.recipes.tiled_compound.TiledCompound.to_trajectory" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert to an md.Trajectory and flatten the compound.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -3740,6 +3754,13 @@ checking against Compound.name.</p>
 <dt><strong>residues</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str of list of str</span></dt>
 <dd><p class="first last">Labels of residues in the Compound. Residues are assigned by
 checking against Compound.name.</p>
+</dd>
+<dt><strong>box</strong> <span class="classifier-delimiter">:</span> <span class="classifier">mb.Box, optional, default=self.boundingbox (with buffer)</span></dt>
+<dd><p class="first last">Box information to be used when converting to a <cite>Trajectory</cite>.
+If ‘None’, a bounding box is used with a 0.5nm buffer in each
+dimension. to avoid overlapping atoms, unless <cite>self.periodicity</cite>
+is not None, in which case those values are used for the
+box lengths.</p>
 </dd>
 </dl>
 </td>
@@ -4982,7 +5003,7 @@ checking against Compound.name.</p>
 
 <dl class="method">
 <dt id="mbuild.recipes.silica_interface.SilicaInterface.to_trajectory">
-<code class="descname">to_trajectory</code><span class="sig-paren">(</span><em>show_ports=False</em>, <em>chains=None</em>, <em>residues=None</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.recipes.silica_interface.SilicaInterface.to_trajectory" title="Permalink to this definition">¶</a></dt>
+<code class="descname">to_trajectory</code><span class="sig-paren">(</span><em>show_ports=False</em>, <em>chains=None</em>, <em>residues=None</em>, <em>box=None</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.recipes.silica_interface.SilicaInterface.to_trajectory" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert to an md.Trajectory and flatten the compound.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -4998,6 +5019,13 @@ checking against Compound.name.</p>
 <dt><strong>residues</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str of list of str</span></dt>
 <dd><p class="first last">Labels of residues in the Compound. Residues are assigned by
 checking against Compound.name.</p>
+</dd>
+<dt><strong>box</strong> <span class="classifier-delimiter">:</span> <span class="classifier">mb.Box, optional, default=self.boundingbox (with buffer)</span></dt>
+<dd><p class="first last">Box information to be used when converting to a <cite>Trajectory</cite>.
+If ‘None’, a bounding box is used with a 0.5nm buffer in each
+dimension. to avoid overlapping atoms, unless <cite>self.periodicity</cite>
+is not None, in which case those values are used for the
+box lengths.</p>
 </dd>
 </dl>
 </td>

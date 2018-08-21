@@ -2021,7 +2021,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">periodicity</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">])</span></div>
 
 <div class="viewcode-block" id="Compound.to_trajectory"><a class="viewcode-back" href="../../data_structures.html#mbuild.compound.Compound.to_trajectory">[docs]</a>    <span class="k">def</span> <span class="nf">to_trajectory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">show_ports</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">chains</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                      <span class="n">residues</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+                      <span class="n">residues</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">box</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Convert to an md.Trajectory and flatten the compound.</span>
 
 <span class="sd">        Parameters</span>
@@ -2033,6 +2033,12 @@
 <span class="sd">        residues : str of list of str</span>
 <span class="sd">            Labels of residues in the Compound. Residues are assigned by</span>
 <span class="sd">            checking against Compound.name.</span>
+<span class="sd">        box : mb.Box, optional, default=self.boundingbox (with buffer)</span>
+<span class="sd">            Box information to be used when converting to a `Trajectory`.</span>
+<span class="sd">            If &#39;None&#39;, a bounding box is used with a 0.5nm buffer in each</span>
+<span class="sd">            dimension. to avoid overlapping atoms, unless `self.periodicity`</span>
+<span class="sd">            is not None, in which case those values are used for the</span>
+<span class="sd">            box lengths.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
@@ -2053,16 +2059,20 @@
             <span class="n">xyz</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">atom</span><span class="o">.</span><span class="n">pos</span>
 
         <span class="c1"># Unitcell information.</span>
-        <span class="n">box</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">boundingbox</span>
-        <span class="n">unitcell_lengths</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">dim</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">periodicity</span><span class="p">):</span>
-            <span class="k">if</span> <span class="n">val</span><span class="p">:</span>
-                <span class="n">unitcell_lengths</span><span class="p">[</span><span class="n">dim</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">unitcell_lengths</span><span class="p">[</span><span class="n">dim</span><span class="p">]</span> <span class="o">=</span> <span class="n">box</span><span class="o">.</span><span class="n">lengths</span><span class="p">[</span><span class="n">dim</span><span class="p">]</span>
+        <span class="n">unitcell_angles</span> <span class="o">=</span> <span class="p">[</span><span class="mf">90.0</span><span class="p">,</span> <span class="mf">90.0</span><span class="p">,</span> <span class="mf">90.0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">box</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">unitcell_lengths</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">dim</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">periodicity</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">val</span><span class="p">:</span>
+                    <span class="n">unitcell_lengths</span><span class="p">[</span><span class="n">dim</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">unitcell_lengths</span><span class="p">[</span><span class="n">dim</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">boundingbox</span><span class="o">.</span><span class="n">lengths</span><span class="p">[</span><span class="n">dim</span><span class="p">]</span> <span class="o">+</span> <span class="mf">0.5</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">unitcell_lengths</span> <span class="o">=</span> <span class="n">box</span><span class="o">.</span><span class="n">lengths</span>
+            <span class="n">unitcell_angles</span> <span class="o">=</span> <span class="n">box</span><span class="o">.</span><span class="n">angles</span>
 
         <span class="k">return</span> <span class="n">md</span><span class="o">.</span><span class="n">Trajectory</span><span class="p">(</span><span class="n">xyz</span><span class="p">,</span> <span class="n">top</span><span class="p">,</span> <span class="n">unitcell_lengths</span><span class="o">=</span><span class="n">unitcell_lengths</span><span class="p">,</span>
-                             <span class="n">unitcell_angles</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">90</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">90</span><span class="p">]))</span></div>
+                             <span class="n">unitcell_angles</span><span class="o">=</span><span class="n">unitcell_angles</span><span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">_to_topology</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">atom_list</span><span class="p">,</span> <span class="n">chains</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">residues</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Create a mdtraj.Topology from a Compound.</span>
@@ -2370,7 +2380,10 @@
             <span class="n">box</span><span class="o">.</span><span class="n">maxs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">box_vec_max</span><span class="p">)</span>
 
         <span class="n">box_vector</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
-        <span class="n">box_vector</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">box_vector</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="n">box_vector</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">=</span> <span class="mf">90.0</span>
+        <span class="k">if</span> <span class="n">box</span><span class="o">.</span><span class="n">angles</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">box_vector</span><span class="p">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">6</span><span class="p">]</span> <span class="o">=</span> <span class="n">box</span><span class="o">.</span><span class="n">angles</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">box_vector</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">box_vector</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="n">box_vector</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">=</span> <span class="mf">90.0</span>
         <span class="k">for</span> <span class="n">dim</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
             <span class="n">box_vector</span><span class="p">[</span><span class="n">dim</span><span class="p">]</span> <span class="o">=</span> <span class="n">box</span><span class="o">.</span><span class="n">lengths</span><span class="p">[</span><span class="n">dim</span><span class="p">]</span> <span class="o">*</span> <span class="mi">10</span>
         <span class="n">structure</span><span class="o">.</span><span class="n">box</span> <span class="o">=</span> <span class="n">box_vector</span>
