@@ -1607,9 +1607,10 @@
 
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="kn">from</span> <span class="nn">foyer</span> <span class="k">import</span> <span class="n">Forcefield</span>
+        <span class="n">foyer</span> <span class="o">=</span> <span class="n">import_</span><span class="p">(</span><span class="s1">&#39;foyer&#39;</span><span class="p">)</span>
+
         <span class="n">to_parmed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_parmed</span><span class="p">()</span>
-        <span class="n">ff</span> <span class="o">=</span> <span class="n">Forcefield</span><span class="p">(</span><span class="n">forcefield_files</span><span class="o">=</span><span class="n">forcefield_files</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">forcefield_name</span><span class="p">)</span>
+        <span class="n">ff</span> <span class="o">=</span> <span class="n">foyer</span><span class="o">.</span><span class="n">Forcefield</span><span class="p">(</span><span class="n">forcefield_files</span><span class="o">=</span><span class="n">forcefield_files</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">forcefield_name</span><span class="p">)</span>
         <span class="n">to_parmed</span> <span class="o">=</span> <span class="n">ff</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">to_parmed</span><span class="p">)</span>
 
         <span class="kn">from</span> <span class="nn">simtk.openmm.app.simulation</span> <span class="k">import</span> <span class="n">Simulation</span>
@@ -1889,9 +1890,9 @@
                                    <span class="n">show_ports</span><span class="o">=</span><span class="n">show_ports</span><span class="p">)</span>
         <span class="c1"># Apply a force field with foyer if specified</span>
         <span class="k">if</span> <span class="n">forcefield_name</span> <span class="ow">or</span> <span class="n">forcefield_files</span><span class="p">:</span>
-            <span class="kn">from</span> <span class="nn">foyer</span> <span class="k">import</span> <span class="n">Forcefield</span>
-            <span class="n">ff</span> <span class="o">=</span> <span class="n">Forcefield</span><span class="p">(</span><span class="n">forcefield_files</span><span class="o">=</span><span class="n">forcefield_files</span><span class="p">,</span>
-                            <span class="n">name</span><span class="o">=</span><span class="n">forcefield_name</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="n">forcefield_debug</span><span class="p">)</span>
+            <span class="n">foyer</span> <span class="o">=</span> <span class="n">import_</span><span class="p">(</span><span class="s1">&#39;foyer&#39;</span><span class="p">)</span>
+            <span class="n">ff</span> <span class="o">=</span> <span class="n">foyer</span><span class="o">.</span><span class="n">Forcefield</span><span class="p">(</span><span class="n">forcefield_files</span><span class="o">=</span><span class="n">forcefield_files</span><span class="p">,</span>
+                                  <span class="n">name</span><span class="o">=</span><span class="n">forcefield_name</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="n">forcefield_debug</span><span class="p">)</span>
             <span class="n">structure</span> <span class="o">=</span> <span class="n">ff</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">structure</span><span class="p">,</span> <span class="n">references_file</span><span class="o">=</span><span class="n">references_file</span><span class="p">)</span>
             <span class="n">structure</span><span class="o">.</span><span class="n">combining_rule</span> <span class="o">=</span> <span class="n">combining_rule</span>
 
