@@ -1282,6 +1282,32 @@ information on atom styles.</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="mbuild.compound.Compound.to_networkx">
+<code class="descname">to_networkx</code><span class="sig-paren">(</span><em>names_only=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/compound.html#Compound.to_networkx"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.compound.Compound.to_networkx" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a NetworkX graph representing the hierarchy of a Compound.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>names_only</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool, optional, default=False Store only the names of the</span></dt>
+<dd><p class="first last">compounds in the graph. When set to False, the default behavior,
+the nodes are the compounds themselves.</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>G</strong> <span class="classifier-delimiter">:</span> <span class="classifier">networkx.DiGraph</span></dt>
+<dd></dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="mbuild.compound.Compound.to_parmed">
 <code class="descname">to_parmed</code><span class="sig-paren">(</span><em>box=None</em>, <em>title=''</em>, <em>residues=None</em>, <em>show_ports=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/compound.html#Compound.to_parmed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.compound.Compound.to_parmed" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a ParmEd Structure from a Compound.</p>
@@ -2546,6 +2572,32 @@ information on atom styles.</p>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
 <dt><strong>intermol_system</strong> <span class="classifier-delimiter">:</span> <span class="classifier">intermol.system.System</span></dt>
+<dd></dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mbuild.port.Port.to_networkx">
+<code class="descname">to_networkx</code><span class="sig-paren">(</span><em>names_only=False</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.port.Port.to_networkx" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a NetworkX graph representing the hierarchy of a Compound.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>names_only</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool, optional, default=False Store only the names of the</span></dt>
+<dd><p class="first last">compounds in the graph. When set to False, the default behavior,
+the nodes are the compounds themselves.</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>G</strong> <span class="classifier-delimiter">:</span> <span class="classifier">networkx.DiGraph</span></dt>
 <dd></dd>
 </dl>
 </td>

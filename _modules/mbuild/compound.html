@@ -2392,6 +2392,47 @@
         <span class="n">structure</span><span class="o">.</span><span class="n">box</span> <span class="o">=</span> <span class="n">box_vector</span>
         <span class="k">return</span> <span class="n">structure</span></div>
 
+<div class="viewcode-block" id="Compound.to_networkx"><a class="viewcode-back" href="../../data_structures.html#mbuild.compound.Compound.to_networkx">[docs]</a>    <span class="k">def</span> <span class="nf">to_networkx</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">names_only</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create a NetworkX graph representing the hierarchy of a Compound.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        names_only : bool, optional, default=False Store only the names of the</span>
+<span class="sd">            compounds in the graph. When set to False, the default behavior,</span>
+<span class="sd">            the nodes are the compounds themselves.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        G : networkx.DiGraph</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">nx</span> <span class="o">=</span> <span class="n">import_</span><span class="p">(</span><span class="s1">&#39;networkx&#39;</span><span class="p">)</span>
+
+        <span class="n">nodes</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="n">edges</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">names_only</span><span class="p">:</span>
+            <span class="n">nodes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">nodes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">nodes</span><span class="p">,</span> <span class="n">edges</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_iterate_children</span><span class="p">(</span><span class="n">nodes</span><span class="p">,</span> <span class="n">edges</span><span class="p">,</span> <span class="n">names_only</span><span class="o">=</span><span class="n">names_only</span><span class="p">)</span>
+
+        <span class="n">graph</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">DiGraph</span><span class="p">()</span>
+        <span class="n">graph</span><span class="o">.</span><span class="n">add_nodes_from</span><span class="p">(</span><span class="n">nodes</span><span class="p">)</span>
+        <span class="n">graph</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">(</span><span class="n">edges</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">graph</span></div>
+
+    <span class="k">def</span> <span class="nf">_iterate_children</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nodes</span><span class="p">,</span> <span class="n">edges</span><span class="p">,</span> <span class="n">names_only</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">nodes</span><span class="p">,</span> <span class="n">edges</span>
+        <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">names_only</span><span class="p">:</span>
+                <span class="n">nodes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">child</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+                <span class="n">edges</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">child</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">child</span><span class="o">.</span><span class="n">name</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">nodes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
+                <span class="n">edges</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">child</span><span class="o">.</span><span class="n">parent</span><span class="p">,</span> <span class="n">child</span><span class="p">])</span>
+            <span class="n">nodes</span><span class="p">,</span> <span class="n">edges</span> <span class="o">=</span> <span class="n">child</span><span class="o">.</span><span class="n">_iterate_children</span><span class="p">(</span><span class="n">nodes</span><span class="p">,</span> <span class="n">edges</span><span class="p">,</span> <span class="n">names_only</span><span class="o">=</span><span class="n">names_only</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">nodes</span><span class="p">,</span> <span class="n">edges</span>
+
 <div class="viewcode-block" id="Compound.to_intermol"><a class="viewcode-back" href="../../data_structures.html#mbuild.compound.Compound.to_intermol">[docs]</a>    <span class="k">def</span> <span class="nf">to_intermol</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">molecule_types</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Create an InterMol system from a Compound.</span>
 
