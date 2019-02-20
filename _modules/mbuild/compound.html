@@ -248,7 +248,17 @@
     <span class="c1"># Handle the case of a xyz file, which must use an internal reader</span>
     <span class="n">extension</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">filename</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">extension</span> <span class="o">==</span> <span class="s1">&#39;.xyz&#39;</span> <span class="ow">and</span> <span class="ow">not</span> <span class="s1">&#39;top&#39;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
-        <span class="n">compound</span> <span class="o">=</span> <span class="n">read_xyz</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">coords_only</span><span class="p">:</span>
+            <span class="n">tmp</span> <span class="o">=</span> <span class="n">read_xyz</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">tmp</span><span class="o">.</span><span class="n">n_particles</span> <span class="o">!=</span> <span class="n">compound</span><span class="o">.</span><span class="n">n_particles</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Number of atoms in </span><span class="si">{filename}</span><span class="s1"> does not match&#39;</span>
+                                 <span class="s1">&#39; </span><span class="si">{compound}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="nb">locals</span><span class="p">()))</span>
+            <span class="n">ref_and_compound</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="n">tmp</span><span class="o">.</span><span class="n">_particles</span><span class="p">(</span><span class="n">include_ports</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+                                   <span class="n">compound</span><span class="o">.</span><span class="n">particles</span><span class="p">(</span><span class="n">include_ports</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+            <span class="k">for</span> <span class="n">ref_particle</span><span class="p">,</span> <span class="n">particle</span> <span class="ow">in</span> <span class="n">ref_and_compound</span><span class="p">:</span>
+                <span class="n">particle</span><span class="o">.</span><span class="n">pos</span> <span class="o">=</span> <span class="n">ref_particle</span><span class="o">.</span><span class="n">pos</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">compound</span> <span class="o">=</span> <span class="n">read_xyz</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">compound</span>
 
     <span class="k">if</span> <span class="n">use_parmed</span><span class="p">:</span>
@@ -1377,10 +1387,10 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">update_port_locations</span><span class="p">:</span>
             <span class="n">xyz_init</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">xyz</span>
-            <span class="n">load</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">compound</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="n">coords_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="bp">self</span> <span class="o">=</span> <span class="n">load</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">compound</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="n">coords_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_update_port_locations</span><span class="p">(</span><span class="n">xyz_init</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">load</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">compound</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="n">coords_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+            <span class="bp">self</span> <span class="o">=</span> <span class="n">load</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">compound</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="n">coords_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">_update_port_locations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">initial_coordinates</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Adjust port locations after particles have moved</span>
