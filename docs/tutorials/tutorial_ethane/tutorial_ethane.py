@@ -1,4 +1,4 @@
-
+#!/usr/bin/env python
 # coding: utf-8
 
 # Ethane: Reading from files, Ports and coordinate transforms
@@ -154,4 +154,10 @@ ethane.visualize()
 
 # Save to .mol2
 ethane.save('ethane.mol2', overwrite=True)
+
+
+# In[ ]:
+
+
+
 

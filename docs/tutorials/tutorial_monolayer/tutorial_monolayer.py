@@ -1,4 +1,4 @@
-
+#!/usr/bin/env python
 # coding: utf-8
 
 # Monolayer: Complex hierarchies, patterns, tiling and writing to files
@@ -96,4 +96,10 @@ monolayer.visualize() # Warning: may be slow in IPython notebooks
 
 # Save as .mol2 file
 monolayer.save('monolayer.mol2', overwrite=True)
+
+
+# In[ ]:
+
+
+
 
