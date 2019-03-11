@@ -178,7 +178,7 @@
 <span class="kn">from</span> <span class="nn">mbuild.box</span> <span class="k">import</span> <span class="n">Box</span>
 <span class="kn">from</span> <span class="nn">mbuild</span> <span class="k">import</span> <span class="n">clone</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;fill_box&#39;</span><span class="p">,</span> <span class="s1">&#39;fill_region&#39;</span><span class="p">,</span> <span class="s1">&#39;solvate&#39;</span><span class="p">]</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;fill_box&#39;</span><span class="p">,</span> <span class="s1">&#39;fill_region&#39;</span><span class="p">,</span> <span class="s1">&#39;fill_sphere&#39;</span><span class="p">,</span> <span class="s1">&#39;solvate&#39;</span><span class="p">]</span>
 
 <span class="n">PACKMOL</span> <span class="o">=</span> <span class="n">find_executable</span><span class="p">(</span><span class="s1">&#39;packmol&#39;</span><span class="p">)</span>
 <span class="n">PACKMOL_HEADER</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
@@ -200,6 +200,13 @@
 <span class="s2">    number </span><span class="si">{1:d}</span><span class="s2"></span>
 <span class="s2">    inside box </span><span class="si">{2:.3f}</span><span class="s2"> </span><span class="si">{3:.3f}</span><span class="s2"> </span><span class="si">{4:.3f}</span><span class="s2"> </span><span class="si">{5:.3f}</span><span class="s2"> </span><span class="si">{6:.3f}</span><span class="s2"> </span><span class="si">{7:.3f}</span><span class="s2"></span>
 <span class="s2">    </span><span class="si">{8}</span><span class="s2"></span>
+<span class="s2">end structure</span>
+<span class="s2">&quot;&quot;&quot;</span>
+<span class="n">PACKMOL_SPHERE</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">structure </span><span class="si">{0}</span><span class="s2"></span>
+<span class="s2">    number </span><span class="si">{1:d}</span><span class="s2"></span>
+<span class="s2">    inside sphere </span><span class="si">{2:.3f}</span><span class="s2"> </span><span class="si">{3:.3f}</span><span class="s2"> </span><span class="si">{4:.3f}</span><span class="s2"> </span><span class="si">{5:.3f}</span><span class="s2"></span>
+<span class="s2">    </span><span class="si">{6}</span><span class="s2"></span>
 <span class="s2">end structure</span>
 <span class="s2">&quot;&quot;&quot;</span>
 
@@ -461,6 +468,156 @@
                                              <span class="n">reg_maxs</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">reg_maxs</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
                                             <span class="n">PACKMOL_CONSTRAIN</span> <span class="k">if</span> <span class="n">rotate</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
 
+        <span class="n">_run_packmol</span><span class="p">(</span><span class="n">input_text</span><span class="p">,</span> <span class="n">filled_xyz</span><span class="p">,</span> <span class="n">temp_file</span><span class="p">)</span>
+
+        <span class="c1"># Create the topology and update the coordinates.</span>
+        <span class="n">filled</span> <span class="o">=</span> <span class="n">Compound</span><span class="p">()</span>
+        <span class="n">filled</span> <span class="o">=</span> <span class="n">_create_topology</span><span class="p">(</span><span class="n">filled</span><span class="p">,</span> <span class="n">compound</span><span class="p">,</span> <span class="n">n_compounds</span><span class="p">)</span>
+        <span class="n">filled</span><span class="o">.</span><span class="n">update_coordinates</span><span class="p">(</span><span class="n">filled_xyz</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">file_handle</span> <span class="ow">in</span> <span class="n">compound_xyz_list</span><span class="p">:</span>
+            <span class="n">file_handle</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">unlink</span><span class="p">(</span><span class="n">file_handle</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">filled_xyz</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">unlink</span><span class="p">(</span><span class="n">filled_xyz</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">filled</span></div>
+
+
+<div class="viewcode-block" id="fill_sphere"><a class="viewcode-back" href="../../recipes.html#mbuild.packing.fill_sphere">[docs]</a><span class="k">def</span> <span class="nf">fill_sphere</span><span class="p">(</span><span class="n">compound</span><span class="p">,</span> <span class="n">sphere</span><span class="p">,</span> <span class="n">n_compounds</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">overlap</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span>
+                <span class="n">seed</span><span class="o">=</span><span class="mi">12345</span><span class="p">,</span> <span class="n">edge</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">compound_ratio</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                <span class="n">fix_orientation</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">temp_file</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Fill a sphere with a compound using packmol.</span>
+
+<span class="sd">    One argument of `n_compounds and density` must be specified.</span>
+
+<span class="sd">    If `n_compounds` is not None, the specified number of</span>
+<span class="sd">    n_compounds will be inserted into a sphere of the specified size.</span>
+
+<span class="sd">    If `density` is not None, the corresponding number of</span>
+<span class="sd">    compounds will be calculated internally.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    compound : mb.Compound or list of mb.Compound</span>
+<span class="sd">        Compound or list of compounds to be put in box.</span>
+<span class="sd">    sphere : list, units nm</span>
+<span class="sd">        Sphere coordinates in the form [x_center, y_center, z_center, radius]</span>
+<span class="sd">    n_compounds : int or list of int</span>
+<span class="sd">        Number of compounds to be put in box.</span>
+<span class="sd">    density : float, units kg/m^3, default=None</span>
+<span class="sd">        Target density for the sphere in macroscale units.</span>
+<span class="sd">    overlap : float, units nm, default=0.2</span>
+<span class="sd">        Minimum separation between atoms of different molecules.</span>
+<span class="sd">    seed : int, default=12345</span>
+<span class="sd">        Random seed to be passed to PACKMOL.</span>
+<span class="sd">    edge : float, units nm, default=0.2</span>
+<span class="sd">        Buffer at the edge of the sphere to not place molecules. This is necessary</span>
+<span class="sd">        in some systems because PACKMOL does not account for periodic boundary</span>
+<span class="sd">        conditions in its optimization.</span>
+<span class="sd">    compound_ratio : list, default=None</span>
+<span class="sd">        Ratio of number of each compound to be put in sphere. Only used in the</span>
+<span class="sd">        case of `density` having been specified, `n_compounds` not specified, </span>
+<span class="sd">        and more than one `compound`.</span>
+<span class="sd">    fix_orientation : bool or list of bools</span>
+<span class="sd">        Specify that compounds should not be rotated when filling the sphere,</span>
+<span class="sd">        default=False.</span>
+<span class="sd">    temp_file : str, default=None</span>
+<span class="sd">        File name to write PACKMOL&#39;s raw output to.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    filled : mb.Compound</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_check_packmol</span><span class="p">(</span><span class="n">PACKMOL</span><span class="p">)</span>
+
+    <span class="n">arg_count</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">-</span> <span class="p">[</span><span class="n">n_compounds</span><span class="p">,</span> <span class="n">density</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">arg_count</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;Exactly 1 of `n_compounds` and `density` &quot;</span>
+               <span class="s2">&quot;must be specified. </span><span class="si">{}</span><span class="s2"> were given.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">arg_count</span><span class="p">))</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">sphere</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">set</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sphere</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">4</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;`sphere` must be a list of len 4&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;`sphere` must be a list&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">compound</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">set</span><span class="p">)):</span>
+        <span class="n">compound</span> <span class="o">=</span> <span class="p">[</span><span class="n">compound</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">n_compounds</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">n_compounds</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">set</span><span class="p">)):</span>
+        <span class="n">n_compounds</span> <span class="o">=</span> <span class="p">[</span><span class="n">n_compounds</span><span class="p">]</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">fix_orientation</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">set</span><span class="p">)):</span>
+        <span class="n">fix_orientation</span> <span class="o">=</span> <span class="p">[</span><span class="n">fix_orientation</span><span class="p">]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">compound</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">compound</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">n_compounds</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">compound</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">n_compounds</span><span class="p">):</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;`compound` and `n_compounds` must be of equal length.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">compound</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">compound</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">fix_orientation</span><span class="p">):</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;`compound`, `n_compounds`, and `fix_orientation` must be of equal length.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">coord</span> <span class="ow">in</span> <span class="n">sphere</span><span class="p">[:</span><span class="mi">3</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="n">coord</span> <span class="o">&lt;</span> <span class="n">sphere</span><span class="p">[</span><span class="mi">3</span><span class="p">]:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;`sphere` center coordinates must be greater than radius.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+
+    <span class="c1"># Apply edge buffer</span>
+    <span class="n">radius</span> <span class="o">=</span> <span class="n">sphere</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">-</span> <span class="n">edge</span>
+
+    <span class="k">if</span> <span class="n">density</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">n_compounds</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">compound</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">compound_mass</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">([</span><span class="n">a</span><span class="o">.</span><span class="n">mass</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">compound</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">to_parmed</span><span class="p">()</span><span class="o">.</span><span class="n">atoms</span><span class="p">])</span>
+                <span class="c1"># Conversion from kg/m^3 / amu * nm^3 to dimensionless units</span>
+                <span class="n">n_compounds</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">density</span><span class="o">/</span><span class="n">compound_mass</span><span class="o">*</span><span class="p">(</span><span class="mi">4</span><span class="o">/</span><span class="mi">3</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">radius</span><span class="o">**</span><span class="mi">3</span><span class="p">)</span><span class="o">*.</span><span class="mi">60224</span><span class="p">)]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">compound_ratio</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;Determing `n_compounds` from `density` &quot;</span>
+                           <span class="s2">&quot;for systems with more than one compound type requires&quot;</span>
+                           <span class="s2">&quot;`compound_ratio`&quot;</span><span class="p">)</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">compound</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">compound_ratio</span><span class="p">):</span>
+                    <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;Length of `compound_ratio` must equal length of &quot;</span>
+                           <span class="s2">&quot;`compound`&quot;</span><span class="p">)</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+                <span class="n">prototype_mass</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="k">for</span> <span class="n">c</span><span class="p">,</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">compound</span><span class="p">,</span> <span class="n">compound_ratio</span><span class="p">):</span>
+                    <span class="n">prototype_mass</span> <span class="o">+=</span> <span class="n">r</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">([</span><span class="n">a</span><span class="o">.</span><span class="n">mass</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">c</span><span class="o">.</span><span class="n">to_parmed</span><span class="p">()</span><span class="o">.</span><span class="n">atoms</span><span class="p">])</span>
+                <span class="c1"># Conversion from kg/m^3 / amu * nm^3 to dimensionless units</span>
+                <span class="n">n_prototypes</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">density</span><span class="o">/</span><span class="n">prototype_mass</span><span class="o">*</span><span class="p">(</span><span class="mi">4</span><span class="o">/</span><span class="mi">3</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">radius</span><span class="o">**</span><span class="mi">3</span><span class="p">)</span><span class="o">*.</span><span class="mi">60224</span><span class="p">)</span>
+                <span class="n">n_compounds</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+                <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">compound_ratio</span><span class="p">:</span>
+                    <span class="n">n_compounds</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">n_prototypes</span> <span class="o">*</span> <span class="n">c</span><span class="p">))</span>
+
+    <span class="c1"># In angstroms for packmol.</span>
+    <span class="n">sphere</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">sphere</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+    <span class="n">radius</span> <span class="o">*=</span> <span class="mi">10</span>
+    <span class="n">overlap</span> <span class="o">*=</span> <span class="mi">10</span>
+
+    <span class="c1"># Build the input file for each compound and call packmol.</span>
+    <span class="n">filled_xyz</span> <span class="o">=</span> <span class="n">_new_xyz_file</span><span class="p">()</span>
+
+    <span class="c1"># List to hold file handles for the temporary compounds</span>
+    <span class="n">compound_xyz_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">input_text</span> <span class="o">=</span> <span class="n">PACKMOL_HEADER</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">overlap</span><span class="p">,</span> <span class="n">filled_xyz</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">seed</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">comp</span><span class="p">,</span> <span class="n">m_compounds</span><span class="p">,</span> <span class="n">rotate</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">compound</span><span class="p">,</span> <span class="n">n_compounds</span><span class="p">,</span> <span class="n">fix_orientation</span><span class="p">):</span>
+            <span class="n">m_compounds</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">m_compounds</span><span class="p">)</span>
+
+            <span class="n">compound_xyz</span> <span class="o">=</span> <span class="n">_new_xyz_file</span><span class="p">()</span>
+            <span class="n">compound_xyz_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">compound_xyz</span><span class="p">)</span>
+
+            <span class="n">comp</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">compound_xyz</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">input_text</span> <span class="o">+=</span> <span class="n">PACKMOL_SPHERE</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">compound_xyz</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">m_compounds</span><span class="p">,</span>
+                                                <span class="n">sphere</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">sphere</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                                                <span class="n">sphere</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">radius</span><span class="p">,</span>
+                                                <span class="n">PACKMOL_CONSTRAIN</span> <span class="k">if</span> <span class="n">rotate</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">input_text</span><span class="p">)</span>
         <span class="n">_run_packmol</span><span class="p">(</span><span class="n">input_text</span><span class="p">,</span> <span class="n">filled_xyz</span><span class="p">,</span> <span class="n">temp_file</span><span class="p">)</span>
 
         <span class="c1"># Create the topology and update the coordinates.</span>

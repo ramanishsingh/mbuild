@@ -5609,6 +5609,68 @@ default=False.</p>
 </dd></dl>
 
 <dl class="function">
+<dt id="mbuild.packing.fill_sphere">
+<code class="descclassname">mbuild.packing.</code><code class="descname">fill_sphere</code><span class="sig-paren">(</span><em>compound</em>, <em>sphere</em>, <em>n_compounds=None</em>, <em>density=None</em>, <em>overlap=0.2</em>, <em>seed=12345</em>, <em>edge=0.2</em>, <em>compound_ratio=None</em>, <em>fix_orientation=False</em>, <em>temp_file=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/packing.html#fill_sphere"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.packing.fill_sphere" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fill a sphere with a compound using packmol.</p>
+<p>One argument of <cite>n_compounds and density</cite> must be specified.</p>
+<p>If <cite>n_compounds</cite> is not None, the specified number of
+n_compounds will be inserted into a sphere of the specified size.</p>
+<p>If <cite>density</cite> is not None, the corresponding number of
+compounds will be calculated internally.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>compound</strong> <span class="classifier-delimiter">:</span> <span class="classifier">mb.Compound or list of mb.Compound</span></dt>
+<dd><p class="first last">Compound or list of compounds to be put in box.</p>
+</dd>
+<dt><strong>sphere</strong> <span class="classifier-delimiter">:</span> <span class="classifier">list, units nm</span></dt>
+<dd><p class="first last">Sphere coordinates in the form [x_center, y_center, z_center, radius]</p>
+</dd>
+<dt><strong>n_compounds</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int or list of int</span></dt>
+<dd><p class="first last">Number of compounds to be put in box.</p>
+</dd>
+<dt><strong>density</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float, units kg/m^3, default=None</span></dt>
+<dd><p class="first last">Target density for the sphere in macroscale units.</p>
+</dd>
+<dt><strong>overlap</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float, units nm, default=0.2</span></dt>
+<dd><p class="first last">Minimum separation between atoms of different molecules.</p>
+</dd>
+<dt><strong>seed</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int, default=12345</span></dt>
+<dd><p class="first last">Random seed to be passed to PACKMOL.</p>
+</dd>
+<dt><strong>edge</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float, units nm, default=0.2</span></dt>
+<dd><p class="first last">Buffer at the edge of the sphere to not place molecules. This is necessary
+in some systems because PACKMOL does not account for periodic boundary
+conditions in its optimization.</p>
+</dd>
+<dt><strong>compound_ratio</strong> <span class="classifier-delimiter">:</span> <span class="classifier">list, default=None</span></dt>
+<dd><p class="first last">Ratio of number of each compound to be put in sphere. Only used in the
+case of <cite>density</cite> having been specified, <cite>n_compounds</cite> not specified, 
+and more than one <cite>compound</cite>.</p>
+</dd>
+<dt><strong>fix_orientation</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool or list of bools</span></dt>
+<dd><p class="first last">Specify that compounds should not be rotated when filling the sphere,
+default=False.</p>
+</dd>
+<dt><strong>temp_file</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str, default=None</span></dt>
+<dd><p class="first last">File name to write PACKMOL’s raw output to.</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>filled</strong> <span class="classifier-delimiter">:</span> <span class="classifier">mb.Compound</span></dt>
+<dd></dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
 <dt id="mbuild.packing.solvate">
 <code class="descclassname">mbuild.packing.</code><code class="descname">solvate</code><span class="sig-paren">(</span><em>solute</em>, <em>solvent</em>, <em>n_solvent</em>, <em>box</em>, <em>overlap=0.2</em>, <em>seed=12345</em>, <em>edge=0.2</em>, <em>fix_orientation=False</em>, <em>temp_file=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/packing.html#solvate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.packing.solvate" title="Permalink to this definition">¶</a></dt>
 <dd><p>Solvate a compound in a box of solvent using packmol.</p>
