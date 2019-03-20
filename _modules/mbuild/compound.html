@@ -1814,7 +1814,7 @@
 <div class="viewcode-block" id="Compound.save"><a class="viewcode-back" href="../../data_structures.html#mbuild.compound.Compound.save">[docs]</a>    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">show_ports</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">forcefield_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
              <span class="n">forcefield_files</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">forcefield_debug</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">box</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
              <span class="n">overwrite</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">residues</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">references_file</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-             <span class="n">combining_rule</span><span class="o">=</span><span class="s1">&#39;lorentz&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+             <span class="n">combining_rule</span><span class="o">=</span><span class="s1">&#39;lorentz&#39;</span><span class="p">,</span> <span class="n">foyerkwargs</span><span class="o">=</span><span class="p">{},</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Save the Compound to a file.</span>
 
 <span class="sd">        Parameters</span>
@@ -1853,9 +1853,12 @@
 <span class="sd">            when the `foyer` package is used to apply a forcefield. Valid</span>
 <span class="sd">            options are &#39;lorentz&#39; and &#39;geometric&#39;, specifying Lorentz-Berthelot</span>
 <span class="sd">            and geometric combining rules respectively.</span>
+<span class="sd">        </span>
 
 <span class="sd">        Other Parameters</span>
 <span class="sd">        ----------------</span>
+<span class="sd">        foyerkwargs : dict, optional</span>
+<span class="sd">            Specify keyword arguments when applying the foyer Forcefield</span>
 <span class="sd">        ref_distance : float, optional, default=1.0</span>
 <span class="sd">            Normalization factor used when saving to .gsd and .hoomdxml formats</span>
 <span class="sd">            for converting distance values to reduced units.</span>
@@ -1905,7 +1908,8 @@
             <span class="n">foyer</span> <span class="o">=</span> <span class="n">import_</span><span class="p">(</span><span class="s1">&#39;foyer&#39;</span><span class="p">)</span>
             <span class="n">ff</span> <span class="o">=</span> <span class="n">foyer</span><span class="o">.</span><span class="n">Forcefield</span><span class="p">(</span><span class="n">forcefield_files</span><span class="o">=</span><span class="n">forcefield_files</span><span class="p">,</span>
                                   <span class="n">name</span><span class="o">=</span><span class="n">forcefield_name</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="n">forcefield_debug</span><span class="p">)</span>
-            <span class="n">structure</span> <span class="o">=</span> <span class="n">ff</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">structure</span><span class="p">,</span> <span class="n">references_file</span><span class="o">=</span><span class="n">references_file</span><span class="p">)</span>
+            <span class="n">structure</span> <span class="o">=</span> <span class="n">ff</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">structure</span><span class="p">,</span> <span class="n">references_file</span><span class="o">=</span><span class="n">references_file</span><span class="p">,</span>
+                    <span class="o">**</span><span class="n">foyerkwargs</span><span class="p">)</span>
             <span class="n">structure</span><span class="o">.</span><span class="n">combining_rule</span> <span class="o">=</span> <span class="n">combining_rule</span>
 
         <span class="n">total_charge</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">([</span><span class="n">atom</span><span class="o">.</span><span class="n">charge</span> <span class="k">for</span> <span class="n">atom</span> <span class="ow">in</span> <span class="n">structure</span><span class="p">])</span>
@@ -1915,14 +1919,15 @@
 
         <span class="c1"># Provide a warning if rigid_ids are not sequential from 0</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">contains_rigid</span><span class="p">:</span>
-            <span class="n">unique_rigid_ids</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">set</span><span class="p">([</span><span class="n">p</span><span class="o">.</span><span class="n">rigid_id</span>
-                                           <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">rigid_particles</span><span class="p">()]))</span>
+            <span class="n">unique_rigid_ids</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">set</span><span class="p">([</span>
+                <span class="n">p</span><span class="o">.</span><span class="n">rigid_id</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">rigid_particles</span><span class="p">()]))</span>
             <span class="k">if</span> <span class="nb">max</span><span class="p">(</span><span class="n">unique_rigid_ids</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">unique_rigid_ids</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
                 <span class="n">warn</span><span class="p">(</span><span class="s2">&quot;Unique rigid body IDs are not sequential starting from zero.&quot;</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">saver</span><span class="p">:</span>  <span class="c1"># mBuild supported saver.</span>
             <span class="k">if</span> <span class="n">extension</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;.gsd&#39;</span><span class="p">,</span> <span class="s1">&#39;.hoomdxml&#39;</span><span class="p">]:</span>
-                <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;rigid_bodies&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">rigid_id</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">particles</span><span class="p">()]</span>
+                <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;rigid_bodies&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+                        <span class="n">p</span><span class="o">.</span><span class="n">rigid_id</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">particles</span><span class="p">()]</span>
             <span class="n">saver</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">filename</span><span class="p">,</span> <span class="n">structure</span><span class="o">=</span><span class="n">structure</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>  <span class="c1"># ParmEd supported saver.</span>
             <span class="n">structure</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="n">overwrite</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
