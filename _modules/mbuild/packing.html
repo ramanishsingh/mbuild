@@ -825,16 +825,6 @@
             <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="n">msg</span> <span class="o">+</span> <span class="s2">&quot; If packmol is already installed, make sure that the &quot;</span>
                          <span class="s2">&quot;packmol.exe is on the path.&quot;</span><span class="p">)</span>
         <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
-
-<span class="k">def</span> <span class="nf">_get_xyz_cords</span><span class="p">(</span><span class="n">file_name</span><span class="p">):</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span> <span class="k">as</span> <span class="n">xyz_file</span><span class="p">:</span>
-        <span class="n">natoms</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">xyz_file</span><span class="o">.</span><span class="n">readline</span><span class="p">())</span>  <span class="c1"># First line of xyz lists natoms</span>
-        <span class="n">xyz_file</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>  <span class="c1"># Skips title of xyz file</span>
-        <span class="n">coords</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="n">natoms</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;float64&quot;</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">coords</span><span class="p">):</span>
-            <span class="n">line</span> <span class="o">=</span> <span class="n">xyz_file</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
-            <span class="n">coords</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">line</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span>
-        <span class="k">return</span> <span class="n">coords</span><span class="o">/</span><span class="mi">10</span>  <span class="c1"># Unit conversion</span>
 </pre></div>
 
            </div>
