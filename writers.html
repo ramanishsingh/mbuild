@@ -24,7 +24,7 @@
         <script type="text/javascript" src="_static/jquery.js"></script>
         <script type="text/javascript" src="_static/underscore.js"></script>
         <script type="text/javascript" src="_static/doctools.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -186,44 +186,32 @@ field.</p>
 <dt id="mbuild.formats.gsdwriter.write_gsd">
 <code class="descclassname">mbuild.formats.gsdwriter.</code><code class="descname">write_gsd</code><span class="sig-paren">(</span><em>structure</em>, <em>filename</em>, <em>ref_distance=1.0</em>, <em>ref_mass=1.0</em>, <em>ref_energy=1.0</em>, <em>rigid_bodies=None</em>, <em>shift_coords=True</em>, <em>write_special_pairs=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/formats/gsdwriter.html#write_gsd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.formats.gsdwriter.write_gsd" title="Permalink to this definition">¶</a></dt>
 <dd><p>Output a GSD file (HOOMD v2 default data format).</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
-<dt><strong>structure</strong> <span class="classifier-delimiter">:</span> <span class="classifier">parmed.Structure</span></dt>
-<dd><p class="first last">ParmEd Structure object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>structure</strong><span class="classifier">parmed.Structure</span></dt><dd><p>ParmEd Structure object</p>
 </dd>
-<dt><strong>filename</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
-<dd><p class="first last">Path of the output file.</p>
+<dt><strong>filename</strong><span class="classifier">str</span></dt><dd><p>Path of the output file.</p>
 </dd>
-<dt><strong>ref_distance</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float, optional, default=1.0</span></dt>
-<dd><p class="first last">Reference distance for conversion to reduced units</p>
+<dt><strong>ref_distance</strong><span class="classifier">float, optional, default=1.0</span></dt><dd><p>Reference distance for conversion to reduced units</p>
 </dd>
-<dt><strong>ref_mass</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float, optional, default=1.0</span></dt>
-<dd><p class="first last">Reference mass for conversion to reduced units</p>
+<dt><strong>ref_mass</strong><span class="classifier">float, optional, default=1.0</span></dt><dd><p>Reference mass for conversion to reduced units</p>
 </dd>
-<dt><strong>ref_energy</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float, optional, default=1.0</span></dt>
-<dd><p class="first last">Reference energy for conversion to reduced units</p>
+<dt><strong>ref_energy</strong><span class="classifier">float, optional, default=1.0</span></dt><dd><p>Reference energy for conversion to reduced units</p>
 </dd>
-<dt><strong>rigid_bodies</strong> <span class="classifier-delimiter">:</span> <span class="classifier">list of int, optional, default=None</span></dt>
-<dd><p class="first last">List of rigid body information. An integer value is required for
+<dt><strong>rigid_bodies</strong><span class="classifier">list of int, optional, default=None</span></dt><dd><p>List of rigid body information. An integer value is required for
 each atom corresponding to the index of the rigid body the particle
 is to be associated with. A value of None indicates the atom is not
 part of a rigid body.</p>
 </dd>
-<dt><strong>shift_coords</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool, optional, default=True</span></dt>
-<dd><p class="first last">Shift coordinates from (0, L) to (-L/2, L/2) if necessary.</p>
+<dt><strong>shift_coords</strong><span class="classifier">bool, optional, default=True</span></dt><dd><p>Shift coordinates from (0, L) to (-L/2, L/2) if necessary.</p>
 </dd>
-<dt><strong>write_special_pairs</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool, optional, default=True</span></dt>
-<dd><p class="first last">Writes out special pair information necessary to correctly use the OPLS fudged 1,4 interactions
+<dt><strong>write_special_pairs</strong><span class="classifier">bool, optional, default=True</span></dt><dd><p>Writes out special pair information necessary to correctly use the OPLS fudged 1,4 interactions
 in HOOMD.</p>
 </dd>
 </dl>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 <p class="rubric">Notes</p>
 <p>Force field parameters are not written to the GSD file and must be included
 manually into a HOOMD input script. Work on a HOOMD plugin is underway to
@@ -249,28 +237,21 @@ read force field parameters from a Foyer XML file.</p>
 <p>Outputs a LAMMPS data file in the ‘full’ atom style format. Assumes use
 of ‘real’ units. See <a class="reference external" href="http://lammps.sandia.gov/doc/atom_style.html">http://lammps.sandia.gov/doc/atom_style.html</a> for
 more information on atom styles.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
-<dt><strong>structure</strong> <span class="classifier-delimiter">:</span> <span class="classifier">parmed.Structure</span></dt>
-<dd><p class="first last">ParmEd structure object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>structure</strong><span class="classifier">parmed.Structure</span></dt><dd><p>ParmEd structure object</p>
 </dd>
-<dt><strong>filename</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
-<dd><p class="first last">Path of the output file</p>
+<dt><strong>filename</strong><span class="classifier">str</span></dt><dd><p>Path of the output file</p>
 </dd>
-<dt><strong>atom_style: str</strong></dt>
-<dd><p class="first last">Defines the style of atoms to be saved in a LAMMPS data file. The following atom
+<dt><strong>atom_style: str</strong></dt><dd><p>Defines the style of atoms to be saved in a LAMMPS data file. The following atom
 styles are currently supported: ‘full’, ‘atomic’, ‘charge’, ‘molecular’
 see <a class="reference external" href="http://lammps.sandia.gov/doc/atom_style.html">http://lammps.sandia.gov/doc/atom_style.html</a> for more
 information on atom styles.</p>
 </dd>
 </dl>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 <p class="rubric">Notes</p>
 <p>See <a class="reference external" href="http://lammps.sandia.gov/doc/2001/data_format.html">http://lammps.sandia.gov/doc/2001/data_format.html</a> for a full description
 of the LAMMPS data format. Currently the following sections are supported (in
