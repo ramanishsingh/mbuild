@@ -327,7 +327,7 @@ Locations of all lattice points in cell using fractional coordinates.</p>
 </dl>
 <dl class="method">
 <dt id="mbuild.lattice.Lattice.populate">
-<code class="descname">populate</code><span class="sig-paren">(</span><em>compound_dict=None</em>, <em>x=1</em>, <em>y=1</em>, <em>z=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/lattice.html#Lattice.populate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.lattice.Lattice.populate" title="Permalink to this definition">¶</a></dt>
+<code class="descname">populate</code><span class="sig-paren">(</span><em>self</em>, <em>compound_dict=None</em>, <em>x=1</em>, <em>y=1</em>, <em>z=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/lattice.html#Lattice.populate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.lattice.Lattice.populate" title="Permalink to this definition">¶</a></dt>
 <dd><p>Expand lattice and create compound from lattice.</p>
 <p>populate will expand lattice based on user input. The user must also
 pass in a dictionary that contains the keys that exist in the
@@ -443,10 +443,10 @@ default=False.</p>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl class="simple">
 <dt><strong>filled</strong><span class="classifier">mb.Compound</span></dt><dd></dd>
-<dt><strong>If using mulitple regions and compounds, the nth value in each</strong></dt><dd></dd>
-<dt><strong>list are used in order.</strong></dt><dd></dd>
-<dt><strong>For example, if the third compound will be put in the third</strong></dt><dd></dd>
-<dt><strong>region using the third value in n_compounds.</strong></dt><dd></dd>
+<dt>If using mulitple regions and compounds, the nth value in each</dt><dd></dd>
+<dt>list are used in order.</dt><dd></dd>
+<dt>For example, if the third compound will be put in the third</dt><dd></dd>
+<dt>region using the third value in n_compounds.</dt><dd></dd>
 </dl>
 </dd>
 </dl>
@@ -549,7 +549,7 @@ default=False.</p>
 <a class="reference external" href="http://blog.marmakoide.org/?p=1">http://blog.marmakoide.org/?p=1</a></p>
 <dl class="method">
 <dt id="mbuild.pattern.DiskPattern.apply">
-<code class="descname">apply</code><span class="sig-paren">(</span><em>compound</em>, <em>orientation=''</em>, <em>compound_port=''</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.pattern.DiskPattern.apply" title="Permalink to this definition">¶</a></dt>
+<code class="descname">apply</code><span class="sig-paren">(</span><em>self</em>, <em>compound</em>, <em>orientation=''</em>, <em>compound_port=''</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.pattern.DiskPattern.apply" title="Permalink to this definition">¶</a></dt>
 <dd><p>Arrange copies of a Compound as specified by the Pattern.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -563,7 +563,7 @@ default=False.</p>
 
 <dl class="method">
 <dt id="mbuild.pattern.DiskPattern.apply_to_compound">
-<code class="descname">apply_to_compound</code><span class="sig-paren">(</span><em>guest</em>, <em>guest_port_name='down'</em>, <em>host=None</em>, <em>backfill=None</em>, <em>backfill_port_name='up'</em>, <em>scale=True</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.pattern.DiskPattern.apply_to_compound" title="Permalink to this definition">¶</a></dt>
+<code class="descname">apply_to_compound</code><span class="sig-paren">(</span><em>self</em>, <em>guest</em>, <em>guest_port_name='down'</em>, <em>host=None</em>, <em>backfill=None</em>, <em>backfill_port_name='up'</em>, <em>scale=True</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.pattern.DiskPattern.apply_to_compound" title="Permalink to this definition">¶</a></dt>
 <dd><p>Attach copies of a guest Compound to Ports on a host Compound.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -590,7 +590,7 @@ pattern</p>
 
 <dl class="method">
 <dt id="mbuild.pattern.DiskPattern.scale">
-<code class="descname">scale</code><span class="sig-paren">(</span><em>by</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.pattern.DiskPattern.scale" title="Permalink to this definition">¶</a></dt>
+<code class="descname">scale</code><span class="sig-paren">(</span><em>self</em>, <em>by</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.pattern.DiskPattern.scale" title="Permalink to this definition">¶</a></dt>
 <dd><p>Scale the points in the Pattern.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -614,7 +614,7 @@ If np.ndarray, scale each direction independently.</p>
 <a class="reference external" href="http://mail.scipy.org/pipermail/numpy-discussion/2009-July/043811.html">http://mail.scipy.org/pipermail/numpy-discussion/2009-July/043811.html</a></p>
 <dl class="method">
 <dt id="mbuild.pattern.SpherePattern.apply">
-<code class="descname">apply</code><span class="sig-paren">(</span><em>compound</em>, <em>orientation=''</em>, <em>compound_port=''</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.pattern.SpherePattern.apply" title="Permalink to this definition">¶</a></dt>
+<code class="descname">apply</code><span class="sig-paren">(</span><em>self</em>, <em>compound</em>, <em>orientation=''</em>, <em>compound_port=''</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.pattern.SpherePattern.apply" title="Permalink to this definition">¶</a></dt>
 <dd><p>Arrange copies of a Compound as specified by the Pattern.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -628,7 +628,7 @@ If np.ndarray, scale each direction independently.</p>
 
 <dl class="method">
 <dt id="mbuild.pattern.SpherePattern.apply_to_compound">
-<code class="descname">apply_to_compound</code><span class="sig-paren">(</span><em>guest</em>, <em>guest_port_name='down'</em>, <em>host=None</em>, <em>backfill=None</em>, <em>backfill_port_name='up'</em>, <em>scale=True</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.pattern.SpherePattern.apply_to_compound" title="Permalink to this definition">¶</a></dt>
+<code class="descname">apply_to_compound</code><span class="sig-paren">(</span><em>self</em>, <em>guest</em>, <em>guest_port_name='down'</em>, <em>host=None</em>, <em>backfill=None</em>, <em>backfill_port_name='up'</em>, <em>scale=True</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.pattern.SpherePattern.apply_to_compound" title="Permalink to this definition">¶</a></dt>
 <dd><p>Attach copies of a guest Compound to Ports on a host Compound.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -655,7 +655,7 @@ pattern</p>
 
 <dl class="method">
 <dt id="mbuild.pattern.SpherePattern.scale">
-<code class="descname">scale</code><span class="sig-paren">(</span><em>by</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.pattern.SpherePattern.scale" title="Permalink to this definition">¶</a></dt>
+<code class="descname">scale</code><span class="sig-paren">(</span><em>self</em>, <em>by</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.pattern.SpherePattern.scale" title="Permalink to this definition">¶</a></dt>
 <dd><p>Scale the points in the Pattern.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>

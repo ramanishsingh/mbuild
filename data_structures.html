@@ -269,7 +269,7 @@ compound is the root of the containment hierarchy.</p>
 </dl>
 <dl class="method">
 <dt id="mbuild.compound.Compound.add">
-<code class="descname">add</code><span class="sig-paren">(</span><em>new_child</em>, <em>label=None</em>, <em>containment=True</em>, <em>replace=False</em>, <em>inherit_periodicity=True</em>, <em>reset_rigid_ids=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/compound.html#Compound.add"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.compound.Compound.add" title="Permalink to this definition">¶</a></dt>
+<code class="descname">add</code><span class="sig-paren">(</span><em>self</em>, <em>new_child</em>, <em>label=None</em>, <em>containment=True</em>, <em>replace=False</em>, <em>inherit_periodicity=True</em>, <em>reset_rigid_ids=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/compound.html#Compound.add"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.compound.Compound.add" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add a part to the Compound.</p>
 <dl class="simple">
 <dt>Note:</dt><dd><p>This does not necessarily add the part to self.children but may
@@ -303,7 +303,7 @@ to add Compounds to an existing rigid body.</p>
 
 <dl class="method">
 <dt id="mbuild.compound.Compound.add_bond">
-<code class="descname">add_bond</code><span class="sig-paren">(</span><em>particle_pair</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/compound.html#Compound.add_bond"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.compound.Compound.add_bond" title="Permalink to this definition">¶</a></dt>
+<code class="descname">add_bond</code><span class="sig-paren">(</span><em>self</em>, <em>particle_pair</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/compound.html#Compound.add_bond"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.compound.Compound.add_bond" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add a bond between two Particles.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -317,12 +317,12 @@ to add Compounds to an existing rigid body.</p>
 
 <dl class="method">
 <dt id="mbuild.compound.Compound.all_ports">
-<code class="descname">all_ports</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/compound.html#Compound.all_ports"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.compound.Compound.all_ports" title="Permalink to this definition">¶</a></dt>
+<code class="descname">all_ports</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/compound.html#Compound.all_ports"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.compound.Compound.all_ports" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return all Ports referenced by this Compound and its successors</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>list of mb.Compound</strong></dt><dd><p>A list of all Ports referenced by this Compound and its successors</p>
+<dt>list of mb.Compound</dt><dd><p>A list of all Ports referenced by this Compound and its successors</p>
 </dd>
 </dl>
 </dd>
@@ -331,12 +331,12 @@ to add Compounds to an existing rigid body.</p>
 
 <dl class="method">
 <dt id="mbuild.compound.Compound.ancestors">
-<code class="descname">ancestors</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/compound.html#Compound.ancestors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.compound.Compound.ancestors" title="Permalink to this definition">¶</a></dt>
+<code class="descname">ancestors</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/compound.html#Compound.ancestors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.compound.Compound.ancestors" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generate all ancestors of the Compound recursively.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Yields</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>mb.Compound</strong></dt><dd><p>The next Compound above self in the hierarchy</p>
+<dt>mb.Compound</dt><dd><p>The next Compound above self in the hierarchy</p>
 </dd>
 </dl>
 </dd>
@@ -345,12 +345,12 @@ to add Compounds to an existing rigid body.</p>
 
 <dl class="method">
 <dt id="mbuild.compound.Compound.available_ports">
-<code class="descname">available_ports</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/compound.html#Compound.available_ports"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.compound.Compound.available_ports" title="Permalink to this definition">¶</a></dt>
+<code class="descname">available_ports</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/compound.html#Compound.available_ports"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.compound.Compound.available_ports" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return all unoccupied Ports referenced by this Compound.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>list of mb.Compound</strong></dt><dd><p>A list of all unoccupied ports referenced by the Compound</p>
+<dt>list of mb.Compound</dt><dd><p>A list of all unoccupied ports referenced by the Compound</p>
 </dd>
 </dl>
 </dd>
@@ -359,12 +359,12 @@ to add Compounds to an existing rigid body.</p>
 
 <dl class="method">
 <dt id="mbuild.compound.Compound.bonds">
-<code class="descname">bonds</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/compound.html#Compound.bonds"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.compound.Compound.bonds" title="Permalink to this definition">¶</a></dt>
+<code class="descname">bonds</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/compound.html#Compound.bonds"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.compound.Compound.bonds" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return all bonds in the Compound and sub-Compounds.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Yields</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>tuple of mb.Compound</strong></dt><dd><p>The next bond in the Compound</p>
+<dt>tuple of mb.Compound</dt><dd><p>The next bond in the Compound</p>
 </dd>
 </dl>
 </dd>
@@ -385,7 +385,7 @@ to add Compounds to an existing rigid body.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>mb.Box</strong></dt><dd><p>The bounding box for this Compound</p>
+<dt>mb.Box</dt><dd><p>The bounding box for this Compound</p>
 </dd>
 </dl>
 </dd>
@@ -399,7 +399,7 @@ to add Compounds to an existing rigid body.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>np.ndarray, shape=(3,), dtype=float</strong></dt><dd><p>The cartesian center of the Compound based on its Particles</p>
+<dt>np.ndarray, shape=(3,), dtype=float</dt><dd><p>The cartesian center of the Compound based on its Particles</p>
 </dd>
 </dl>
 </dd>
@@ -417,7 +417,7 @@ hierarchy) then contains_rigid will return False.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>bool</strong></dt><dd><p>True if the Compound contains any particle with a rigid_id != None</p>
+<dt>bool</dt><dd><p>True if the Compound contains any particle with a rigid_id != None</p>
 </dd>
 </dl>
 </dd>
@@ -431,7 +431,7 @@ and the particle tree is not traversed, boosting performance.</p>
 
 <dl class="method">
 <dt id="mbuild.compound.Compound.energy_minimize">
-<code class="descname">energy_minimize</code><span class="sig-paren">(</span><em>forcefield='UFF'</em>, <em>steps=1000</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/compound.html#Compound.energy_minimize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.compound.Compound.energy_minimize" title="Permalink to this definition">¶</a></dt>
+<code class="descname">energy_minimize</code><span class="sig-paren">(</span><em>self</em>, <em>forcefield='UFF'</em>, <em>steps=1000</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/compound.html#Compound.energy_minimize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.compound.Compound.energy_minimize" title="Permalink to this definition">¶</a></dt>
 <dd><p>Perform an energy minimization on a Compound</p>
 <p>Default beahvior utilizes Open Babel (<a class="reference external" href="http://openbabel.org/docs/dev/">http://openbabel.org/docs/dev/</a>)
 to perform an energy minimization/geometry optimization on a
@@ -499,7 +499,7 @@ J. Chem. Theor. Comput. 9(1): 461-469. (2013).</p>
 chemical toolbox.” (2011) J. Cheminf. 3, 33</p>
 </div></blockquote>
 <dl class="citation">
-<dt class="label" id="r92550878d20b-2"><span class="brackets"><a class="fn-backref" href="#id3">2</a></span></dt>
+<dt class="label" id="r92550878d20b-2"><span class="brackets">2</span></dt>
 <dd><p>Open Babel, version X.X.X <a class="reference external" href="http://openbabel.org">http://openbabel.org</a>, (installed
 Month Year)</p>
 </dd>
@@ -511,22 +511,22 @@ Month Year)</p>
 J. Comput. Chem. 17, 490-519</p>
 </div></blockquote>
 <dl class="citation">
-<dt class="label" id="r92550878d20b-4"><span class="brackets"><a class="fn-backref" href="#id5">4</a></span></dt>
+<dt class="label" id="r92550878d20b-4"><span class="brackets">4</span></dt>
 <dd><p>T.A. Halgren, “Merck molecular force field. II. MMFF94 van der
 Waals and electrostatic parameters for intermolecular
 interactions.” (1996) J. Comput. Chem. 17, 520-552</p>
 </dd>
-<dt class="label" id="r92550878d20b-5"><span class="brackets"><a class="fn-backref" href="#id6">5</a></span></dt>
+<dt class="label" id="r92550878d20b-5"><span class="brackets">5</span></dt>
 <dd><p>T.A. Halgren, “Merck molecular force field. III. Molecular
 geometries and vibrational frequencies for MMFF94.” (1996)
 J. Comput. Chem. 17, 553-586</p>
 </dd>
-<dt class="label" id="r92550878d20b-6"><span class="brackets"><a class="fn-backref" href="#id7">6</a></span></dt>
+<dt class="label" id="r92550878d20b-6"><span class="brackets">6</span></dt>
 <dd><p>T.A. Halgren and R.B. Nachbar, “Merck molecular force field.
 IV. Conformational energies and geometries for MMFF94.” (1996)
 J. Comput. Chem. 17, 587-615</p>
 </dd>
-<dt class="label" id="r92550878d20b-7"><span class="brackets"><a class="fn-backref" href="#id8">7</a></span></dt>
+<dt class="label" id="r92550878d20b-7"><span class="brackets">7</span></dt>
 <dd><p>T.A. Halgren, “Merck molecular force field. V. Extension of
 MMFF94 using experimental data, additional computational data,
 and empirical rules.” (1996) J. Comput. Chem. 17, 616-641</p>
@@ -560,7 +560,7 @@ J. Comput. Chem. 22, 1229-1242</p>
 
 <dl class="method">
 <dt id="mbuild.compound.Compound.from_parmed">
-<code class="descname">from_parmed</code><span class="sig-paren">(</span><em>structure</em>, <em>coords_only=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/compound.html#Compound.from_parmed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.compound.Compound.from_parmed" title="Permalink to this definition">¶</a></dt>
+<code class="descname">from_parmed</code><span class="sig-paren">(</span><em>self</em>, <em>structure</em>, <em>coords_only=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/compound.html#Compound.from_parmed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.compound.Compound.from_parmed" title="Permalink to this definition">¶</a></dt>
 <dd><p>Extract atoms and bonds from a pmd.Structure.</p>
 <p>Will create sub-compounds for every chain if there is more than one
 and sub-sub-compounds for every residue.</p>
@@ -578,7 +578,7 @@ and sub-sub-compounds for every residue.</p>
 
 <dl class="method">
 <dt id="mbuild.compound.Compound.from_trajectory">
-<code class="descname">from_trajectory</code><span class="sig-paren">(</span><em>traj</em>, <em>frame=-1</em>, <em>coords_only=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/compound.html#Compound.from_trajectory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.compound.Compound.from_trajectory" title="Permalink to this definition">¶</a></dt>
+<code class="descname">from_trajectory</code><span class="sig-paren">(</span><em>self</em>, <em>traj</em>, <em>frame=-1</em>, <em>coords_only=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/compound.html#Compound.from_trajectory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.compound.Compound.from_trajectory" title="Permalink to this definition">¶</a></dt>
 <dd><p>Extract atoms and bonds from a md.Trajectory.</p>
 <p>Will create sub-compounds for every chain if there is more than one
 and sub-sub-compounds for every residue.</p>
@@ -598,7 +598,7 @@ and sub-sub-compounds for every residue.</p>
 
 <dl class="method">
 <dt id="mbuild.compound.Compound.generate_bonds">
-<code class="descname">generate_bonds</code><span class="sig-paren">(</span><em>name_a</em>, <em>name_b</em>, <em>dmin</em>, <em>dmax</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/compound.html#Compound.generate_bonds"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.compound.Compound.generate_bonds" title="Permalink to this definition">¶</a></dt>
+<code class="descname">generate_bonds</code><span class="sig-paren">(</span><em>self</em>, <em>name_a</em>, <em>name_b</em>, <em>dmin</em>, <em>dmax</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/compound.html#Compound.generate_bonds"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.compound.Compound.generate_bonds" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add Bonds between all pairs of types a/b within [dmin, dmax].</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -618,7 +618,7 @@ and sub-sub-compounds for every residue.</p>
 
 <dl class="method">
 <dt id="mbuild.compound.Compound.label_rigid_bodies">
-<code class="descname">label_rigid_bodies</code><span class="sig-paren">(</span><em>discrete_bodies=None</em>, <em>rigid_particles=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/compound.html#Compound.label_rigid_bodies"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.compound.Compound.label_rigid_bodies" title="Permalink to this definition">¶</a></dt>
+<code class="descname">label_rigid_bodies</code><span class="sig-paren">(</span><em>self</em>, <em>discrete_bodies=None</em>, <em>rigid_particles=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/compound.html#Compound.label_rigid_bodies"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.compound.Compound.label_rigid_bodies" title="Permalink to this definition">¶</a></dt>
 <dd><p>Designate which Compounds should be treated as rigid bodies</p>
 <p>If no arguments are provided, this function will treat the compound
 as a single rigid body by providing all particles in <cite>self</cite> with the
@@ -694,7 +694,7 @@ rigid_id in the containment hierarchy.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>int or None</strong></dt><dd><p>The maximum rigid body ID contained in the Compound. If no
+<dt>int or None</dt><dd><p>The maximum rigid body ID contained in the Compound. If no
 rigid body IDs are found, None is returned</p>
 </dd>
 </dl>
@@ -704,7 +704,7 @@ rigid body IDs are found, None is returned</p>
 
 <dl class="method">
 <dt id="mbuild.compound.Compound.min_periodic_distance">
-<code class="descname">min_periodic_distance</code><span class="sig-paren">(</span><em>xyz0</em>, <em>xyz1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/compound.html#Compound.min_periodic_distance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.compound.Compound.min_periodic_distance" title="Permalink to this definition">¶</a></dt>
+<code class="descname">min_periodic_distance</code><span class="sig-paren">(</span><em>self</em>, <em>xyz0</em>, <em>xyz1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/compound.html#Compound.min_periodic_distance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.compound.Compound.min_periodic_distance" title="Permalink to this definition">¶</a></dt>
 <dd><p>Vectorized distance calculation considering minimum image.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -717,7 +717,7 @@ rigid body IDs are found, None is returned</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl class="simple">
-<dt><strong>float</strong></dt><dd><p>Vectorized distance between the two points following minimum
+<dt>float</dt><dd><p>Vectorized distance between the two points following minimum
 image convention</p>
 </dd>
 </dl>
@@ -732,7 +732,7 @@ image convention</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>int</strong></dt><dd><p>The number of bonds in the Compound</p>
+<dt>int</dt><dd><p>The number of bonds in the Compound</p>
 </dd>
 </dl>
 </dd>
@@ -746,7 +746,7 @@ image convention</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>int</strong></dt><dd><p>The number of Particles in the Compound</p>
+<dt>int</dt><dd><p>The number of Particles in the Compound</p>
 </dd>
 </dl>
 </dd>
@@ -755,7 +755,7 @@ image convention</p>
 
 <dl class="method">
 <dt id="mbuild.compound.Compound.particles">
-<code class="descname">particles</code><span class="sig-paren">(</span><em>include_ports=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/compound.html#Compound.particles"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.compound.Compound.particles" title="Permalink to this definition">¶</a></dt>
+<code class="descname">particles</code><span class="sig-paren">(</span><em>self</em>, <em>include_ports=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/compound.html#Compound.particles"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.compound.Compound.particles" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return all Particles of the Compound.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -766,7 +766,7 @@ image convention</p>
 </dd>
 <dt class="field-even">Yields</dt>
 <dd class="field-even"><dl class="simple">
-<dt><strong>mb.Compound</strong></dt><dd><p>The next Particle in the Compound</p>
+<dt>mb.Compound</dt><dd><p>The next Particle in the Compound</p>
 </dd>
 </dl>
 </dd>
@@ -775,7 +775,7 @@ image convention</p>
 
 <dl class="method">
 <dt id="mbuild.compound.Compound.particles_by_name">
-<code class="descname">particles_by_name</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/compound.html#Compound.particles_by_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.compound.Compound.particles_by_name" title="Permalink to this definition">¶</a></dt>
+<code class="descname">particles_by_name</code><span class="sig-paren">(</span><em>self</em>, <em>name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/compound.html#Compound.particles_by_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.compound.Compound.particles_by_name" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return all Particles of the Compound with a specific name</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -786,7 +786,7 @@ image convention</p>
 </dd>
 <dt class="field-even">Yields</dt>
 <dd class="field-even"><dl class="simple">
-<dt><strong>mb.Compound</strong></dt><dd><p>The next Particle in the Compound with the user-specified name</p>
+<dt>mb.Compound</dt><dd><p>The next Particle in the Compound with the user-specified name</p>
 </dd>
 </dl>
 </dd>
@@ -795,7 +795,7 @@ image convention</p>
 
 <dl class="method">
 <dt id="mbuild.compound.Compound.particles_in_range">
-<code class="descname">particles_in_range</code><span class="sig-paren">(</span><em>compound</em>, <em>dmax</em>, <em>max_particles=20</em>, <em>particle_kdtree=None</em>, <em>particle_array=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/compound.html#Compound.particles_in_range"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.compound.Compound.particles_in_range" title="Permalink to this definition">¶</a></dt>
+<code class="descname">particles_in_range</code><span class="sig-paren">(</span><em>self</em>, <em>compound</em>, <em>dmax</em>, <em>max_particles=20</em>, <em>particle_kdtree=None</em>, <em>particle_array=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/compound.html#Compound.particles_in_range"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.compound.Compound.particles_in_range" title="Permalink to this definition">¶</a></dt>
 <dd><p>Find particles within a specified range of another particle.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -816,7 +816,7 @@ provided, this defaults to all Particles in self</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl class="simple">
-<dt><strong>np.ndarray, shape=(n,), dtype=mb.Compound</strong></dt><dd><p>Particles in range of compound according to user-defined limits</p>
+<dt>np.ndarray, shape=(n,), dtype=mb.Compound</dt><dd><p>Particles in range of compound according to user-defined limits</p>
 </dd>
 </dl>
 </dd>
@@ -834,12 +834,12 @@ provided, this defaults to all Particles in self</p>
 
 <dl class="method">
 <dt id="mbuild.compound.Compound.referenced_ports">
-<code class="descname">referenced_ports</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/compound.html#Compound.referenced_ports"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.compound.Compound.referenced_ports" title="Permalink to this definition">¶</a></dt>
+<code class="descname">referenced_ports</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/compound.html#Compound.referenced_ports"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.compound.Compound.referenced_ports" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return all Ports referenced by this Compound.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>list of mb.Compound</strong></dt><dd><p>A list of all ports referenced by the Compound</p>
+<dt>list of mb.Compound</dt><dd><p>A list of all ports referenced by the Compound</p>
 </dd>
 </dl>
 </dd>
@@ -848,7 +848,7 @@ provided, this defaults to all Particles in self</p>
 
 <dl class="method">
 <dt id="mbuild.compound.Compound.remove">
-<code class="descname">remove</code><span class="sig-paren">(</span><em>objs_to_remove</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/compound.html#Compound.remove"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.compound.Compound.remove" title="Permalink to this definition">¶</a></dt>
+<code class="descname">remove</code><span class="sig-paren">(</span><em>self</em>, <em>objs_to_remove</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/compound.html#Compound.remove"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.compound.Compound.remove" title="Permalink to this definition">¶</a></dt>
 <dd><p>Remove children from the Compound.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -862,7 +862,7 @@ provided, this defaults to all Particles in self</p>
 
 <dl class="method">
 <dt id="mbuild.compound.Compound.remove_bond">
-<code class="descname">remove_bond</code><span class="sig-paren">(</span><em>particle_pair</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/compound.html#Compound.remove_bond"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.compound.Compound.remove_bond" title="Permalink to this definition">¶</a></dt>
+<code class="descname">remove_bond</code><span class="sig-paren">(</span><em>self</em>, <em>particle_pair</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/compound.html#Compound.remove_bond"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.compound.Compound.remove_bond" title="Permalink to this definition">¶</a></dt>
 <dd><p>Deletes a bond between a pair of Particles</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -876,7 +876,7 @@ provided, this defaults to all Particles in self</p>
 
 <dl class="method">
 <dt id="mbuild.compound.Compound.rigid_particles">
-<code class="descname">rigid_particles</code><span class="sig-paren">(</span><em>rigid_id=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/compound.html#Compound.rigid_particles"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.compound.Compound.rigid_particles" title="Permalink to this definition">¶</a></dt>
+<code class="descname">rigid_particles</code><span class="sig-paren">(</span><em>self</em>, <em>rigid_id=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/compound.html#Compound.rigid_particles"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.compound.Compound.rigid_particles" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generate all particles in rigid bodies.</p>
 <p>If a rigid_id is specified, then this function will only yield particles
 with a matching rigid_id.</p>
@@ -889,7 +889,7 @@ with a matching rigid_id.</p>
 </dd>
 <dt class="field-even">Yields</dt>
 <dd class="field-even"><dl class="simple">
-<dt><strong>mb.Compound</strong></dt><dd><p>The next particle with a rigid_id that is not None, or the next
+<dt>mb.Compound</dt><dd><p>The next particle with a rigid_id that is not None, or the next
 particle with a matching rigid_id if specified</p>
 </dd>
 </dl>
@@ -904,7 +904,7 @@ particle with a matching rigid_id if specified</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>mb.Compound</strong></dt><dd><p>The Compound at the top of self’s hierarchy</p>
+<dt>mb.Compound</dt><dd><p>The Compound at the top of self’s hierarchy</p>
 </dd>
 </dl>
 </dd>
@@ -913,7 +913,7 @@ particle with a matching rigid_id if specified</p>
 
 <dl class="method">
 <dt id="mbuild.compound.Compound.rotate">
-<code class="descname">rotate</code><span class="sig-paren">(</span><em>theta</em>, <em>around</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/compound.html#Compound.rotate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.compound.Compound.rotate" title="Permalink to this definition">¶</a></dt>
+<code class="descname">rotate</code><span class="sig-paren">(</span><em>self</em>, <em>theta</em>, <em>around</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/compound.html#Compound.rotate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.compound.Compound.rotate" title="Permalink to this definition">¶</a></dt>
 <dd><p>Rotate Compound around an arbitrary vector.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -929,7 +929,7 @@ particle with a matching rigid_id if specified</p>
 
 <dl class="method">
 <dt id="mbuild.compound.Compound.save">
-<code class="descname">save</code><span class="sig-paren">(</span><em>filename</em>, <em>show_ports=False</em>, <em>forcefield_name=None</em>, <em>forcefield_files=None</em>, <em>forcefield_debug=False</em>, <em>box=None</em>, <em>overwrite=False</em>, <em>residues=None</em>, <em>references_file=None</em>, <em>combining_rule='lorentz'</em>, <em>foyerkwargs={}</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/compound.html#Compound.save"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.compound.Compound.save" title="Permalink to this definition">¶</a></dt>
+<code class="descname">save</code><span class="sig-paren">(</span><em>self</em>, <em>filename</em>, <em>show_ports=False</em>, <em>forcefield_name=None</em>, <em>forcefield_files=None</em>, <em>forcefield_debug=False</em>, <em>box=None</em>, <em>overwrite=False</em>, <em>residues=None</em>, <em>references_file=None</em>, <em>combining_rule='lorentz'</em>, <em>foyerkwargs={}</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/compound.html#Compound.save"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.compound.Compound.save" title="Permalink to this definition">¶</a></dt>
 <dd><p>Save the Compound to a file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1006,7 +1006,7 @@ information on atom styles.</p>
 
 <dl class="method">
 <dt id="mbuild.compound.Compound.spin">
-<code class="descname">spin</code><span class="sig-paren">(</span><em>theta</em>, <em>around</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/compound.html#Compound.spin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.compound.Compound.spin" title="Permalink to this definition">¶</a></dt>
+<code class="descname">spin</code><span class="sig-paren">(</span><em>self</em>, <em>theta</em>, <em>around</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/compound.html#Compound.spin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.compound.Compound.spin" title="Permalink to this definition">¶</a></dt>
 <dd><p>Rotate Compound in place around an arbitrary vector.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1022,12 +1022,12 @@ information on atom styles.</p>
 
 <dl class="method">
 <dt id="mbuild.compound.Compound.successors">
-<code class="descname">successors</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/compound.html#Compound.successors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.compound.Compound.successors" title="Permalink to this definition">¶</a></dt>
+<code class="descname">successors</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/compound.html#Compound.successors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.compound.Compound.successors" title="Permalink to this definition">¶</a></dt>
 <dd><p>Yield Compounds below self in the hierarchy.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Yields</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>mb.Compound</strong></dt><dd><p>The next Particle below self in the hierarchy</p>
+<dt>mb.Compound</dt><dd><p>The next Particle below self in the hierarchy</p>
 </dd>
 </dl>
 </dd>
@@ -1036,7 +1036,7 @@ information on atom styles.</p>
 
 <dl class="method">
 <dt id="mbuild.compound.Compound.to_intermol">
-<code class="descname">to_intermol</code><span class="sig-paren">(</span><em>molecule_types=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/compound.html#Compound.to_intermol"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.compound.Compound.to_intermol" title="Permalink to this definition">¶</a></dt>
+<code class="descname">to_intermol</code><span class="sig-paren">(</span><em>self</em>, <em>molecule_types=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/compound.html#Compound.to_intermol"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.compound.Compound.to_intermol" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create an InterMol system from a Compound.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1054,7 +1054,7 @@ information on atom styles.</p>
 
 <dl class="method">
 <dt id="mbuild.compound.Compound.to_networkx">
-<code class="descname">to_networkx</code><span class="sig-paren">(</span><em>names_only=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/compound.html#Compound.to_networkx"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.compound.Compound.to_networkx" title="Permalink to this definition">¶</a></dt>
+<code class="descname">to_networkx</code><span class="sig-paren">(</span><em>self</em>, <em>names_only=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/compound.html#Compound.to_networkx"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.compound.Compound.to_networkx" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a NetworkX graph representing the hierarchy of a Compound.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1074,7 +1074,7 @@ the nodes are the compounds themselves.</p>
 
 <dl class="method">
 <dt id="mbuild.compound.Compound.to_parmed">
-<code class="descname">to_parmed</code><span class="sig-paren">(</span><em>box=None</em>, <em>title=''</em>, <em>residues=None</em>, <em>show_ports=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/compound.html#Compound.to_parmed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.compound.Compound.to_parmed" title="Permalink to this definition">¶</a></dt>
+<code class="descname">to_parmed</code><span class="sig-paren">(</span><em>self</em>, <em>box=None</em>, <em>title=''</em>, <em>residues=None</em>, <em>show_ports=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/compound.html#Compound.to_parmed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.compound.Compound.to_parmed" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a ParmEd Structure from a Compound.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1096,7 +1096,7 @@ checking against Compound.name.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl class="simple">
-<dt><strong>parmed.structure.Structure</strong></dt><dd><p>ParmEd Structure object converted from self</p>
+<dt>parmed.structure.Structure</dt><dd><p>ParmEd Structure object converted from self</p>
 </dd>
 </dl>
 </dd>
@@ -1112,7 +1112,7 @@ checking against Compound.name.</p>
 
 <dl class="method">
 <dt id="mbuild.compound.Compound.to_trajectory">
-<code class="descname">to_trajectory</code><span class="sig-paren">(</span><em>show_ports=False</em>, <em>chains=None</em>, <em>residues=None</em>, <em>box=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/compound.html#Compound.to_trajectory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.compound.Compound.to_trajectory" title="Permalink to this definition">¶</a></dt>
+<code class="descname">to_trajectory</code><span class="sig-paren">(</span><em>self</em>, <em>show_ports=False</em>, <em>chains=None</em>, <em>residues=None</em>, <em>box=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/compound.html#Compound.to_trajectory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.compound.Compound.to_trajectory" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert to an md.Trajectory and flatten the compound.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1140,13 +1140,15 @@ box lengths.</p>
 </dl>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><code class="xref py py-obj docutils literal notranslate"><span class="pre">_to_topology</span></code></p>
+<dl class="simple">
+<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">_to_topology</span></code></dt><dd></dd>
+</dl>
 </div>
 </dd></dl>
 
 <dl class="method">
 <dt id="mbuild.compound.Compound.translate">
-<code class="descname">translate</code><span class="sig-paren">(</span><em>by</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/compound.html#Compound.translate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.compound.Compound.translate" title="Permalink to this definition">¶</a></dt>
+<code class="descname">translate</code><span class="sig-paren">(</span><em>self</em>, <em>by</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/compound.html#Compound.translate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.compound.Compound.translate" title="Permalink to this definition">¶</a></dt>
 <dd><p>Translate the Compound by a vector</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1159,7 +1161,7 @@ box lengths.</p>
 
 <dl class="method">
 <dt id="mbuild.compound.Compound.translate_to">
-<code class="descname">translate_to</code><span class="sig-paren">(</span><em>pos</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/compound.html#Compound.translate_to"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.compound.Compound.translate_to" title="Permalink to this definition">¶</a></dt>
+<code class="descname">translate_to</code><span class="sig-paren">(</span><em>self</em>, <em>pos</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/compound.html#Compound.translate_to"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.compound.Compound.translate_to" title="Permalink to this definition">¶</a></dt>
 <dd><p>Translate the Compound to a specific position</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1172,13 +1174,13 @@ box lengths.</p>
 
 <dl class="method">
 <dt id="mbuild.compound.Compound.unlabel_rigid_bodies">
-<code class="descname">unlabel_rigid_bodies</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/compound.html#Compound.unlabel_rigid_bodies"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.compound.Compound.unlabel_rigid_bodies" title="Permalink to this definition">¶</a></dt>
+<code class="descname">unlabel_rigid_bodies</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/compound.html#Compound.unlabel_rigid_bodies"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.compound.Compound.unlabel_rigid_bodies" title="Permalink to this definition">¶</a></dt>
 <dd><p>Remove all rigid body labels from the Compound</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="mbuild.compound.Compound.update_coordinates">
-<code class="descname">update_coordinates</code><span class="sig-paren">(</span><em>filename</em>, <em>update_port_locations=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/compound.html#Compound.update_coordinates"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.compound.Compound.update_coordinates" title="Permalink to this definition">¶</a></dt>
+<code class="descname">update_coordinates</code><span class="sig-paren">(</span><em>self</em>, <em>filename</em>, <em>update_port_locations=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/compound.html#Compound.update_coordinates"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.compound.Compound.update_coordinates" title="Permalink to this definition">¶</a></dt>
 <dd><p>Update the coordinates of this Compound from a file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1205,7 +1207,7 @@ the orientation of Ports with respect to the molecule as a whole.</p>
 
 <dl class="method">
 <dt id="mbuild.compound.Compound.visualize">
-<code class="descname">visualize</code><span class="sig-paren">(</span><em>show_ports=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/compound.html#Compound.visualize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.compound.Compound.visualize" title="Permalink to this definition">¶</a></dt>
+<code class="descname">visualize</code><span class="sig-paren">(</span><em>self</em>, <em>show_ports=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/compound.html#Compound.visualize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.compound.Compound.visualize" title="Permalink to this definition">¶</a></dt>
 <dd><p>Visualize the Compound using nglview.</p>
 <p>Allows for visualization of a Compound within a Jupyter Notebook.</p>
 <dl class="field-list simple">
@@ -1291,7 +1293,7 @@ transform.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>list of str</strong></dt><dd><p>Strings that can be used to access this Port relative to self.root</p>
+<dt>list of str</dt><dd><p>Strings that can be used to access this Port relative to self.root</p>
 </dd>
 </dl>
 </dd>
@@ -1300,7 +1302,7 @@ transform.</p>
 
 <dl class="method">
 <dt id="mbuild.port.Port.add">
-<code class="descname">add</code><span class="sig-paren">(</span><em>new_child</em>, <em>label=None</em>, <em>containment=True</em>, <em>replace=False</em>, <em>inherit_periodicity=True</em>, <em>reset_rigid_ids=True</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.port.Port.add" title="Permalink to this definition">¶</a></dt>
+<code class="descname">add</code><span class="sig-paren">(</span><em>self</em>, <em>new_child</em>, <em>label=None</em>, <em>containment=True</em>, <em>replace=False</em>, <em>inherit_periodicity=True</em>, <em>reset_rigid_ids=True</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.port.Port.add" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add a part to the Compound.</p>
 <dl class="simple">
 <dt>Note:</dt><dd><p>This does not necessarily add the part to self.children but may
@@ -1334,7 +1336,7 @@ to add Compounds to an existing rigid body.</p>
 
 <dl class="method">
 <dt id="mbuild.port.Port.add_bond">
-<code class="descname">add_bond</code><span class="sig-paren">(</span><em>particle_pair</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.port.Port.add_bond" title="Permalink to this definition">¶</a></dt>
+<code class="descname">add_bond</code><span class="sig-paren">(</span><em>self</em>, <em>particle_pair</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.port.Port.add_bond" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add a bond between two Particles.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1348,12 +1350,12 @@ to add Compounds to an existing rigid body.</p>
 
 <dl class="method">
 <dt id="mbuild.port.Port.all_ports">
-<code class="descname">all_ports</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.port.Port.all_ports" title="Permalink to this definition">¶</a></dt>
+<code class="descname">all_ports</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.port.Port.all_ports" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return all Ports referenced by this Compound and its successors</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>list of mb.Compound</strong></dt><dd><p>A list of all Ports referenced by this Compound and its successors</p>
+<dt>list of mb.Compound</dt><dd><p>A list of all Ports referenced by this Compound and its successors</p>
 </dd>
 </dl>
 </dd>
@@ -1362,12 +1364,12 @@ to add Compounds to an existing rigid body.</p>
 
 <dl class="method">
 <dt id="mbuild.port.Port.ancestors">
-<code class="descname">ancestors</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.port.Port.ancestors" title="Permalink to this definition">¶</a></dt>
+<code class="descname">ancestors</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.port.Port.ancestors" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generate all ancestors of the Compound recursively.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Yields</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>mb.Compound</strong></dt><dd><p>The next Compound above self in the hierarchy</p>
+<dt>mb.Compound</dt><dd><p>The next Compound above self in the hierarchy</p>
 </dd>
 </dl>
 </dd>
@@ -1376,12 +1378,12 @@ to add Compounds to an existing rigid body.</p>
 
 <dl class="method">
 <dt id="mbuild.port.Port.available_ports">
-<code class="descname">available_ports</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.port.Port.available_ports" title="Permalink to this definition">¶</a></dt>
+<code class="descname">available_ports</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.port.Port.available_ports" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return all unoccupied Ports referenced by this Compound.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>list of mb.Compound</strong></dt><dd><p>A list of all unoccupied ports referenced by the Compound</p>
+<dt>list of mb.Compound</dt><dd><p>A list of all unoccupied ports referenced by the Compound</p>
 </dd>
 </dl>
 </dd>
@@ -1390,12 +1392,12 @@ to add Compounds to an existing rigid body.</p>
 
 <dl class="method">
 <dt id="mbuild.port.Port.bonds">
-<code class="descname">bonds</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.port.Port.bonds" title="Permalink to this definition">¶</a></dt>
+<code class="descname">bonds</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.port.Port.bonds" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return all bonds in the Compound and sub-Compounds.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Yields</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>tuple of mb.Compound</strong></dt><dd><p>The next bond in the Compound</p>
+<dt>tuple of mb.Compound</dt><dd><p>The next bond in the Compound</p>
 </dd>
 </dl>
 </dd>
@@ -1416,7 +1418,7 @@ to add Compounds to an existing rigid body.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>mb.Box</strong></dt><dd><p>The bounding box for this Compound</p>
+<dt>mb.Box</dt><dd><p>The bounding box for this Compound</p>
 </dd>
 </dl>
 </dd>
@@ -1440,7 +1442,7 @@ hierarchy) then contains_rigid will return False.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>bool</strong></dt><dd><p>True if the Compound contains any particle with a rigid_id != None</p>
+<dt>bool</dt><dd><p>True if the Compound contains any particle with a rigid_id != None</p>
 </dd>
 </dl>
 </dd>
@@ -1460,7 +1462,7 @@ and the particle tree is not traversed, boosting performance.</p>
 
 <dl class="method">
 <dt id="mbuild.port.Port.energy_minimize">
-<code class="descname">energy_minimize</code><span class="sig-paren">(</span><em>forcefield='UFF'</em>, <em>steps=1000</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.port.Port.energy_minimize" title="Permalink to this definition">¶</a></dt>
+<code class="descname">energy_minimize</code><span class="sig-paren">(</span><em>self</em>, <em>forcefield='UFF'</em>, <em>steps=1000</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.port.Port.energy_minimize" title="Permalink to this definition">¶</a></dt>
 <dd><p>Perform an energy minimization on a Compound</p>
 <p>Default beahvior utilizes Open Babel (<a class="reference external" href="http://openbabel.org/docs/dev/">http://openbabel.org/docs/dev/</a>)
 to perform an energy minimization/geometry optimization on a
@@ -1528,7 +1530,7 @@ J. Chem. Theor. Comput. 9(1): 461-469. (2013).</p>
 chemical toolbox.” (2011) J. Cheminf. 3, 33</p>
 </div></blockquote>
 <dl class="citation">
-<dt class="label" id="rba59df87d8d7-2"><span class="brackets"><a class="fn-backref" href="#id15">2</a></span></dt>
+<dt class="label" id="rba59df87d8d7-2"><span class="brackets">2</span></dt>
 <dd><p>Open Babel, version X.X.X <a class="reference external" href="http://openbabel.org">http://openbabel.org</a>, (installed
 Month Year)</p>
 </dd>
@@ -1540,22 +1542,22 @@ Month Year)</p>
 J. Comput. Chem. 17, 490-519</p>
 </div></blockquote>
 <dl class="citation">
-<dt class="label" id="rba59df87d8d7-4"><span class="brackets"><a class="fn-backref" href="#id17">4</a></span></dt>
+<dt class="label" id="rba59df87d8d7-4"><span class="brackets">4</span></dt>
 <dd><p>T.A. Halgren, “Merck molecular force field. II. MMFF94 van der
 Waals and electrostatic parameters for intermolecular
 interactions.” (1996) J. Comput. Chem. 17, 520-552</p>
 </dd>
-<dt class="label" id="rba59df87d8d7-5"><span class="brackets"><a class="fn-backref" href="#id18">5</a></span></dt>
+<dt class="label" id="rba59df87d8d7-5"><span class="brackets">5</span></dt>
 <dd><p>T.A. Halgren, “Merck molecular force field. III. Molecular
 geometries and vibrational frequencies for MMFF94.” (1996)
 J. Comput. Chem. 17, 553-586</p>
 </dd>
-<dt class="label" id="rba59df87d8d7-6"><span class="brackets"><a class="fn-backref" href="#id19">6</a></span></dt>
+<dt class="label" id="rba59df87d8d7-6"><span class="brackets">6</span></dt>
 <dd><p>T.A. Halgren and R.B. Nachbar, “Merck molecular force field.
 IV. Conformational energies and geometries for MMFF94.” (1996)
 J. Comput. Chem. 17, 587-615</p>
 </dd>
-<dt class="label" id="rba59df87d8d7-7"><span class="brackets"><a class="fn-backref" href="#id20">7</a></span></dt>
+<dt class="label" id="rba59df87d8d7-7"><span class="brackets">7</span></dt>
 <dd><p>T.A. Halgren, “Merck molecular force field. V. Extension of
 MMFF94 using experimental data, additional computational data,
 and empirical rules.” (1996) J. Comput. Chem. 17, 616-641</p>
@@ -1589,7 +1591,7 @@ J. Comput. Chem. 22, 1229-1242</p>
 
 <dl class="method">
 <dt id="mbuild.port.Port.from_parmed">
-<code class="descname">from_parmed</code><span class="sig-paren">(</span><em>structure</em>, <em>coords_only=False</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.port.Port.from_parmed" title="Permalink to this definition">¶</a></dt>
+<code class="descname">from_parmed</code><span class="sig-paren">(</span><em>self</em>, <em>structure</em>, <em>coords_only=False</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.port.Port.from_parmed" title="Permalink to this definition">¶</a></dt>
 <dd><p>Extract atoms and bonds from a pmd.Structure.</p>
 <p>Will create sub-compounds for every chain if there is more than one
 and sub-sub-compounds for every residue.</p>
@@ -1607,7 +1609,7 @@ and sub-sub-compounds for every residue.</p>
 
 <dl class="method">
 <dt id="mbuild.port.Port.from_trajectory">
-<code class="descname">from_trajectory</code><span class="sig-paren">(</span><em>traj</em>, <em>frame=-1</em>, <em>coords_only=False</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.port.Port.from_trajectory" title="Permalink to this definition">¶</a></dt>
+<code class="descname">from_trajectory</code><span class="sig-paren">(</span><em>self</em>, <em>traj</em>, <em>frame=-1</em>, <em>coords_only=False</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.port.Port.from_trajectory" title="Permalink to this definition">¶</a></dt>
 <dd><p>Extract atoms and bonds from a md.Trajectory.</p>
 <p>Will create sub-compounds for every chain if there is more than one
 and sub-sub-compounds for every residue.</p>
@@ -1627,7 +1629,7 @@ and sub-sub-compounds for every residue.</p>
 
 <dl class="method">
 <dt id="mbuild.port.Port.generate_bonds">
-<code class="descname">generate_bonds</code><span class="sig-paren">(</span><em>name_a</em>, <em>name_b</em>, <em>dmin</em>, <em>dmax</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.port.Port.generate_bonds" title="Permalink to this definition">¶</a></dt>
+<code class="descname">generate_bonds</code><span class="sig-paren">(</span><em>self</em>, <em>name_a</em>, <em>name_b</em>, <em>dmin</em>, <em>dmax</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.port.Port.generate_bonds" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add Bonds between all pairs of types a/b within [dmin, dmax].</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1647,7 +1649,7 @@ and sub-sub-compounds for every residue.</p>
 
 <dl class="method">
 <dt id="mbuild.port.Port.label_rigid_bodies">
-<code class="descname">label_rigid_bodies</code><span class="sig-paren">(</span><em>discrete_bodies=None</em>, <em>rigid_particles=None</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.port.Port.label_rigid_bodies" title="Permalink to this definition">¶</a></dt>
+<code class="descname">label_rigid_bodies</code><span class="sig-paren">(</span><em>self</em>, <em>discrete_bodies=None</em>, <em>rigid_particles=None</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.port.Port.label_rigid_bodies" title="Permalink to this definition">¶</a></dt>
 <dd><p>Designate which Compounds should be treated as rigid bodies</p>
 <p>If no arguments are provided, this function will treat the compound
 as a single rigid body by providing all particles in <cite>self</cite> with the
@@ -1723,7 +1725,7 @@ rigid_id in the containment hierarchy.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>int or None</strong></dt><dd><p>The maximum rigid body ID contained in the Compound. If no
+<dt>int or None</dt><dd><p>The maximum rigid body ID contained in the Compound. If no
 rigid body IDs are found, None is returned</p>
 </dd>
 </dl>
@@ -1733,7 +1735,7 @@ rigid body IDs are found, None is returned</p>
 
 <dl class="method">
 <dt id="mbuild.port.Port.min_periodic_distance">
-<code class="descname">min_periodic_distance</code><span class="sig-paren">(</span><em>xyz0</em>, <em>xyz1</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.port.Port.min_periodic_distance" title="Permalink to this definition">¶</a></dt>
+<code class="descname">min_periodic_distance</code><span class="sig-paren">(</span><em>self</em>, <em>xyz0</em>, <em>xyz1</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.port.Port.min_periodic_distance" title="Permalink to this definition">¶</a></dt>
 <dd><p>Vectorized distance calculation considering minimum image.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1746,7 +1748,7 @@ rigid body IDs are found, None is returned</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl class="simple">
-<dt><strong>float</strong></dt><dd><p>Vectorized distance between the two points following minimum
+<dt>float</dt><dd><p>Vectorized distance between the two points following minimum
 image convention</p>
 </dd>
 </dl>
@@ -1761,7 +1763,7 @@ image convention</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>int</strong></dt><dd><p>The number of bonds in the Compound</p>
+<dt>int</dt><dd><p>The number of bonds in the Compound</p>
 </dd>
 </dl>
 </dd>
@@ -1775,7 +1777,7 @@ image convention</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>int</strong></dt><dd><p>The number of Particles in the Compound</p>
+<dt>int</dt><dd><p>The number of Particles in the Compound</p>
 </dd>
 </dl>
 </dd>
@@ -1784,7 +1786,7 @@ image convention</p>
 
 <dl class="method">
 <dt id="mbuild.port.Port.particles">
-<code class="descname">particles</code><span class="sig-paren">(</span><em>include_ports=False</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.port.Port.particles" title="Permalink to this definition">¶</a></dt>
+<code class="descname">particles</code><span class="sig-paren">(</span><em>self</em>, <em>include_ports=False</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.port.Port.particles" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return all Particles of the Compound.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1795,7 +1797,7 @@ image convention</p>
 </dd>
 <dt class="field-even">Yields</dt>
 <dd class="field-even"><dl class="simple">
-<dt><strong>mb.Compound</strong></dt><dd><p>The next Particle in the Compound</p>
+<dt>mb.Compound</dt><dd><p>The next Particle in the Compound</p>
 </dd>
 </dl>
 </dd>
@@ -1804,7 +1806,7 @@ image convention</p>
 
 <dl class="method">
 <dt id="mbuild.port.Port.particles_by_name">
-<code class="descname">particles_by_name</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.port.Port.particles_by_name" title="Permalink to this definition">¶</a></dt>
+<code class="descname">particles_by_name</code><span class="sig-paren">(</span><em>self</em>, <em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.port.Port.particles_by_name" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return all Particles of the Compound with a specific name</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1815,7 +1817,7 @@ image convention</p>
 </dd>
 <dt class="field-even">Yields</dt>
 <dd class="field-even"><dl class="simple">
-<dt><strong>mb.Compound</strong></dt><dd><p>The next Particle in the Compound with the user-specified name</p>
+<dt>mb.Compound</dt><dd><p>The next Particle in the Compound with the user-specified name</p>
 </dd>
 </dl>
 </dd>
@@ -1824,7 +1826,7 @@ image convention</p>
 
 <dl class="method">
 <dt id="mbuild.port.Port.particles_in_range">
-<code class="descname">particles_in_range</code><span class="sig-paren">(</span><em>compound</em>, <em>dmax</em>, <em>max_particles=20</em>, <em>particle_kdtree=None</em>, <em>particle_array=None</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.port.Port.particles_in_range" title="Permalink to this definition">¶</a></dt>
+<code class="descname">particles_in_range</code><span class="sig-paren">(</span><em>self</em>, <em>compound</em>, <em>dmax</em>, <em>max_particles=20</em>, <em>particle_kdtree=None</em>, <em>particle_array=None</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.port.Port.particles_in_range" title="Permalink to this definition">¶</a></dt>
 <dd><p>Find particles within a specified range of another particle.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1845,7 +1847,7 @@ provided, this defaults to all Particles in self</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl class="simple">
-<dt><strong>np.ndarray, shape=(n,), dtype=mb.Compound</strong></dt><dd><p>Particles in range of compound according to user-defined limits</p>
+<dt>np.ndarray, shape=(n,), dtype=mb.Compound</dt><dd><p>Particles in range of compound according to user-defined limits</p>
 </dd>
 </dl>
 </dd>
@@ -1863,12 +1865,12 @@ provided, this defaults to all Particles in self</p>
 
 <dl class="method">
 <dt id="mbuild.port.Port.referenced_ports">
-<code class="descname">referenced_ports</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.port.Port.referenced_ports" title="Permalink to this definition">¶</a></dt>
+<code class="descname">referenced_ports</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.port.Port.referenced_ports" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return all Ports referenced by this Compound.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>list of mb.Compound</strong></dt><dd><p>A list of all ports referenced by the Compound</p>
+<dt>list of mb.Compound</dt><dd><p>A list of all ports referenced by the Compound</p>
 </dd>
 </dl>
 </dd>
@@ -1877,7 +1879,7 @@ provided, this defaults to all Particles in self</p>
 
 <dl class="method">
 <dt id="mbuild.port.Port.remove">
-<code class="descname">remove</code><span class="sig-paren">(</span><em>objs_to_remove</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.port.Port.remove" title="Permalink to this definition">¶</a></dt>
+<code class="descname">remove</code><span class="sig-paren">(</span><em>self</em>, <em>objs_to_remove</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.port.Port.remove" title="Permalink to this definition">¶</a></dt>
 <dd><p>Remove children from the Compound.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1891,7 +1893,7 @@ provided, this defaults to all Particles in self</p>
 
 <dl class="method">
 <dt id="mbuild.port.Port.remove_bond">
-<code class="descname">remove_bond</code><span class="sig-paren">(</span><em>particle_pair</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.port.Port.remove_bond" title="Permalink to this definition">¶</a></dt>
+<code class="descname">remove_bond</code><span class="sig-paren">(</span><em>self</em>, <em>particle_pair</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.port.Port.remove_bond" title="Permalink to this definition">¶</a></dt>
 <dd><p>Deletes a bond between a pair of Particles</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1905,7 +1907,7 @@ provided, this defaults to all Particles in self</p>
 
 <dl class="method">
 <dt id="mbuild.port.Port.rigid_particles">
-<code class="descname">rigid_particles</code><span class="sig-paren">(</span><em>rigid_id=None</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.port.Port.rigid_particles" title="Permalink to this definition">¶</a></dt>
+<code class="descname">rigid_particles</code><span class="sig-paren">(</span><em>self</em>, <em>rigid_id=None</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.port.Port.rigid_particles" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generate all particles in rigid bodies.</p>
 <p>If a rigid_id is specified, then this function will only yield particles
 with a matching rigid_id.</p>
@@ -1918,7 +1920,7 @@ with a matching rigid_id.</p>
 </dd>
 <dt class="field-even">Yields</dt>
 <dd class="field-even"><dl class="simple">
-<dt><strong>mb.Compound</strong></dt><dd><p>The next particle with a rigid_id that is not None, or the next
+<dt>mb.Compound</dt><dd><p>The next particle with a rigid_id that is not None, or the next
 particle with a matching rigid_id if specified</p>
 </dd>
 </dl>
@@ -1933,7 +1935,7 @@ particle with a matching rigid_id if specified</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>mb.Compound</strong></dt><dd><p>The Compound at the top of self’s hierarchy</p>
+<dt>mb.Compound</dt><dd><p>The Compound at the top of self’s hierarchy</p>
 </dd>
 </dl>
 </dd>
@@ -1942,7 +1944,7 @@ particle with a matching rigid_id if specified</p>
 
 <dl class="method">
 <dt id="mbuild.port.Port.rotate">
-<code class="descname">rotate</code><span class="sig-paren">(</span><em>theta</em>, <em>around</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.port.Port.rotate" title="Permalink to this definition">¶</a></dt>
+<code class="descname">rotate</code><span class="sig-paren">(</span><em>self</em>, <em>theta</em>, <em>around</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.port.Port.rotate" title="Permalink to this definition">¶</a></dt>
 <dd><p>Rotate Compound around an arbitrary vector.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1958,7 +1960,7 @@ particle with a matching rigid_id if specified</p>
 
 <dl class="method">
 <dt id="mbuild.port.Port.save">
-<code class="descname">save</code><span class="sig-paren">(</span><em>filename</em>, <em>show_ports=False</em>, <em>forcefield_name=None</em>, <em>forcefield_files=None</em>, <em>forcefield_debug=False</em>, <em>box=None</em>, <em>overwrite=False</em>, <em>residues=None</em>, <em>references_file=None</em>, <em>combining_rule='lorentz'</em>, <em>foyerkwargs={}</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.port.Port.save" title="Permalink to this definition">¶</a></dt>
+<code class="descname">save</code><span class="sig-paren">(</span><em>self</em>, <em>filename</em>, <em>show_ports=False</em>, <em>forcefield_name=None</em>, <em>forcefield_files=None</em>, <em>forcefield_debug=False</em>, <em>box=None</em>, <em>overwrite=False</em>, <em>residues=None</em>, <em>references_file=None</em>, <em>combining_rule='lorentz'</em>, <em>foyerkwargs={}</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.port.Port.save" title="Permalink to this definition">¶</a></dt>
 <dd><p>Save the Compound to a file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -2035,7 +2037,7 @@ information on atom styles.</p>
 
 <dl class="method">
 <dt id="mbuild.port.Port.spin">
-<code class="descname">spin</code><span class="sig-paren">(</span><em>theta</em>, <em>around</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.port.Port.spin" title="Permalink to this definition">¶</a></dt>
+<code class="descname">spin</code><span class="sig-paren">(</span><em>self</em>, <em>theta</em>, <em>around</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.port.Port.spin" title="Permalink to this definition">¶</a></dt>
 <dd><p>Rotate Compound in place around an arbitrary vector.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -2051,12 +2053,12 @@ information on atom styles.</p>
 
 <dl class="method">
 <dt id="mbuild.port.Port.successors">
-<code class="descname">successors</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.port.Port.successors" title="Permalink to this definition">¶</a></dt>
+<code class="descname">successors</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.port.Port.successors" title="Permalink to this definition">¶</a></dt>
 <dd><p>Yield Compounds below self in the hierarchy.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Yields</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>mb.Compound</strong></dt><dd><p>The next Particle below self in the hierarchy</p>
+<dt>mb.Compound</dt><dd><p>The next Particle below self in the hierarchy</p>
 </dd>
 </dl>
 </dd>
@@ -2065,7 +2067,7 @@ information on atom styles.</p>
 
 <dl class="method">
 <dt id="mbuild.port.Port.to_intermol">
-<code class="descname">to_intermol</code><span class="sig-paren">(</span><em>molecule_types=None</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.port.Port.to_intermol" title="Permalink to this definition">¶</a></dt>
+<code class="descname">to_intermol</code><span class="sig-paren">(</span><em>self</em>, <em>molecule_types=None</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.port.Port.to_intermol" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create an InterMol system from a Compound.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -2083,7 +2085,7 @@ information on atom styles.</p>
 
 <dl class="method">
 <dt id="mbuild.port.Port.to_networkx">
-<code class="descname">to_networkx</code><span class="sig-paren">(</span><em>names_only=False</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.port.Port.to_networkx" title="Permalink to this definition">¶</a></dt>
+<code class="descname">to_networkx</code><span class="sig-paren">(</span><em>self</em>, <em>names_only=False</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.port.Port.to_networkx" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a NetworkX graph representing the hierarchy of a Compound.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -2103,7 +2105,7 @@ the nodes are the compounds themselves.</p>
 
 <dl class="method">
 <dt id="mbuild.port.Port.to_parmed">
-<code class="descname">to_parmed</code><span class="sig-paren">(</span><em>box=None</em>, <em>title=''</em>, <em>residues=None</em>, <em>show_ports=False</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.port.Port.to_parmed" title="Permalink to this definition">¶</a></dt>
+<code class="descname">to_parmed</code><span class="sig-paren">(</span><em>self</em>, <em>box=None</em>, <em>title=''</em>, <em>residues=None</em>, <em>show_ports=False</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.port.Port.to_parmed" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a ParmEd Structure from a Compound.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -2125,7 +2127,7 @@ checking against Compound.name.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl class="simple">
-<dt><strong>parmed.structure.Structure</strong></dt><dd><p>ParmEd Structure object converted from self</p>
+<dt>parmed.structure.Structure</dt><dd><p>ParmEd Structure object converted from self</p>
 </dd>
 </dl>
 </dd>
@@ -2141,7 +2143,7 @@ checking against Compound.name.</p>
 
 <dl class="method">
 <dt id="mbuild.port.Port.to_trajectory">
-<code class="descname">to_trajectory</code><span class="sig-paren">(</span><em>show_ports=False</em>, <em>chains=None</em>, <em>residues=None</em>, <em>box=None</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.port.Port.to_trajectory" title="Permalink to this definition">¶</a></dt>
+<code class="descname">to_trajectory</code><span class="sig-paren">(</span><em>self</em>, <em>show_ports=False</em>, <em>chains=None</em>, <em>residues=None</em>, <em>box=None</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.port.Port.to_trajectory" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert to an md.Trajectory and flatten the compound.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -2169,13 +2171,15 @@ box lengths.</p>
 </dl>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><code class="xref py py-obj docutils literal notranslate"><span class="pre">_to_topology</span></code></p>
+<dl class="simple">
+<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">_to_topology</span></code></dt><dd></dd>
+</dl>
 </div>
 </dd></dl>
 
 <dl class="method">
 <dt id="mbuild.port.Port.translate">
-<code class="descname">translate</code><span class="sig-paren">(</span><em>by</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.port.Port.translate" title="Permalink to this definition">¶</a></dt>
+<code class="descname">translate</code><span class="sig-paren">(</span><em>self</em>, <em>by</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.port.Port.translate" title="Permalink to this definition">¶</a></dt>
 <dd><p>Translate the Compound by a vector</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -2188,7 +2192,7 @@ box lengths.</p>
 
 <dl class="method">
 <dt id="mbuild.port.Port.translate_to">
-<code class="descname">translate_to</code><span class="sig-paren">(</span><em>pos</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.port.Port.translate_to" title="Permalink to this definition">¶</a></dt>
+<code class="descname">translate_to</code><span class="sig-paren">(</span><em>self</em>, <em>pos</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.port.Port.translate_to" title="Permalink to this definition">¶</a></dt>
 <dd><p>Translate the Compound to a specific position</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -2201,13 +2205,13 @@ box lengths.</p>
 
 <dl class="method">
 <dt id="mbuild.port.Port.unlabel_rigid_bodies">
-<code class="descname">unlabel_rigid_bodies</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.port.Port.unlabel_rigid_bodies" title="Permalink to this definition">¶</a></dt>
+<code class="descname">unlabel_rigid_bodies</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.port.Port.unlabel_rigid_bodies" title="Permalink to this definition">¶</a></dt>
 <dd><p>Remove all rigid body labels from the Compound</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="mbuild.port.Port.update_coordinates">
-<code class="descname">update_coordinates</code><span class="sig-paren">(</span><em>filename</em>, <em>update_port_locations=True</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.port.Port.update_coordinates" title="Permalink to this definition">¶</a></dt>
+<code class="descname">update_coordinates</code><span class="sig-paren">(</span><em>self</em>, <em>filename</em>, <em>update_port_locations=True</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.port.Port.update_coordinates" title="Permalink to this definition">¶</a></dt>
 <dd><p>Update the coordinates of this Compound from a file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -2234,7 +2238,7 @@ the orientation of Ports with respect to the molecule as a whole.</p>
 
 <dl class="method">
 <dt id="mbuild.port.Port.visualize">
-<code class="descname">visualize</code><span class="sig-paren">(</span><em>show_ports=False</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.port.Port.visualize" title="Permalink to this definition">¶</a></dt>
+<code class="descname">visualize</code><span class="sig-paren">(</span><em>self</em>, <em>show_ports=False</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.port.Port.visualize" title="Permalink to this definition">¶</a></dt>
 <dd><p>Visualize the Compound using nglview.</p>
 <p>Allows for visualization of a Compound within a Jupyter Notebook.</p>
 <dl class="field-list simple">
