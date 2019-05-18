@@ -87,7 +87,9 @@
               <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#install-with-conda">Install with conda</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#install-with-pip">Install with pip</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#install-an-editable-version-from-source">Install an editable version from source</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#supported-python-versions">Supported Python Versions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#testing-your-installation">Testing your installation</a></li>
 </ul>
 </li>
@@ -192,6 +194,17 @@ nice case for using Python and in particular the
 to manage your numerical and scientific Python packages.</p>
 </div>
 </div>
+<div class="section" id="install-with-pip">
+<h2>Install with <a class="reference external" href="https://pypi.org/project/pip/">pip</a><a class="headerlink" href="#install-with-pip" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pip install mbuild
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><a class="reference external" href="http://m3g.iqm.unicamp.br/packmol/">PACKMOL</a> is not available on pip
+but can be installed from source or via conda.</p>
+</div>
+</div>
 <div class="section" id="install-an-editable-version-from-source">
 <h2>Install an editable version from source<a class="headerlink" href="#install-an-editable-version-from-source" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git clone https://github.com/mosdef-hub/mbuild
@@ -202,6 +215,13 @@ $ pip install -e .
 <p>To make your life easier, we recommend that you use a pre-packaged Python
 distribution like <a class="reference external" href="https://store.continuum.io/">Continuum’s Anaconda</a>
 in order to get all of the dependencies.</p>
+</div>
+<div class="section" id="supported-python-versions">
+<h2>Supported Python Versions<a class="headerlink" href="#supported-python-versions" title="Permalink to this headline">¶</a></h2>
+<p>Python 2.7, 3.5 and 3.6 are officially supported, including testing during
+development and packaging. Support for Python 2.7 is planned to be dropped in
+late 2019. Other Python versions, such as 3.7 and 3.4 and older, may
+successfully build and function but no guarantee is made.</p>
 </div>
 <div class="section" id="testing-your-installation">
 <h2>Testing your installation<a class="headerlink" href="#testing-your-installation" title="Permalink to this headline">¶</a></h2>
