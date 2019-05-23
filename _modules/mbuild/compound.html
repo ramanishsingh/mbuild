@@ -1317,7 +1317,7 @@
             <span class="n">particle_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">particles</span><span class="p">()))</span>
         <span class="k">return</span> <span class="n">particle_array</span><span class="p">[</span><span class="n">idxs</span><span class="p">]</span></div>
 
-<div class="viewcode-block" id="Compound.visualize"><a class="viewcode-back" href="../../data_structures.html#mbuild.compound.Compound.visualize">[docs]</a>    <span class="k">def</span> <span class="nf">visualize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">show_ports</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="Compound.visualize"><a class="viewcode-back" href="../../data_structures.html#mbuild.compound.Compound.visualize">[docs]</a>    <span class="k">def</span> <span class="nf">visualize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">show_ports</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span> <span class="c1"># pragma: no cover</span>
         <span class="sd">&quot;&quot;&quot;Visualize the Compound using nglview.</span>
 
 <span class="sd">        Allows for visualization of a Compound within a Jupyter Notebook.</span>
@@ -2458,7 +2458,7 @@
             <span class="n">nodes</span><span class="p">,</span> <span class="n">edges</span> <span class="o">=</span> <span class="n">child</span><span class="o">.</span><span class="n">_iterate_children</span><span class="p">(</span><span class="n">nodes</span><span class="p">,</span> <span class="n">edges</span><span class="p">,</span> <span class="n">names_only</span><span class="o">=</span><span class="n">names_only</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">nodes</span><span class="p">,</span> <span class="n">edges</span>
 
-<div class="viewcode-block" id="Compound.to_intermol"><a class="viewcode-back" href="../../data_structures.html#mbuild.compound.Compound.to_intermol">[docs]</a>    <span class="k">def</span> <span class="nf">to_intermol</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">molecule_types</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="Compound.to_intermol"><a class="viewcode-back" href="../../data_structures.html#mbuild.compound.Compound.to_intermol">[docs]</a>    <span class="k">def</span> <span class="nf">to_intermol</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">molecule_types</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span> <span class="c1"># pragma: no cover</span>
         <span class="sd">&quot;&quot;&quot;Create an InterMol system from a Compound.</span>
 
 <span class="sd">        Parameters</span>
@@ -2511,7 +2511,7 @@
         <span class="k">return</span> <span class="n">intermol_system</span></div>
 
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">_add_intermol_molecule_type</span><span class="p">(</span><span class="n">intermol_system</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_add_intermol_molecule_type</span><span class="p">(</span><span class="n">intermol_system</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span> <span class="c1"># pragma: no cover</span>
         <span class="sd">&quot;&quot;&quot;Create a molecule type for the parent and add bonds. &quot;&quot;&quot;</span>
         <span class="kn">from</span> <span class="nn">intermol.moleculetype</span> <span class="k">import</span> <span class="n">MoleculeType</span>
         <span class="kn">from</span> <span class="nn">intermol.forces.bond</span> <span class="k">import</span> <span class="n">Bond</span> <span class="k">as</span> <span class="n">InterMolBond</span>

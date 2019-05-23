@@ -164,15 +164,8 @@
   <h1>Source code for mbuild.formats.gsdwriter</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span>
 
-<span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">OrderedDict</span>
-<span class="kn">from</span> <span class="nn">copy</span> <span class="k">import</span> <span class="n">deepcopy</span>
-<span class="kn">from</span> <span class="nn">math</span> <span class="k">import</span> <span class="n">floor</span>
-<span class="kn">import</span> <span class="nn">re</span>
-
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">oset</span> <span class="k">import</span> <span class="n">oset</span> <span class="k">as</span> <span class="n">OrderedSet</span>
 
-<span class="kn">from</span> <span class="nn">mbuild</span> <span class="k">import</span> <span class="n">Box</span>
 <span class="kn">from</span> <span class="nn">mbuild.utils.io</span> <span class="k">import</span> <span class="n">import_</span>
 <span class="kn">from</span> <span class="nn">mbuild.utils.sorting</span> <span class="k">import</span> <span class="n">natural_sort</span>
 <span class="kn">from</span> <span class="nn">mbuild.utils.geometry</span> <span class="k">import</span> <span class="n">coord_shift</span>
