@@ -1401,16 +1401,7 @@
                                 <span class="s1">&#39;color&#39;</span><span class="p">:</span><span class="s1">&#39;grey&#39;</span><span class="p">},</span>
                         <span class="s1">&#39;sphere&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;scale&#39;</span><span class="p">:</span> <span class="mf">0.3</span><span class="p">,</span>
                                     <span class="s1">&#39;colorscheme&#39;</span><span class="p">:</span><span class="n">modified_color_scheme</span><span class="p">}})</span>
-        <span class="k">if</span> <span class="n">show_ports</span><span class="p">:</span>
-            <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">particles</span><span class="p">(</span><span class="n">include_ports</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-                <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">port_particle</span><span class="p">:</span>
-                    <span class="n">view</span><span class="o">.</span><span class="n">addSphere</span><span class="p">({</span>
-                        <span class="s1">&#39;center&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;x&#39;</span><span class="p">:</span><span class="n">p</span><span class="o">.</span><span class="n">pos</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;y&#39;</span><span class="p">:</span><span class="n">p</span><span class="o">.</span><span class="n">pos</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;z&#39;</span><span class="p">:</span><span class="n">p</span><span class="o">.</span><span class="n">pos</span><span class="p">[</span><span class="mi">2</span><span class="p">]},</span>
-                        <span class="s1">&#39;radius&#39;</span> <span class="p">:</span><span class="mf">0.4</span><span class="p">,</span>
-                        <span class="s1">&#39;color&#39;</span><span class="p">:</span> <span class="s1">&#39;0x991f00&#39;</span><span class="p">,</span>
-                        <span class="s1">&#39;alpha&#39;</span><span class="p">:</span> <span class="mf">0.9</span><span class="p">})</span>
         <span class="n">view</span><span class="o">.</span><span class="n">zoomTo</span><span class="p">()</span>
-        <span class="n">view</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 
         <span class="k">return</span> <span class="n">view</span>
 
