@@ -8,7 +8,7 @@
 # 
 # The primary building block in mBuild is a `Compound`. Anything you construct will inherit from this class. Let's start with some basic imports and initialization:
 
-# In[12]:
+# In[ ]:
 
 
 import mbuild as mb
@@ -20,7 +20,7 @@ class Methane(mb.Compound):
 
 # Any `Compound` can contain other `Compounds` which can be added using its `add()` method. `Compounds` at the bottom of such a hierarchy are referred to as `Particles`. Note however, that this is purely semantic in mBuild to help clearly designate the bottom of a hierarchy.
 
-# In[13]:
+# In[ ]:
 
 
 import mbuild as mb
@@ -45,7 +45,7 @@ class Methane(mb.Compound):
 # Now let's use these styles of referencing to connect the carbon to the hydrogen. Note that for typical use cases, you will almost never have to explicitly define a bond when using mBuild - this is just to show you what's going on
 # under the hood:
 
-# In[14]:
+# In[ ]:
 
 
 import mbuild as mb
@@ -66,7 +66,7 @@ class Methane(mb.Compound):
 # 
 # Alright now that we've got the basics, let's finish building our `Methane` and take a look at it:
 
-# In[15]:
+# In[ ]:
 
 
 import mbuild as mb
@@ -91,16 +91,16 @@ class Methane(mb.Compound):
         self.add_bond((self[0], self['HC'][3]))
 
 
-# In[16]:
+# In[ ]:
 
 
 methane = Methane()
 methane.visualize()
 
 
-# In[17]:
+# In[ ]:
 
 
 # Save to .mol2
-methane.save('methane.mol2')
+methane.save('methane.mol2',overwrite=True)
 

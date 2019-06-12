@@ -9,7 +9,7 @@
 
 # The first step is to construct the basic repeat unit for the alkane, i.e., a $CH_2$ group, similar to the construction of the $CH_3$ monomer in the prior methane tutorial.  Rather than importing the coordinates from a pdb file, as in the previous example, we will instead explicitly define them in the class. Recall that distance units are nm in mBuild.
 
-# In[2]:
+# In[ ]:
 
 
 import mbuild as mb
@@ -39,7 +39,7 @@ monomer.visualize(show_ports=True)
 # 
 # Below, we use the same basic script, but now apply a rotation to the hydrogen atoms.  Since the hydrogens start 180&deg; apart and we know they should be ~109.5&deg; apart, each should be rotated half of the difference closer to each other around the y-axis. Note that the rotation angle is given in radians. Similarly, the ports should be rotated around the x-axis by the same amount so that atoms can be added in a realistic orientation. 
 
-# In[5]:
+# In[ ]:
 
 
 import numpy as np
@@ -70,7 +70,7 @@ monomer.visualize(show_ports=True)
 
 # With a basic monomer construct, we can now construct a polymer by connecting the ports together. Here, we first instantiate one instance of the CH2 class as ```1ast_monomer```, then use the clone function to make a copy. The ```force_overlap()``` function is used to connect the ```'up'``` port from ```current_monomer``` to the ```'down'``` port of ```last_mononer```.
 
-# In[11]:
+# In[ ]:
 
 
 class AlkanePolymer(mb.Compound):
@@ -79,7 +79,7 @@ class AlkanePolymer(mb.Compound):
         last_monomer = CH2()
         self.add(last_monomer)
         for i in range(3):
-            current_monomer = mb.clone(last_monomer)
+            current_monomer = CH2()
             mb.force_overlap(move_this=current_monomer, 
                              from_positions=current_monomer['up'], 
                              to_positions=last_monomer['down'])
@@ -94,7 +94,7 @@ polymer.visualize(show_ports=True)
 # 
 # We can also add a variable ```chain_length``` both to the for loop and ```init```  that will allow the length of the polymer to be adjusted when the class is instantiated.  
 
-# In[13]:
+# In[ ]:
 
 
 import numpy as np
@@ -125,7 +125,7 @@ class AlkanePolymer(mb.Compound):
         last_monomer = CH2()
         self.add(last_monomer)
         for i in range (chain_length-1):
-            current_monomer = mb.clone(last_monomer)
+            current_monomer = CH2()
     
             mb.force_overlap(move_this=current_monomer, 
                              from_positions=current_monomer['up'], 
@@ -134,7 +134,7 @@ class AlkanePolymer(mb.Compound):
             last_monomer=current_monomer
 
 
-# In[14]:
+# In[ ]:
 
 
 polymer = AlkanePolymer(chain_length=10)
@@ -145,10 +145,10 @@ polymer.visualize(show_ports=True)
 
 # ```mBuild``` provides a prebuilt class to perform this basic functionality. Since it is designed to be more general, it takes as an argument not just the chain length, but also the monomer and the port labels (e.g., 'up' and 'down', since these labels are user defined). 
 
-# In[15]:
+# In[ ]:
 
 
-polymer = mb.Polymer(CH2(), 10, port_labels=('up', 'down'))
+polymer = mb.lib.recipes.Polymer(CH2(), 10, port_labels=('up', 'down'))
 polymer.visualize()
 
 
@@ -156,11 +156,11 @@ polymer.visualize()
 
 # A system of alkanes can be constructed by simply cloning the polymer constructed above and translating and/or rotating the alkanes in space. ```mBuild``` provides many routines that can be used to create different patterns, to which the polymers can be shifted.
 
-# In[23]:
+# In[ ]:
 
 
 # create the polymer
-polymer = mb.Polymer(CH2(), 10, port_labels=('up', 'down'))
+polymer = mb.lib.recipes.Polymer(CH2(), 10, port_labels=('up', 'down'))
 
 # the pattern we generate puts points in the xy-plane, so we'll rotate the polymer
 # so that it is oriented normal to the xy-plane
@@ -186,12 +186,12 @@ system.visualize()
 
 # Other patterns can be used, e.g., the ```Grid3DPattern```.  We can also use the rotation commands to randomize the orientation. 
 
-# In[27]:
+# In[ ]:
 
 
 import random
 
-polymer = mb.Polymer(CH2(), 10, port_labels=('up', 'down'))
+polymer = mb.lib.recipes.Polymer(CH2(), 10, port_labels=('up', 'down'))
 system = mb.Compound()
 mb.rotate(polymer, np.pi/2, [1, 0, 0])
 
@@ -210,10 +210,10 @@ system.visualize()
 
 # ```mBuild``` also provides an interface to ```PACKMOL```, allowing the creation of a randomized configuration.
 
-# In[29]:
+# In[ ]:
 
 
-polymer = mb.Polymer(CH2(), 5, port_labels=('up', 'down'))
+polymer = mb.lib.recipes.Polymer(CH2(), 5, port_labels=('up', 'down'))
 system = mb.fill_box(polymer, n_compounds=100, overlap=1.5, box=[10,10,10]) 
 system.visualize()
 
@@ -224,7 +224,7 @@ system.visualize()
 # 
 # We also define a variable ```delta```, which will control the maximum amount of perturbation. Note that large values of ```delta``` may result in the chain overlapping itself, as ```mBuild``` does not currently include routines to exclude such overlaps.
 
-# In[33]:
+# In[ ]:
 
 
 import mbuild as mb
@@ -251,4 +251,10 @@ class AlkanePolymer(mb.Compound):
 
 polymer = AlkanePolymer(chain_length = 200, delta=0.4)
 polymer.visualize()
+
+
+# In[ ]:
+
+
+
 

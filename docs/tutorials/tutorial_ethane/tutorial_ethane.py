@@ -11,7 +11,7 @@
 # First, we need to import the mbuild package:
 # 
 
-# In[1]:
+# In[ ]:
 
 
 import mbuild as mb
@@ -21,7 +21,7 @@ import mbuild as mb
 # 
 # Let's start by reading a methyl group from a `.pdb` file:
 
-# In[2]:
+# In[ ]:
 
 
 import mbuild as mb
@@ -32,7 +32,7 @@ ch3.visualize()
 
 # Now let's use our first coordinate transform to center the methyl at its carbon atom:
 
-# In[3]:
+# In[ ]:
 
 
 import mbuild as mb
@@ -44,7 +44,7 @@ mb.translate(ch3, -ch3[0].pos)  # Move carbon to origin.
 # Now we have a methyl group loaded up and centered. In order to connect `Compounds` in mBuild, we make use of a special type of `Compound`: the `Port`. A `Port` is a `Compound` with two sets of four "ghost" `Particles`. In addition ``Ports`` have an `anchor` attribute which typically points to a particle that the `Port` should be associated with. In our methyl group, the `Port` should be anchored to the carbon atom so that we
 # can now form bonds to this carbon:
 
-# In[4]:
+# In[ ]:
 
 
 import mbuild as mb
@@ -61,7 +61,7 @@ mb.translate(ch3['up'], [0, -0.07, 0])
 
 # By default, `Ports` are never output from the mBuild structure. However, it can be useful to look at a molecule with the `Ports` to check your work as you go:
 
-# In[5]:
+# In[ ]:
 
 
 ch3.visualize(show_ports=True)
@@ -69,7 +69,7 @@ ch3.visualize(show_ports=True)
 
 # Now we wrap the methyl group into a python class, so that we can reuse it as a component to build more complex molecules later.
 
-# In[6]:
+# In[ ]:
 
 
 import mbuild as mb
@@ -97,7 +97,7 @@ class CH3(mb.Compound):
 # 
 # Now the fun part: stick 'em together to create an ethane:
 
-# In[7]:
+# In[ ]:
 
 
 ethane = mb.Compound()
@@ -112,13 +112,13 @@ mb.force_overlap(move_this=ethane['methyl_1'],
 # Above, the `force_overlap()` function takes a `Compound` and then rotates and translates it such that two other `Compounds` overlap. Typically, as in
 # this case, those two other `Compounds` are `Ports` - in our case, `methyl1['up']` and `methyl2['up']`.
 
-# In[8]:
+# In[ ]:
 
 
 ethane.visualize()
 
 
-# In[9]:
+# In[ ]:
 
 
 ethane.visualize(show_ports=True)
@@ -126,7 +126,7 @@ ethane.visualize(show_ports=True)
 
 # Similarly, if we want to make ethane a reusable component, we need to wrap it into a python class.
 
-# In[10]:
+# In[ ]:
 
 
 import mbuild as mb
@@ -142,14 +142,14 @@ class Ethane(mb.Compound):
                          to_positions=self['methyl_2']['up'])
 
 
-# In[11]:
+# In[ ]:
 
 
 ethane = Ethane()
 ethane.visualize()
 
 
-# In[12]:
+# In[ ]:
 
 
 # Save to .mol2

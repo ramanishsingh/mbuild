@@ -51,7 +51,7 @@ import mbuild as mb
 from mbuild.lib.surfaces import Betacristobalite
 
 surface = Betacristobalite()
-tiled_surface = mb.TiledCompound(surface, n_tiles=(2, 1, 1))
+tiled_surface = mb.lib.recipes.TiledCompound(surface, n_tiles=(2, 1, 1))
 
 
 # Here we've imported a beta-cristobalite surface from our component library. The `TiledCompound` tool allows you replicate any `Compound` in the x-, y-
