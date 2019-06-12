@@ -219,7 +219,8 @@
 
 <div class="viewcode-block" id="fill_box"><a class="viewcode-back" href="../../recipes.html#mbuild.packing.fill_box">[docs]</a><span class="k">def</span> <span class="nf">fill_box</span><span class="p">(</span><span class="n">compound</span><span class="p">,</span> <span class="n">n_compounds</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">box</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">overlap</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span>
              <span class="n">seed</span><span class="o">=</span><span class="mi">12345</span><span class="p">,</span> <span class="n">edge</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">compound_ratio</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-             <span class="n">aspect_ratio</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">fix_orientation</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">temp_file</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+             <span class="n">aspect_ratio</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">fix_orientation</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">temp_file</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+             <span class="n">update_port_locations</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Fill a box with a compound using packmol.</span>
 
 <span class="sd">    Two arguments of `n_compounds, box, and density` must be specified.</span>
@@ -269,6 +270,9 @@
 <span class="sd">        default=False.</span>
 <span class="sd">    temp_file : str, default=None</span>
 <span class="sd">        File name to write PACKMOL&#39;s raw output to.</span>
+<span class="sd">    update_port_locations : bool, default=False</span>
+<span class="sd">        After packing, port locations can be updated, but since compounds</span>
+<span class="sd">        can be rotated, port orientation may be incorrect.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
@@ -369,7 +373,7 @@
         <span class="c1"># Create the topology and update the coordinates.</span>
         <span class="n">filled</span> <span class="o">=</span> <span class="n">Compound</span><span class="p">()</span>
         <span class="n">filled</span> <span class="o">=</span> <span class="n">_create_topology</span><span class="p">(</span><span class="n">filled</span><span class="p">,</span> <span class="n">compound</span><span class="p">,</span> <span class="n">n_compounds</span><span class="p">)</span>
-        <span class="n">filled</span><span class="o">.</span><span class="n">update_coordinates</span><span class="p">(</span><span class="n">filled_xyz</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">filled</span><span class="o">.</span><span class="n">update_coordinates</span><span class="p">(</span><span class="n">filled_xyz</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">update_port_locations</span><span class="o">=</span><span class="n">update_port_locations</span><span class="p">)</span>
         <span class="n">filled</span><span class="o">.</span><span class="n">periodicity</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">box</span><span class="o">.</span><span class="n">lengths</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
 
     <span class="k">finally</span><span class="p">:</span>
@@ -382,7 +386,8 @@
 
 
 <div class="viewcode-block" id="fill_region"><a class="viewcode-back" href="../../recipes.html#mbuild.packing.fill_region">[docs]</a><span class="k">def</span> <span class="nf">fill_region</span><span class="p">(</span><span class="n">compound</span><span class="p">,</span> <span class="n">n_compounds</span><span class="p">,</span> <span class="n">region</span><span class="p">,</span> <span class="n">overlap</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span>
-                <span class="n">seed</span><span class="o">=</span><span class="mi">12345</span><span class="p">,</span> <span class="n">edge</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">fix_orientation</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">temp_file</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+                <span class="n">seed</span><span class="o">=</span><span class="mi">12345</span><span class="p">,</span> <span class="n">edge</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">fix_orientation</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">temp_file</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                <span class="n">update_port_locations</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Fill a region of a box with a compound using packmol.</span>
 
 <span class="sd">    Parameters</span>
@@ -406,6 +411,9 @@
 <span class="sd">        default=False.</span>
 <span class="sd">    temp_file : str, default=None</span>
 <span class="sd">        File name to write PACKMOL&#39;s raw output to.</span>
+<span class="sd">    update_port_locations : bool, default=False</span>
+<span class="sd">        After packing, port locations can be updated, but since compounds</span>
+<span class="sd">        can be rotated, port orientation may be incorrect.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
@@ -473,7 +481,7 @@
         <span class="c1"># Create the topology and update the coordinates.</span>
         <span class="n">filled</span> <span class="o">=</span> <span class="n">Compound</span><span class="p">()</span>
         <span class="n">filled</span> <span class="o">=</span> <span class="n">_create_topology</span><span class="p">(</span><span class="n">filled</span><span class="p">,</span> <span class="n">compound</span><span class="p">,</span> <span class="n">n_compounds</span><span class="p">)</span>
-        <span class="n">filled</span><span class="o">.</span><span class="n">update_coordinates</span><span class="p">(</span><span class="n">filled_xyz</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">filled</span><span class="o">.</span><span class="n">update_coordinates</span><span class="p">(</span><span class="n">filled_xyz</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">update_port_locations</span><span class="o">=</span><span class="n">update_port_locations</span><span class="p">)</span>
     <span class="k">finally</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">file_handle</span> <span class="ow">in</span> <span class="n">compound_xyz_list</span><span class="p">:</span>
             <span class="n">file_handle</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
@@ -485,7 +493,7 @@
 
 <div class="viewcode-block" id="fill_sphere"><a class="viewcode-back" href="../../recipes.html#mbuild.packing.fill_sphere">[docs]</a><span class="k">def</span> <span class="nf">fill_sphere</span><span class="p">(</span><span class="n">compound</span><span class="p">,</span> <span class="n">sphere</span><span class="p">,</span> <span class="n">n_compounds</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">overlap</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span>
                 <span class="n">seed</span><span class="o">=</span><span class="mi">12345</span><span class="p">,</span> <span class="n">edge</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">compound_ratio</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                <span class="n">fix_orientation</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">temp_file</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+                <span class="n">fix_orientation</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">temp_file</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">update_port_locations</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Fill a sphere with a compound using packmol.</span>
 
 <span class="sd">    One argument of `n_compounds and density` must be specified.</span>
@@ -516,13 +524,16 @@
 <span class="sd">        conditions in its optimization.</span>
 <span class="sd">    compound_ratio : list, default=None</span>
 <span class="sd">        Ratio of number of each compound to be put in sphere. Only used in the</span>
-<span class="sd">        case of `density` having been specified, `n_compounds` not specified, </span>
+<span class="sd">        case of `density` having been specified, `n_compounds` not specified,</span>
 <span class="sd">        and more than one `compound`.</span>
 <span class="sd">    fix_orientation : bool or list of bools</span>
 <span class="sd">        Specify that compounds should not be rotated when filling the sphere,</span>
 <span class="sd">        default=False.</span>
 <span class="sd">    temp_file : str, default=None</span>
 <span class="sd">        File name to write PACKMOL&#39;s raw output to.</span>
+<span class="sd">    update_port_locations : bool, default=False</span>
+<span class="sd">        After packing, port locations can be updated, but since compounds</span>
+<span class="sd">        can be rotated, port orientation may be incorrect.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
@@ -623,7 +634,7 @@
         <span class="c1"># Create the topology and update the coordinates.</span>
         <span class="n">filled</span> <span class="o">=</span> <span class="n">Compound</span><span class="p">()</span>
         <span class="n">filled</span> <span class="o">=</span> <span class="n">_create_topology</span><span class="p">(</span><span class="n">filled</span><span class="p">,</span> <span class="n">compound</span><span class="p">,</span> <span class="n">n_compounds</span><span class="p">)</span>
-        <span class="n">filled</span><span class="o">.</span><span class="n">update_coordinates</span><span class="p">(</span><span class="n">filled_xyz</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">filled</span><span class="o">.</span><span class="n">update_coordinates</span><span class="p">(</span><span class="n">filled_xyz</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">update_port_locations</span><span class="o">=</span><span class="n">update_port_locations</span><span class="p">)</span>
     <span class="k">finally</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">file_handle</span> <span class="ow">in</span> <span class="n">compound_xyz_list</span><span class="p">:</span>
             <span class="n">file_handle</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
@@ -634,7 +645,8 @@
 
 
 <div class="viewcode-block" id="solvate"><a class="viewcode-back" href="../../recipes.html#mbuild.packing.solvate">[docs]</a><span class="k">def</span> <span class="nf">solvate</span><span class="p">(</span><span class="n">solute</span><span class="p">,</span> <span class="n">solvent</span><span class="p">,</span> <span class="n">n_solvent</span><span class="p">,</span> <span class="n">box</span><span class="p">,</span> <span class="n">overlap</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span>
-            <span class="n">seed</span><span class="o">=</span><span class="mi">12345</span><span class="p">,</span> <span class="n">edge</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">fix_orientation</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">temp_file</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+            <span class="n">seed</span><span class="o">=</span><span class="mi">12345</span><span class="p">,</span> <span class="n">edge</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">fix_orientation</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">temp_file</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">update_port_locations</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Solvate a compound in a box of solvent using packmol.</span>
 
 <span class="sd">    Parameters</span>
@@ -660,6 +672,9 @@
 <span class="sd">        default=False.</span>
 <span class="sd">    temp_file : str, default=None</span>
 <span class="sd">        File name to write PACKMOL&#39;s raw output to.</span>
+<span class="sd">    update_port_locations : bool, default=False</span>
+<span class="sd">        After packing, port locations can be updated, but since compounds</span>
+<span class="sd">        can be rotated, port orientation may be incorrect.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
@@ -718,7 +733,7 @@
         <span class="n">solvated</span> <span class="o">=</span> <span class="n">Compound</span><span class="p">()</span>
         <span class="n">solvated</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">solute</span><span class="p">)</span>
         <span class="n">solvated</span> <span class="o">=</span> <span class="n">_create_topology</span><span class="p">(</span><span class="n">solvated</span><span class="p">,</span> <span class="n">solvent</span><span class="p">,</span> <span class="n">n_solvent</span><span class="p">)</span>
-        <span class="n">solvated</span><span class="o">.</span><span class="n">update_coordinates</span><span class="p">(</span><span class="n">solvated_xyz</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">solvated</span><span class="o">.</span><span class="n">update_coordinates</span><span class="p">(</span><span class="n">solvated_xyz</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">update_port_locations</span><span class="o">=</span><span class="n">update_port_locations</span><span class="p">)</span>
 
     <span class="k">finally</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">file_handle</span> <span class="ow">in</span> <span class="n">solvent_xyz_list</span><span class="p">:</span>
