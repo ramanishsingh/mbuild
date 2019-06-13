@@ -232,7 +232,7 @@ read force field parameters from a Foyer XML file.</p>
 <span id="default-data-file-format-for-lammps"></span><h3>Default data file format for LAMMPS<a class="headerlink" href="#module-mbuild.formats.lammpsdata" title="Permalink to this headline">¶</a></h3>
 <dl class="function">
 <dt id="mbuild.formats.lammpsdata.write_lammpsdata">
-<code class="sig-prename descclassname">mbuild.formats.lammpsdata.</code><code class="sig-name descname">write_lammpsdata</code><span class="sig-paren">(</span><em class="sig-param">structure</em>, <em class="sig-param">filename</em>, <em class="sig-param">atom_style='full'</em>, <em class="sig-param">nbfix_in_data_file=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/formats/lammpsdata.html#write_lammpsdata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.formats.lammpsdata.write_lammpsdata" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">mbuild.formats.lammpsdata.</code><code class="sig-name descname">write_lammpsdata</code><span class="sig-paren">(</span><em class="sig-param">structure</em>, <em class="sig-param">filename</em>, <em class="sig-param">atom_style='full'</em>, <em class="sig-param">detect_forcefield_style=True</em>, <em class="sig-param">nbfix_in_data_file=True</em>, <em class="sig-param">use_urey_bradleys=False</em>, <em class="sig-param">use_rb_torsions=True</em>, <em class="sig-param">use_dihedrals=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/formats/lammpsdata.html#write_lammpsdata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.formats.lammpsdata.write_lammpsdata" title="Permalink to this definition">¶</a></dt>
 <dd><p>Output a LAMMPS data file.</p>
 <p>Outputs a LAMMPS data file in the ‘full’ atom style format. Assumes use
 of ‘real’ units. See <a class="reference external" href="http://lammps.sandia.gov/doc/atom_style.html">http://lammps.sandia.gov/doc/atom_style.html</a> for
@@ -249,6 +249,18 @@ styles are currently supported: ‘full’, ‘atomic’, ‘charge’, ‘molec
 see <a class="reference external" href="http://lammps.sandia.gov/doc/atom_style.html">http://lammps.sandia.gov/doc/atom_style.html</a> for more
 information on atom styles.</p>
 </dd>
+<dt><strong>detect_forcefield_style: boolean</strong></dt><dd><p>If True, format lammpsdata parameters based on the contents of 
+the parmed Structure</p>
+</dd>
+<dt><strong>use_urey_bradleys: boolean</strong></dt><dd><p>If True, will treat angles as CHARMM-style angles with urey bradley terms
+while looking for <cite>structure.urey_bradleys</cite></p>
+</dd>
+<dt><strong>use_rb_torsions:</strong></dt><dd><p>If True, will treat dihedrals OPLS-style torsions while looking for
+<cite>structure.rb_torsions</cite></p>
+</dd>
+<dt><strong>use_dihedrals:</strong></dt><dd><p>If True, will treat dihedrals as CHARMM-style dihedrals while looking for 
+<cite>structure.dihedrals</cite></p>
+</dd>
 </dl>
 </dd>
 </dl>
@@ -256,7 +268,8 @@ information on atom styles.</p>
 <p>See <a class="reference external" href="http://lammps.sandia.gov/doc/2001/data_format.html">http://lammps.sandia.gov/doc/2001/data_format.html</a> for a full description
 of the LAMMPS data format. Currently the following sections are supported (in
 addition to the header): <em>Masses</em>, <em>Nonbond Coeffs</em>, <em>Bond Coeffs</em>, <em>Angle
-Coeffs</em>, <em>Dihedral Coeffs</em>, <em>Atoms</em>, <em>Bonds</em>, <em>Angles</em>, <em>Dihedrals</em></p>
+Coeffs</em>, <em>Dihedral Coeffs</em>, <em>Atoms</em>, <em>Bonds</em>, <em>Angles</em>, <em>Dihedrals</em>, <em>Impropers</em>
+OPLS and CHARMM forcefield styles are supported, AMBER forcefield styles are NOT</p>
 <p>Some of this function has beed adopted from <cite>mdtraj</cite>’s support of the LAMMPSTRJ
 trajectory format. See <a class="reference external" href="https://github.com/mdtraj/mdtraj/blob/master/mdtraj/formats/lammpstrj.py">https://github.com/mdtraj/mdtraj/blob/master/mdtraj/formats/lammpstrj.py</a> for details.</p>
 </dd></dl>
