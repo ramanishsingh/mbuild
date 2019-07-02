@@ -178,21 +178,167 @@
 <h1>Recipes<a class="headerlink" href="#recipes" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="monolayer">
 <h2>Monolayer<a class="headerlink" href="#monolayer" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="mbuild.lib.recipes.monolayer.Monolayer">
+<em class="property">class </em><code class="descclassname">mbuild.lib.recipes.monolayer.</code><code class="descname">Monolayer</code><span class="sig-paren">(</span><em>surface</em>, <em>chains</em>, <em>fractions=None</em>, <em>backfill=None</em>, <em>pattern=None</em>, <em>tile_x=1</em>, <em>tile_y=1</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/lib/recipes/monolayer.html#Monolayer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.lib.recipes.monolayer.Monolayer" title="Permalink to this definition">¶</a></dt>
+<dd><p>A general monolayer recipe.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>surface</strong> <span class="classifier-delimiter">:</span> <span class="classifier">mb.Compound</span></dt>
+<dd><p class="first last">Surface on which the monolayer will be built.</p>
+</dd>
+<dt><strong>chains</strong> <span class="classifier-delimiter">:</span> <span class="classifier">list of mb.Compounds</span></dt>
+<dd><p class="first last">The chains to be replicated and attached to the surface.</p>
+</dd>
+<dt><strong>fractions</strong> <span class="classifier-delimiter">:</span> <span class="classifier">list of floats</span></dt>
+<dd><p class="first last">The fractions of the pattern to be allocated to each chain.</p>
+</dd>
+<dt><strong>backfill</strong> <span class="classifier-delimiter">:</span> <span class="classifier">list of mb.Compound, optional, default=None</span></dt>
+<dd><p class="first last">If there are fewer chains than there are ports on the surface,
+copies of <cite>backfill</cite> will be used to fill the remaining ports.</p>
+</dd>
+<dt><strong>pattern</strong> <span class="classifier-delimiter">:</span> <span class="classifier">mb.Pattern, optional, default=mb.Random2DPattern</span></dt>
+<dd><p class="first last">An array of planar binding locations. If not provided, the entire
+surface will be filled with <cite>chain</cite>.</p>
+</dd>
+<dt><strong>tile_x</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int, optional, default=1</span></dt>
+<dd><p class="first last">Number of times to replicate substrate in x-direction.</p>
+</dd>
+<dt><strong>tile_y</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int, optional, default=1</span></dt>
+<dd><p class="first last">Number of times to replicate substrate in y-direction.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 </div>
 <div class="section" id="polymer">
 <h2>Polymer<a class="headerlink" href="#polymer" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="mbuild.lib.recipes.polymer.Polymer">
+<em class="property">class </em><code class="descclassname">mbuild.lib.recipes.polymer.</code><code class="descname">Polymer</code><span class="sig-paren">(</span><em>monomers</em>, <em>n</em>, <em>sequence='A'</em>, <em>port_labels=('up'</em>, <em>'down')</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/lib/recipes/polymer.html#Polymer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.lib.recipes.polymer.Polymer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Connect one or more components in a specified sequence.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>monomers</strong> <span class="classifier-delimiter">:</span> <span class="classifier">mb.Compound or list of mb.Compound</span></dt>
+<dd><p class="first last">The compound(s) to replicate.</p>
+</dd>
+<dt><strong>n</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd><p class="first last">The number of times to replicate the sequence.</p>
+</dd>
+<dt><strong>sequence</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str, optional, default=’A’</span></dt>
+<dd><p class="first last">A string of characters where each unique character represents one
+repetition of a monomer. Characters in <cite>sequence</cite> are assigned to
+monomers in the order assigned by the built-in <cite>sorted()</cite>.</p>
+</dd>
+<dt><strong>port_labels</strong> <span class="classifier-delimiter">:</span> <span class="classifier">2-tuple of strs, optional, default=(‘up’, ‘down’)</span></dt>
+<dd><p class="first last">The names of the two ports to use to connect copies of proto.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 </div>
 <div class="section" id="tiled-compound">
 <h2>Tiled Compound<a class="headerlink" href="#tiled-compound" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="mbuild.lib.recipes.tiled_compound.TiledCompound">
+<em class="property">class </em><code class="descclassname">mbuild.lib.recipes.tiled_compound.</code><code class="descname">TiledCompound</code><span class="sig-paren">(</span><em>tile</em>, <em>n_tiles</em>, <em>name=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/lib/recipes/tiled_compound.html#TiledCompound"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.lib.recipes.tiled_compound.TiledCompound" title="Permalink to this definition">¶</a></dt>
+<dd><p>Replicates a Compound in any cartesian direction(s).</p>
+<p>Correctly updates connectivity while respecting periodic boundary
+conditions.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>tile</strong> <span class="classifier-delimiter">:</span> <span class="classifier">mb.Compound</span></dt>
+<dd><p class="first last">The Compound to be replicated.</p>
+</dd>
+<dt><strong>n_tiles</strong> <span class="classifier-delimiter">:</span> <span class="classifier">array-like, shape=(3,), dtype=int, optional, default=(1, 1, 1)</span></dt>
+<dd><p class="first last">Number of times to replicate tile in the x, y and z-directions.</p>
+</dd>
+<dt><strong>name</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str, optional, default=tile.name</span></dt>
+<dd><p class="first last">Descriptive string for the compound.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 </div>
 <div class="section" id="silica-interface">
 <h2>Silica Interface<a class="headerlink" href="#silica-interface" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="mbuild.lib.recipes.silica_interface.SilicaInterface">
+<em class="property">class </em><code class="descclassname">mbuild.lib.recipes.silica_interface.</code><code class="descname">SilicaInterface</code><span class="sig-paren">(</span><em>bulk_silica</em>, <em>tile_x=1</em>, <em>tile_y=1</em>, <em>thickness=1.0</em>, <em>seed=12345</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/lib/recipes/silica_interface.html#SilicaInterface"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.lib.recipes.silica_interface.SilicaInterface" title="Permalink to this definition">¶</a></dt>
+<dd><p>A recipe for creating an interface from bulk silica.</p>
+<p>Carves silica interface from bulk, adjusts to a reactive
+surface site density of 5.0 sites/nm^2 (agreeing with experimental
+results, see Zhuravlev 2000) by creating Si-O-Si bridges, and
+yields a 2:1 Si:O ratio (excluding the reactive surface sites).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>bulk_silica</strong> <span class="classifier-delimiter">:</span> <span class="classifier">mb.Compound</span></dt>
+<dd><p class="first last">Bulk silica from which to cleave an interface</p>
+</dd>
+<dt><strong>tile_x</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int, optional, default=1</span></dt>
+<dd><p class="first last">Number of times to replicate bulk silica in x-direction</p>
+</dd>
+<dt><strong>tile_y</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int, optional, default=1</span></dt>
+<dd><p class="first last">Number of times to replicate bulk silica in y-direction</p>
+</dd>
+<dt><strong>thickness</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float, optional, default=1.0</span></dt>
+<dd><p class="first last">Thickness of the slab to carve from the silica bulk. (in nm; not
+including oxygen layers on the top and bottom of the surface)</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">References</p>
+<table class="docutils citation" frame="void" id="rc80a24964c75-1" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[1]</td><td>Hartkamp, R., Siboulet, B., Dufreche, J.-F., Boasne, B.
+“Ion-specific adsorption and electroosmosis in charged
+amorphous porous silica.” (2015) Phys. Chem. Chem. Phys.
+17, 24683-24695</td></tr>
+</tbody>
+</table>
+<table class="docutils citation" frame="void" id="rc80a24964c75-2" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[2]</td><td>L.T. Zhuravlev, “The surface chemistry of amorphous silica.
+Zhuravlev model.” (2000) Colloids Surf., A. 10, 1-38</td></tr>
+</tbody>
+</table>
+</dd></dl>
+
 </div>
 <div class="section" id="lattice">
 <h2>Lattice<a class="headerlink" href="#lattice" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="mbuild.lattice.Lattice">
-<em class="property">class </em><code class="sig-prename descclassname">mbuild.lattice.</code><code class="sig-name descname">Lattice</code><span class="sig-paren">(</span><em class="sig-param">lattice_spacing=None</em>, <em class="sig-param">lattice_vectors=None</em>, <em class="sig-param">lattice_points=None</em>, <em class="sig-param">angles=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/lattice.html#Lattice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.lattice.Lattice" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">mbuild.lattice.</code><code class="descname">Lattice</code><span class="sig-paren">(</span><em>lattice_spacing=None</em>, <em>lattice_vectors=None</em>, <em>lattice_points=None</em>, <em>angles=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/lattice.html#Lattice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.lattice.Lattice" title="Permalink to this definition">¶</a></dt>
 <dd><p>Develop crystal structure from user defined inputs.</p>
 <p>Lattice, the abstract building block of a crystal cell.
 Once defined by the user, the lattice can then be populated with
@@ -201,25 +347,33 @@ Compounds and replicated as many cell lengths desired in 3D space.</p>
 vectors a1, a2, a3; lattice spacing a,b,c; and lattice points at unique
 fractional positions between 0-1 in 3 dimensions. This encapsulates
 distance, area, volume, depending on the parameters defined.</p>
-<dl class="field-list">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><dl>
-<dt><strong>lattice_spacing</strong><span class="classifier">array-like, shape=(3,), required, dtype=float</span></dt><dd><p>Array of lattice spacings a,b,c for the cell.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>lattice_spacing</strong> <span class="classifier-delimiter">:</span> <span class="classifier">array-like, shape=(3,), required, dtype=float</span></dt>
+<dd><p class="first last">Array of lattice spacings a,b,c for the cell.</p>
 </dd>
-<dt><strong>lattice_vectors</strong><span class="classifier">array-like, shape=(3, 3), optional</span></dt><dd><blockquote>
+<dt><strong>lattice_vectors</strong> <span class="classifier-delimiter">:</span> <span class="classifier">array-like, shape=(3, 3), optional</span></dt>
+<dd><blockquote class="first">
 <div><p>default=[[1,0,0], [0,1,0], [0,0,1]]</p>
 </div></blockquote>
-<p>Vectors that encase the unit cell corresponding to dimension. Will
+<p class="last">Vectors that encase the unit cell corresponding to dimension. Will
 only default to these values if no angles were defined as well.</p>
 </dd>
-<dt><strong>lattice_points</strong><span class="classifier">dictionary, shape={‘id’: [[nested list of positions]]</span></dt><dd><p>optional, default={‘default’: [[0.,0.,0.]]}
+<dt><strong>lattice_points</strong> <span class="classifier-delimiter">:</span> <span class="classifier">dictionary, shape={‘id’: [[nested list of positions]]</span></dt>
+<dd><p class="first last">optional, default={‘default’: [[0.,0.,0.]]}
 Locations of all lattice points in cell using fractional coordinates.</p>
 </dd>
-<dt><strong>angles</strong><span class="classifier">array-like, shape=(3,), optional, dtype=float</span></dt><dd><p>Array of inter-planar Bravais angles in degrees.</p>
+<dt><strong>angles</strong> <span class="classifier-delimiter">:</span> <span class="classifier">array-like, shape=(3,), optional, dtype=float</span></dt>
+<dd><p class="first last">Array of inter-planar Bravais angles in degrees.</p>
 </dd>
 </dl>
-</dd>
-</dl>
+</td>
+</tr>
+</tbody>
+</table>
 <p class="rubric">Examples</p>
 <p>Generating a triclinic lattice for cholesterol.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">mbuild</span> <span class="k">as</span> <span class="nn">mb</span>
@@ -303,51 +457,68 @@ input.</p>
 <span class="gp">... </span>                                  <span class="n">x</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
 </div>
-<dl class="field-list">
-<dt class="field-odd">Attributes</dt>
-<dd class="field-odd"><dl>
-<dt><strong>dimension</strong><span class="classifier">int, 3</span></dt><dd><p>Default dimensionality within mBuild. If choosing a lower dimension,
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Attributes:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>dimension</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int, 3</span></dt>
+<dd><p class="first last">Default dimensionality within mBuild. If choosing a lower dimension,
 pad the relevant arrays with zeroes.</p>
 </dd>
-<dt><strong>lattice_spacing</strong><span class="classifier">numpy array, shape=(3,), required, dtype=float</span></dt><dd><p>Array of lattice spacings a,b,c for the cell.</p>
+<dt><strong>lattice_spacing</strong> <span class="classifier-delimiter">:</span> <span class="classifier">numpy array, shape=(3,), required, dtype=float</span></dt>
+<dd><p class="first last">Array of lattice spacings a,b,c for the cell.</p>
 </dd>
-<dt><strong>lattice_vectors</strong><span class="classifier">numpy array, shape=(3, 3), optional</span></dt><dd><blockquote>
+<dt><strong>lattice_vectors</strong> <span class="classifier-delimiter">:</span> <span class="classifier">numpy array, shape=(3, 3), optional</span></dt>
+<dd><blockquote class="first">
 <div><p>default=[[1,0,0], [0,1,0], [0,0,1]]</p>
 </div></blockquote>
-<p>Vectors that encase the unit cell corresponding to dimension. Will
+<p class="last">Vectors that encase the unit cell corresponding to dimension. Will
 only default to these values if no angles were defined as well.</p>
 </dd>
-<dt><strong>lattice_points</strong><span class="classifier">dictionary, shape={‘id’: [[nested list of positions]]</span></dt><dd><p>optional, default={‘default’: [[0.,0.,0.]]}
+<dt><strong>lattice_points</strong> <span class="classifier-delimiter">:</span> <span class="classifier">dictionary, shape={‘id’: [[nested list of positions]]</span></dt>
+<dd><p class="first last">optional, default={‘default’: [[0.,0.,0.]]}
 Locations of all lattice points in cell using fractional coordinates.</p>
 </dd>
-<dt><strong>angles</strong><span class="classifier">numpy array, shape=(3,), optional, dtype=float</span></dt><dd><p>Array of inter-planar Bravais angles</p>
+<dt><strong>angles</strong> <span class="classifier-delimiter">:</span> <span class="classifier">numpy array, shape=(3,), optional, dtype=float</span></dt>
+<dd><p class="first last">Array of inter-planar Bravais angles</p>
 </dd>
 </dl>
-</dd>
-</dl>
+</td>
+</tr>
+</tbody>
+</table>
 <dl class="method">
 <dt id="mbuild.lattice.Lattice.populate">
-<code class="sig-name descname">populate</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">compound_dict=None</em>, <em class="sig-param">x=1</em>, <em class="sig-param">y=1</em>, <em class="sig-param">z=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/lattice.html#Lattice.populate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.lattice.Lattice.populate" title="Permalink to this definition">¶</a></dt>
+<code class="descname">populate</code><span class="sig-paren">(</span><em>self</em>, <em>compound_dict=None</em>, <em>x=1</em>, <em>y=1</em>, <em>z=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/lattice.html#Lattice.populate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.lattice.Lattice.populate" title="Permalink to this definition">¶</a></dt>
 <dd><p>Expand lattice and create compound from lattice.</p>
 <p>populate will expand lattice based on user input. The user must also
 pass in a dictionary that contains the keys that exist in the
 basis_dict. The corresponding Compound will be the full lattice
 returned to the user.</p>
 <p>If no dictionary is passed to the user, Dummy Compounds will be used.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><dl class="simple">
-<dt><strong>x</strong><span class="classifier">int, optional, default=1</span></dt><dd><p>How many iterations in the x direction.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>x</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int, optional, default=1</span></dt>
+<dd><p class="first last">How many iterations in the x direction.</p>
 </dd>
-<dt><strong>y</strong><span class="classifier">int, optional, default=1</span></dt><dd><p>How many iterations in the y direction.</p>
+<dt><strong>y</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int, optional, default=1</span></dt>
+<dd><p class="first last">How many iterations in the y direction.</p>
 </dd>
-<dt><strong>z</strong><span class="classifier">int, optional, default=1</span></dt><dd><p>How many iterations in the z direction.</p>
+<dt><strong>z</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int, optional, default=1</span></dt>
+<dd><p class="first last">How many iterations in the z direction.</p>
 </dd>
-<dt><strong>compound_dict</strong><span class="classifier">dictionary, optional, default=None</span></dt><dd><p>Link between basis_dict and Compounds.</p>
+<dt><strong>compound_dict</strong> <span class="classifier-delimiter">:</span> <span class="classifier">dictionary, optional, default=None</span></dt>
+<dd><p class="first last">Link between basis_dict and Compounds.</p>
 </dd>
 </dl>
-</dd>
-</dl>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </dd></dl>
@@ -357,7 +528,7 @@ returned to the user.</p>
 <span id="packing"></span><h2>Packing<a class="headerlink" href="#module-mbuild.packing" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="mbuild.packing.fill_box">
-<code class="sig-prename descclassname">mbuild.packing.</code><code class="sig-name descname">fill_box</code><span class="sig-paren">(</span><em class="sig-param">compound</em>, <em class="sig-param">n_compounds=None</em>, <em class="sig-param">box=None</em>, <em class="sig-param">density=None</em>, <em class="sig-param">overlap=0.2</em>, <em class="sig-param">seed=12345</em>, <em class="sig-param">edge=0.2</em>, <em class="sig-param">compound_ratio=None</em>, <em class="sig-param">aspect_ratio=None</em>, <em class="sig-param">fix_orientation=False</em>, <em class="sig-param">temp_file=None</em>, <em class="sig-param">update_port_locations=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/packing.html#fill_box"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.packing.fill_box" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">mbuild.packing.</code><code class="descname">fill_box</code><span class="sig-paren">(</span><em>compound</em>, <em>n_compounds=None</em>, <em>box=None</em>, <em>density=None</em>, <em>overlap=0.2</em>, <em>seed=12345</em>, <em>edge=0.2</em>, <em>compound_ratio=None</em>, <em>aspect_ratio=None</em>, <em>fix_orientation=False</em>, <em>temp_file=None</em>, <em>update_port_locations=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/packing.html#fill_box"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.packing.fill_box" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fill a box with a compound using packmol.</p>
 <p>Two arguments of <cite>n_compounds, box, and density</cite> must be specified.</p>
 <p>If <cite>n_compounds</cite> and <cite>box</cite> are not None, the specified number of
@@ -370,183 +541,249 @@ compounds will be calculated internally.</p>
 <p>For the cases in which <cite>box</cite> is not specified but generated internally,
 the default behavior is to calculate a cubic box. Optionally,
 <cite>aspect_ratio</cite> can be passed to generate a non-cubic box.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><dl class="simple">
-<dt><strong>compound</strong><span class="classifier">mb.Compound or list of mb.Compound</span></dt><dd><p>Compound or list of compounds to be put in box.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>compound</strong> <span class="classifier-delimiter">:</span> <span class="classifier">mb.Compound or list of mb.Compound</span></dt>
+<dd><p class="first last">Compound or list of compounds to be put in box.</p>
 </dd>
-<dt><strong>n_compounds</strong><span class="classifier">int or list of int</span></dt><dd><p>Number of compounds to be put in box.</p>
+<dt><strong>n_compounds</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int or list of int</span></dt>
+<dd><p class="first last">Number of compounds to be put in box.</p>
 </dd>
-<dt><strong>box</strong><span class="classifier">mb.Box</span></dt><dd><p>Box to be filled by compounds.</p>
+<dt><strong>box</strong> <span class="classifier-delimiter">:</span> <span class="classifier">mb.Box</span></dt>
+<dd><p class="first last">Box to be filled by compounds.</p>
 </dd>
-<dt><strong>density</strong><span class="classifier">float, units kg/m^3, default=None</span></dt><dd><p>Target density for the system in macroscale units. If not None, one of
+<dt><strong>density</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float, units kg/m^3, default=None</span></dt>
+<dd><p class="first last">Target density for the system in macroscale units. If not None, one of
 <cite>n_compounds</cite> or <cite>box</cite>, but not both, must be specified.</p>
 </dd>
-<dt><strong>overlap</strong><span class="classifier">float, units nm, default=0.2</span></dt><dd><p>Minimum separation between atoms of different molecules.</p>
+<dt><strong>overlap</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float, units nm, default=0.2</span></dt>
+<dd><p class="first last">Minimum separation between atoms of different molecules.</p>
 </dd>
-<dt><strong>seed</strong><span class="classifier">int, default=12345</span></dt><dd><p>Random seed to be passed to PACKMOL.</p>
+<dt><strong>seed</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int, default=12345</span></dt>
+<dd><p class="first last">Random seed to be passed to PACKMOL.</p>
 </dd>
-<dt><strong>edge</strong><span class="classifier">float, units nm, default=0.2</span></dt><dd><p>Buffer at the edge of the box to not place molecules. This is necessary
+<dt><strong>edge</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float, units nm, default=0.2</span></dt>
+<dd><p class="first last">Buffer at the edge of the box to not place molecules. This is necessary
 in some systems because PACKMOL does not account for periodic boundary
 conditions in its optimization.</p>
 </dd>
-<dt><strong>compound_ratio</strong><span class="classifier">list, default=None</span></dt><dd><p>Ratio of number of each compound to be put in box. Only used in the
+<dt><strong>compound_ratio</strong> <span class="classifier-delimiter">:</span> <span class="classifier">list, default=None</span></dt>
+<dd><p class="first last">Ratio of number of each compound to be put in box. Only used in the
 case of <cite>density</cite> and <cite>box</cite> having been specified, <cite>n_compounds</cite> not
 specified, and more than one <cite>compound</cite>.</p>
 </dd>
-<dt><strong>aspect_ratio</strong><span class="classifier">list of float</span></dt><dd><p>If a non-cubic box is desired, the ratio of box lengths in the x, y,
+<dt><strong>aspect_ratio</strong> <span class="classifier-delimiter">:</span> <span class="classifier">list of float</span></dt>
+<dd><p class="first last">If a non-cubic box is desired, the ratio of box lengths in the x, y,
 and z directions.</p>
 </dd>
-<dt><strong>fix_orientation</strong><span class="classifier">bool or list of bools</span></dt><dd><p>Specify that compounds should not be rotated when filling the box,
+<dt><strong>fix_orientation</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool or list of bools</span></dt>
+<dd><p class="first last">Specify that compounds should not be rotated when filling the box,
 default=False.</p>
 </dd>
-<dt><strong>temp_file</strong><span class="classifier">str, default=None</span></dt><dd><p>File name to write PACKMOL’s raw output to.</p>
+<dt><strong>temp_file</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str, default=None</span></dt>
+<dd><p class="first last">File name to write PACKMOL’s raw output to.</p>
 </dd>
-<dt><strong>update_port_locations</strong><span class="classifier">bool, default=False</span></dt><dd><p>After packing, port locations can be updated, but since compounds
+<dt><strong>update_port_locations</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool, default=False</span></dt>
+<dd><p class="first last">After packing, port locations can be updated, but since compounds
 can be rotated, port orientation may be incorrect.</p>
 </dd>
 </dl>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><dl class="simple">
-<dt><strong>filled</strong><span class="classifier">mb.Compound</span></dt><dd></dd>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>filled</strong> <span class="classifier-delimiter">:</span> <span class="classifier">mb.Compound</span></dt>
+<dd></dd>
 </dl>
-</dd>
-</dl>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="mbuild.packing.fill_region">
-<code class="sig-prename descclassname">mbuild.packing.</code><code class="sig-name descname">fill_region</code><span class="sig-paren">(</span><em class="sig-param">compound</em>, <em class="sig-param">n_compounds</em>, <em class="sig-param">region</em>, <em class="sig-param">overlap=0.2</em>, <em class="sig-param">seed=12345</em>, <em class="sig-param">edge=0.2</em>, <em class="sig-param">fix_orientation=False</em>, <em class="sig-param">temp_file=None</em>, <em class="sig-param">update_port_locations=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/packing.html#fill_region"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.packing.fill_region" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">mbuild.packing.</code><code class="descname">fill_region</code><span class="sig-paren">(</span><em>compound</em>, <em>n_compounds</em>, <em>region</em>, <em>overlap=0.2</em>, <em>seed=12345</em>, <em>edge=0.2</em>, <em>fix_orientation=False</em>, <em>temp_file=None</em>, <em>update_port_locations=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/packing.html#fill_region"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.packing.fill_region" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fill a region of a box with a compound using packmol.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><dl class="simple">
-<dt><strong>compound</strong><span class="classifier">mb.Compound or list of mb.Compound</span></dt><dd><p>Compound or list of compounds to be put in region.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>compound</strong> <span class="classifier-delimiter">:</span> <span class="classifier">mb.Compound or list of mb.Compound</span></dt>
+<dd><p class="first last">Compound or list of compounds to be put in region.</p>
 </dd>
-<dt><strong>n_compounds</strong><span class="classifier">int or list of int</span></dt><dd><p>Number of compounds to be put in region.</p>
+<dt><strong>n_compounds</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int or list of int</span></dt>
+<dd><p class="first last">Number of compounds to be put in region.</p>
 </dd>
-<dt><strong>region</strong><span class="classifier">mb.Box or list of mb.Box</span></dt><dd><p>Region to be filled by compounds.</p>
+<dt><strong>region</strong> <span class="classifier-delimiter">:</span> <span class="classifier">mb.Box or list of mb.Box</span></dt>
+<dd><p class="first last">Region to be filled by compounds.</p>
 </dd>
-<dt><strong>overlap</strong><span class="classifier">float, units nm, default=0.2</span></dt><dd><p>Minimum separation between atoms of different molecules.</p>
+<dt><strong>overlap</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float, units nm, default=0.2</span></dt>
+<dd><p class="first last">Minimum separation between atoms of different molecules.</p>
 </dd>
-<dt><strong>seed</strong><span class="classifier">int, default=12345</span></dt><dd><p>Random seed to be passed to PACKMOL.</p>
+<dt><strong>seed</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int, default=12345</span></dt>
+<dd><p class="first last">Random seed to be passed to PACKMOL.</p>
 </dd>
-<dt><strong>edge</strong><span class="classifier">float, units nm, default=0.2</span></dt><dd><p>Buffer at the edge of the region to not place molecules. This is
+<dt><strong>edge</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float, units nm, default=0.2</span></dt>
+<dd><p class="first last">Buffer at the edge of the region to not place molecules. This is
 necessary in some systems because PACKMOL does not account for
 periodic boundary conditions in its optimization.</p>
 </dd>
-<dt><strong>fix_orientation</strong><span class="classifier">bool or list of bools</span></dt><dd><p>Specify that compounds should not be rotated when filling the box,
+<dt><strong>fix_orientation</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool or list of bools</span></dt>
+<dd><p class="first last">Specify that compounds should not be rotated when filling the box,
 default=False.</p>
 </dd>
-<dt><strong>temp_file</strong><span class="classifier">str, default=None</span></dt><dd><p>File name to write PACKMOL’s raw output to.</p>
+<dt><strong>temp_file</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str, default=None</span></dt>
+<dd><p class="first last">File name to write PACKMOL’s raw output to.</p>
 </dd>
-<dt><strong>update_port_locations</strong><span class="classifier">bool, default=False</span></dt><dd><p>After packing, port locations can be updated, but since compounds
+<dt><strong>update_port_locations</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool, default=False</span></dt>
+<dd><p class="first last">After packing, port locations can be updated, but since compounds
 can be rotated, port orientation may be incorrect.</p>
 </dd>
 </dl>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><dl class="simple">
-<dt><strong>filled</strong><span class="classifier">mb.Compound</span></dt><dd></dd>
-<dt>If using mulitple regions and compounds, the nth value in each</dt><dd></dd>
-<dt>list are used in order.</dt><dd></dd>
-<dt>For example, if the third compound will be put in the third</dt><dd></dd>
-<dt>region using the third value in n_compounds.</dt><dd></dd>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>filled</strong> <span class="classifier-delimiter">:</span> <span class="classifier">mb.Compound</span></dt>
+<dd></dd>
+<dt>If using mulitple regions and compounds, the nth value in each</dt>
+<dd></dd>
+<dt>list are used in order.</dt>
+<dd></dd>
+<dt>For example, if the third compound will be put in the third</dt>
+<dd></dd>
+<dt>region using the third value in n_compounds.</dt>
+<dd></dd>
 </dl>
-</dd>
-</dl>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="mbuild.packing.fill_sphere">
-<code class="sig-prename descclassname">mbuild.packing.</code><code class="sig-name descname">fill_sphere</code><span class="sig-paren">(</span><em class="sig-param">compound</em>, <em class="sig-param">sphere</em>, <em class="sig-param">n_compounds=None</em>, <em class="sig-param">density=None</em>, <em class="sig-param">overlap=0.2</em>, <em class="sig-param">seed=12345</em>, <em class="sig-param">edge=0.2</em>, <em class="sig-param">compound_ratio=None</em>, <em class="sig-param">fix_orientation=False</em>, <em class="sig-param">temp_file=None</em>, <em class="sig-param">update_port_locations=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/packing.html#fill_sphere"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.packing.fill_sphere" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">mbuild.packing.</code><code class="descname">fill_sphere</code><span class="sig-paren">(</span><em>compound</em>, <em>sphere</em>, <em>n_compounds=None</em>, <em>density=None</em>, <em>overlap=0.2</em>, <em>seed=12345</em>, <em>edge=0.2</em>, <em>compound_ratio=None</em>, <em>fix_orientation=False</em>, <em>temp_file=None</em>, <em>update_port_locations=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/packing.html#fill_sphere"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.packing.fill_sphere" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fill a sphere with a compound using packmol.</p>
 <p>One argument of <cite>n_compounds and density</cite> must be specified.</p>
 <p>If <cite>n_compounds</cite> is not None, the specified number of
 n_compounds will be inserted into a sphere of the specified size.</p>
 <p>If <cite>density</cite> is not None, the corresponding number of
 compounds will be calculated internally.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><dl class="simple">
-<dt><strong>compound</strong><span class="classifier">mb.Compound or list of mb.Compound</span></dt><dd><p>Compound or list of compounds to be put in box.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>compound</strong> <span class="classifier-delimiter">:</span> <span class="classifier">mb.Compound or list of mb.Compound</span></dt>
+<dd><p class="first last">Compound or list of compounds to be put in box.</p>
 </dd>
-<dt><strong>sphere</strong><span class="classifier">list, units nm</span></dt><dd><p>Sphere coordinates in the form [x_center, y_center, z_center, radius]</p>
+<dt><strong>sphere</strong> <span class="classifier-delimiter">:</span> <span class="classifier">list, units nm</span></dt>
+<dd><p class="first last">Sphere coordinates in the form [x_center, y_center, z_center, radius]</p>
 </dd>
-<dt><strong>n_compounds</strong><span class="classifier">int or list of int</span></dt><dd><p>Number of compounds to be put in box.</p>
+<dt><strong>n_compounds</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int or list of int</span></dt>
+<dd><p class="first last">Number of compounds to be put in box.</p>
 </dd>
-<dt><strong>density</strong><span class="classifier">float, units kg/m^3, default=None</span></dt><dd><p>Target density for the sphere in macroscale units.</p>
+<dt><strong>density</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float, units kg/m^3, default=None</span></dt>
+<dd><p class="first last">Target density for the sphere in macroscale units.</p>
 </dd>
-<dt><strong>overlap</strong><span class="classifier">float, units nm, default=0.2</span></dt><dd><p>Minimum separation between atoms of different molecules.</p>
+<dt><strong>overlap</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float, units nm, default=0.2</span></dt>
+<dd><p class="first last">Minimum separation between atoms of different molecules.</p>
 </dd>
-<dt><strong>seed</strong><span class="classifier">int, default=12345</span></dt><dd><p>Random seed to be passed to PACKMOL.</p>
+<dt><strong>seed</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int, default=12345</span></dt>
+<dd><p class="first last">Random seed to be passed to PACKMOL.</p>
 </dd>
-<dt><strong>edge</strong><span class="classifier">float, units nm, default=0.2</span></dt><dd><p>Buffer at the edge of the sphere to not place molecules. This is necessary
+<dt><strong>edge</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float, units nm, default=0.2</span></dt>
+<dd><p class="first last">Buffer at the edge of the sphere to not place molecules. This is necessary
 in some systems because PACKMOL does not account for periodic boundary
 conditions in its optimization.</p>
 </dd>
-<dt><strong>compound_ratio</strong><span class="classifier">list, default=None</span></dt><dd><p>Ratio of number of each compound to be put in sphere. Only used in the
+<dt><strong>compound_ratio</strong> <span class="classifier-delimiter">:</span> <span class="classifier">list, default=None</span></dt>
+<dd><p class="first last">Ratio of number of each compound to be put in sphere. Only used in the
 case of <cite>density</cite> having been specified, <cite>n_compounds</cite> not specified,
 and more than one <cite>compound</cite>.</p>
 </dd>
-<dt><strong>fix_orientation</strong><span class="classifier">bool or list of bools</span></dt><dd><p>Specify that compounds should not be rotated when filling the sphere,
+<dt><strong>fix_orientation</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool or list of bools</span></dt>
+<dd><p class="first last">Specify that compounds should not be rotated when filling the sphere,
 default=False.</p>
 </dd>
-<dt><strong>temp_file</strong><span class="classifier">str, default=None</span></dt><dd><p>File name to write PACKMOL’s raw output to.</p>
+<dt><strong>temp_file</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str, default=None</span></dt>
+<dd><p class="first last">File name to write PACKMOL’s raw output to.</p>
 </dd>
-<dt><strong>update_port_locations</strong><span class="classifier">bool, default=False</span></dt><dd><p>After packing, port locations can be updated, but since compounds
+<dt><strong>update_port_locations</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool, default=False</span></dt>
+<dd><p class="first last">After packing, port locations can be updated, but since compounds
 can be rotated, port orientation may be incorrect.</p>
 </dd>
 </dl>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><dl class="simple">
-<dt><strong>filled</strong><span class="classifier">mb.Compound</span></dt><dd></dd>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>filled</strong> <span class="classifier-delimiter">:</span> <span class="classifier">mb.Compound</span></dt>
+<dd></dd>
 </dl>
-</dd>
-</dl>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="mbuild.packing.solvate">
-<code class="sig-prename descclassname">mbuild.packing.</code><code class="sig-name descname">solvate</code><span class="sig-paren">(</span><em class="sig-param">solute</em>, <em class="sig-param">solvent</em>, <em class="sig-param">n_solvent</em>, <em class="sig-param">box</em>, <em class="sig-param">overlap=0.2</em>, <em class="sig-param">seed=12345</em>, <em class="sig-param">edge=0.2</em>, <em class="sig-param">fix_orientation=False</em>, <em class="sig-param">temp_file=None</em>, <em class="sig-param">update_port_locations=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/packing.html#solvate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.packing.solvate" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">mbuild.packing.</code><code class="descname">solvate</code><span class="sig-paren">(</span><em>solute</em>, <em>solvent</em>, <em>n_solvent</em>, <em>box</em>, <em>overlap=0.2</em>, <em>seed=12345</em>, <em>edge=0.2</em>, <em>fix_orientation=False</em>, <em>temp_file=None</em>, <em>update_port_locations=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/packing.html#solvate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.packing.solvate" title="Permalink to this definition">¶</a></dt>
 <dd><p>Solvate a compound in a box of solvent using packmol.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><dl class="simple">
-<dt><strong>solute</strong><span class="classifier">mb.Compound</span></dt><dd><p>Compound to be placed in a box and solvated.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>solute</strong> <span class="classifier-delimiter">:</span> <span class="classifier">mb.Compound</span></dt>
+<dd><p class="first last">Compound to be placed in a box and solvated.</p>
 </dd>
-<dt><strong>solvent</strong><span class="classifier">mb.Compound</span></dt><dd><p>Compound to solvate the box.</p>
+<dt><strong>solvent</strong> <span class="classifier-delimiter">:</span> <span class="classifier">mb.Compound</span></dt>
+<dd><p class="first last">Compound to solvate the box.</p>
 </dd>
-<dt><strong>n_solvent</strong><span class="classifier">int</span></dt><dd><p>Number of solvents to be put in box.</p>
+<dt><strong>n_solvent</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd><p class="first last">Number of solvents to be put in box.</p>
 </dd>
-<dt><strong>box</strong><span class="classifier">mb.Box</span></dt><dd><p>Box to be filled by compounds.</p>
+<dt><strong>box</strong> <span class="classifier-delimiter">:</span> <span class="classifier">mb.Box</span></dt>
+<dd><p class="first last">Box to be filled by compounds.</p>
 </dd>
-<dt><strong>overlap</strong><span class="classifier">float, units nm, default=0.2</span></dt><dd><p>Minimum separation between atoms of different molecules.</p>
+<dt><strong>overlap</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float, units nm, default=0.2</span></dt>
+<dd><p class="first last">Minimum separation between atoms of different molecules.</p>
 </dd>
-<dt><strong>seed</strong><span class="classifier">int, default=12345</span></dt><dd><p>Random seed to be passed to PACKMOL.</p>
+<dt><strong>seed</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int, default=12345</span></dt>
+<dd><p class="first last">Random seed to be passed to PACKMOL.</p>
 </dd>
-<dt><strong>edge</strong><span class="classifier">float, units nm, default=0.2</span></dt><dd><p>Buffer at the edge of the box to not place molecules. This is necessary
+<dt><strong>edge</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float, units nm, default=0.2</span></dt>
+<dd><p class="first last">Buffer at the edge of the box to not place molecules. This is necessary
 in some systems because PACKMOL does not account for periodic boundary
 conditions in its optimization.</p>
 </dd>
-<dt><strong>fix_orientation</strong><span class="classifier">bool</span></dt><dd><p>Specify if solvent should not be rotated when filling box,
+<dt><strong>fix_orientation</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool</span></dt>
+<dd><p class="first last">Specify if solvent should not be rotated when filling box,
 default=False.</p>
 </dd>
-<dt><strong>temp_file</strong><span class="classifier">str, default=None</span></dt><dd><p>File name to write PACKMOL’s raw output to.</p>
+<dt><strong>temp_file</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str, default=None</span></dt>
+<dd><p class="first last">File name to write PACKMOL’s raw output to.</p>
 </dd>
-<dt><strong>update_port_locations</strong><span class="classifier">bool, default=False</span></dt><dd><p>After packing, port locations can be updated, but since compounds
+<dt><strong>update_port_locations</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool, default=False</span></dt>
+<dd><p class="first last">After packing, port locations can be updated, but since compounds
 can be rotated, port orientation may be incorrect.</p>
 </dd>
 </dl>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><dl class="simple">
-<dt><strong>solvated</strong><span class="classifier">mb.Compound</span></dt><dd></dd>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>solvated</strong> <span class="classifier-delimiter">:</span> <span class="classifier">mb.Compound</span></dt>
+<dd></dd>
 </dl>
-</dd>
-</dl>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </div>
@@ -554,132 +791,20 @@ can be rotated, port orientation may be incorrect.</p>
 <span id="pattern"></span><h2>Pattern<a class="headerlink" href="#module-mbuild.pattern" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="mbuild.pattern.DiskPattern">
-<em class="property">class </em><code class="sig-prename descclassname">mbuild.pattern.</code><code class="sig-name descname">DiskPattern</code><span class="sig-paren">(</span><em class="sig-param">n</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/pattern.html#DiskPattern"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.pattern.DiskPattern" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">mbuild.pattern.</code><code class="descname">DiskPattern</code><span class="sig-paren">(</span><em>n</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/pattern.html#DiskPattern"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.pattern.DiskPattern" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generate N evenly distributed points on the unit circle along z = 0.</p>
 <p>Disk is centered at the origin. Algorithm based on Vogel’s method.</p>
 <p>Code by Alexandre Devert:
 <a class="reference external" href="http://blog.marmakoide.org/?p=1">http://blog.marmakoide.org/?p=1</a></p>
-<dl class="method">
-<dt id="mbuild.pattern.DiskPattern.apply">
-<code class="sig-name descname">apply</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">compound</em>, <em class="sig-param">orientation=''</em>, <em class="sig-param">compound_port=''</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.pattern.DiskPattern.apply" title="Permalink to this definition">¶</a></dt>
-<dd><p>Arrange copies of a Compound as specified by the Pattern.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><dl class="simple">
-<dt><strong>compound</strong></dt><dd></dd>
-<dt><strong>orientation</strong></dt><dd></dd>
-</dl>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="method">
-<dt id="mbuild.pattern.DiskPattern.apply_to_compound">
-<code class="sig-name descname">apply_to_compound</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">guest</em>, <em class="sig-param">guest_port_name='down'</em>, <em class="sig-param">host=None</em>, <em class="sig-param">backfill=None</em>, <em class="sig-param">backfill_port_name='up'</em>, <em class="sig-param">scale=True</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.pattern.DiskPattern.apply_to_compound" title="Permalink to this definition">¶</a></dt>
-<dd><p>Attach copies of a guest Compound to Ports on a host Compound.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><dl class="simple">
-<dt><strong>guest</strong><span class="classifier">mb.Compound</span></dt><dd><p>The Compound prototype to be applied to the host Compound</p>
-</dd>
-<dt><strong>guest_port_name</strong><span class="classifier">str, optional, default=’down’</span></dt><dd><p>The name of the port located on <cite>guest</cite> to attach to the host</p>
-</dd>
-<dt><strong>host</strong><span class="classifier">mb.Compound, optional, default=None</span></dt><dd><p>A Compound with available ports to add copies of <cite>guest</cite> to</p>
-</dd>
-<dt><strong>backfill</strong><span class="classifier">mb.Compound, optional, default=None</span></dt><dd><p>A Compound to add to the remaining available ports on <cite>host</cite>
-after clones of <cite>guest</cite> have been added for each point in the
-pattern</p>
-</dd>
-<dt><strong>backfill_port_name</strong><span class="classifier">str, optional, default=’up’</span></dt><dd><p>The name of the port located on <cite>backfill</cite> to attach to the host</p>
-</dd>
-<dt><strong>scale</strong><span class="classifier">bool, optional, default=True</span></dt><dd><p>Scale the points in the pattern to the lengths of the <cite>host</cite>’s
-<cite>boundingbox</cite> and shift them by the <cite>boundingbox</cite>’s mins</p>
-</dd>
-</dl>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="method">
-<dt id="mbuild.pattern.DiskPattern.scale">
-<code class="sig-name descname">scale</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">by</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.pattern.DiskPattern.scale" title="Permalink to this definition">¶</a></dt>
-<dd><p>Scale the points in the Pattern.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><dl class="simple">
-<dt><strong>by</strong><span class="classifier">float or np.ndarray, shape=(3,)</span></dt><dd><p>The factor to scale by. If a scalar, scale all directions isotropically.
-If np.ndarray, scale each direction independently.</p>
-</dd>
-</dl>
-</dd>
-</dl>
-</dd></dl>
-
 </dd></dl>
 
 <dl class="class">
 <dt id="mbuild.pattern.SpherePattern">
-<em class="property">class </em><code class="sig-prename descclassname">mbuild.pattern.</code><code class="sig-name descname">SpherePattern</code><span class="sig-paren">(</span><em class="sig-param">n</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/pattern.html#SpherePattern"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.pattern.SpherePattern" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">mbuild.pattern.</code><code class="descname">SpherePattern</code><span class="sig-paren">(</span><em>n</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/pattern.html#SpherePattern"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.pattern.SpherePattern" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generate N evenly distributed points on the unit sphere.</p>
 <p>Sphere is centered at the origin. Alrgorithm based on the ‘Golden Spiral’.</p>
 <p>Code by Chris Colbert from the numpy-discussion list:
 <a class="reference external" href="http://mail.scipy.org/pipermail/numpy-discussion/2009-July/043811.html">http://mail.scipy.org/pipermail/numpy-discussion/2009-July/043811.html</a></p>
-<dl class="method">
-<dt id="mbuild.pattern.SpherePattern.apply">
-<code class="sig-name descname">apply</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">compound</em>, <em class="sig-param">orientation=''</em>, <em class="sig-param">compound_port=''</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.pattern.SpherePattern.apply" title="Permalink to this definition">¶</a></dt>
-<dd><p>Arrange copies of a Compound as specified by the Pattern.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><dl class="simple">
-<dt><strong>compound</strong></dt><dd></dd>
-<dt><strong>orientation</strong></dt><dd></dd>
-</dl>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="method">
-<dt id="mbuild.pattern.SpherePattern.apply_to_compound">
-<code class="sig-name descname">apply_to_compound</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">guest</em>, <em class="sig-param">guest_port_name='down'</em>, <em class="sig-param">host=None</em>, <em class="sig-param">backfill=None</em>, <em class="sig-param">backfill_port_name='up'</em>, <em class="sig-param">scale=True</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.pattern.SpherePattern.apply_to_compound" title="Permalink to this definition">¶</a></dt>
-<dd><p>Attach copies of a guest Compound to Ports on a host Compound.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><dl class="simple">
-<dt><strong>guest</strong><span class="classifier">mb.Compound</span></dt><dd><p>The Compound prototype to be applied to the host Compound</p>
-</dd>
-<dt><strong>guest_port_name</strong><span class="classifier">str, optional, default=’down’</span></dt><dd><p>The name of the port located on <cite>guest</cite> to attach to the host</p>
-</dd>
-<dt><strong>host</strong><span class="classifier">mb.Compound, optional, default=None</span></dt><dd><p>A Compound with available ports to add copies of <cite>guest</cite> to</p>
-</dd>
-<dt><strong>backfill</strong><span class="classifier">mb.Compound, optional, default=None</span></dt><dd><p>A Compound to add to the remaining available ports on <cite>host</cite>
-after clones of <cite>guest</cite> have been added for each point in the
-pattern</p>
-</dd>
-<dt><strong>backfill_port_name</strong><span class="classifier">str, optional, default=’up’</span></dt><dd><p>The name of the port located on <cite>backfill</cite> to attach to the host</p>
-</dd>
-<dt><strong>scale</strong><span class="classifier">bool, optional, default=True</span></dt><dd><p>Scale the points in the pattern to the lengths of the <cite>host</cite>’s
-<cite>boundingbox</cite> and shift them by the <cite>boundingbox</cite>’s mins</p>
-</dd>
-</dl>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="method">
-<dt id="mbuild.pattern.SpherePattern.scale">
-<code class="sig-name descname">scale</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">by</em><span class="sig-paren">)</span><a class="headerlink" href="#mbuild.pattern.SpherePattern.scale" title="Permalink to this definition">¶</a></dt>
-<dd><p>Scale the points in the Pattern.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><dl class="simple">
-<dt><strong>by</strong><span class="classifier">float or np.ndarray, shape=(3,)</span></dt><dd><p>The factor to scale by. If a scalar, scale all directions isotropically.
-If np.ndarray, scale each direction independently.</p>
-</dd>
-</dl>
-</dd>
-</dl>
-</dd></dl>
-
 </dd></dl>
 
 </div>
@@ -705,7 +830,7 @@ If np.ndarray, scale each direction independently.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2014-2017, Vanderbilt University
+        &copy; Copyright 2014-2019, Vanderbilt University
 
     </p>
   </div>
