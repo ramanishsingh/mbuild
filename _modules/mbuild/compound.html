@@ -1329,7 +1329,7 @@
             <span class="n">particle_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">particles</span><span class="p">()))</span>
         <span class="k">return</span> <span class="n">particle_array</span><span class="p">[</span><span class="n">idxs</span><span class="p">]</span></div>
 
-<div class="viewcode-block" id="Compound.visualize"><a class="viewcode-back" href="../../data_structures.html#mbuild.compound.Compound.visualize">[docs]</a>    <span class="k">def</span> <span class="nf">visualize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">show_ports</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> 
+<div class="viewcode-block" id="Compound.visualize"><a class="viewcode-back" href="../../data_structures.html#mbuild.compound.Compound.visualize">[docs]</a>    <span class="k">def</span> <span class="nf">visualize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">show_ports</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
             <span class="n">backend</span><span class="o">=</span><span class="s1">&#39;py3dmol&#39;</span><span class="p">,</span> <span class="n">color_scheme</span><span class="o">=</span><span class="p">{}):</span> <span class="c1"># pragma: no cover</span>
         <span class="sd">&quot;&quot;&quot;Visualize the Compound using py3dmol (default) or nglview.</span>
 
@@ -1353,13 +1353,13 @@
                 <span class="s1">&#39;py3dmol&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_visualize_py3dmol</span><span class="p">}</span>
         <span class="k">if</span> <span class="n">run_from_ipython</span><span class="p">():</span>
             <span class="k">if</span> <span class="n">backend</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="n">viz_pkg</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">viz_pkg</span><span class="p">[</span><span class="n">backend</span><span class="o">.</span><span class="n">lower</span><span class="p">()](</span><span class="n">show_ports</span><span class="o">=</span><span class="n">show_ports</span><span class="p">,</span> 
+                <span class="k">return</span> <span class="n">viz_pkg</span><span class="p">[</span><span class="n">backend</span><span class="o">.</span><span class="n">lower</span><span class="p">()](</span><span class="n">show_ports</span><span class="o">=</span><span class="n">show_ports</span><span class="p">,</span>
                         <span class="n">color_scheme</span><span class="o">=</span><span class="n">color_scheme</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Unsupported visualization &quot;</span> <span class="o">+</span>
                         <span class="s2">&quot;backend (</span><span class="si">{}</span><span class="s2">). &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">backend</span><span class="p">)</span> <span class="o">+</span>
                         <span class="s2">&quot;Currently supported backends include nglview and py3dmol&quot;</span><span class="p">)</span>
-                        
+
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;Visualization is only supported in Jupyter &#39;</span>
                                <span class="s1">&#39;Notebooks.&#39;</span><span class="p">)</span></div>
@@ -1391,9 +1391,9 @@
 
         <span class="n">modified_color_scheme</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">color</span> <span class="ow">in</span> <span class="n">color_scheme</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-            <span class="c1"># Py3dmol does some element string conversions, </span>
+            <span class="c1"># Py3dmol does some element string conversions,</span>
             <span class="c1"># first character is as-is, rest of the characters are lowercase</span>
-            <span class="n">new_name</span> <span class="o">=</span> <span class="n">name</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">name</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> 
+            <span class="n">new_name</span> <span class="o">=</span> <span class="n">name</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">name</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
             <span class="n">modified_color_scheme</span><span class="p">[</span><span class="n">new_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">color</span>
             <span class="n">modified_color_scheme</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">color</span>
 
@@ -1406,8 +1406,9 @@
                   <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
         <span class="n">view</span> <span class="o">=</span> <span class="n">py3Dmol</span><span class="o">.</span><span class="n">view</span><span class="p">()</span>
-        <span class="n">view</span><span class="o">.</span><span class="n">addModel</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tmp_dir</span><span class="p">,</span> <span class="s1">&#39;tmp.mol2&#39;</span><span class="p">),</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">(),</span>
-                <span class="s1">&#39;mol2&#39;</span><span class="p">,</span> <span class="n">keepH</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tmp_dir</span><span class="p">,</span> <span class="s1">&#39;tmp.mol2&#39;</span><span class="p">),</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">view</span><span class="o">.</span><span class="n">addModel</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">(),</span> <span class="s1">&#39;mol2&#39;</span><span class="p">,</span> <span class="n">keepH</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
         <span class="n">view</span><span class="o">.</span><span class="n">setStyle</span><span class="p">({</span><span class="s1">&#39;stick&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;radius&#39;</span><span class="p">:</span> <span class="mf">0.2</span><span class="p">,</span>
                                 <span class="s1">&#39;color&#39;</span><span class="p">:</span><span class="s1">&#39;grey&#39;</span><span class="p">},</span>
                         <span class="s1">&#39;sphere&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;scale&#39;</span><span class="p">:</span> <span class="mf">0.3</span><span class="p">,</span>
@@ -1574,7 +1575,7 @@
 <span class="sd">        scale_torsions : float, optional, default=1</span>
 <span class="sd">            Scales the torsional force constants (1 is completely on)</span>
 <span class="sd">            For _energy_minimize_openmm</span>
-<span class="sd">            Note: Only Ryckaert-Bellemans style torsions are currently supported </span>
+<span class="sd">            Note: Only Ryckaert-Bellemans style torsions are currently supported</span>
 <span class="sd">        scale_nonbonded : float, optional, default=1</span>
 <span class="sd">            Scales epsilon (1 is completely on)</span>
 <span class="sd">            For _energy_minimize_openmm</span>
@@ -1677,7 +1678,7 @@
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        forcefield_files : str or list of str, optional, default=None</span>
-<span class="sd">            Forcefield files to load </span>
+<span class="sd">            Forcefield files to load</span>
 <span class="sd">        forcefield_name : str, optional, default=None</span>
 <span class="sd">            Apply a named forcefield to the output file using the `foyer`</span>
 <span class="sd">            package, e.g. &#39;oplsaa&#39;. Forcefields listed here:</span>
@@ -1947,7 +1948,7 @@
 <span class="sd">            when the `foyer` package is used to apply a forcefield. Valid</span>
 <span class="sd">            options are &#39;lorentz&#39; and &#39;geometric&#39;, specifying Lorentz-Berthelot</span>
 <span class="sd">            and geometric combining rules respectively.</span>
-<span class="sd">        </span>
+
 
 <span class="sd">        Other Parameters</span>
 <span class="sd">        ----------------</span>
