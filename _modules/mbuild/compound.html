@@ -180,7 +180,7 @@
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">oset</span> <span class="k">import</span> <span class="n">oset</span> <span class="k">as</span> <span class="n">OrderedSet</span>
 <span class="kn">import</span> <span class="nn">parmed</span> <span class="k">as</span> <span class="nn">pmd</span>
-<span class="kn">from</span> <span class="nn">parmed.periodic_table</span> <span class="k">import</span> <span class="n">AtomicNum</span><span class="p">,</span> <span class="n">element_by_name</span><span class="p">,</span> <span class="n">Mass</span>
+<span class="kn">from</span> <span class="nn">parmed.periodic_table</span> <span class="k">import</span> <span class="n">AtomicNum</span><span class="p">,</span> <span class="n">element_by_name</span><span class="p">,</span> <span class="n">Mass</span><span class="p">,</span> <span class="n">Element</span>
 <span class="kn">from</span> <span class="nn">six</span> <span class="k">import</span> <span class="n">integer_types</span><span class="p">,</span> <span class="n">string_types</span>
 
 <span class="kn">from</span> <span class="nn">mbuild.bond_graph</span> <span class="k">import</span> <span class="n">BondGraph</span>
@@ -207,7 +207,8 @@
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    filename_or_object : str, mdtraj.Trajectory, parmed.Structure, mbuild.Compound</span>
+<span class="sd">    filename_or_object : str, mdtraj.Trajectory, parmed.Structure, mbuild.Compound,</span>
+<span class="sd">            pybel.Molecule</span>
 <span class="sd">        Name of the file or topology from which to load atom and bond information.</span>
 <span class="sd">    relative_to_module : str, optional, default=None</span>
 <span class="sd">        Instead of looking in the current working directory, look for the file</span>
@@ -233,12 +234,17 @@
 <span class="sd">    compound : mb.Compound</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">pybel</span> <span class="o">=</span> <span class="n">import_</span><span class="p">(</span><span class="s1">&#39;pybel&#39;</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">compound</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">compound</span> <span class="o">=</span> <span class="n">Compound</span><span class="p">()</span>
 
     <span class="c1"># First check if we are loading from an existing parmed or trajectory structure</span>
-    <span class="n">type_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">pmd</span><span class="o">.</span><span class="n">Structure</span><span class="p">:</span><span class="n">compound</span><span class="o">.</span><span class="n">from_parmed</span><span class="p">,</span><span class="n">md</span><span class="o">.</span><span class="n">Trajectory</span><span class="p">:</span><span class="n">compound</span><span class="o">.</span><span class="n">from_trajectory</span><span class="p">}</span>
+    <span class="n">type_dict</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">pmd</span><span class="o">.</span><span class="n">Structure</span><span class="p">:</span><span class="n">compound</span><span class="o">.</span><span class="n">from_parmed</span><span class="p">,</span>
+        <span class="n">md</span><span class="o">.</span><span class="n">Trajectory</span><span class="p">:</span><span class="n">compound</span><span class="o">.</span><span class="n">from_trajectory</span><span class="p">,</span>
+        <span class="n">pybel</span><span class="o">.</span><span class="n">Molecule</span><span class="p">:</span><span class="n">compound</span><span class="o">.</span><span class="n">from_pybel</span><span class="p">,</span>
+    <span class="p">}</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">filename_or_object</span><span class="p">,</span> <span class="n">Compound</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">filename_or_object</span>
     <span class="k">for</span> <span class="nb">type</span> <span class="ow">in</span> <span class="n">type_dict</span><span class="p">:</span>
@@ -300,12 +306,9 @@
                 <span class="n">warn</span><span class="p">(</span><span class="s2">&quot;More than one SMILES string in file, more than one SMILES &quot;</span>
                      <span class="s2">&quot;string is not supported, using </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">mymol</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;smi&quot;</span><span class="p">)))</span>
 
-        <span class="n">tmp_dir</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">mkdtemp</span><span class="p">()</span>
-        <span class="n">temp_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tmp_dir</span><span class="p">,</span> <span class="s1">&#39;smiles_to_mol2_intermediate.mol2&#39;</span><span class="p">)</span>
         <span class="n">mymol</span><span class="o">.</span><span class="n">make3D</span><span class="p">()</span>
-        <span class="n">mymol</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;MOL2&quot;</span><span class="p">,</span> <span class="n">temp_file</span><span class="p">)</span>
-        <span class="n">structure</span> <span class="o">=</span> <span class="n">pmd</span><span class="o">.</span><span class="n">load_file</span><span class="p">(</span><span class="n">temp_file</span><span class="p">,</span> <span class="n">structure</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="n">compound</span><span class="o">.</span><span class="n">from_parmed</span><span class="p">(</span><span class="n">structure</span><span class="p">,</span> <span class="n">coords_only</span><span class="o">=</span><span class="n">coords_only</span><span class="p">)</span>
+        <span class="n">compound</span> <span class="o">=</span> <span class="n">Compound</span><span class="p">()</span>
+        <span class="n">compound</span><span class="o">.</span><span class="n">from_pybel</span><span class="p">(</span><span class="n">mymol</span><span class="p">)</span>
 
     <span class="k">else</span><span class="p">:</span>
         <span class="n">traj</span> <span class="o">=</span> <span class="n">md</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">filename_or_object</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
@@ -2552,6 +2555,210 @@
                 <span class="n">edges</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">child</span><span class="o">.</span><span class="n">parent</span><span class="p">,</span> <span class="n">child</span><span class="p">])</span>
             <span class="n">nodes</span><span class="p">,</span> <span class="n">edges</span> <span class="o">=</span> <span class="n">child</span><span class="o">.</span><span class="n">_iterate_children</span><span class="p">(</span><span class="n">nodes</span><span class="p">,</span> <span class="n">edges</span><span class="p">,</span> <span class="n">names_only</span><span class="o">=</span><span class="n">names_only</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">nodes</span><span class="p">,</span> <span class="n">edges</span>
+
+<div class="viewcode-block" id="Compound.to_pybel"><a class="viewcode-back" href="../../data_structures.html#mbuild.compound.Compound.to_pybel">[docs]</a>    <span class="k">def</span> <span class="nf">to_pybel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">box</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">residues</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">show_ports</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> 
+            <span class="n">infer_residues</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Create a pybel.Molecule from a Compound</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ---------</span>
+<span class="sd">        box : mb.Box, def None</span>
+<span class="sd">        title : str, optional, default=self.name</span>
+<span class="sd">            Title/name of the ParmEd Structure</span>
+<span class="sd">        residues : str of list of str</span>
+<span class="sd">            Labels of residues in the Compound. Residues are assigned by</span>
+<span class="sd">            checking against Compound.name.</span>
+<span class="sd">        show_ports : boolean, optional, default=False</span>
+<span class="sd">            Include all port atoms when converting to a `Structure`.</span>
+<span class="sd">        infer_residues : bool, optional, default=False</span>
+<span class="sd">            Attempt to assign residues based on names of children</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        ------</span>
+<span class="sd">        pybel.Molecule</span>
+
+<span class="sd">        Notes</span>
+<span class="sd">        -----</span>
+<span class="sd">        Most of the mb.Compound is first converted to openbabel.OBMol </span>
+<span class="sd">        And then pybel creates a pybel.Molecule from the OBMol</span>
+<span class="sd">        Bond orders are assumed to be 1</span>
+<span class="sd">        OBMol atom indexing starts at 1, with spatial dimension Angstrom</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">openbabel</span> <span class="o">=</span> <span class="n">import_</span><span class="p">(</span><span class="s1">&#39;openbabel&#39;</span><span class="p">)</span>
+        <span class="n">pybel</span> <span class="o">=</span> <span class="n">import_</span><span class="p">(</span><span class="s1">&#39;pybel&#39;</span><span class="p">)</span>
+
+        <span class="n">mol</span> <span class="o">=</span> <span class="n">openbabel</span><span class="o">.</span><span class="n">OBMol</span><span class="p">()</span>
+        <span class="n">particle_to_atom_index</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">residues</span> <span class="ow">and</span> <span class="n">infer_residues</span><span class="p">:</span>
+            <span class="n">residues</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">([</span><span class="n">child</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">]))</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">residues</span><span class="p">,</span> <span class="n">string_types</span><span class="p">):</span>
+            <span class="n">residues</span> <span class="o">=</span> <span class="p">[</span><span class="n">residues</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">residues</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">set</span><span class="p">)):</span>
+            <span class="n">residues</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">residues</span><span class="p">)</span>
+
+        <span class="n">compound_residue_map</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="n">atom_residue_map</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">part</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">particles</span><span class="p">(</span><span class="n">include_ports</span><span class="o">=</span><span class="n">show_ports</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">residues</span> <span class="ow">and</span> <span class="n">part</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="n">residues</span><span class="p">:</span>
+                <span class="n">current_residue</span> <span class="o">=</span> <span class="n">mol</span><span class="o">.</span><span class="n">NewResidue</span><span class="p">()</span>
+                <span class="n">current_residue</span><span class="o">.</span><span class="n">SetName</span><span class="p">(</span><span class="n">part</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+                <span class="n">atom_residue_map</span><span class="p">[</span><span class="n">part</span><span class="p">]</span> <span class="o">=</span> <span class="n">current_residue</span>
+                <span class="n">compound_residue_map</span><span class="p">[</span><span class="n">part</span><span class="p">]</span> <span class="o">=</span> <span class="n">current_residue</span>
+            <span class="k">elif</span> <span class="n">residues</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">parent</span> <span class="ow">in</span> <span class="n">part</span><span class="o">.</span><span class="n">ancestors</span><span class="p">():</span>
+                    <span class="k">if</span> <span class="n">residues</span> <span class="ow">and</span> <span class="n">parent</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="n">residues</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">parent</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">compound_residue_map</span><span class="p">:</span>
+                            <span class="n">current_residue</span> <span class="o">=</span> <span class="n">mol</span><span class="o">.</span><span class="n">NewResidue</span><span class="p">()</span>
+                            <span class="n">current_residue</span><span class="o">.</span><span class="n">SetName</span><span class="p">(</span><span class="n">parent</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+                            <span class="n">compound_residue_map</span><span class="p">[</span><span class="n">parent</span><span class="p">]</span> <span class="o">=</span> <span class="n">current_residue</span>
+                        <span class="n">atom_residue_map</span><span class="p">[</span><span class="n">part</span><span class="p">]</span> <span class="o">=</span> <span class="n">current_residue</span>
+                        <span class="k">break</span>
+                <span class="k">else</span><span class="p">:</span>  <span class="c1"># Did not find specified residues in ancestors.</span>
+                    <span class="n">current_residue</span> <span class="o">=</span> <span class="n">mol</span><span class="o">.</span><span class="n">NewResidue</span><span class="p">()</span>
+                    <span class="n">current_residue</span><span class="o">.</span><span class="n">SetName</span><span class="p">(</span><span class="s2">&quot;RES&quot;</span><span class="p">)</span>
+                    <span class="n">atom_residue_map</span><span class="p">[</span><span class="n">part</span><span class="p">]</span> <span class="o">=</span> <span class="n">current_residue</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">current_residue</span> <span class="o">=</span> <span class="n">mol</span><span class="o">.</span><span class="n">NewResidue</span><span class="p">()</span>
+                <span class="n">current_residue</span><span class="o">.</span><span class="n">SetName</span><span class="p">(</span><span class="s2">&quot;RES&quot;</span><span class="p">)</span>
+                <span class="n">atom_residue_map</span><span class="p">[</span><span class="n">part</span><span class="p">]</span> <span class="o">=</span> <span class="n">current_residue</span>
+
+            <span class="n">temp</span> <span class="o">=</span> <span class="n">mol</span><span class="o">.</span><span class="n">NewAtom</span><span class="p">()</span>
+            <span class="n">residue</span> <span class="o">=</span> <span class="n">atom_residue_map</span><span class="p">[</span><span class="n">part</span><span class="p">]</span>
+            <span class="n">temp</span><span class="o">.</span><span class="n">SetResidue</span><span class="p">(</span><span class="n">residue</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">part</span><span class="o">.</span><span class="n">port_particle</span><span class="p">:</span>
+                <span class="n">temp</span><span class="o">.</span><span class="n">SetAtomicNum</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">temp</span><span class="o">.</span><span class="n">SetAtomicNum</span><span class="p">(</span><span class="n">AtomicNum</span><span class="p">[</span><span class="n">part</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()])</span>
+                <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                    <span class="n">warn</span><span class="p">(</span><span class="s2">&quot;Could not infer atomic number from &quot;</span>
+                            <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">, setting to 0&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">part</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+                    <span class="n">temp</span><span class="o">.</span><span class="n">SetAtomicNum</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+
+            <span class="n">temp</span><span class="o">.</span><span class="n">SetVector</span><span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="n">part</span><span class="o">.</span><span class="n">xyz</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mi">10</span><span class="p">))</span>
+            <span class="n">particle_to_atom_index</span><span class="p">[</span><span class="n">part</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span>
+
+        <span class="n">ucell</span> <span class="o">=</span> <span class="n">openbabel</span><span class="o">.</span><span class="n">OBUnitCell</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">box</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">box</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">boundingbox</span>
+        <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="mf">10.0</span> <span class="o">*</span> <span class="n">box</span><span class="o">.</span><span class="n">lengths</span>
+        <span class="n">alpha</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">gamma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">box</span><span class="o">.</span><span class="n">angles</span><span class="p">)</span>
+
+        <span class="n">cosa</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span>
+        <span class="n">cosb</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">beta</span><span class="p">)</span>
+        <span class="n">sinb</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">beta</span><span class="p">)</span>
+        <span class="n">cosg</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">gamma</span><span class="p">)</span>
+        <span class="n">sing</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">gamma</span><span class="p">)</span>
+        <span class="n">mat_coef_y</span> <span class="o">=</span> <span class="p">(</span><span class="n">cosa</span> <span class="o">-</span> <span class="n">cosb</span> <span class="o">*</span> <span class="n">cosg</span><span class="p">)</span> <span class="o">/</span> <span class="n">sing</span>
+        <span class="n">mat_coef_z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">sinb</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span> <span class="o">-</span> \
+                    <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">mat_coef_y</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">mat_coef_z</span> <span class="o">&gt;</span> <span class="mf">0.</span><span class="p">:</span>
+            <span class="n">mat_coef_z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">mat_coef_z</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Warning</span><span class="p">(</span><span class="s1">&#39;Non-positive z-vector. Angles </span><span class="si">{}</span><span class="s1"> &#39;</span>
+                                  <span class="s1">&#39;do not generate a box with the z-vector in the&#39;</span>
+                                  <span class="s1">&#39;positive z direction&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">box</span><span class="o">.</span><span class="n">angles</span><span class="p">))</span>
+
+        <span class="n">box_vec</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                    <span class="p">[</span><span class="n">cosg</span><span class="p">,</span> <span class="n">sing</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                    <span class="p">[</span><span class="n">cosb</span><span class="p">,</span> <span class="n">mat_coef_y</span><span class="p">,</span> <span class="n">mat_coef_z</span><span class="p">]]</span>
+        <span class="n">box_vec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">box_vec</span><span class="p">)</span>
+        <span class="n">box_mat</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="p">])</span><span class="o">*</span> <span class="n">box_vec</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+        <span class="n">first_vector</span> <span class="o">=</span> <span class="n">openbabel</span><span class="o">.</span><span class="n">vector3</span><span class="p">(</span><span class="o">*</span><span class="n">box_mat</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">second_vector</span> <span class="o">=</span> <span class="n">openbabel</span><span class="o">.</span><span class="n">vector3</span><span class="p">(</span><span class="o">*</span><span class="n">box_mat</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">third_vector</span> <span class="o">=</span> <span class="n">openbabel</span><span class="o">.</span><span class="n">vector3</span><span class="p">(</span><span class="o">*</span><span class="n">box_mat</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+        <span class="n">ucell</span><span class="o">.</span><span class="n">SetData</span><span class="p">(</span><span class="n">first_vector</span><span class="p">,</span> <span class="n">second_vector</span><span class="p">,</span> <span class="n">third_vector</span><span class="p">)</span>
+        <span class="n">mol</span><span class="o">.</span><span class="n">CloneData</span><span class="p">(</span><span class="n">ucell</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">bond</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">bonds</span><span class="p">():</span>
+            <span class="n">bond_order</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="n">mol</span><span class="o">.</span><span class="n">AddBond</span><span class="p">(</span><span class="n">particle_to_atom_index</span><span class="p">[</span><span class="n">bond</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> 
+                    <span class="n">particle_to_atom_index</span><span class="p">[</span><span class="n">bond</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> 
+                    <span class="n">bond_order</span><span class="p">)</span>
+
+        <span class="n">pybelmol</span> <span class="o">=</span> <span class="n">pybel</span><span class="o">.</span><span class="n">Molecule</span><span class="p">(</span><span class="n">mol</span><span class="p">)</span>
+        <span class="n">pybelmol</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="n">title</span> <span class="k">if</span> <span class="n">title</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+
+        <span class="k">return</span> <span class="n">pybelmol</span></div>
+
+<div class="viewcode-block" id="Compound.from_pybel"><a class="viewcode-back" href="../../data_structures.html#mbuild.compound.Compound.from_pybel">[docs]</a>    <span class="k">def</span> <span class="nf">from_pybel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pybel_mol</span><span class="p">,</span> <span class="n">use_element</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">coords_only</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create a Compound from a Pybel.Molecule</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ---------</span>
+<span class="sd">        pybel_mol: pybel.Molecule</span>
+<span class="sd">        use_element : bool, default True</span>
+<span class="sd">            If True, construct mb Particles based on the pybel Atom&#39;s element.</span>
+<span class="sd">            If False, construcs mb Particles based on the pybel Atom&#39;s type</span>
+<span class="sd">        coords_only : bool, default False</span>
+<span class="sd">            Set preexisting atoms in compound to coordinates given by</span>
+<span class="sd">            structure.  Note: Not yet implemented, included only for parity</span>
+<span class="sd">            with other conversion functions</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">openbabel</span> <span class="o">=</span> <span class="n">import_</span><span class="p">(</span><span class="s2">&quot;openbabel&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">pybel_mol</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">resindex_to_cmpd</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="k">if</span> <span class="n">coords_only</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Warning</span><span class="p">(</span><span class="s1">&#39;coords_only=True not yet implemented for &#39;</span>
+                    <span class="s1">&#39;conversion from pybel&#39;</span><span class="p">)</span>
+        <span class="c1"># Iterating through pybel_mol for atom/residue information</span>
+        <span class="c1"># This could just as easily be implemented by </span>
+        <span class="c1"># an OBMolAtomIter from the openbabel library, </span>
+        <span class="c1"># but this seemed more convenient at time of writing</span>
+        <span class="c1"># pybel atoms are 1-indexed, coordinates in Angstrom</span>
+        <span class="k">for</span> <span class="n">atom</span> <span class="ow">in</span> <span class="n">pybel_mol</span><span class="o">.</span><span class="n">atoms</span><span class="p">:</span>
+            <span class="n">xyz</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">atom</span><span class="o">.</span><span class="n">coords</span><span class="p">)</span><span class="o">/</span><span class="mi">10</span>
+            <span class="k">if</span> <span class="n">use_element</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">temp_name</span> <span class="o">=</span> <span class="n">Element</span><span class="p">[</span><span class="n">atom</span><span class="o">.</span><span class="n">atomicnum</span><span class="p">]</span>
+                <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                    <span class="n">warn</span><span class="p">(</span><span class="s2">&quot;No element detected for atom at index &quot;</span>
+                            <span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> with number </span><span class="si">{}</span><span class="s2">, type </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                                <span class="n">atom</span><span class="o">.</span><span class="n">idx</span><span class="p">,</span> <span class="n">atom</span><span class="o">.</span><span class="n">atomicnum</span><span class="p">,</span> <span class="n">atom</span><span class="o">.</span><span class="n">type</span><span class="p">))</span>
+                    <span class="n">temp_name</span> <span class="o">=</span> <span class="n">atom</span><span class="o">.</span><span class="n">type</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">temp_name</span> <span class="o">=</span> <span class="n">atom</span><span class="o">.</span><span class="n">type</span>
+            <span class="n">temp</span> <span class="o">=</span> <span class="n">Particle</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">temp_name</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="n">xyz</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">atom</span><span class="p">,</span> <span class="s1">&#39;residue&#39;</span><span class="p">):</span> <span class="c1"># Is there a safer way to check for res?</span>
+                <span class="k">if</span> <span class="n">atom</span><span class="o">.</span><span class="n">residue</span><span class="o">.</span><span class="n">idx</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">resindex_to_cmpd</span><span class="p">:</span>
+                    <span class="n">res_cmpd</span> <span class="o">=</span> <span class="n">Compound</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">atom</span><span class="o">.</span><span class="n">residue</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+                    <span class="n">resindex_to_cmpd</span><span class="p">[</span><span class="n">atom</span><span class="o">.</span><span class="n">residue</span><span class="o">.</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">res_cmpd</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">res_cmpd</span><span class="p">)</span>
+                <span class="n">resindex_to_cmpd</span><span class="p">[</span><span class="n">atom</span><span class="o">.</span><span class="n">residue</span><span class="o">.</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span>
+
+        <span class="c1"># Iterating through pybel_mol.OBMol for bond information</span>
+        <span class="c1"># Bonds are 0-indexed, but the atoms are 1-indexed</span>
+        <span class="c1"># Bond information doesn&#39;t appear stored in pybel_mol,</span>
+        <span class="c1"># so we need to look into the OBMol object,</span>
+        <span class="c1"># using an iterator from the openbabel library</span>
+        <span class="k">for</span> <span class="n">bond</span> <span class="ow">in</span> <span class="n">openbabel</span><span class="o">.</span><span class="n">OBMolBondIter</span><span class="p">(</span><span class="n">pybel_mol</span><span class="o">.</span><span class="n">OBMol</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">add_bond</span><span class="p">([</span><span class="bp">self</span><span class="p">[</span><span class="n">bond</span><span class="o">.</span><span class="n">GetBeginAtomIdx</span><span class="p">()</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+                            <span class="bp">self</span><span class="p">[</span><span class="n">bond</span><span class="o">.</span><span class="n">GetEndAtomIdx</span><span class="p">()</span><span class="o">-</span><span class="mi">1</span><span class="p">]])</span>
+
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">pybel_mol</span><span class="p">,</span> <span class="s1">&#39;unitcell&#39;</span><span class="p">):</span>
+            <span class="n">box</span> <span class="o">=</span> <span class="n">Box</span><span class="p">(</span><span class="n">lengths</span><span class="o">=</span><span class="p">[</span><span class="n">pybel_mol</span><span class="o">.</span><span class="n">unitcell</span><span class="o">.</span><span class="n">GetA</span><span class="p">()</span><span class="o">/</span><span class="mi">10</span><span class="p">,</span> 
+                                <span class="n">pybel_mol</span><span class="o">.</span><span class="n">unitcell</span><span class="o">.</span><span class="n">GetB</span><span class="p">()</span><span class="o">/</span><span class="mi">10</span><span class="p">,</span> 
+                                <span class="n">pybel_mol</span><span class="o">.</span><span class="n">unitcell</span><span class="o">.</span><span class="n">GetC</span><span class="p">()</span><span class="o">/</span><span class="mi">10</span><span class="p">],</span>
+                        <span class="n">angles</span><span class="o">=</span><span class="p">[</span><span class="n">pybel_mol</span><span class="o">.</span><span class="n">unitcell</span><span class="o">.</span><span class="n">GetAlpha</span><span class="p">(),</span> 
+                                <span class="n">pybel_mol</span><span class="o">.</span><span class="n">unitcell</span><span class="o">.</span><span class="n">GetBeta</span><span class="p">(),</span> 
+                                <span class="n">pybel_mol</span><span class="o">.</span><span class="n">unitcell</span><span class="o">.</span><span class="n">GetGamma</span><span class="p">()])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">periodicity</span> <span class="o">=</span> <span class="n">box</span><span class="o">.</span><span class="n">lengths</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">warn</span><span class="p">(</span><span class="s2">&quot;No unitcell detected for pybel.Molecule </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pybel_mol</span><span class="p">))</span>
+            <span class="n">box</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+<span class="c1">#       TODO: Decide how to gather PBC information from openbabel. Options may</span>
+<span class="c1">#             include storing it in .periodicity or writing a separate function</span>
+<span class="c1">#             that returns the box.</span>
 
 <div class="viewcode-block" id="Compound.to_intermol"><a class="viewcode-back" href="../../data_structures.html#mbuild.compound.Compound.to_intermol">[docs]</a>    <span class="k">def</span> <span class="nf">to_intermol</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">molecule_types</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span> <span class="c1"># pragma: no cover</span>
         <span class="sd">&quot;&quot;&quot;Create an InterMol system from a Compound.</span>
