@@ -176,7 +176,24 @@
            <span class="s1">&#39;Random3DPattern&#39;</span><span class="p">,</span> <span class="s1">&#39;Grid2DPattern&#39;</span><span class="p">,</span> <span class="s1">&#39;Grid3DPattern&#39;</span><span class="p">]</span>
 
 
-<span class="k">class</span> <span class="nc">Pattern</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="Pattern"><a class="viewcode-back" href="../../recipes.html#mbuild.pattern.Pattern">[docs]</a><span class="k">class</span> <span class="nc">Pattern</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A superclass for molecules spatial Patterns.</span>
+
+<span class="sd">    Patterns refer to how molecules are arranged either in a box (volume) or 2-D</span>
+<span class="sd">    surface. This class could serve as a superclass for different molecules</span>
+<span class="sd">    patterns</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    points : array or np.array</span>
+<span class="sd">         Positions of molecules in surface or space</span>
+<span class="sd">    orientations : dict, optional, default=None</span>
+<span class="sd">         Orientations of ports</span>
+<span class="sd">    scale : float, optional, default=None</span>
+<span class="sd">         Scaling factor for the original pattern</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">points</span><span class="p">,</span> <span class="n">orientations</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">points</span> <span class="o">=</span> <span class="n">points</span>
         <span class="k">if</span> <span class="n">orientations</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -191,35 +208,46 @@
     <span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">points</span><span class="p">[</span><span class="n">item</span><span class="p">]</span>
 
-    <span class="k">def</span> <span class="nf">scale</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">by</span><span class="p">):</span>
+<div class="viewcode-block" id="Pattern.scale"><a class="viewcode-back" href="../../recipes.html#mbuild.pattern.Pattern.scale">[docs]</a>    <span class="k">def</span> <span class="nf">scale</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">by</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Scale the points in the Pattern.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        by : float or np.ndarray, shape=(3,)</span>
 <span class="sd">            The factor to scale by. If a scalar, scale all directions isotropically.</span>
-<span class="sd">            If np.ndarray, scale each direction independently.</span>
+<span class="sd">            If np.ndarray, scale each direction independently</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">points</span> <span class="o">*=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">([</span><span class="n">by</span><span class="p">])</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_adjust_ports</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_adjust_ports</span><span class="p">()</span></div>
 
     <span class="k">def</span> <span class="nf">_adjust_ports</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Adjust ports according to the provided orientations&quot;&quot;&quot;</span>
+
         <span class="k">for</span> <span class="n">orientation</span><span class="p">,</span> <span class="n">ports</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">orientations</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="k">for</span> <span class="n">port</span><span class="p">,</span> <span class="n">point</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">ports</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">points</span><span class="p">):</span>
                 <span class="n">port</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="n">point</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">apply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">compound</span><span class="p">,</span> <span class="n">orientation</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">compound_port</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+<div class="viewcode-block" id="Pattern.apply"><a class="viewcode-back" href="../../recipes.html#mbuild.pattern.Pattern.apply">[docs]</a>    <span class="k">def</span> <span class="nf">apply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">compound</span><span class="p">,</span> <span class="n">orientation</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">compound_port</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Arrange copies of a Compound as specified by the Pattern.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        compound</span>
-<span class="sd">        orientation</span>
+<span class="sd">        compound : mb.Compound</span>
+<span class="sd">            mb.Compound to be applied new pattern</span>
+<span class="sd">        orientation : dict, optional, default=&#39;&#39;</span>
+<span class="sd">            New orientations for ports in compound</span>
+<span class="sd">        compound_port : list, optional, default=None</span>
+<span class="sd">            Ports to be applied new orientations</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
+<span class="sd">        compound : mb.Compound</span>
+<span class="sd">            mb.Compound with applied pattern</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="n">compounds</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">orientations</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">orientation</span><span class="p">):</span>
             <span class="k">for</span> <span class="n">port</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">orientations</span><span class="p">[</span><span class="n">orientation</span><span class="p">]:</span>
@@ -234,9 +262,9 @@
                 <span class="n">new_compound</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="n">point</span><span class="p">)</span>
 
                 <span class="n">compounds</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_compound</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">compounds</span>
+        <span class="k">return</span> <span class="n">compounds</span></div>
 
-    <span class="k">def</span> <span class="nf">apply_to_compound</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">guest</span><span class="p">,</span> <span class="n">guest_port_name</span><span class="o">=</span><span class="s1">&#39;down&#39;</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<div class="viewcode-block" id="Pattern.apply_to_compound"><a class="viewcode-back" href="../../recipes.html#mbuild.pattern.Pattern.apply_to_compound">[docs]</a>    <span class="k">def</span> <span class="nf">apply_to_compound</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">guest</span><span class="p">,</span> <span class="n">guest_port_name</span><span class="o">=</span><span class="s1">&#39;down&#39;</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                           <span class="n">backfill</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">backfill_port_name</span><span class="o">=</span><span class="s1">&#39;up&#39;</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Attach copies of a guest Compound to Ports on a host Compound.</span>
 
@@ -260,8 +288,13 @@
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
+<span class="sd">        guests : list of mb.Compound</span>
+<span class="sd">            List of inserted guest compounds on host compound</span>
+<span class="sd">        backfills : list of mb.Compound</span>
+<span class="sd">            List of inserted backfill compounds on host compound</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="n">n_ports</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">host</span><span class="o">.</span><span class="n">available_ports</span><span class="p">())</span>
         <span class="k">assert</span> <span class="n">n_ports</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">points</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s2">&quot;Not enough ports for pattern.&quot;</span>
         <span class="n">assert_port_exists</span><span class="p">(</span><span class="n">guest_port_name</span><span class="p">,</span> <span class="n">guest</span><span class="p">)</span>
@@ -302,10 +335,10 @@
                                   <span class="n">new_backfill</span><span class="o">.</span><span class="n">labels</span><span class="p">[</span><span class="n">backfill_port_name</span><span class="p">],</span>
                                   <span class="n">port</span><span class="p">)</span>
                     <span class="n">backfills</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_backfill</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">guests</span><span class="p">,</span> <span class="n">backfills</span>
+        <span class="k">return</span> <span class="n">guests</span><span class="p">,</span> <span class="n">backfills</span></div></div>
 
 
-<span class="k">class</span> <span class="nc">Random2DPattern</span><span class="p">(</span><span class="n">Pattern</span><span class="p">):</span>
+<div class="viewcode-block" id="Random2DPattern"><a class="viewcode-back" href="../../recipes.html#mbuild.pattern.Random2DPattern">[docs]</a><span class="k">class</span> <span class="nc">Random2DPattern</span><span class="p">(</span><span class="n">Pattern</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Generate n random points on a 2D grid along z = 0</span>
 
@@ -322,12 +355,11 @@
             <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
         <span class="n">points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="n">n</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
         <span class="n">points</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">Random2DPattern</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">points</span><span class="o">=</span><span class="n">points</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Random2DPattern</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">points</span><span class="o">=</span><span class="n">points</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
 
-<span class="k">class</span> <span class="nc">Random3DPattern</span><span class="p">(</span><span class="n">Pattern</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; Generate n random points on a 3D grid </span>
+<div class="viewcode-block" id="Random3DPattern"><a class="viewcode-back" href="../../recipes.html#mbuild.pattern.Random3DPattern">[docs]</a><span class="k">class</span> <span class="nc">Random3DPattern</span><span class="p">(</span><span class="n">Pattern</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Generate n random points on a 3D grid</span>
 
 <span class="sd">        Attributes</span>
 <span class="sd">        ----------</span>
@@ -338,15 +370,15 @@
 
 <span class="sd">        &quot;&quot;&quot;</span>
 
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">seed</span><span class="p">:</span>
             <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
         <span class="n">points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="n">n</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">Random3DPattern</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">points</span><span class="o">=</span><span class="n">points</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Random3DPattern</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">points</span><span class="o">=</span><span class="n">points</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
 
-<span class="k">class</span> <span class="nc">Grid2DPattern</span><span class="p">(</span><span class="n">Pattern</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; Generate a 2D grid (n x m) of points along z = 0</span>
+<div class="viewcode-block" id="Grid2DPattern"><a class="viewcode-back" href="../../recipes.html#mbuild.pattern.Grid2DPattern">[docs]</a><span class="k">class</span> <span class="nc">Grid2DPattern</span><span class="p">(</span><span class="n">Pattern</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Generate a 2D grid (n x m) of points along z = 0</span>
 
 <span class="sd">        Notes</span>
 <span class="sd">        -----</span>
@@ -361,16 +393,17 @@
 
 <span class="sd">        &quot;&quot;&quot;</span>
 
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+
         <span class="n">points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">n</span><span class="o">*</span><span class="n">m</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">product</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">),</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="p">)):</span>
             <span class="n">points</span><span class="p">[</span><span class="n">i</span><span class="o">*</span><span class="n">m</span> <span class="o">+</span> <span class="n">j</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span> <span class="o">/</span> <span class="n">n</span>
             <span class="n">points</span><span class="p">[</span><span class="n">i</span><span class="o">*</span><span class="n">m</span> <span class="o">+</span> <span class="n">j</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">j</span> <span class="o">/</span> <span class="n">m</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">Grid2DPattern</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">points</span><span class="o">=</span><span class="n">points</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Grid2DPattern</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">points</span><span class="o">=</span><span class="n">points</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
 
-<span class="k">class</span> <span class="nc">Grid3DPattern</span><span class="p">(</span><span class="n">Pattern</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; Generate a 3D grid (n x m x l) of points</span>
+<div class="viewcode-block" id="Grid3DPattern"><a class="viewcode-back" href="../../recipes.html#mbuild.pattern.Grid3DPattern">[docs]</a><span class="k">class</span> <span class="nc">Grid3DPattern</span><span class="p">(</span><span class="n">Pattern</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Generate a 3D grid (n x m x l) of points</span>
 
 <span class="sd">        Notes</span>
 <span class="sd">        -----</span>
@@ -387,12 +420,13 @@
 
 <span class="sd">        &quot;&quot;&quot;</span>
 
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="n">points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">n</span><span class="o">*</span><span class="n">m</span><span class="o">*</span><span class="n">l</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">product</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">),</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="p">),</span> <span class="nb">range</span><span class="p">(</span><span class="n">l</span><span class="p">)):</span>
             <span class="n">points</span><span class="p">[</span><span class="n">i</span><span class="o">*</span><span class="n">m</span><span class="o">*</span><span class="n">l</span> <span class="o">+</span> <span class="n">j</span><span class="o">*</span><span class="n">l</span> <span class="o">+</span> <span class="n">k</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span> <span class="o">/</span> <span class="n">n</span>
             <span class="n">points</span><span class="p">[</span><span class="n">i</span><span class="o">*</span><span class="n">m</span><span class="o">*</span><span class="n">l</span> <span class="o">+</span> <span class="n">j</span><span class="o">*</span><span class="n">l</span> <span class="o">+</span> <span class="n">k</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">j</span> <span class="o">/</span> <span class="n">m</span>
             <span class="n">points</span><span class="p">[</span><span class="n">i</span><span class="o">*</span><span class="n">m</span><span class="o">*</span><span class="n">l</span> <span class="o">+</span> <span class="n">j</span><span class="o">*</span><span class="n">l</span> <span class="o">+</span> <span class="n">k</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">k</span> <span class="o">/</span> <span class="n">l</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">Grid3DPattern</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">points</span><span class="o">=</span><span class="n">points</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Grid3DPattern</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">points</span><span class="o">=</span><span class="n">points</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="SpherePattern"><a class="viewcode-back" href="../../recipes.html#mbuild.pattern.SpherePattern">[docs]</a><span class="k">class</span> <span class="nc">SpherePattern</span><span class="p">(</span><span class="n">Pattern</span><span class="p">):</span>
@@ -404,6 +438,7 @@
 <span class="sd">    http://mail.scipy.org/pipermail/numpy-discussion/2009-July/043811.html</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="n">phi</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span> <span class="o">/</span> <span class="mi">2</span>   <span class="c1"># the golden ratio</span>
         <span class="n">long_incr</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="n">phi</span>    <span class="c1"># how much to increment the longitude</span>

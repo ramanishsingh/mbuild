@@ -319,21 +319,22 @@
                          <span class="n">lattice_points</span><span class="p">,</span> <span class="n">angles</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Check for proper inputs and set instance attributes.</span>
 
-<span class="sd">        validate_inputs takes the data passed to the constructor by the user</span>
-<span class="sd">        and will ensure that the data is correctly formatted and will then</span>
-<span class="sd">        set its instance attributes.</span>
+<span class="sd">        Takes the data passed to the constructor by the user</span>
+<span class="sd">        and ensures that the data is correctly formatted and</span>
+<span class="sd">        then sets its instance attributes.</span>
 
-<span class="sd">        validate_inputs checks that dimensionality is maintained,</span>
-<span class="sd">        the unit cell is right handed, the area or volume of the unit cell</span>
+<span class="sd">        This method checks that dimensionality is maintained, the unit</span>
+<span class="sd">        cell is right handed, the area or volume of the unit cell</span>
 <span class="sd">        is positive and non-zero for 2D and 3D respectively, lattice spacing</span>
 <span class="sd">        are provided, basis vectors do not overlap when the unit cell is</span>
 <span class="sd">        expanded.</span>
 
 <span class="sd">        Exceptions Raised</span>
 <span class="sd">        -----------------</span>
-<span class="sd">        TypeError : incorrect typing of the input parameters.</span>
+<span class="sd">        TypeError : incorrect typing of the input parameters</span>
 
-<span class="sd">        ValueError : values are not within restrictions.</span>
+<span class="sd">        ValueError : values are not within restrictions</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">if</span> <span class="n">angles</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">lattice_vectors</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -354,13 +355,14 @@
     <span class="k">def</span> <span class="nf">_validate_lattice_spacing</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lattice_spacing</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Ensure that lattice spacing is provided and correct.</span>
 
-<span class="sd">        _validate_lattice_spacing will ensure that the lattice spacing</span>
-<span class="sd">        provided are acceptable values. Additional Numpy errors can also occur</span>
-<span class="sd">        due to the conversion to a Numpy array.</span>
+<span class="sd">        Ensures that the lattice spacing provided are acceptable values.</span>
+<span class="sd">        Additional NumPy errors can also occur due to the conversion</span>
+<span class="sd">        to a numpy array.</span>
 
 <span class="sd">        Exceptions Raised</span>
 <span class="sd">        -----------------</span>
 <span class="sd">        ValueError : Incorrect lattice_spacing input</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">dataType</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span>
@@ -390,7 +392,17 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">lattice_spacing</span> <span class="o">=</span> <span class="n">lattice_spacing</span>
 
     <span class="k">def</span> <span class="nf">_validate_angles</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">angles</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Ensure that the angles between the lattice_vectors are correct&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Ensure that the angles between the lattice_vectors are correct</span>
+
+<span class="sd">        Ensures that the angles input has an appropriate array size and each</span>
+<span class="sd">        components is in an acceptatble range. Additional NumPy errors can</span>
+<span class="sd">        also occur due to the conversion to a numpy array.</span>
+
+<span class="sd">        Exception Raised</span>
+<span class="sd">        ----------------</span>
+<span class="sd">        ValueError : Incorrect angles input</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">dataType</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span>
         <span class="n">tempAngles</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">angles</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dataType</span><span class="p">)</span>
@@ -423,7 +435,17 @@
     <span class="k">def</span> <span class="nf">_validate_lattice_vectors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lattice_vectors</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Ensure that the lattice_vectors are reasonable inputs.</span>
 
+<span class="sd">        Makes sure that the provided lattice_vectors input has the correct</span>
+<span class="sd">        array size and their determinants have appropriate values.</span>
+<span class="sd">        Additional NumPy errors can also occur due to the conversion to</span>
+<span class="sd">        a numpy array.</span>
+
+<span class="sd">        Exception Raised</span>
+<span class="sd">        ----------------</span>
+<span class="sd">        ValueError : Incorrect lattice_vectors input</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="n">dataType</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span>
         <span class="k">if</span> <span class="n">lattice_vectors</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">lattice_vectors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">identity</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dimension</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dataType</span><span class="p">)</span>
@@ -450,6 +472,18 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">lattice_vectors</span> <span class="o">=</span> <span class="n">lattice_vectors</span>
 
     <span class="k">def</span> <span class="nf">_validate_lattice_points</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lattice_points</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Ensure that lattice_points are reasonable inputs.</span>
+
+<span class="sd">        Makes sure that the provided lattice_points are appropriate,</span>
+<span class="sd">        specifically, making sure that the positions are consistent</span>
+<span class="sd">        with the dimension and have appropriate input types/values.</span>
+
+<span class="sd">        Exception Raised</span>
+<span class="sd">        ----------------</span>
+<span class="sd">        ValueError : Incorrect lattice_poins input</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="k">if</span> <span class="n">lattice_points</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">lattice_points</span> <span class="o">=</span> <span class="p">{}</span>
             <span class="n">lattice_points</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="p">[[</span><span class="mf">0.</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dimension</span><span class="p">)]]}</span>
@@ -462,14 +496,14 @@
         <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">positions</span> <span class="ow">in</span> <span class="n">lattice_points</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="k">for</span> <span class="n">pos</span> <span class="ow">in</span> <span class="n">positions</span><span class="p">:</span>
                 <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">pos</span><span class="p">)</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dimension</span><span class="p">:</span>
-                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Incorrect lattice point position size. &quot;</span>
-                                     <span class="s2">&quot;lattice point </span><span class="si">{}</span><span class="s2"> has location &quot;</span>
-                                     <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">, which is inconsistent with the &quot;</span>
-                                     <span class="s2">&quot;dimension </span><span class="si">{}</span><span class="s2">.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Incorrect lattice point position size. &#39;</span>
+                                     <span class="s1">&#39;lattice point </span><span class="si">{}</span><span class="s1"> has location &#39;</span>
+                                     <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">, which is inconsistent with the &#39;</span>
+                                     <span class="s1">&#39;dimension </span><span class="si">{}</span><span class="s1">.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span>
                                                             <span class="bp">self</span><span class="o">.</span><span class="n">dimension</span><span class="p">))</span>
                 <span class="k">if</span> <span class="n">pos</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;NoneType passed, expected float. &quot;</span>
-                                     <span class="s2">&quot;None was passed in as position for </span><span class="si">{}</span><span class="s2">.&quot;</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;NoneType passed, expected float. &#39;</span>
+                                     <span class="s1">&#39;None was passed in as position for </span><span class="si">{}</span><span class="s1">.&#39;</span>
                                      <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
                 <span class="k">for</span> <span class="n">coord</span> <span class="ow">in</span> <span class="n">pos</span><span class="p">:</span>
                     <span class="k">if</span> <span class="p">(</span><span class="n">coord</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="mi">0</span> <span class="o">&gt;</span> <span class="n">coord</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">coord</span> <span class="o">&gt;=</span><span class="mi">1</span><span class="p">):</span>
@@ -481,6 +515,16 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">lattice_points</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_for_overlap</span><span class="p">(</span><span class="n">lattice_points</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_check_for_overlap</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lattice_points</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Check for overlapping lattice</span>
+
+<span class="sd">        Makes sure the lattice_points do not overlap when the unit cell</span>
+<span class="sd">        get expanded to certain extent.</span>
+
+<span class="sd">        Exception Raised</span>
+<span class="sd">        ----------------</span>
+<span class="sd">        ValueError : Incorrect lattice_points input</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">overlap_dict</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
         <span class="n">num_iter</span> <span class="o">=</span> <span class="mi">3</span>
@@ -504,9 +548,9 @@
     <span class="k">def</span> <span class="nf">_from_lattice_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">angles</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Convert Bravais lattice parameters to lattice vectors.</span>
 
-<span class="sd">        _from_lattice_parameters will generate the lattice vectors based on</span>
-<span class="sd">        the parameters necessary to build a Bravais Lattice. The lattice</span>
-<span class="sd">        vectors are in the lower diagonal matrix form.</span>
+<span class="sd">        Generate the lattice vectors based on the parameters necessary</span>
+<span class="sd">        to build a Bravais Lattice. The lattice vectors are in the lower</span>
+<span class="sd">        diagonal matrix form.</span>
 
 <span class="sd">        This was adapted from the ASE triclinic.py lattice parameter code.</span>
 
@@ -518,6 +562,7 @@
 <span class="sd">        ----------</span>
 <span class="sd">        angles : list-like, required</span>
 <span class="sd">            Angles of bravais lattice.</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">dataType</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span>
@@ -549,11 +594,12 @@
     <span class="k">def</span> <span class="nf">_from_lattice_vectors</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Calculate the angles between the vectors that define the lattice.</span>
 
-<span class="sd">        _from_lattice_vectors will calculate the angles alpha, beta, and</span>
-<span class="sd">        gamma from the Lattice object attribute lattice_vectors.</span>
+<span class="sd">        Calculates the angles alpha, beta, and gamma from the Lattice object</span>
+<span class="sd">        attribute lattice_vectors.</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="n">degreeConvsersion</span> <span class="o">=</span> <span class="mf">180.0</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span>
+        <span class="n">degreeConversion</span> <span class="o">=</span> <span class="mf">180.0</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span>
         <span class="n">vector_magnitudes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lattice_vectors</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
         <span class="n">a_dot_b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lattice_vectors</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">lattice_vectors</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
@@ -564,16 +610,16 @@
         <span class="n">beta_raw</span> <span class="o">=</span> <span class="n">a_dot_c</span> <span class="o">/</span> <span class="p">(</span><span class="n">vector_magnitudes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">vector_magnitudes</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
         <span class="n">gamma_raw</span> <span class="o">=</span> <span class="n">a_dot_b</span> <span class="o">/</span> <span class="p">(</span><span class="n">vector_magnitudes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">vector_magnitudes</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 
-        <span class="n">alpha</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arccos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">alpha_raw</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">))</span> <span class="o">*</span> <span class="n">degreeConvsersion</span>
-        <span class="n">beta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arccos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">beta_raw</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">))</span> <span class="o">*</span> <span class="n">degreeConvsersion</span>
-        <span class="n">gamma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arccos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">gamma_raw</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">))</span> <span class="o">*</span> <span class="n">degreeConvsersion</span>
+        <span class="n">alpha</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arccos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">alpha_raw</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">))</span> <span class="o">*</span> <span class="n">degreeConversion</span>
+        <span class="n">beta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arccos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">beta_raw</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">))</span> <span class="o">*</span> <span class="n">degreeConversion</span>
+        <span class="n">gamma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arccos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">gamma_raw</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">))</span> <span class="o">*</span> <span class="n">degreeConversion</span>
 
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">([</span><span class="n">alpha</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">gamma</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
 
 <div class="viewcode-block" id="Lattice.populate"><a class="viewcode-back" href="../../recipes.html#mbuild.lattice.Lattice.populate">[docs]</a>    <span class="k">def</span> <span class="nf">populate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">compound_dict</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Expand lattice and create compound from lattice.</span>
 
-<span class="sd">        populate will expand lattice based on user input. The user must also</span>
+<span class="sd">        Expands lattice based on user input. The user must also</span>
 <span class="sd">        pass in a dictionary that contains the keys that exist in the</span>
 <span class="sd">        basis_dict. The corresponding Compound will be the full lattice</span>
 <span class="sd">        returned to the user.</span>
@@ -599,8 +645,18 @@
 <span class="sd">        Call Restrictions</span>
 <span class="sd">        -----------------</span>
 <span class="sd">        Called after constructor by user.</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="n">error_dict</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="s1">&#39;X&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span> <span class="s1">&#39;Y&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="s1">&#39;Z&#39;</span><span class="p">}</span>
+
+        <span class="c1"># Make sure neither x, y, z input is None</span>
+        <span class="k">if</span> <span class="kc">None</span> <span class="ow">in</span> <span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Attempt to replicate None times. &#39;</span>
+                             <span class="s1">&#39;None is not an acceptable replication &#39;</span>
+                             <span class="s1">&#39;amount, 1 is the default.&#39;</span><span class="p">)</span>
+
+        <span class="c1"># Try to convert x, y, and z to int, raise a ValueError if fail</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">x</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
             <span class="n">y</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
@@ -609,12 +665,6 @@
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Cannot convert replication amounts into &#39;</span>
                              <span class="s1">&#39;integers. x= </span><span class="si">{}</span><span class="s1">, y= </span><span class="si">{}</span><span class="s1">, z= </span><span class="si">{}</span><span class="s1"> needs to &#39;</span>
                              <span class="s1">&#39;be an int.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">))</span>
-
-        <span class="k">for</span> <span class="n">replication_amount</span> <span class="ow">in</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">replication_amount</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Attempt to replicate None times. &#39;</span>
-                                 <span class="s1">&#39;None is not an acceptable replication &#39;</span>
-                                 <span class="s1">&#39;amount, 1 is the default.&#39;</span><span class="p">)</span>
 
         <span class="k">for</span> <span class="n">replication_amount</span><span class="p">,</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">],</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)):</span>
             <span class="k">if</span> <span class="n">replication_amount</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
@@ -632,14 +682,15 @@
         <span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lattice_spacing</span>
 
         <span class="n">transform_mat</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lattice_vectors</span>
-        <span class="c1"># unit vectors</span>
+        <span class="c1"># Unit vectors</span>
         <span class="n">transform_mat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">transform_mat</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
         <span class="n">transform_mat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">transform_mat</span><span class="p">,</span> <span class="n">newshape</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
         <span class="n">norms</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">transform_mat</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
-        <span class="c1"># normalized vectors for change of basis</span>
+        <span class="c1"># Normalized vectors for change of basis</span>
         <span class="n">unit_vecs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">divide</span><span class="p">(</span><span class="n">transform_mat</span><span class="o">.</span><span class="n">transpose</span><span class="p">(),</span> <span class="n">norms</span><span class="p">)</span>
 
+        <span class="c1"># Generate new coordinates</span>
         <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">locations</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">lattice_points</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="k">for</span> <span class="n">coords</span> <span class="ow">in</span> <span class="n">locations</span><span class="p">:</span>
                 <span class="k">for</span> <span class="n">replication</span> <span class="ow">in</span> <span class="n">it</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="nb">range</span><span class="p">(</span><span class="n">y</span><span class="p">),</span> <span class="nb">range</span><span class="p">(</span><span class="n">z</span><span class="p">)):</span>
@@ -651,7 +702,7 @@
                     <span class="n">new_coords</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_coords</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">replication</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
                     <span class="n">new_coords</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_coords</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="n">replication</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
 
-                    <span class="c1"># change of basis to cartesian</span>
+                    <span class="c1"># Change of basis to cartesian</span>
                     <span class="n">new_coords</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">unit_vecs</span><span class="p">,</span> <span class="n">new_coords</span><span class="o">.</span><span class="n">transpose</span><span class="p">())</span>
 
                     <span class="n">new_coords</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_coords</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">a</span>
@@ -664,6 +715,7 @@
 
         <span class="n">ret_lattice</span> <span class="o">=</span> <span class="n">mb</span><span class="o">.</span><span class="n">Compound</span><span class="p">()</span>
 
+        <span class="c1"># Create (clone) a mb.Compound for the newly generate positions</span>
         <span class="k">if</span> <span class="n">compound_dict</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">key_id</span><span class="p">,</span> <span class="n">all_pos</span> <span class="ow">in</span> <span class="n">cell</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
                 <span class="n">particle</span> <span class="o">=</span> <span class="n">mb</span><span class="o">.</span><span class="n">Compound</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">key_id</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
@@ -696,6 +748,7 @@
         <span class="n">ret_lattice</span><span class="o">.</span><span class="n">xyz_with_ports</span><span class="p">[</span><span class="n">ret_lattice</span><span class="o">.</span><span class="n">xyz_with_ports</span> <span class="o">&lt;=</span> <span class="n">tolerance</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.</span>
 
         <span class="k">return</span> <span class="n">ret_lattice</span></div></div>
+
 </pre></div>
 
            </div>

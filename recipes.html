@@ -492,7 +492,7 @@ Locations of all lattice points in cell using fractional coordinates.</p>
 <dt id="mbuild.lattice.Lattice.populate">
 <code class="descname">populate</code><span class="sig-paren">(</span><em>self</em>, <em>compound_dict=None</em>, <em>x=1</em>, <em>y=1</em>, <em>z=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/lattice.html#Lattice.populate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.lattice.Lattice.populate" title="Permalink to this definition">¶</a></dt>
 <dd><p>Expand lattice and create compound from lattice.</p>
-<p>populate will expand lattice based on user input. The user must also
+<p>Expands lattice based on user input. The user must also
 pass in a dictionary that contains the keys that exist in the
 basis_dict. The corresponding Compound will be the full lattice
 returned to the user.</p>
@@ -790,6 +790,133 @@ can be rotated, port orientation may be incorrect.</p>
 <div class="section" id="module-mbuild.pattern">
 <span id="pattern"></span><h2>Pattern<a class="headerlink" href="#module-mbuild.pattern" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
+<dt id="mbuild.pattern.Pattern">
+<em class="property">class </em><code class="descclassname">mbuild.pattern.</code><code class="descname">Pattern</code><span class="sig-paren">(</span><em>points</em>, <em>orientations=None</em>, <em>scale=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/pattern.html#Pattern"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.pattern.Pattern" title="Permalink to this definition">¶</a></dt>
+<dd><p>A superclass for molecules spatial Patterns.</p>
+<p>Patterns refer to how molecules are arranged either in a box (volume) or 2-D
+surface. This class could serve as a superclass for different molecules
+patterns</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Attributes:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>points</strong> <span class="classifier-delimiter">:</span> <span class="classifier">array or np.array</span></dt>
+<dd><p class="first last">Positions of molecules in surface or space</p>
+</dd>
+<dt><strong>orientations</strong> <span class="classifier-delimiter">:</span> <span class="classifier">dict, optional, default=None</span></dt>
+<dd><p class="first last">Orientations of ports</p>
+</dd>
+<dt><a class="reference internal" href="#mbuild.pattern.Pattern.scale" title="mbuild.pattern.Pattern.scale"><code class="xref py py-obj docutils literal notranslate"><span class="pre">scale</span></code></a> <span class="classifier-delimiter">:</span> <span class="classifier">float, optional, default=None</span></dt>
+<dd><p class="first last">Scale the points in the Pattern.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="mbuild.pattern.Pattern.apply">
+<code class="descname">apply</code><span class="sig-paren">(</span><em>self</em>, <em>compound</em>, <em>orientation=''</em>, <em>compound_port=''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/pattern.html#Pattern.apply"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.pattern.Pattern.apply" title="Permalink to this definition">¶</a></dt>
+<dd><p>Arrange copies of a Compound as specified by the Pattern.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>compound</strong> <span class="classifier-delimiter">:</span> <span class="classifier">mb.Compound</span></dt>
+<dd><p class="first last">mb.Compound to be applied new pattern</p>
+</dd>
+<dt><strong>orientation</strong> <span class="classifier-delimiter">:</span> <span class="classifier">dict, optional, default=’’</span></dt>
+<dd><p class="first last">New orientations for ports in compound</p>
+</dd>
+<dt><strong>compound_port</strong> <span class="classifier-delimiter">:</span> <span class="classifier">list, optional, default=None</span></dt>
+<dd><p class="first last">Ports to be applied new orientations</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>compound</strong> <span class="classifier-delimiter">:</span> <span class="classifier">mb.Compound</span></dt>
+<dd><p class="first last">mb.Compound with applied pattern</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mbuild.pattern.Pattern.apply_to_compound">
+<code class="descname">apply_to_compound</code><span class="sig-paren">(</span><em>self</em>, <em>guest</em>, <em>guest_port_name='down'</em>, <em>host=None</em>, <em>backfill=None</em>, <em>backfill_port_name='up'</em>, <em>scale=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/pattern.html#Pattern.apply_to_compound"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.pattern.Pattern.apply_to_compound" title="Permalink to this definition">¶</a></dt>
+<dd><p>Attach copies of a guest Compound to Ports on a host Compound.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>guest</strong> <span class="classifier-delimiter">:</span> <span class="classifier">mb.Compound</span></dt>
+<dd><p class="first last">The Compound prototype to be applied to the host Compound</p>
+</dd>
+<dt><strong>guest_port_name</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str, optional, default=’down’</span></dt>
+<dd><p class="first last">The name of the port located on <cite>guest</cite> to attach to the host</p>
+</dd>
+<dt><strong>host</strong> <span class="classifier-delimiter">:</span> <span class="classifier">mb.Compound, optional, default=None</span></dt>
+<dd><p class="first last">A Compound with available ports to add copies of <cite>guest</cite> to</p>
+</dd>
+<dt><strong>backfill</strong> <span class="classifier-delimiter">:</span> <span class="classifier">mb.Compound, optional, default=None</span></dt>
+<dd><p class="first last">A Compound to add to the remaining available ports on <cite>host</cite>
+after clones of <cite>guest</cite> have been added for each point in the
+pattern</p>
+</dd>
+<dt><strong>backfill_port_name</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str, optional, default=’up’</span></dt>
+<dd><p class="first last">The name of the port located on <cite>backfill</cite> to attach to the host</p>
+</dd>
+<dt><strong>scale</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool, optional, default=True</span></dt>
+<dd><p class="first last">Scale the points in the pattern to the lengths of the <cite>host</cite>’s
+<cite>boundingbox</cite> and shift them by the <cite>boundingbox</cite>’s mins</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>guests</strong> <span class="classifier-delimiter">:</span> <span class="classifier">list of mb.Compound</span></dt>
+<dd><p class="first last">List of inserted guest compounds on host compound</p>
+</dd>
+<dt><strong>backfills</strong> <span class="classifier-delimiter">:</span> <span class="classifier">list of mb.Compound</span></dt>
+<dd><p class="first last">List of inserted backfill compounds on host compound</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mbuild.pattern.Pattern.scale">
+<code class="descname">scale</code><span class="sig-paren">(</span><em>self</em>, <em>by</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/pattern.html#Pattern.scale"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.pattern.Pattern.scale" title="Permalink to this definition">¶</a></dt>
+<dd><p>Scale the points in the Pattern.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>by</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float or np.ndarray, shape=(3,)</span></dt>
+<dd><p class="first last">The factor to scale by. If a scalar, scale all directions isotropically.
+If np.ndarray, scale each direction independently</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
 <dt id="mbuild.pattern.DiskPattern">
 <em class="property">class </em><code class="descclassname">mbuild.pattern.</code><code class="descname">DiskPattern</code><span class="sig-paren">(</span><em>n</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/pattern.html#DiskPattern"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.pattern.DiskPattern" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generate N evenly distributed points on the unit circle along z = 0.</p>
@@ -805,6 +932,63 @@ can be rotated, port orientation may be incorrect.</p>
 <p>Sphere is centered at the origin. Alrgorithm based on the ‘Golden Spiral’.</p>
 <p>Code by Chris Colbert from the numpy-discussion list:
 <a class="reference external" href="http://mail.scipy.org/pipermail/numpy-discussion/2009-July/043811.html">http://mail.scipy.org/pipermail/numpy-discussion/2009-July/043811.html</a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="mbuild.pattern.Random2DPattern">
+<em class="property">class </em><code class="descclassname">mbuild.pattern.</code><code class="descname">Random2DPattern</code><span class="sig-paren">(</span><em>n</em>, <em>seed=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/pattern.html#Random2DPattern"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.pattern.Random2DPattern" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="mbuild.pattern.Random3DPattern">
+<em class="property">class </em><code class="descclassname">mbuild.pattern.</code><code class="descname">Random3DPattern</code><span class="sig-paren">(</span><em>n</em>, <em>seed=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/pattern.html#Random3DPattern"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.pattern.Random3DPattern" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate n random points on a 3D grid</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Attributes:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>n</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd><p class="first last">Number of points to generate</p>
+</dd>
+<dt><strong>seed</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd><p class="first last">Seed for random number generation</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="mbuild.pattern.Grid2DPattern">
+<em class="property">class </em><code class="descclassname">mbuild.pattern.</code><code class="descname">Grid2DPattern</code><span class="sig-paren">(</span><em>n</em>, <em>m</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/pattern.html#Grid2DPattern"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.pattern.Grid2DPattern" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate a 2D grid (n x m) of points along z = 0</p>
+<p class="rubric">Notes</p>
+<p>Points span [0,1) along x and y axes</p>
+<dl class="docutils">
+<dt>n <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Number of grid rows</dd>
+<dt>m <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Number of grid columns</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="mbuild.pattern.Grid3DPattern">
+<em class="property">class </em><code class="descclassname">mbuild.pattern.</code><code class="descname">Grid3DPattern</code><span class="sig-paren">(</span><em>n</em>, <em>m</em>, <em>l</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/pattern.html#Grid3DPattern"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.pattern.Grid3DPattern" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate a 3D grid (n x m x l) of points</p>
+<p class="rubric">Notes</p>
+<p>Points span [0,1) along x, y, and z axes</p>
+<dl class="docutils">
+<dt>n <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Number of grid rows</dd>
+<dt>m <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Number of grid columns</dd>
+<dt>l <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Number of grid aisles</dd>
+</dl>
 </dd></dl>
 
 </div>
