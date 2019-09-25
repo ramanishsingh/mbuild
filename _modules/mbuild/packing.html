@@ -164,19 +164,19 @@
   <h1>Source code for mbuild.packing</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span>
 
-<span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">tempfile</span>
 <span class="kn">import</span> <span class="nn">warnings</span>
 <span class="kn">from</span> <span class="nn">distutils.spawn</span> <span class="k">import</span> <span class="n">find_executable</span>
-<span class="kn">from</span> <span class="nn">subprocess</span> <span class="k">import</span> <span class="n">Popen</span><span class="p">,</span> <span class="n">PIPE</span>
+<span class="kn">from</span> <span class="nn">subprocess</span> <span class="k">import</span> <span class="n">PIPE</span><span class="p">,</span> <span class="n">Popen</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
+<span class="kn">from</span> <span class="nn">mbuild</span> <span class="k">import</span> <span class="n">clone</span>
+<span class="kn">from</span> <span class="nn">mbuild.box</span> <span class="k">import</span> <span class="n">Box</span>
 <span class="kn">from</span> <span class="nn">mbuild.compound</span> <span class="k">import</span> <span class="n">Compound</span>
 <span class="kn">from</span> <span class="nn">mbuild.exceptions</span> <span class="k">import</span> <span class="n">MBuildError</span>
-<span class="kn">from</span> <span class="nn">mbuild.box</span> <span class="k">import</span> <span class="n">Box</span>
-<span class="kn">from</span> <span class="nn">mbuild</span> <span class="k">import</span> <span class="n">clone</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;fill_box&#39;</span><span class="p">,</span> <span class="s1">&#39;fill_region&#39;</span><span class="p">,</span> <span class="s1">&#39;fill_sphere&#39;</span><span class="p">,</span> <span class="s1">&#39;solvate&#39;</span><span class="p">]</span>
 
@@ -221,9 +221,14 @@
              <span class="n">seed</span><span class="o">=</span><span class="mi">12345</span><span class="p">,</span> <span class="n">edge</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">compound_ratio</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
              <span class="n">aspect_ratio</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">fix_orientation</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">temp_file</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
              <span class="n">update_port_locations</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Fill a box with a compound using packmol.</span>
+    <span class="sd">&quot;&quot;&quot;Fill a box with a `mbuild.compound` or `Compound`s using PACKMOL.</span>
 
-<span class="sd">    Two arguments of `n_compounds, box, and density` must be specified.</span>
+<span class="sd">   `fill_box` takes a single `mbuild.Compound` or a</span>
+<span class="sd">   list of `mbuild.Compound`&#39;s and return an `mbuild.Compound` that has</span>
+<span class="sd">   been filled to the user&#39;s specifications to the best of PACKMOL&#39;s ability.</span>
+
+<span class="sd">    When filling a system, two arguments of `n_compounds, box, and density`</span>
+<span class="sd">    must be specified.</span>
 
 <span class="sd">    If `n_compounds` and `box` are not None, the specified number of</span>
 <span class="sd">    n_compounds will be inserted into a box of the specified size.</span>
@@ -242,9 +247,9 @@
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    compound : mb.Compound or list of mb.Compound</span>
-<span class="sd">        Compound or list of compounds to be put in box.</span>
+<span class="sd">        Compound or list of compounds to fill in box.</span>
 <span class="sd">    n_compounds : int or list of int</span>
-<span class="sd">        Number of compounds to be put in box.</span>
+<span class="sd">        Number of compounds to be filled in box.</span>
 <span class="sd">    box : mb.Box</span>
 <span class="sd">        Box to be filled by compounds.</span>
 <span class="sd">    density : float, units kg/m^3, default=None</span>
@@ -279,6 +284,7 @@
 <span class="sd">    filled : mb.Compound</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># check that the user has the PACKMOL binary on their PATH</span>
     <span class="n">_check_packmol</span><span class="p">(</span><span class="n">PACKMOL</span><span class="p">)</span>
 
     <span class="n">arg_count</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">-</span> <span class="p">[</span><span class="n">n_compounds</span><span class="p">,</span> <span class="n">box</span><span class="p">,</span> <span class="n">density</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
@@ -303,7 +309,8 @@
 
     <span class="k">if</span> <span class="n">compound</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">compound</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">fix_orientation</span><span class="p">):</span>
-            <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;`compound`, `n_compounds`, and `fix_orientation` must be of equal length.&quot;</span><span class="p">)</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;`compound`, `n_compounds`, and `fix_orientation` &quot;</span>
+                   <span class="s2">&quot;must be of equal length.&quot;</span><span class="p">)</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">density</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -321,12 +328,13 @@
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">compound</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
                 <span class="n">compound_mass</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">([</span><span class="n">a</span><span class="o">.</span><span class="n">mass</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">compound</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">to_parmed</span><span class="p">()</span><span class="o">.</span><span class="n">atoms</span><span class="p">])</span>
                 <span class="c1"># Conversion from kg/m^3 / amu * nm^3 to dimensionless units</span>
-                <span class="n">n_compounds</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">density</span><span class="o">/</span><span class="n">compound_mass</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="n">box</span><span class="o">.</span><span class="n">lengths</span><span class="p">)</span><span class="o">*.</span><span class="mi">60224</span><span class="p">)]</span>
+                <span class="n">n_compounds</span> <span class="o">=</span> <span class="p">[</span>
+                    <span class="nb">int</span><span class="p">(</span><span class="n">density</span><span class="o">/</span><span class="n">compound_mass</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="n">box</span><span class="o">.</span><span class="n">lengths</span><span class="p">)</span><span class="o">*</span><span class="mf">0.60224</span><span class="p">)]</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">compound_ratio</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;Determing `n_compounds` from `density` and `box` &quot;</span>
-                           <span class="s2">&quot;for systems with more than one compound type requires&quot;</span>
-                           <span class="s2">&quot;`compound_ratio`&quot;</span><span class="p">)</span>
+                           <span class="s2">&quot;for systems with more than one compound type &quot;</span>
+                           <span class="s2">&quot;requires `compound_ratio`&quot;</span><span class="p">)</span>
                     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
                 <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">compound</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">compound_ratio</span><span class="p">):</span>
                     <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;Length of `compound_ratio` must equal length of &quot;</span>
@@ -336,17 +344,17 @@
                 <span class="k">for</span> <span class="n">c</span><span class="p">,</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">compound</span><span class="p">,</span> <span class="n">compound_ratio</span><span class="p">):</span>
                     <span class="n">prototype_mass</span> <span class="o">+=</span> <span class="n">r</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">([</span><span class="n">a</span><span class="o">.</span><span class="n">mass</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">c</span><span class="o">.</span><span class="n">to_parmed</span><span class="p">()</span><span class="o">.</span><span class="n">atoms</span><span class="p">])</span>
                 <span class="c1"># Conversion from kg/m^3 / amu * nm^3 to dimensionless units</span>
-                <span class="n">n_prototypes</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">density</span><span class="o">/</span><span class="n">prototype_mass</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="n">box</span><span class="o">.</span><span class="n">lengths</span><span class="p">)</span><span class="o">*.</span><span class="mi">60224</span><span class="p">)</span>
+                <span class="n">n_prototypes</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">density</span><span class="o">/</span><span class="n">prototype_mass</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="n">box</span><span class="o">.</span><span class="n">lengths</span><span class="p">)</span><span class="o">*</span><span class="mf">0.60224</span><span class="p">)</span>
                 <span class="n">n_compounds</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
                 <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">compound_ratio</span><span class="p">:</span>
                     <span class="n">n_compounds</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">n_prototypes</span> <span class="o">*</span> <span class="n">c</span><span class="p">))</span>
 
-    <span class="c1"># In angstroms for packmol.</span>
+    <span class="c1"># Convert nm to angstroms for PACKMOL.</span>
     <span class="n">box_mins</span> <span class="o">=</span> <span class="n">box</span><span class="o">.</span><span class="n">mins</span> <span class="o">*</span> <span class="mi">10</span>
     <span class="n">box_maxs</span> <span class="o">=</span> <span class="n">box</span><span class="o">.</span><span class="n">maxs</span> <span class="o">*</span> <span class="mi">10</span>
     <span class="n">overlap</span> <span class="o">*=</span> <span class="mi">10</span>
 
-    <span class="c1"># Apply edge buffer</span>
+    <span class="c1"># Apply 1nm edge buffer</span>
     <span class="n">box_maxs</span> <span class="o">-=</span> <span class="n">edge</span> <span class="o">*</span> <span class="mi">10</span>
 
     <span class="c1"># Build the input file for each compound and call packmol.</span>
@@ -376,6 +384,7 @@
         <span class="n">filled</span><span class="o">.</span><span class="n">update_coordinates</span><span class="p">(</span><span class="n">filled_xyz</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">update_port_locations</span><span class="o">=</span><span class="n">update_port_locations</span><span class="p">)</span>
         <span class="n">filled</span><span class="o">.</span><span class="n">periodicity</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">box</span><span class="o">.</span><span class="n">lengths</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
 
+    <span class="c1"># ensure that the temporary files are removed from the machine after filling</span>
     <span class="k">finally</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">file_handle</span> <span class="ow">in</span> <span class="n">compound_xyz_list</span><span class="p">:</span>
             <span class="n">file_handle</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
@@ -388,13 +397,13 @@
 <div class="viewcode-block" id="fill_region"><a class="viewcode-back" href="../../recipes.html#mbuild.packing.fill_region">[docs]</a><span class="k">def</span> <span class="nf">fill_region</span><span class="p">(</span><span class="n">compound</span><span class="p">,</span> <span class="n">n_compounds</span><span class="p">,</span> <span class="n">region</span><span class="p">,</span> <span class="n">overlap</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span>
                 <span class="n">seed</span><span class="o">=</span><span class="mi">12345</span><span class="p">,</span> <span class="n">edge</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">fix_orientation</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">temp_file</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                 <span class="n">update_port_locations</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Fill a region of a box with a compound using packmol.</span>
+    <span class="sd">&quot;&quot;&quot;Fill a region of a box with `mbuild.Compound`(s) using PACKMOL.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    compound : mb.Compound or list of mb.Compound</span>
-<span class="sd">        Compound or list of compounds to be put in region.</span>
-<span class="sd">    n_compounds : int or list of int</span>
+<span class="sd">        Compound or list of compounds to fill in region.</span>
+<span class="sd">    n_compounds : int or list of ints</span>
 <span class="sd">        Number of compounds to be put in region.</span>
 <span class="sd">    region : mb.Box or list of mb.Box</span>
 <span class="sd">        Region to be filled by compounds.</span>
@@ -424,6 +433,7 @@
 <span class="sd">    For example, if the third compound will be put in the third</span>
 <span class="sd">    region using the third value in n_compounds.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># check that the user has the PACKMOL binary on their PATH</span>
     <span class="n">_check_packmol</span><span class="p">(</span><span class="n">PACKMOL</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">compound</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">set</span><span class="p">)):</span>
@@ -681,6 +691,7 @@
 <span class="sd">    solvated : mb.Compound</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># check that the user has the PACKMOL binary on their PATH</span>
     <span class="n">_check_packmol</span><span class="p">(</span><span class="n">PACKMOL</span><span class="p">)</span>
 
     <span class="n">box</span> <span class="o">=</span> <span class="n">_validate_box</span><span class="p">(</span><span class="n">box</span><span class="p">)</span>
@@ -747,6 +758,17 @@
 
 
 <span class="k">def</span> <span class="nf">_validate_box</span><span class="p">(</span><span class="n">box</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Ensure that the box passed by the user can be formatted as an mbuild.Box</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    box : mbuild.Box or a tuple or list thereof</span>
+<span class="sd">        Box or inputs to `mbuild.Box` to generate a `mbuild.Box`.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    box : mbuild.Box</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">box</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">box</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
             <span class="n">box</span> <span class="o">=</span> <span class="n">Box</span><span class="p">(</span><span class="n">lengths</span><span class="o">=</span><span class="n">box</span><span class="p">)</span>
@@ -791,8 +813,8 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">for</span> <span class="n">comp</span><span class="p">,</span> <span class="n">m_compound</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">comp_to_add</span><span class="p">,</span> <span class="n">n_compounds</span><span class="p">):</span>
-            <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m_compound</span><span class="p">):</span>
-                <span class="n">container</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">clone</span><span class="p">(</span><span class="n">comp</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m_compound</span><span class="p">):</span>
+            <span class="n">container</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">clone</span><span class="p">(</span><span class="n">comp</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">container</span>
 
 
@@ -804,7 +826,17 @@
 
 
 <span class="k">def</span> <span class="nf">_run_packmol</span><span class="p">(</span><span class="n">input_text</span><span class="p">,</span> <span class="n">filled_xyz</span><span class="p">,</span> <span class="n">temp_file</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Call PACKMOL to pack system based on the input text.</span>
 
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    input_text : str, required</span>
+<span class="sd">        String formatted in the input file syntax for PACKMOL.</span>
+<span class="sd">    filled_xyz : `tempfile` object, required</span>
+<span class="sd">        Tempfile that will store the results of PACKMOL&#39;s packing.</span>
+<span class="sd">    temp_file : `tempfile` object, required</span>
+<span class="sd">        Where to copy the filled tempfile.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># Create input file</span>
     <span class="n">packmol_inp</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">NamedTemporaryFile</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">delete</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                                               <span class="n">prefix</span><span class="o">=</span><span class="s1">&#39;packmol-&#39;</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="s1">&#39;.inp&#39;</span><span class="p">)</span>

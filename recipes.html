@@ -529,8 +529,13 @@ returned to the user.</p>
 <dl class="function">
 <dt id="mbuild.packing.fill_box">
 <code class="descclassname">mbuild.packing.</code><code class="descname">fill_box</code><span class="sig-paren">(</span><em>compound</em>, <em>n_compounds=None</em>, <em>box=None</em>, <em>density=None</em>, <em>overlap=0.2</em>, <em>seed=12345</em>, <em>edge=0.2</em>, <em>compound_ratio=None</em>, <em>aspect_ratio=None</em>, <em>fix_orientation=False</em>, <em>temp_file=None</em>, <em>update_port_locations=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/packing.html#fill_box"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.packing.fill_box" title="Permalink to this definition">¶</a></dt>
-<dd><p>Fill a box with a compound using packmol.</p>
-<p>Two arguments of <cite>n_compounds, box, and density</cite> must be specified.</p>
+<dd><p>Fill a box with a <cite>mbuild.compound</cite> or <a href="#id3"><span class="problematic" id="id4">`</span></a>Compound`s using PACKMOL.</p>
+<p><cite>fill_box</cite> takes a single <cite>mbuild.Compound</cite> or a
+list of <cite>mbuild.Compound</cite>’s and return an <cite>mbuild.Compound</cite> that has
+been filled to the user’s specifications to the best of PACKMOL’s ability.</p>
+<blockquote>
+<div><p>When filling a system, two arguments of <cite>n_compounds, box, and density</cite>
+must be specified.</p>
 <p>If <cite>n_compounds</cite> and <cite>box</cite> are not None, the specified number of
 n_compounds will be inserted into a box of the specified size.</p>
 <p>If <cite>n_compounds</cite> and <cite>density</cite> are not None, the corresponding box
@@ -541,54 +546,59 @@ compounds will be calculated internally.</p>
 <p>For the cases in which <cite>box</cite> is not specified but generated internally,
 the default behavior is to calculate a cubic box. Optionally,
 <cite>aspect_ratio</cite> can be passed to generate a non-cubic box.</p>
+</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
 <dt><strong>compound</strong> <span class="classifier-delimiter">:</span> <span class="classifier">mb.Compound or list of mb.Compound</span></dt>
-<dd><p class="first last">Compound or list of compounds to be put in box.</p>
+<dd><blockquote class="first">
+<div><p>Compound or list of compounds to fill in box.</p>
+</div></blockquote>
+<dl class="last docutils">
+<dt>n_compounds <span class="classifier-delimiter">:</span> <span class="classifier">int or list of int</span></dt>
+<dd><p class="first last">Number of compounds to be filled in box.</p>
 </dd>
-<dt><strong>n_compounds</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int or list of int</span></dt>
-<dd><p class="first last">Number of compounds to be put in box.</p>
-</dd>
-<dt><strong>box</strong> <span class="classifier-delimiter">:</span> <span class="classifier">mb.Box</span></dt>
+<dt>box <span class="classifier-delimiter">:</span> <span class="classifier">mb.Box</span></dt>
 <dd><p class="first last">Box to be filled by compounds.</p>
 </dd>
-<dt><strong>density</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float, units kg/m^3, default=None</span></dt>
+<dt>density <span class="classifier-delimiter">:</span> <span class="classifier">float, units kg/m^3, default=None</span></dt>
 <dd><p class="first last">Target density for the system in macroscale units. If not None, one of
 <cite>n_compounds</cite> or <cite>box</cite>, but not both, must be specified.</p>
 </dd>
-<dt><strong>overlap</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float, units nm, default=0.2</span></dt>
+<dt>overlap <span class="classifier-delimiter">:</span> <span class="classifier">float, units nm, default=0.2</span></dt>
 <dd><p class="first last">Minimum separation between atoms of different molecules.</p>
 </dd>
-<dt><strong>seed</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int, default=12345</span></dt>
+<dt>seed <span class="classifier-delimiter">:</span> <span class="classifier">int, default=12345</span></dt>
 <dd><p class="first last">Random seed to be passed to PACKMOL.</p>
 </dd>
-<dt><strong>edge</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float, units nm, default=0.2</span></dt>
+<dt>edge <span class="classifier-delimiter">:</span> <span class="classifier">float, units nm, default=0.2</span></dt>
 <dd><p class="first last">Buffer at the edge of the box to not place molecules. This is necessary
 in some systems because PACKMOL does not account for periodic boundary
 conditions in its optimization.</p>
 </dd>
-<dt><strong>compound_ratio</strong> <span class="classifier-delimiter">:</span> <span class="classifier">list, default=None</span></dt>
+<dt>compound_ratio <span class="classifier-delimiter">:</span> <span class="classifier">list, default=None</span></dt>
 <dd><p class="first last">Ratio of number of each compound to be put in box. Only used in the
 case of <cite>density</cite> and <cite>box</cite> having been specified, <cite>n_compounds</cite> not
 specified, and more than one <cite>compound</cite>.</p>
 </dd>
-<dt><strong>aspect_ratio</strong> <span class="classifier-delimiter">:</span> <span class="classifier">list of float</span></dt>
+<dt>aspect_ratio <span class="classifier-delimiter">:</span> <span class="classifier">list of float</span></dt>
 <dd><p class="first last">If a non-cubic box is desired, the ratio of box lengths in the x, y,
 and z directions.</p>
 </dd>
-<dt><strong>fix_orientation</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool or list of bools</span></dt>
+<dt>fix_orientation <span class="classifier-delimiter">:</span> <span class="classifier">bool or list of bools</span></dt>
 <dd><p class="first last">Specify that compounds should not be rotated when filling the box,
 default=False.</p>
 </dd>
-<dt><strong>temp_file</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str, default=None</span></dt>
+<dt>temp_file <span class="classifier-delimiter">:</span> <span class="classifier">str, default=None</span></dt>
 <dd><p class="first last">File name to write PACKMOL’s raw output to.</p>
 </dd>
-<dt><strong>update_port_locations</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool, default=False</span></dt>
+<dt>update_port_locations <span class="classifier-delimiter">:</span> <span class="classifier">bool, default=False</span></dt>
 <dd><p class="first last">After packing, port locations can be updated, but since compounds
 can be rotated, port orientation may be incorrect.</p>
+</dd>
+</dl>
 </dd>
 </dl>
 </td>
@@ -606,16 +616,16 @@ can be rotated, port orientation may be incorrect.</p>
 <dl class="function">
 <dt id="mbuild.packing.fill_region">
 <code class="descclassname">mbuild.packing.</code><code class="descname">fill_region</code><span class="sig-paren">(</span><em>compound</em>, <em>n_compounds</em>, <em>region</em>, <em>overlap=0.2</em>, <em>seed=12345</em>, <em>edge=0.2</em>, <em>fix_orientation=False</em>, <em>temp_file=None</em>, <em>update_port_locations=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/packing.html#fill_region"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.packing.fill_region" title="Permalink to this definition">¶</a></dt>
-<dd><p>Fill a region of a box with a compound using packmol.</p>
+<dd><p>Fill a region of a box with <a href="#id5"><span class="problematic" id="id6">`</span></a>mbuild.Compound`(s) using PACKMOL.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
 <dt><strong>compound</strong> <span class="classifier-delimiter">:</span> <span class="classifier">mb.Compound or list of mb.Compound</span></dt>
-<dd><p class="first last">Compound or list of compounds to be put in region.</p>
+<dd><p class="first last">Compound or list of compounds to fill in region.</p>
 </dd>
-<dt><strong>n_compounds</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int or list of int</span></dt>
+<dt><strong>n_compounds</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int or list of ints</span></dt>
 <dd><p class="first last">Number of compounds to be put in region.</p>
 </dd>
 <dt><strong>region</strong> <span class="classifier-delimiter">:</span> <span class="classifier">mb.Box or list of mb.Box</span></dt>
