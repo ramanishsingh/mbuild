@@ -508,7 +508,7 @@ and the particle tree is not traversed, boosting performance.</p>
 <dt id="mbuild.compound.Compound.energy_minimize">
 <code class="descname">energy_minimize</code><span class="sig-paren">(</span><em>self</em>, <em>forcefield='UFF'</em>, <em>steps=1000</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/compound.html#Compound.energy_minimize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.compound.Compound.energy_minimize" title="Permalink to this definition">¶</a></dt>
 <dd><p>Perform an energy minimization on a Compound</p>
-<p>Default beahvior utilizes Open Babel (<a class="reference external" href="http://openbabel.org/docs/dev/">http://openbabel.org/docs/dev/</a>)
+<p>Default behavior utilizes Open Babel (<a class="reference external" href="http://openbabel.org/docs/dev/">http://openbabel.org/docs/dev/</a>)
 to perform an energy minimization/geometry optimization on a
 Compound by applying a generic force field</p>
 <p>Can also utilize OpenMM (<a class="reference external" href="http://openmm.org/">http://openmm.org/</a>) to energy minimize
@@ -1325,6 +1325,15 @@ the nodes are the compounds themselves.</p>
 </tr>
 </tbody>
 </table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">mbuild.bond_graph</span></code></dt>
+<dd></dd>
+</dl>
+</div>
+<p class="rubric">Notes</p>
+<p>This digraph is not the bondgraph of the compound.</p>
 </dd></dl>
 
 <dl class="method">

@@ -1533,7 +1533,7 @@
 <div class="viewcode-block" id="Compound.energy_minimize"><a class="viewcode-back" href="../../data_structures.html#mbuild.compound.Compound.energy_minimize">[docs]</a>    <span class="k">def</span> <span class="nf">energy_minimize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">forcefield</span><span class="o">=</span><span class="s1">&#39;UFF&#39;</span><span class="p">,</span> <span class="n">steps</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Perform an energy minimization on a Compound</span>
 
-<span class="sd">        Default beahvior utilizes Open Babel (http://openbabel.org/docs/dev/)</span>
+<span class="sd">        Default behavior utilizes Open Babel (http://openbabel.org/docs/dev/)</span>
 <span class="sd">        to perform an energy minimization/geometry optimization on a</span>
 <span class="sd">        Compound by applying a generic force field</span>
 
@@ -2527,6 +2527,14 @@
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        G : networkx.DiGraph</span>
+
+<span class="sd">        Notes</span>
+<span class="sd">        -----</span>
+<span class="sd">        This digraph is not the bondgraph of the compound.</span>
+
+<span class="sd">        See Also</span>
+<span class="sd">        --------</span>
+<span class="sd">        mbuild.bond_graph</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">nx</span> <span class="o">=</span> <span class="n">import_</span><span class="p">(</span><span class="s1">&#39;networkx&#39;</span><span class="p">)</span>
 
@@ -2544,6 +2552,7 @@
         <span class="k">return</span> <span class="n">graph</span></div>
 
     <span class="k">def</span> <span class="nf">_iterate_children</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nodes</span><span class="p">,</span> <span class="n">edges</span><span class="p">,</span> <span class="n">names_only</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Iterate through the compound hierarchy for building a graph&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">nodes</span><span class="p">,</span> <span class="n">edges</span>
         <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
@@ -2770,7 +2779,6 @@
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        intermol_system : intermol.system.System</span>
-
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="kn">from</span> <span class="nn">intermol.atom</span> <span class="k">import</span> <span class="n">Atom</span> <span class="k">as</span> <span class="n">InterMolAtom</span>
         <span class="kn">from</span> <span class="nn">intermol.molecule</span> <span class="k">import</span> <span class="n">Molecule</span>
@@ -2813,8 +2821,12 @@
         <span class="k">return</span> <span class="n">intermol_system</span></div>
 
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">_add_intermol_molecule_type</span><span class="p">(</span><span class="n">intermol_system</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span> <span class="c1"># pragma: no cover</span>
-        <span class="sd">&quot;&quot;&quot;Create a molecule type for the parent and add bonds. &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">_add_intermol_molecule_type</span><span class="p">(</span><span class="n">intermol_system</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>  <span class="c1"># pragma: no cover</span>
+        <span class="sd">&quot;&quot;&quot;Create a molecule type for the parent and add bonds.</span>
+
+<span class="sd">        This method takes an intermol system and adds a</span>
+<span class="sd">        parent compound, including its particles and bonds, to it.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="kn">from</span> <span class="nn">intermol.moleculetype</span> <span class="k">import</span> <span class="n">MoleculeType</span>
         <span class="kn">from</span> <span class="nn">intermol.forces.bond</span> <span class="k">import</span> <span class="n">Bond</span> <span class="k">as</span> <span class="n">InterMolBond</span>
 
@@ -2926,6 +2938,7 @@
         <span class="k">return</span> <span class="n">newone</span>
 
     <span class="k">def</span> <span class="nf">_clone_bonds</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">clone_of</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;While cloning, clone the bond of the source compound to clone compound&quot;&quot;&quot;</span>
         <span class="n">newone</span> <span class="o">=</span> <span class="n">clone_of</span><span class="p">[</span><span class="bp">self</span><span class="p">]</span>
         <span class="k">for</span> <span class="n">c1</span><span class="p">,</span> <span class="n">c2</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">bonds</span><span class="p">():</span>
             <span class="k">try</span><span class="p">:</span>
