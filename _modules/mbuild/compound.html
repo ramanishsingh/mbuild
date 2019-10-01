@@ -1920,8 +1920,8 @@
 
 <div class="viewcode-block" id="Compound.save"><a class="viewcode-back" href="../../data_structures.html#mbuild.compound.Compound.save">[docs]</a>    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">show_ports</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">forcefield_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
              <span class="n">forcefield_files</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">forcefield_debug</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">box</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-             <span class="n">overwrite</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">residues</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">references_file</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-             <span class="n">combining_rule</span><span class="o">=</span><span class="s1">&#39;lorentz&#39;</span><span class="p">,</span> <span class="n">foyerkwargs</span><span class="o">=</span><span class="p">{},</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+             <span class="n">overwrite</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">residues</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">combining_rule</span><span class="o">=</span><span class="s1">&#39;lorentz&#39;</span><span class="p">,</span>
+             <span class="n">foyer_kwargs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Save the Compound to a file.</span>
 
 <span class="sd">        Parameters</span>
@@ -1952,20 +1952,22 @@
 <span class="sd">        residues : str of list of str</span>
 <span class="sd">            Labels of residues in the Compound. Residues are assigned by</span>
 <span class="sd">            checking against Compound.name.</span>
-<span class="sd">        references_file : str, optional, default=None</span>
-<span class="sd">            Specify a filename to write references for the forcefield that is</span>
-<span class="sd">            to be applied. References are written in BiBTeX format.</span>
 <span class="sd">        combining_rule : str, optional, default=&#39;lorentz&#39;</span>
 <span class="sd">            Specify the combining rule for nonbonded interactions. Only relevant</span>
 <span class="sd">            when the `foyer` package is used to apply a forcefield. Valid</span>
 <span class="sd">            options are &#39;lorentz&#39; and &#39;geometric&#39;, specifying Lorentz-Berthelot</span>
 <span class="sd">            and geometric combining rules respectively.</span>
+<span class="sd">        foyer_kwargs : dict, optional, default=None</span>
+<span class="sd">            Keyword arguments to provide to `foyer.Forcefield.apply`.</span>
+<span class="sd">        **kwargs</span>
+<span class="sd">            Depending on the file extension these will be passed to either</span>
+<span class="sd">            `write_gsd`, `write_hoomdxml`, `write_lammpsdata`, or</span>
+<span class="sd">            `parmed.Structure.save`.</span>
+<span class="sd">            See https://parmed.github.io/ParmEd/html/structobj/parmed.structure.Structure.html#parmed.structure.Structure.save</span>
 
 
 <span class="sd">        Other Parameters</span>
 <span class="sd">        ----------------</span>
-<span class="sd">        foyerkwargs : dict, optional</span>
-<span class="sd">            Specify keyword arguments when applying the foyer Forcefield</span>
 <span class="sd">        ref_distance : float, optional, default=1.0</span>
 <span class="sd">            Normalization factor used when saving to .gsd and .hoomdxml formats</span>
 <span class="sd">            for converting distance values to reduced units.</span>
@@ -2014,9 +2016,10 @@
         <span class="k">if</span> <span class="n">forcefield_name</span> <span class="ow">or</span> <span class="n">forcefield_files</span><span class="p">:</span>
             <span class="n">foyer</span> <span class="o">=</span> <span class="n">import_</span><span class="p">(</span><span class="s1">&#39;foyer&#39;</span><span class="p">)</span>
             <span class="n">ff</span> <span class="o">=</span> <span class="n">foyer</span><span class="o">.</span><span class="n">Forcefield</span><span class="p">(</span><span class="n">forcefield_files</span><span class="o">=</span><span class="n">forcefield_files</span><span class="p">,</span>
-                                  <span class="n">name</span><span class="o">=</span><span class="n">forcefield_name</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="n">forcefield_debug</span><span class="p">)</span>
-            <span class="n">structure</span> <span class="o">=</span> <span class="n">ff</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">structure</span><span class="p">,</span> <span class="n">references_file</span><span class="o">=</span><span class="n">references_file</span><span class="p">,</span>
-                    <span class="o">**</span><span class="n">foyerkwargs</span><span class="p">)</span>
+                            <span class="n">name</span><span class="o">=</span><span class="n">forcefield_name</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="n">forcefield_debug</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">foyer_kwargs</span><span class="p">:</span>
+                <span class="n">foyer_kwargs</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="n">structure</span> <span class="o">=</span> <span class="n">ff</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">structure</span><span class="p">,</span> <span class="o">**</span><span class="n">foyer_kwargs</span><span class="p">)</span>
             <span class="n">structure</span><span class="o">.</span><span class="n">combining_rule</span> <span class="o">=</span> <span class="n">combining_rule</span>
 
         <span class="n">total_charge</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">([</span><span class="n">atom</span><span class="o">.</span><span class="n">charge</span> <span class="k">for</span> <span class="n">atom</span> <span class="ow">in</span> <span class="n">structure</span><span class="p">])</span>
