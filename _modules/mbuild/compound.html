@@ -2583,7 +2583,7 @@
             <span class="n">nodes</span><span class="p">,</span> <span class="n">edges</span> <span class="o">=</span> <span class="n">child</span><span class="o">.</span><span class="n">_iterate_children</span><span class="p">(</span><span class="n">nodes</span><span class="p">,</span> <span class="n">edges</span><span class="p">,</span> <span class="n">names_only</span><span class="o">=</span><span class="n">names_only</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">nodes</span><span class="p">,</span> <span class="n">edges</span>
 
-<div class="viewcode-block" id="Compound.to_pybel"><a class="viewcode-back" href="../../data_structures.html#mbuild.compound.Compound.to_pybel">[docs]</a>    <span class="k">def</span> <span class="nf">to_pybel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">box</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">residues</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">show_ports</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> 
+<div class="viewcode-block" id="Compound.to_pybel"><a class="viewcode-back" href="../../data_structures.html#mbuild.compound.Compound.to_pybel">[docs]</a>    <span class="k">def</span> <span class="nf">to_pybel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">box</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">residues</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">show_ports</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
             <span class="n">infer_residues</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Create a pybel.Molecule from a Compound</span>
 
@@ -2606,7 +2606,7 @@
 
 <span class="sd">        Notes</span>
 <span class="sd">        -----</span>
-<span class="sd">        Most of the mb.Compound is first converted to openbabel.OBMol </span>
+<span class="sd">        Most of the mb.Compound is first converted to openbabel.OBMol</span>
 <span class="sd">        And then pybel creates a pybel.Molecule from the OBMol</span>
 <span class="sd">        Bond orders are assumed to be 1</span>
 <span class="sd">        OBMol atom indexing starts at 1, with spatial dimension Angstrom</span>
@@ -2704,8 +2704,8 @@
 
         <span class="k">for</span> <span class="n">bond</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">bonds</span><span class="p">():</span>
             <span class="n">bond_order</span> <span class="o">=</span> <span class="mi">1</span>
-            <span class="n">mol</span><span class="o">.</span><span class="n">AddBond</span><span class="p">(</span><span class="n">particle_to_atom_index</span><span class="p">[</span><span class="n">bond</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> 
-                    <span class="n">particle_to_atom_index</span><span class="p">[</span><span class="n">bond</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> 
+            <span class="n">mol</span><span class="o">.</span><span class="n">AddBond</span><span class="p">(</span><span class="n">particle_to_atom_index</span><span class="p">[</span><span class="n">bond</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span>
+                    <span class="n">particle_to_atom_index</span><span class="p">[</span><span class="n">bond</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span>
                     <span class="n">bond_order</span><span class="p">)</span>
 
         <span class="n">pybelmol</span> <span class="o">=</span> <span class="n">pybel</span><span class="o">.</span><span class="n">Molecule</span><span class="p">(</span><span class="n">mol</span><span class="p">)</span>
@@ -2715,7 +2715,7 @@
 
 <div class="viewcode-block" id="Compound.from_pybel"><a class="viewcode-back" href="../../data_structures.html#mbuild.compound.Compound.from_pybel">[docs]</a>    <span class="k">def</span> <span class="nf">from_pybel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pybel_mol</span><span class="p">,</span> <span class="n">use_element</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">coords_only</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Create a Compound from a Pybel.Molecule</span>
-<span class="sd">        </span>
+
 <span class="sd">        Parameters</span>
 <span class="sd">        ---------</span>
 <span class="sd">        pybel_mol: pybel.Molecule</span>
@@ -2736,8 +2736,8 @@
             <span class="k">raise</span> <span class="ne">Warning</span><span class="p">(</span><span class="s1">&#39;coords_only=True not yet implemented for &#39;</span>
                     <span class="s1">&#39;conversion from pybel&#39;</span><span class="p">)</span>
         <span class="c1"># Iterating through pybel_mol for atom/residue information</span>
-        <span class="c1"># This could just as easily be implemented by </span>
-        <span class="c1"># an OBMolAtomIter from the openbabel library, </span>
+        <span class="c1"># This could just as easily be implemented by</span>
+        <span class="c1"># an OBMolAtomIter from the openbabel library,</span>
         <span class="c1"># but this seemed more convenient at time of writing</span>
         <span class="c1"># pybel atoms are 1-indexed, coordinates in Angstrom</span>
         <span class="k">for</span> <span class="n">atom</span> <span class="ow">in</span> <span class="n">pybel_mol</span><span class="o">.</span><span class="n">atoms</span><span class="p">:</span>
@@ -2772,11 +2772,11 @@
                             <span class="bp">self</span><span class="p">[</span><span class="n">bond</span><span class="o">.</span><span class="n">GetEndAtomIdx</span><span class="p">()</span><span class="o">-</span><span class="mi">1</span><span class="p">]])</span>
 
         <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">pybel_mol</span><span class="p">,</span> <span class="s1">&#39;unitcell&#39;</span><span class="p">):</span>
-            <span class="n">box</span> <span class="o">=</span> <span class="n">Box</span><span class="p">(</span><span class="n">lengths</span><span class="o">=</span><span class="p">[</span><span class="n">pybel_mol</span><span class="o">.</span><span class="n">unitcell</span><span class="o">.</span><span class="n">GetA</span><span class="p">()</span><span class="o">/</span><span class="mi">10</span><span class="p">,</span> 
-                                <span class="n">pybel_mol</span><span class="o">.</span><span class="n">unitcell</span><span class="o">.</span><span class="n">GetB</span><span class="p">()</span><span class="o">/</span><span class="mi">10</span><span class="p">,</span> 
+            <span class="n">box</span> <span class="o">=</span> <span class="n">Box</span><span class="p">(</span><span class="n">lengths</span><span class="o">=</span><span class="p">[</span><span class="n">pybel_mol</span><span class="o">.</span><span class="n">unitcell</span><span class="o">.</span><span class="n">GetA</span><span class="p">()</span><span class="o">/</span><span class="mi">10</span><span class="p">,</span>
+                                <span class="n">pybel_mol</span><span class="o">.</span><span class="n">unitcell</span><span class="o">.</span><span class="n">GetB</span><span class="p">()</span><span class="o">/</span><span class="mi">10</span><span class="p">,</span>
                                 <span class="n">pybel_mol</span><span class="o">.</span><span class="n">unitcell</span><span class="o">.</span><span class="n">GetC</span><span class="p">()</span><span class="o">/</span><span class="mi">10</span><span class="p">],</span>
-                        <span class="n">angles</span><span class="o">=</span><span class="p">[</span><span class="n">pybel_mol</span><span class="o">.</span><span class="n">unitcell</span><span class="o">.</span><span class="n">GetAlpha</span><span class="p">(),</span> 
-                                <span class="n">pybel_mol</span><span class="o">.</span><span class="n">unitcell</span><span class="o">.</span><span class="n">GetBeta</span><span class="p">(),</span> 
+                        <span class="n">angles</span><span class="o">=</span><span class="p">[</span><span class="n">pybel_mol</span><span class="o">.</span><span class="n">unitcell</span><span class="o">.</span><span class="n">GetAlpha</span><span class="p">(),</span>
+                                <span class="n">pybel_mol</span><span class="o">.</span><span class="n">unitcell</span><span class="o">.</span><span class="n">GetBeta</span><span class="p">(),</span>
                                 <span class="n">pybel_mol</span><span class="o">.</span><span class="n">unitcell</span><span class="o">.</span><span class="n">GetGamma</span><span class="p">()])</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">periodicity</span> <span class="o">=</span> <span class="n">box</span><span class="o">.</span><span class="n">lengths</span>
         <span class="k">else</span><span class="p">:</span>
@@ -2837,6 +2837,24 @@
             <span class="n">intermol_atom</span><span class="o">.</span><span class="n">position</span> <span class="o">=</span> <span class="n">atom</span><span class="o">.</span><span class="n">pos</span> <span class="o">*</span> <span class="n">u</span><span class="o">.</span><span class="n">nanometers</span>
             <span class="n">last_molecule</span><span class="o">.</span><span class="n">add_atom</span><span class="p">(</span><span class="n">intermol_atom</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">intermol_system</span></div>
+
+<div class="viewcode-block" id="Compound.get_smiles"><a class="viewcode-back" href="../../data_structures.html#mbuild.compound.Compound.get_smiles">[docs]</a>    <span class="k">def</span> <span class="nf">get_smiles</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get SMILES string for compound</span>
+
+<span class="sd">        Bond order is guessed with pybel and may lead to incorrect SMILES</span>
+<span class="sd">        strings.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        smiles_string: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">pybel_cmp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_pybel</span><span class="p">()</span>
+        <span class="n">pybel_cmp</span><span class="o">.</span><span class="n">OBMol</span><span class="o">.</span><span class="n">PerceiveBondOrders</span><span class="p">()</span>
+        <span class="c1"># we only need the smiles string</span>
+        <span class="n">smiles</span> <span class="o">=</span> <span class="n">pybel_cmp</span><span class="o">.</span><span class="n">write</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">smiles</span></div>
+
 
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">_add_intermol_molecule_type</span><span class="p">(</span><span class="n">intermol_system</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>  <span class="c1"># pragma: no cover</span>

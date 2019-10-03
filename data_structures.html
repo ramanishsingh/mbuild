@@ -747,6 +747,26 @@ and sub-sub-compounds for every residue.</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="mbuild.compound.Compound.get_smiles">
+<code class="descname">get_smiles</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/compound.html#Compound.get_smiles"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.compound.Compound.get_smiles" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get SMILES string for compound</p>
+<p>Bond order is guessed with pybel and may lead to incorrect SMILES
+strings.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt>smiles_string: str</dt>
+<dd></dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="mbuild.compound.Compound.label_rigid_bodies">
 <code class="descname">label_rigid_bodies</code><span class="sig-paren">(</span><em>self</em>, <em>discrete_bodies=None</em>, <em>rigid_particles=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/compound.html#Compound.label_rigid_bodies"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.compound.Compound.label_rigid_bodies" title="Permalink to this definition">¶</a></dt>
 <dd><p>Designate which Compounds should be treated as rigid bodies</p>
@@ -1407,7 +1427,7 @@ checking against Compound.name.</dd>
 </dl>
 <p>pybel.Molecule</p>
 <p class="rubric">Notes</p>
-<p>Most of the mb.Compound is first converted to openbabel.OBMol 
+<p>Most of the mb.Compound is first converted to openbabel.OBMol
 And then pybel creates a pybel.Molecule from the OBMol
 Bond orders are assumed to be 1
 OBMol atom indexing starts at 1, with spatial dimension Angstrom</p>
