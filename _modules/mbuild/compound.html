@@ -194,6 +194,7 @@
 <span class="kn">from</span> <span class="nn">mbuild.formats.par_writer</span> <span class="k">import</span> <span class="n">write_par</span>
 <span class="kn">from</span> <span class="nn">mbuild.periodic_kdtree</span> <span class="k">import</span> <span class="n">PeriodicCKDTree</span>
 <span class="kn">from</span> <span class="nn">mbuild.utils.io</span> <span class="k">import</span> <span class="n">run_from_ipython</span><span class="p">,</span> <span class="n">import_</span>
+<span class="kn">from</span> <span class="nn">mbuild.utils.jsutils</span> <span class="k">import</span> <span class="n">overwrite_nglview_default</span>
 <span class="kn">from</span> <span class="nn">mbuild.coordinate_transform</span> <span class="k">import</span> <span class="n">_translate</span><span class="p">,</span> <span class="n">_rotate</span>
 
 
@@ -1468,6 +1469,7 @@
         <span class="k">if</span> <span class="n">show_ports</span><span class="p">:</span>
             <span class="n">widget</span><span class="o">.</span><span class="n">add_ball_and_stick</span><span class="p">(</span><span class="s1">&#39;_VS&#39;</span><span class="p">,</span>
                                       <span class="n">aspect_ratio</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;#991f00&#39;</span><span class="p">)</span>
+        <span class="n">overwrite_nglview_default</span><span class="p">(</span><span class="n">widget</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">widget</span>
 
 <div class="viewcode-block" id="Compound.update_coordinates"><a class="viewcode-back" href="../../data_structures.html#mbuild.compound.Compound.update_coordinates">[docs]</a>    <span class="k">def</span> <span class="nf">update_coordinates</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">update_port_locations</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
