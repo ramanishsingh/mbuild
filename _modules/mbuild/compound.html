@@ -236,8 +236,6 @@
 <span class="sd">    compound : mb.Compound</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">pybel</span> <span class="o">=</span> <span class="n">import_</span><span class="p">(</span><span class="s1">&#39;pybel&#39;</span><span class="p">)</span>
-
     <span class="c1"># If compound doesn&#39;t exist, we will initialize one</span>
     <span class="k">if</span> <span class="n">compound</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">compound</span> <span class="o">=</span> <span class="n">Compound</span><span class="p">()</span>
@@ -246,8 +244,13 @@
     <span class="n">type_dict</span> <span class="o">=</span> <span class="p">{</span>
         <span class="n">pmd</span><span class="o">.</span><span class="n">Structure</span><span class="p">:</span><span class="n">compound</span><span class="o">.</span><span class="n">from_parmed</span><span class="p">,</span>
         <span class="n">md</span><span class="o">.</span><span class="n">Trajectory</span><span class="p">:</span><span class="n">compound</span><span class="o">.</span><span class="n">from_trajectory</span><span class="p">,</span>
-        <span class="n">pybel</span><span class="o">.</span><span class="n">Molecule</span><span class="p">:</span><span class="n">compound</span><span class="o">.</span><span class="n">from_pybel</span><span class="p">,</span>
     <span class="p">}</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="kn">import</span> <span class="nn">pybel</span>
+        <span class="n">type_dict</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="n">pybel</span><span class="o">.</span><span class="n">Molecule</span><span class="p">:</span><span class="n">compound</span><span class="o">.</span><span class="n">from_pybel</span><span class="p">})</span>
+    <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+        <span class="k">pass</span>
+
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">filename_or_object</span><span class="p">,</span> <span class="n">Compound</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">filename_or_object</span>
     <span class="k">for</span> <span class="nb">type</span> <span class="ow">in</span> <span class="n">type_dict</span><span class="p">:</span>
