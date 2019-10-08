@@ -188,6 +188,7 @@
 <span class="kn">from</span> <span class="nn">mbuild.exceptions</span> <span class="k">import</span> <span class="n">MBuildError</span>
 <span class="kn">from</span> <span class="nn">mbuild.utils.decorators</span> <span class="k">import</span> <span class="n">deprecated</span>
 <span class="kn">from</span> <span class="nn">mbuild.formats.xyz</span> <span class="k">import</span> <span class="n">read_xyz</span>
+<span class="kn">from</span> <span class="nn">mbuild.formats.json_formats</span> <span class="k">import</span> <span class="n">compound_to_json</span><span class="p">,</span> <span class="n">compound_from_json</span>
 <span class="kn">from</span> <span class="nn">mbuild.formats.hoomdxml</span> <span class="k">import</span> <span class="n">write_hoomdxml</span>
 <span class="kn">from</span> <span class="nn">mbuild.formats.lammpsdata</span> <span class="k">import</span> <span class="n">write_lammpsdata</span>
 <span class="kn">from</span> <span class="nn">mbuild.formats.gsdwriter</span> <span class="k">import</span> <span class="n">write_gsd</span>
@@ -220,7 +221,7 @@
 <span class="sd">    compound : mb.Compound, optional, default=None</span>
 <span class="sd">        Existing compound to load atom and bond information into.</span>
 <span class="sd">    coords_only : bool, optional, default=False</span>
-<span class="sd">        Only load the coordinates into an existing compoint.</span>
+<span class="sd">        Only load the coordinates into an existing compound.</span>
 <span class="sd">    rigid : bool, optional, default=False</span>
 <span class="sd">        Treat the compound as a rigid body</span>
 <span class="sd">    use_parmed : bool, optional, default=False</span>
@@ -246,7 +247,7 @@
         <span class="n">md</span><span class="o">.</span><span class="n">Trajectory</span><span class="p">:</span><span class="n">compound</span><span class="o">.</span><span class="n">from_trajectory</span><span class="p">,</span>
     <span class="p">}</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="kn">import</span> <span class="nn">pybel</span>
+        <span class="n">pybel</span> <span class="o">=</span> <span class="n">import_</span><span class="p">(</span><span class="s1">&#39;pybel&#39;</span><span class="p">)</span>
         <span class="n">type_dict</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="n">pybel</span><span class="o">.</span><span class="n">Molecule</span><span class="p">:</span><span class="n">compound</span><span class="o">.</span><span class="n">from_pybel</span><span class="p">})</span>
     <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
         <span class="k">pass</span>
@@ -269,8 +270,12 @@
         <span class="n">file_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">script_path</span><span class="p">)</span>
         <span class="n">filename_or_object</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">file_dir</span><span class="p">,</span> <span class="n">filename_or_object</span><span class="p">)</span>
 
-    <span class="c1"># Handle the case of a xyz file, which must use an internal reader</span>
+    <span class="c1"># Handle the case of a xyz and json file, which must use an internal reader</span>
     <span class="n">extension</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">filename_or_object</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">extension</span> <span class="o">==</span> <span class="s1">&#39;.json&#39;</span><span class="p">:</span>
+        <span class="n">compound</span> <span class="o">=</span> <span class="n">compound_from_json</span><span class="p">(</span><span class="n">filename_or_object</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">compound</span>
+
     <span class="k">if</span> <span class="n">extension</span> <span class="o">==</span> <span class="s1">&#39;.xyz&#39;</span> <span class="ow">and</span> <span class="ow">not</span> <span class="s1">&#39;top&#39;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">coords_only</span><span class="p">:</span>
             <span class="n">tmp</span> <span class="o">=</span> <span class="n">read_xyz</span><span class="p">(</span><span class="n">filename_or_object</span><span class="p">)</span>
@@ -1935,7 +1940,7 @@
 <span class="sd">        filename : str</span>
 <span class="sd">            Filesystem path in which to save the trajectory. The extension or</span>
 <span class="sd">            prefix will be parsed and control the format. Supported</span>
-<span class="sd">            extensions are: &#39;hoomdxml&#39;, &#39;gsd&#39;, &#39;gro&#39;, &#39;top&#39;, &#39;lammps&#39;, &#39;lmp&#39;</span>
+<span class="sd">            extensions are: &#39;hoomdxml&#39;, &#39;gsd&#39;, &#39;gro&#39;, &#39;top&#39;, &#39;lammps&#39;, &#39;lmp&#39;, &#39;json&#39;</span>
 <span class="sd">        show_ports : bool, optional, default=False</span>
 <span class="sd">            Save ports contained within the compound.</span>
 <span class="sd">        forcefield_files : str, optional, default=None</span>
@@ -1989,17 +1994,30 @@
 <span class="sd">            see http://lammps.sandia.gov/doc/atom_style.html for more</span>
 <span class="sd">            information on atom styles.</span>
 
+<span class="sd">        Notes</span>
+<span class="sd">        ------</span>
+<span class="sd">        When saving the compound as a json, only the following arguments are used:</span>
+<span class="sd">            - filename</span>
+<span class="sd">            - show_ports</span>
+
 <span class="sd">        See Also</span>
 <span class="sd">        --------</span>
 <span class="sd">        formats.gsdwrite.write_gsd : Write to GSD format</span>
 <span class="sd">        formats.hoomdxml.write_hoomdxml : Write to Hoomd XML format</span>
 <span class="sd">        formats.lammpsdata.write_lammpsdata : Write to LAMMPS data format</span>
+<span class="sd">        formats.json_formats.compound_to_json : Write to a json file</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">extension</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">filename</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">extension</span> <span class="o">==</span> <span class="s1">&#39;.xyz&#39;</span><span class="p">:</span>
             <span class="n">traj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_trajectory</span><span class="p">(</span><span class="n">show_ports</span><span class="o">=</span><span class="n">show_ports</span><span class="p">)</span>
             <span class="n">traj</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="k">if</span> <span class="n">extension</span> <span class="o">==</span> <span class="s1">&#39;.json&#39;</span><span class="p">:</span>
+            <span class="n">compound_to_json</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                             <span class="n">file_path</span><span class="o">=</span><span class="n">filename</span><span class="p">,</span>
+                             <span class="n">include_ports</span><span class="o">=</span><span class="n">show_ports</span><span class="p">)</span>
             <span class="k">return</span>
 
         <span class="c1"># Savers supported by mbuild.formats</span>

@@ -1171,7 +1171,7 @@ particle with a matching rigid_id if specified</p>
 <dt><strong>filename</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
 <dd><p class="first last">Filesystem path in which to save the trajectory. The extension or
 prefix will be parsed and control the format. Supported
-extensions are: ‘hoomdxml’, ‘gsd’, ‘gro’, ‘top’, ‘lammps’, ‘lmp’</p>
+extensions are: ‘hoomdxml’, ‘gsd’, ‘gro’, ‘top’, ‘lammps’, ‘lmp’, ‘json’</p>
 </dd>
 <dt><strong>show_ports</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool, optional, default=False</span></dt>
 <dd><p class="first last">Save ports contained within the compound.</p>
@@ -1254,8 +1254,19 @@ information on atom styles.</p>
 <dd>Write to Hoomd XML format</dd>
 <dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">formats.lammpsdata.write_lammpsdata</span></code></dt>
 <dd>Write to LAMMPS data format</dd>
+<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">formats.json_formats.compound_to_json</span></code></dt>
+<dd>Write to a json file</dd>
 </dl>
 </div>
+<p class="rubric">Notes</p>
+<dl class="docutils">
+<dt>When saving the compound as a json, only the following arguments are used:</dt>
+<dd><ul class="first last simple">
+<li>filename</li>
+<li>show_ports</li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
