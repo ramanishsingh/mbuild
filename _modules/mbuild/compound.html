@@ -2561,8 +2561,10 @@
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        names_only : bool, optional, default=False Store only the names of the</span>
-<span class="sd">            compounds in the graph. When set to False, the default behavior,</span>
+<span class="sd">        names_only : bool, optional, default=False</span>
+<span class="sd">        Store only the names of the</span>
+<span class="sd">            compounds in the graph, appended with their IDs, for distinction even</span>
+<span class="sd">            if they have the same name. When set to False, the default behavior,</span>
 <span class="sd">            the nodes are the compounds themselves.</span>
 
 <span class="sd">        Returns</span>
@@ -2582,7 +2584,7 @@
         <span class="n">nodes</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
         <span class="n">edges</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">names_only</span><span class="p">:</span>
-            <span class="n">nodes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+            <span class="n">nodes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="bp">self</span><span class="p">)))</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">nodes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="n">nodes</span><span class="p">,</span> <span class="n">edges</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_iterate_children</span><span class="p">(</span><span class="n">nodes</span><span class="p">,</span> <span class="n">edges</span><span class="p">,</span> <span class="n">names_only</span><span class="o">=</span><span class="n">names_only</span><span class="p">)</span>
@@ -2598,8 +2600,10 @@
             <span class="k">return</span> <span class="n">nodes</span><span class="p">,</span> <span class="n">edges</span>
         <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">names_only</span><span class="p">:</span>
-                <span class="n">nodes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">child</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-                <span class="n">edges</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">child</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">child</span><span class="o">.</span><span class="n">name</span><span class="p">])</span>
+                <span class="n">unique_name</span> <span class="o">=</span> <span class="n">child</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="n">child</span><span class="p">))</span>
+                <span class="n">unique_name_parent</span> <span class="o">=</span> <span class="n">child</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">((</span><span class="nb">id</span><span class="p">(</span><span class="n">child</span><span class="o">.</span><span class="n">parent</span><span class="p">)))</span>
+                <span class="n">nodes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">unique_name</span><span class="p">)</span>
+                <span class="n">edges</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">unique_name_parent</span><span class="p">,</span> <span class="n">unique_name</span><span class="p">])</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">nodes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
                 <span class="n">edges</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">child</span><span class="o">.</span><span class="n">parent</span><span class="p">,</span> <span class="n">child</span><span class="p">])</span>
