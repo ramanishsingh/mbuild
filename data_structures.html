@@ -652,7 +652,7 @@ J. Comput. Chem. 22, 1229-1242</div></blockquote>
 
 <dl class="method">
 <dt id="mbuild.compound.Compound.from_parmed">
-<code class="descname">from_parmed</code><span class="sig-paren">(</span><em>self</em>, <em>structure</em>, <em>coords_only=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/compound.html#Compound.from_parmed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.compound.Compound.from_parmed" title="Permalink to this definition">¶</a></dt>
+<code class="descname">from_parmed</code><span class="sig-paren">(</span><em>self</em>, <em>structure</em>, <em>coords_only=False</em>, <em>infer_hierarchy=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/compound.html#Compound.from_parmed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.compound.Compound.from_parmed" title="Permalink to this definition">¶</a></dt>
 <dd><p>Extract atoms and bonds from a pmd.Structure.</p>
 <p>Will create sub-compounds for every chain if there is more than one
 and sub-sub-compounds for every residue.</p>
@@ -667,6 +667,9 @@ and sub-sub-compounds for every residue.</p>
 <dt><strong>coords_only</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool</span></dt>
 <dd><p class="first last">Set preexisting atoms in compound to coordinates given by structure.</p>
 </dd>
+<dt><strong>infer_hierarchy</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool, optional, default=True</span></dt>
+<dd><p class="first last">If true, infer compound hierarchy from chains and residues</p>
+</dd>
 </dl>
 </td>
 </tr>
@@ -676,7 +679,7 @@ and sub-sub-compounds for every residue.</p>
 
 <dl class="method">
 <dt id="mbuild.compound.Compound.from_pybel">
-<code class="descname">from_pybel</code><span class="sig-paren">(</span><em>self</em>, <em>pybel_mol</em>, <em>use_element=True</em>, <em>coords_only=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/compound.html#Compound.from_pybel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.compound.Compound.from_pybel" title="Permalink to this definition">¶</a></dt>
+<code class="descname">from_pybel</code><span class="sig-paren">(</span><em>self</em>, <em>pybel_mol</em>, <em>use_element=True</em>, <em>coords_only=False</em>, <em>infer_hierarchy=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/compound.html#Compound.from_pybel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.compound.Compound.from_pybel" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a Compound from a Pybel.Molecule</p>
 <p>pybel_mol: pybel.Molecule
 use_element : bool, default True</p>
@@ -688,12 +691,14 @@ If False, construcs mb Particles based on the pybel Atom’s type</div></blockqu
 <dd>Set preexisting atoms in compound to coordinates given by
 structure.  Note: Not yet implemented, included only for parity
 with other conversion functions</dd>
+<dt>infer_hierarchy <span class="classifier-delimiter">:</span> <span class="classifier">bool, optional, default=True</span></dt>
+<dd>If True, infer hierarchy from residues</dd>
 </dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="mbuild.compound.Compound.from_trajectory">
-<code class="descname">from_trajectory</code><span class="sig-paren">(</span><em>self</em>, <em>traj</em>, <em>frame=-1</em>, <em>coords_only=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/compound.html#Compound.from_trajectory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.compound.Compound.from_trajectory" title="Permalink to this definition">¶</a></dt>
+<code class="descname">from_trajectory</code><span class="sig-paren">(</span><em>self</em>, <em>traj</em>, <em>frame=-1</em>, <em>coords_only=False</em>, <em>infer_hierarchy=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/compound.html#Compound.from_trajectory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.compound.Compound.from_trajectory" title="Permalink to this definition">¶</a></dt>
 <dd><p>Extract atoms and bonds from a md.Trajectory.</p>
 <p>Will create sub-compounds for every chain if there is more than one
 and sub-sub-compounds for every residue.</p>
@@ -710,6 +715,9 @@ and sub-sub-compounds for every residue.</p>
 </dd>
 <dt><strong>coords_only</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool, optional, default=False</span></dt>
 <dd><p class="first last">Only read coordinate information</p>
+</dd>
+<dt><strong>infer_hierarchy</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool, optional, default=True</span></dt>
+<dd><p class="first last">If True, infer compound hierarchy from chains and residues</p>
 </dd>
 </dl>
 </td>

@@ -199,7 +199,8 @@
 
 
 <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="n">filename_or_object</span><span class="p">,</span> <span class="n">relative_to_module</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">compound</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">coords_only</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-         <span class="n">rigid</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">use_parmed</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">smiles</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+         <span class="n">rigid</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">use_parmed</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">smiles</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> 
+         <span class="n">infer_hierarchy</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Load a file or an existing topology into an mbuild compound.</span>
 
 <span class="sd">    Files are read using the MDTraj package unless the `use_parmed` argument is</span>
@@ -228,6 +229,8 @@
 <span class="sd">    smiles: bool, optional, default=False</span>
 <span class="sd">        Use Open Babel to parse filename as a SMILES string</span>
 <span class="sd">        or file containing a SMILES string.</span>
+<span class="sd">    infer_hierarchy : bool, optional, default=True</span>
+<span class="sd">        If True, infer hierarchy from chains and residues</span>
 <span class="sd">    **kwargs : keyword arguments</span>
 <span class="sd">        Key word arguments passed to mdTraj for loading.</span>
 
@@ -255,7 +258,8 @@
         <span class="k">return</span> <span class="n">filename_or_object</span>
     <span class="k">for</span> <span class="nb">type</span> <span class="ow">in</span> <span class="n">type_dict</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">filename_or_object</span><span class="p">,</span> <span class="nb">type</span><span class="p">):</span>
-            <span class="n">type_dict</span><span class="p">[</span><span class="nb">type</span><span class="p">](</span><span class="n">filename_or_object</span><span class="p">,</span><span class="n">coords_only</span><span class="o">=</span><span class="n">coords_only</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="n">type_dict</span><span class="p">[</span><span class="nb">type</span><span class="p">](</span><span class="n">filename_or_object</span><span class="p">,</span><span class="n">coords_only</span><span class="o">=</span><span class="n">coords_only</span><span class="p">,</span> 
+                    <span class="n">infer_hierarchy</span><span class="o">=</span><span class="n">infer_hierarchy</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">compound</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">filename_or_object</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Input not supported.&#39;</span><span class="p">)</span>
@@ -294,7 +298,8 @@
             <span class="s2">&quot;use_parmed set to True.  Bonds may be inferred from inter-particle &quot;</span>
             <span class="s2">&quot;distances and standard residue templates!&quot;</span><span class="p">)</span>
         <span class="n">structure</span> <span class="o">=</span> <span class="n">pmd</span><span class="o">.</span><span class="n">load_file</span><span class="p">(</span><span class="n">filename_or_object</span><span class="p">,</span> <span class="n">structure</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="n">compound</span><span class="o">.</span><span class="n">from_parmed</span><span class="p">(</span><span class="n">structure</span><span class="p">,</span> <span class="n">coords_only</span><span class="o">=</span><span class="n">coords_only</span><span class="p">)</span>
+        <span class="n">compound</span><span class="o">.</span><span class="n">from_parmed</span><span class="p">(</span><span class="n">structure</span><span class="p">,</span> <span class="n">coords_only</span><span class="o">=</span><span class="n">coords_only</span><span class="p">,</span> 
+                <span class="n">infer_hierarchy</span><span class="o">=</span><span class="n">infer_hierarchy</span><span class="p">)</span>
 
     <span class="k">elif</span> <span class="n">smiles</span><span class="p">:</span>
         <span class="n">pybel</span> <span class="o">=</span> <span class="n">import_</span><span class="p">(</span><span class="s1">&#39;pybel&#39;</span><span class="p">)</span>
@@ -322,11 +327,12 @@
         <span class="n">temp_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tmp_dir</span><span class="p">,</span> <span class="s1">&#39;smiles_to_mol2_intermediate.mol2&#39;</span><span class="p">)</span>
         <span class="n">mymol</span><span class="o">.</span><span class="n">make3D</span><span class="p">()</span>
         <span class="n">compound</span> <span class="o">=</span> <span class="n">Compound</span><span class="p">()</span>
-        <span class="n">compound</span><span class="o">.</span><span class="n">from_pybel</span><span class="p">(</span><span class="n">mymol</span><span class="p">)</span>
+        <span class="n">compound</span><span class="o">.</span><span class="n">from_pybel</span><span class="p">(</span><span class="n">mymol</span><span class="p">,</span> <span class="n">infer_hierarchy</span><span class="o">=</span><span class="n">infer_hierarchy</span><span class="p">)</span>
 
     <span class="k">else</span><span class="p">:</span>
         <span class="n">traj</span> <span class="o">=</span> <span class="n">md</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">filename_or_object</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="n">compound</span><span class="o">.</span><span class="n">from_trajectory</span><span class="p">(</span><span class="n">traj</span><span class="p">,</span> <span class="n">frame</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">coords_only</span><span class="o">=</span><span class="n">coords_only</span><span class="p">)</span>
+        <span class="n">compound</span><span class="o">.</span><span class="n">from_trajectory</span><span class="p">(</span><span class="n">traj</span><span class="p">,</span> <span class="n">frame</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">coords_only</span><span class="o">=</span><span class="n">coords_only</span><span class="p">,</span>
+                <span class="n">infer_hierarchy</span><span class="o">=</span><span class="n">infer_hierarchy</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">rigid</span><span class="p">:</span>
         <span class="n">compound</span><span class="o">.</span><span class="n">label_rigid_bodies</span><span class="p">()</span>
@@ -2120,7 +2126,8 @@
 
     <span class="c1"># Interface to Trajectory for reading/writing .pdb and .mol2 files.</span>
     <span class="c1"># -----------------------------------------------------------------</span>
-<div class="viewcode-block" id="Compound.from_trajectory"><a class="viewcode-back" href="../../data_structures.html#mbuild.compound.Compound.from_trajectory">[docs]</a>    <span class="k">def</span> <span class="nf">from_trajectory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">traj</span><span class="p">,</span> <span class="n">frame</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">coords_only</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="Compound.from_trajectory"><a class="viewcode-back" href="../../data_structures.html#mbuild.compound.Compound.from_trajectory">[docs]</a>    <span class="k">def</span> <span class="nf">from_trajectory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">traj</span><span class="p">,</span> <span class="n">frame</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">coords_only</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">infer_hierarchy</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Extract atoms and bonds from a md.Trajectory.</span>
 
 <span class="sd">        Will create sub-compounds for every chain if there is more than one</span>
@@ -2134,7 +2141,8 @@
 <span class="sd">            The frame to take coordinates from.</span>
 <span class="sd">        coords_only : bool, optional, default=False</span>
 <span class="sd">            Only read coordinate information</span>
-
+<span class="sd">        infer_hierarchy : bool, optional, default=True</span>
+<span class="sd">            If True, infer compound hierarchy from chains and residues</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">coords_only</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">traj</span><span class="o">.</span><span class="n">n_atoms</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_particles</span><span class="p">:</span>
@@ -2156,10 +2164,16 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">chain_compound</span> <span class="o">=</span> <span class="bp">self</span>
             <span class="k">for</span> <span class="n">res</span> <span class="ow">in</span> <span class="n">chain</span><span class="o">.</span><span class="n">residues</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">infer_hierarchy</span><span class="p">:</span>
+                    <span class="n">res_compound</span> <span class="o">=</span> <span class="n">Compound</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">res</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+                    <span class="n">chain_compound</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">res_compound</span><span class="p">)</span>
+                    <span class="n">parent_cmpd</span> <span class="o">=</span> <span class="n">res_compound</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">parent_cmpd</span> <span class="o">=</span> <span class="n">chain_compound</span>
                 <span class="k">for</span> <span class="n">atom</span> <span class="ow">in</span> <span class="n">res</span><span class="o">.</span><span class="n">atoms</span><span class="p">:</span>
                     <span class="n">new_atom</span> <span class="o">=</span> <span class="n">Particle</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">atom</span><span class="o">.</span><span class="n">name</span><span class="p">),</span>
                                         <span class="n">pos</span><span class="o">=</span><span class="n">traj</span><span class="o">.</span><span class="n">xyz</span><span class="p">[</span><span class="n">frame</span><span class="p">,</span> <span class="n">atom</span><span class="o">.</span><span class="n">index</span><span class="p">])</span>
-                    <span class="n">chain_compound</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
+                    <span class="n">parent_cmpd</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
                         <span class="n">new_atom</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">{0}</span><span class="s1">[$]&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
                             <span class="n">atom</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
                     <span class="n">atom_mapping</span><span class="p">[</span><span class="n">atom</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_atom</span>
@@ -2348,7 +2362,8 @@
                 <span class="n">top</span><span class="o">.</span><span class="n">add_bond</span><span class="p">(</span><span class="n">atom_mapping</span><span class="p">[</span><span class="n">atom1</span><span class="p">],</span> <span class="n">atom_mapping</span><span class="p">[</span><span class="n">atom2</span><span class="p">])</span>
         <span class="k">return</span> <span class="n">top</span>
 
-<div class="viewcode-block" id="Compound.from_parmed"><a class="viewcode-back" href="../../data_structures.html#mbuild.compound.Compound.from_parmed">[docs]</a>    <span class="k">def</span> <span class="nf">from_parmed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">structure</span><span class="p">,</span> <span class="n">coords_only</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="Compound.from_parmed"><a class="viewcode-back" href="../../data_structures.html#mbuild.compound.Compound.from_parmed">[docs]</a>    <span class="k">def</span> <span class="nf">from_parmed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">structure</span><span class="p">,</span> <span class="n">coords_only</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">infer_hierarchy</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Extract atoms and bonds from a pmd.Structure.</span>
 
 <span class="sd">        Will create sub-compounds for every chain if there is more than one</span>
@@ -2360,7 +2375,8 @@
 <span class="sd">            The structure to load.</span>
 <span class="sd">        coords_only : bool</span>
 <span class="sd">            Set preexisting atoms in compound to coordinates given by structure.</span>
-
+<span class="sd">        infer_hierarchy : bool, optional, default=True</span>
+<span class="sd">            If true, infer compound hierarchy from chains and residues</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">coords_only</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">structure</span><span class="o">.</span><span class="n">atoms</span><span class="p">)</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_particles</span><span class="p">:</span>
@@ -2391,10 +2407,16 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">chain_compound</span> <span class="o">=</span> <span class="bp">self</span>
             <span class="k">for</span> <span class="n">residue</span> <span class="ow">in</span> <span class="n">residues</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">infer_hierarchy</span><span class="p">:</span>
+                    <span class="n">residue_compound</span> <span class="o">=</span> <span class="n">Compound</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">residue</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+                    <span class="n">chain_compound</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">residue_compound</span><span class="p">)</span>
+                    <span class="n">parent_cmpd</span> <span class="o">=</span> <span class="n">residue_compound</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">parent_cmpd</span> <span class="o">=</span> <span class="n">chain_compound</span>
                 <span class="k">for</span> <span class="n">atom</span> <span class="ow">in</span> <span class="n">residue</span><span class="o">.</span><span class="n">atoms</span><span class="p">:</span>
                     <span class="n">pos</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">atom</span><span class="o">.</span><span class="n">xx</span><span class="p">,</span> <span class="n">atom</span><span class="o">.</span><span class="n">xy</span><span class="p">,</span> <span class="n">atom</span><span class="o">.</span><span class="n">xz</span><span class="p">])</span> <span class="o">/</span> <span class="mi">10</span>
                     <span class="n">new_atom</span> <span class="o">=</span> <span class="n">Particle</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">atom</span><span class="o">.</span><span class="n">name</span><span class="p">),</span> <span class="n">pos</span><span class="o">=</span><span class="n">pos</span><span class="p">)</span>
-                    <span class="n">chain_compound</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
+                    <span class="n">parent_cmpd</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
                         <span class="n">new_atom</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">{0}</span><span class="s1">[$]&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
                             <span class="n">atom</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
                     <span class="n">atom_mapping</span><span class="p">[</span><span class="n">atom</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_atom</span>
@@ -2739,7 +2761,8 @@
 
         <span class="k">return</span> <span class="n">pybelmol</span></div>
 
-<div class="viewcode-block" id="Compound.from_pybel"><a class="viewcode-back" href="../../data_structures.html#mbuild.compound.Compound.from_pybel">[docs]</a>    <span class="k">def</span> <span class="nf">from_pybel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pybel_mol</span><span class="p">,</span> <span class="n">use_element</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">coords_only</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="Compound.from_pybel"><a class="viewcode-back" href="../../data_structures.html#mbuild.compound.Compound.from_pybel">[docs]</a>    <span class="k">def</span> <span class="nf">from_pybel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pybel_mol</span><span class="p">,</span> <span class="n">use_element</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">coords_only</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">infer_hierarchy</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Create a Compound from a Pybel.Molecule</span>
 
 <span class="sd">        Parameters</span>
@@ -2752,6 +2775,8 @@
 <span class="sd">            Set preexisting atoms in compound to coordinates given by</span>
 <span class="sd">            structure.  Note: Not yet implemented, included only for parity</span>
 <span class="sd">            with other conversion functions</span>
+<span class="sd">        infer_hierarchy : bool, optional, default=True</span>
+<span class="sd">            If True, infer hierarchy from residues</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">openbabel</span> <span class="o">=</span> <span class="n">import_</span><span class="p">(</span><span class="s2">&quot;openbabel&quot;</span><span class="p">)</span>
@@ -2779,7 +2804,8 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">temp_name</span> <span class="o">=</span> <span class="n">atom</span><span class="o">.</span><span class="n">type</span>
             <span class="n">temp</span> <span class="o">=</span> <span class="n">Particle</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">temp_name</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="n">xyz</span><span class="p">)</span>
-            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">atom</span><span class="p">,</span> <span class="s1">&#39;residue&#39;</span><span class="p">):</span> <span class="c1"># Is there a safer way to check for res?</span>
+            <span class="k">if</span> <span class="n">infer_hierarchy</span> <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">atom</span><span class="p">,</span> <span class="s1">&#39;residue&#39;</span><span class="p">):</span> 
+                <span class="c1"># Is there a safer way to check for res?</span>
                 <span class="k">if</span> <span class="n">atom</span><span class="o">.</span><span class="n">residue</span><span class="o">.</span><span class="n">idx</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">resindex_to_cmpd</span><span class="p">:</span>
                     <span class="n">res_cmpd</span> <span class="o">=</span> <span class="n">Compound</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">atom</span><span class="o">.</span><span class="n">residue</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
                     <span class="n">resindex_to_cmpd</span><span class="p">[</span><span class="n">atom</span><span class="o">.</span><span class="n">residue</span><span class="o">.</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">res_cmpd</span>
