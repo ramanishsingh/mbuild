@@ -928,7 +928,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">periodicity</span> <span class="o">=</span> <span class="n">new_child</span><span class="o">.</span><span class="n">periodicity</span></div>
 
 <div class="viewcode-block" id="Compound.remove"><a class="viewcode-back" href="../../data_structures.html#mbuild.compound.Compound.remove">[docs]</a>    <span class="k">def</span> <span class="nf">remove</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">objs_to_remove</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Remove children from the Compound.</span>
+        <span class="sd">&quot;&quot;&quot; Cleanly remove children from the Compound.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -936,40 +936,83 @@
 <span class="sd">            The Compound(s) to be removed from self</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
-            <span class="k">return</span>
-
+        <span class="c1"># Preprocessing and validating input type</span>
+        <span class="kn">from</span> <span class="nn">mbuild.port</span> <span class="k">import</span> <span class="n">Port</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">objs_to_remove</span><span class="p">,</span> <span class="s1">&#39;__iter__&#39;</span><span class="p">):</span>
             <span class="n">objs_to_remove</span> <span class="o">=</span> <span class="p">[</span><span class="n">objs_to_remove</span><span class="p">]</span>
         <span class="n">objs_to_remove</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">objs_to_remove</span><span class="p">)</span>
 
+        <span class="c1"># If nothing is to be remove, do nothing</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">objs_to_remove</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">return</span>
 
-        <span class="n">remove_from_here</span> <span class="o">=</span> <span class="n">objs_to_remove</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">children</span> <span class="o">-=</span> <span class="n">remove_from_here</span>
-        <span class="n">yet_to_remove</span> <span class="o">=</span> <span class="n">objs_to_remove</span> <span class="o">-</span> <span class="n">remove_from_here</span>
+        <span class="c1"># Remove Port objects separately</span>
+        <span class="n">ports_removed</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">objs_to_remove</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">Port</span><span class="p">):</span>
+                <span class="n">ports_removed</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_remove</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+                <span class="n">obj</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">children</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_remove_references</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
 
-        <span class="k">for</span> <span class="n">removed</span> <span class="ow">in</span> <span class="n">remove_from_here</span><span class="p">:</span>
-            <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">removed</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
-                <span class="n">removed</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
+        <span class="n">objs_to_remove</span> <span class="o">=</span> <span class="n">objs_to_remove</span> <span class="o">-</span> <span class="n">ports_removed</span>
 
-        <span class="k">for</span> <span class="n">removed_part</span> <span class="ow">in</span> <span class="n">remove_from_here</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">removed_part</span><span class="o">.</span><span class="n">rigid_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="k">for</span> <span class="n">ancestor</span> <span class="ow">in</span> <span class="n">removed_part</span><span class="o">.</span><span class="n">ancestors</span><span class="p">():</span>
-                    <span class="n">ancestor</span><span class="o">.</span><span class="n">_check_if_contains_rigid_bodies</span> <span class="o">=</span> <span class="kc">True</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">bond_graph</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">bond_graph</span><span class="o">.</span><span class="n">has_node</span><span class="p">(</span>
-                    <span class="n">removed_part</span><span class="p">):</span>
-                <span class="k">for</span> <span class="n">neighbor</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">bond_graph</span><span class="o">.</span><span class="n">neighbors</span><span class="p">(</span><span class="n">removed_part</span><span class="p">):</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">remove_bond</span><span class="p">((</span><span class="n">removed_part</span><span class="p">,</span> <span class="n">neighbor</span><span class="p">))</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">bond_graph</span><span class="o">.</span><span class="n">remove_node</span><span class="p">(</span><span class="n">removed_part</span><span class="p">)</span>
+        <span class="c1"># Get particles to remove</span>
+        <span class="n">particles_to_remove</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span><span class="n">particle</span> <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">objs_to_remove</span>
+                                            <span class="k">for</span> <span class="n">particle</span> <span class="ow">in</span> <span class="n">obj</span><span class="o">.</span><span class="n">particles</span><span class="p">()])</span>
+
+        <span class="c1"># Recursively get container compounds to remove</span>
+        <span class="n">to_remove</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+
+        <span class="k">def</span> <span class="nf">_check_if_empty</span><span class="p">(</span><span class="n">child</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">to_remove</span><span class="p">:</span>
+                <span class="k">return</span>
+            <span class="k">if</span> <span class="nb">set</span><span class="p">(</span><span class="n">child</span><span class="o">.</span><span class="n">particles</span><span class="p">())</span><span class="o">.</span><span class="n">issubset</span><span class="p">(</span><span class="n">particles_to_remove</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">child</span><span class="o">.</span><span class="n">parent</span><span class="p">:</span>
+                    <span class="n">to_remove</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
+                    <span class="n">_check_if_empty</span><span class="p">(</span><span class="n">child</span><span class="o">.</span><span class="n">parent</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">warn</span><span class="p">(</span><span class="s2">&quot;This will remove all particles in &quot;</span>
+                            <span class="s2">&quot;compound </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+            <span class="k">return</span>
+
+        <span class="k">for</span> <span class="n">particle</span> <span class="ow">in</span> <span class="n">particles_to_remove</span><span class="p">:</span>
+            <span class="n">_check_if_empty</span><span class="p">(</span><span class="n">particle</span><span class="p">)</span>
+
+        <span class="c1"># Fix rigid_ids and remove obj from bondgraph</span>
+        <span class="k">for</span> <span class="n">removed_part</span> <span class="ow">in</span> <span class="n">to_remove</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_remove</span><span class="p">(</span><span class="n">removed_part</span><span class="p">)</span>
+
+        <span class="c1"># Remove references to object</span>
+        <span class="k">for</span> <span class="n">removed_part</span> <span class="ow">in</span> <span class="n">to_remove</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">removed_part</span><span class="o">.</span><span class="n">parent</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">removed_part</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">children</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">removed_part</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_remove_references</span><span class="p">(</span><span class="n">removed_part</span><span class="p">)</span>
 
-        <span class="c1"># Remove the part recursively from sub-compounds.</span>
-        <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
-            <span class="n">child</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">yet_to_remove</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">child</span><span class="o">.</span><span class="n">contains_rigid</span><span class="p">:</span>
+        <span class="c1"># Remove ghost ports</span>
+        <span class="n">all_ports_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">all_ports</span><span class="p">())</span>
+        <span class="k">for</span> <span class="n">port</span> <span class="ow">in</span> <span class="n">all_ports_list</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">port</span><span class="o">.</span><span class="n">anchor</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">particles</span><span class="p">()]:</span>
+                <span class="n">port</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">children</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">port</span><span class="p">)</span>
+
+        <span class="c1"># Check and reorder rigid id</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">particles_to_remove</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">contains_rigid</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">_reorder_rigid_ids</span><span class="p">()</span></div>
+
+
+    <span class="k">def</span> <span class="nf">_remove</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">removed_part</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Worker for remove(). Fixes rigid IDs and removes bonds&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">removed_part</span><span class="o">.</span><span class="n">rigid_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">ancestor</span> <span class="ow">in</span> <span class="n">removed_part</span><span class="o">.</span><span class="n">ancestors</span><span class="p">():</span>
+                <span class="n">ancestor</span><span class="o">.</span><span class="n">_check_if_contains_rigid_bodies</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">bond_graph</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">bond_graph</span><span class="o">.</span><span class="n">has_node</span><span class="p">(</span>
+                <span class="n">removed_part</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">neighbor</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">bond_graph</span><span class="o">.</span><span class="n">neighbors</span><span class="p">(</span>
+                    <span class="n">removed_part</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">remove_bond</span><span class="p">((</span><span class="n">removed_part</span><span class="p">,</span> <span class="n">neighbor</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">bond_graph</span><span class="o">.</span><span class="n">remove_node</span><span class="p">(</span><span class="n">removed_part</span><span class="p">)</span>
+
 
     <span class="k">def</span> <span class="nf">_remove_references</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">removed_part</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Remove labels pointing to this part and vice versa. &quot;&quot;&quot;</span>
