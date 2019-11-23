@@ -1179,7 +1179,8 @@ particle with a matching rigid_id if specified</p>
 <dt><strong>filename</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
 <dd><p class="first last">Filesystem path in which to save the trajectory. The extension or
 prefix will be parsed and control the format. Supported
-extensions are: ‘hoomdxml’, ‘gsd’, ‘gro’, ‘top’, ‘lammps’, ‘lmp’, ‘json’</p>
+extensions are: ‘hoomdxml’, ‘gsd’, ‘gro’, ‘top’,
+‘lammps’, ‘lmp’, ‘mcf’</p>
 </dd>
 <dt><strong>show_ports</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool, optional, default=False</span></dt>
 <dd><p class="first last">Save ports contained within the compound.</p>
@@ -1221,8 +1222,8 @@ and geometric combining rules respectively.</p>
 </dd>
 <dt><strong>**kwargs</strong></dt>
 <dd><p class="first last">Depending on the file extension these will be passed to either
-<cite>write_gsd</cite>, <cite>write_hoomdxml</cite>, <cite>write_lammpsdata</cite>, or
-<cite>parmed.Structure.save</cite>.
+<cite>write_gsd</cite>, <cite>write_hoomdxml</cite>, <cite>write_lammpsdata</cite>,
+<cite>write_mcf</cite>, or <cite>parmed.Structure.save</cite>.
 See <a class="reference external" href="https://parmed.github.io/ParmEd/html/structobj/parmed.structure.Structure.html#parmed.structure.Structure.save">https://parmed.github.io/ParmEd/html/structobj/parmed.structure.Structure.html#parmed.structure.Structure.save</a></p>
 </dd>
 </dl>
@@ -1262,6 +1263,8 @@ information on atom styles.</p>
 <dd>Write to Hoomd XML format</dd>
 <dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">formats.lammpsdata.write_lammpsdata</span></code></dt>
 <dd>Write to LAMMPS data format</dd>
+<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">formats.cassandramcf.write_mcf</span></code></dt>
+<dd>Write to Cassandra MCF format</dd>
 <dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">formats.json_formats.compound_to_json</span></code></dt>
 <dd>Write to a json file</dd>
 </dl>

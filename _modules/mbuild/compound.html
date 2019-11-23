@@ -192,6 +192,7 @@
 <span class="kn">from</span> <span class="nn">mbuild.formats.lammpsdata</span> <span class="k">import</span> <span class="n">write_lammpsdata</span>
 <span class="kn">from</span> <span class="nn">mbuild.formats.gsdwriter</span> <span class="k">import</span> <span class="n">write_gsd</span>
 <span class="kn">from</span> <span class="nn">mbuild.formats.par_writer</span> <span class="k">import</span> <span class="n">write_par</span>
+<span class="kn">from</span> <span class="nn">mbuild.formats.cassandramcf</span> <span class="k">import</span> <span class="n">write_mcf</span>
 <span class="kn">from</span> <span class="nn">mbuild.periodic_kdtree</span> <span class="k">import</span> <span class="n">PeriodicCKDTree</span>
 <span class="kn">from</span> <span class="nn">mbuild.utils.io</span> <span class="k">import</span> <span class="n">run_from_ipython</span><span class="p">,</span> <span class="n">import_</span>
 <span class="kn">from</span> <span class="nn">mbuild.utils.jsutils</span> <span class="k">import</span> <span class="n">overwrite_nglview_default</span>
@@ -1988,7 +1989,8 @@
 <span class="sd">        filename : str</span>
 <span class="sd">            Filesystem path in which to save the trajectory. The extension or</span>
 <span class="sd">            prefix will be parsed and control the format. Supported</span>
-<span class="sd">            extensions are: &#39;hoomdxml&#39;, &#39;gsd&#39;, &#39;gro&#39;, &#39;top&#39;, &#39;lammps&#39;, &#39;lmp&#39;, &#39;json&#39;</span>
+<span class="sd">            extensions are: &#39;hoomdxml&#39;, &#39;gsd&#39;, &#39;gro&#39;, &#39;top&#39;,</span>
+<span class="sd">            &#39;lammps&#39;, &#39;lmp&#39;, &#39;mcf&#39;</span>
 <span class="sd">        show_ports : bool, optional, default=False</span>
 <span class="sd">            Save ports contained within the compound.</span>
 <span class="sd">        forcefield_files : str, optional, default=None</span>
@@ -2020,8 +2022,8 @@
 <span class="sd">            Keyword arguments to provide to `foyer.Forcefield.apply`.</span>
 <span class="sd">        **kwargs</span>
 <span class="sd">            Depending on the file extension these will be passed to either</span>
-<span class="sd">            `write_gsd`, `write_hoomdxml`, `write_lammpsdata`, or</span>
-<span class="sd">            `parmed.Structure.save`.</span>
+<span class="sd">            `write_gsd`, `write_hoomdxml`, `write_lammpsdata`,</span>
+<span class="sd">            `write_mcf`, or `parmed.Structure.save`.</span>
 <span class="sd">            See https://parmed.github.io/ParmEd/html/structobj/parmed.structure.Structure.html#parmed.structure.Structure.save</span>
 
 
@@ -2053,6 +2055,7 @@
 <span class="sd">        formats.gsdwrite.write_gsd : Write to GSD format</span>
 <span class="sd">        formats.hoomdxml.write_hoomdxml : Write to Hoomd XML format</span>
 <span class="sd">        formats.lammpsdata.write_lammpsdata : Write to LAMMPS data format</span>
+<span class="sd">        formats.cassandramcf.write_mcf : Write to Cassandra MCF format</span>
 <span class="sd">        formats.json_formats.compound_to_json : Write to a json file</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -2073,7 +2076,8 @@
                   <span class="s1">&#39;.gsd&#39;</span><span class="p">:</span> <span class="n">write_gsd</span><span class="p">,</span>
                   <span class="s1">&#39;.lammps&#39;</span><span class="p">:</span> <span class="n">write_lammpsdata</span><span class="p">,</span>
                   <span class="s1">&#39;.lmp&#39;</span><span class="p">:</span> <span class="n">write_lammpsdata</span><span class="p">,</span>
-                  <span class="s1">&#39;.par&#39;</span><span class="p">:</span> <span class="n">write_par</span><span class="p">}</span>
+                  <span class="s1">&#39;.par&#39;</span><span class="p">:</span> <span class="n">write_par</span><span class="p">,</span>
+                  <span class="s1">&#39;.mcf&#39;</span><span class="p">:</span> <span class="n">write_mcf</span><span class="p">}</span>
 
         <span class="k">try</span><span class="p">:</span>
             <span class="n">saver</span> <span class="o">=</span> <span class="n">savers</span><span class="p">[</span><span class="n">extension</span><span class="p">]</span>
