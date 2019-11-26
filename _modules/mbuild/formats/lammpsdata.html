@@ -162,18 +162,18 @@
            <div itemprop="articleBody">
             
   <h1>Source code for mbuild.formats.lammpsdata</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span>
+<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span>
 
-<span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">OrderedDict</span>
-<span class="kn">from</span> <span class="nn">warnings</span> <span class="k">import</span> <span class="n">warn</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">OrderedDict</span>
+<span class="kn">from</span> <span class="nn">warnings</span> <span class="kn">import</span> <span class="n">warn</span>
 <span class="kn">import</span> <span class="nn">itertools</span> <span class="k">as</span> <span class="nn">it</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">parmed.parameters</span> <span class="k">import</span> <span class="n">ParameterSet</span>
+<span class="kn">from</span> <span class="nn">parmed.parameters</span> <span class="kn">import</span> <span class="n">ParameterSet</span>
 
-<span class="kn">from</span> <span class="nn">mbuild</span> <span class="k">import</span> <span class="n">Box</span>
-<span class="kn">from</span> <span class="nn">mbuild.utils.conversion</span> <span class="k">import</span> <span class="n">RB_to_OPLS</span>
-<span class="kn">from</span> <span class="nn">mbuild.utils.sorting</span> <span class="k">import</span> <span class="n">natural_sort</span>
+<span class="kn">from</span> <span class="nn">mbuild</span> <span class="kn">import</span> <span class="n">Box</span>
+<span class="kn">from</span> <span class="nn">mbuild.utils.conversion</span> <span class="kn">import</span> <span class="n">RB_to_OPLS</span>
+<span class="kn">from</span> <span class="nn">mbuild.utils.sorting</span> <span class="kn">import</span> <span class="n">natural_sort</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;write_lammpsdata&#39;</span><span class="p">]</span>
 

@@ -162,21 +162,21 @@
            <div itemprop="articleBody">
             
   <h1>Source code for mbuild.packing</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span>
+<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span>
 
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">tempfile</span>
 <span class="kn">import</span> <span class="nn">warnings</span>
-<span class="kn">from</span> <span class="nn">distutils.spawn</span> <span class="k">import</span> <span class="n">find_executable</span>
-<span class="kn">from</span> <span class="nn">subprocess</span> <span class="k">import</span> <span class="n">PIPE</span><span class="p">,</span> <span class="n">Popen</span>
+<span class="kn">from</span> <span class="nn">distutils.spawn</span> <span class="kn">import</span> <span class="n">find_executable</span>
+<span class="kn">from</span> <span class="nn">subprocess</span> <span class="kn">import</span> <span class="n">PIPE</span><span class="p">,</span> <span class="n">Popen</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
-<span class="kn">from</span> <span class="nn">mbuild</span> <span class="k">import</span> <span class="n">clone</span>
-<span class="kn">from</span> <span class="nn">mbuild.box</span> <span class="k">import</span> <span class="n">Box</span>
-<span class="kn">from</span> <span class="nn">mbuild.compound</span> <span class="k">import</span> <span class="n">Compound</span>
-<span class="kn">from</span> <span class="nn">mbuild.exceptions</span> <span class="k">import</span> <span class="n">MBuildError</span>
+<span class="kn">from</span> <span class="nn">mbuild</span> <span class="kn">import</span> <span class="n">clone</span>
+<span class="kn">from</span> <span class="nn">mbuild.box</span> <span class="kn">import</span> <span class="n">Box</span>
+<span class="kn">from</span> <span class="nn">mbuild.compound</span> <span class="kn">import</span> <span class="n">Compound</span>
+<span class="kn">from</span> <span class="nn">mbuild.exceptions</span> <span class="kn">import</span> <span class="n">MBuildError</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;fill_box&#39;</span><span class="p">,</span> <span class="s1">&#39;fill_region&#39;</span><span class="p">,</span> <span class="s1">&#39;fill_sphere&#39;</span><span class="p">,</span> <span class="s1">&#39;solvate&#39;</span><span class="p">]</span>
 

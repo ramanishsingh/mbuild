@@ -809,7 +809,7 @@ match the rigid body number.</p>
 <p class="rubric">Examples</p>
 <p>Creating a rigid benzene</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">mbuild</span> <span class="k">as</span> <span class="nn">mb</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">mbuild.utils.io</span> <span class="k">import</span> <span class="n">get_fn</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">mbuild.utils.io</span> <span class="kn">import</span> <span class="n">get_fn</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">benzene</span> <span class="o">=</span> <span class="n">mb</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">get_fn</span><span class="p">(</span><span class="s1">&#39;benzene.mol2&#39;</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">benzene</span><span class="o">.</span><span class="n">label_rigid_bodies</span><span class="p">()</span>
 </pre></div>
@@ -817,7 +817,7 @@ match the rigid body number.</p>
 <p>Creating a semi-rigid benzene, where only the carbons are treated as
 a rigid body</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">mbuild</span> <span class="k">as</span> <span class="nn">mb</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">mbuild.utils.io</span> <span class="k">import</span> <span class="n">get_fn</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">mbuild.utils.io</span> <span class="kn">import</span> <span class="n">get_fn</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">benzene</span> <span class="o">=</span> <span class="n">mb</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">get_fn</span><span class="p">(</span><span class="s1">&#39;benzene.mol2&#39;</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">benzene</span><span class="o">.</span><span class="n">label_rigid_bodies</span><span class="p">(</span><span class="n">rigid_particles</span><span class="o">=</span><span class="s1">&#39;C&#39;</span><span class="p">)</span>
 </pre></div>
@@ -825,7 +825,7 @@ a rigid body</p>
 <p>Create a box of rigid benzenes, where each benzene has a unique rigid
 body ID.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">mbuild</span> <span class="k">as</span> <span class="nn">mb</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">mbuild.utils.io</span> <span class="k">import</span> <span class="n">get_fn</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">mbuild.utils.io</span> <span class="kn">import</span> <span class="n">get_fn</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">benzene</span> <span class="o">=</span> <span class="n">mb</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">get_fn</span><span class="p">(</span><span class="s1">&#39;benzene.mol2&#39;</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">benzene</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Benzene&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">filled</span> <span class="o">=</span> <span class="n">mb</span><span class="o">.</span><span class="n">fill_box</span><span class="p">(</span><span class="n">benzene</span><span class="p">,</span>
@@ -837,7 +837,7 @@ body ID.</p>
 <p>Create a box of semi-rigid benzenes, where each benzene has a unique
 rigid body ID and only the carbon portion is treated as rigid.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">mbuild</span> <span class="k">as</span> <span class="nn">mb</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">mbuild.utils.io</span> <span class="k">import</span> <span class="n">get_fn</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">mbuild.utils.io</span> <span class="kn">import</span> <span class="n">get_fn</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">benzene</span> <span class="o">=</span> <span class="n">mb</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">get_fn</span><span class="p">(</span><span class="s1">&#39;benzene.mol2&#39;</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">benzene</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Benzene&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">filled</span> <span class="o">=</span> <span class="n">mb</span><span class="o">.</span><span class="n">fill_box</span><span class="p">(</span><span class="n">benzene</span><span class="p">,</span>

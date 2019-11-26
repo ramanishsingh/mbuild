@@ -162,41 +162,41 @@
            <div itemprop="articleBody">
             
   <h1>Source code for mbuild.compound</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">division</span>
+<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">division</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;load&#39;</span><span class="p">,</span> <span class="s1">&#39;clone&#39;</span><span class="p">,</span> <span class="s1">&#39;Compound&#39;</span><span class="p">,</span> <span class="s1">&#39;Particle&#39;</span><span class="p">]</span>
 
-<span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">OrderedDict</span><span class="p">,</span> <span class="n">defaultdict</span><span class="p">,</span> <span class="n">Iterable</span>
-<span class="kn">from</span> <span class="nn">copy</span> <span class="k">import</span> <span class="n">deepcopy</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">OrderedDict</span><span class="p">,</span> <span class="n">defaultdict</span><span class="p">,</span> <span class="n">Iterable</span>
+<span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">deepcopy</span>
 <span class="kn">import</span> <span class="nn">itertools</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">tempfile</span>
-<span class="kn">from</span> <span class="nn">warnings</span> <span class="k">import</span> <span class="n">warn</span>
+<span class="kn">from</span> <span class="nn">warnings</span> <span class="kn">import</span> <span class="n">warn</span>
 
 <span class="kn">import</span> <span class="nn">mdtraj</span> <span class="k">as</span> <span class="nn">md</span>
-<span class="kn">from</span> <span class="nn">mdtraj.core.element</span> <span class="k">import</span> <span class="n">get_by_symbol</span>
+<span class="kn">from</span> <span class="nn">mdtraj.core.element</span> <span class="kn">import</span> <span class="n">get_by_symbol</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">oset</span> <span class="k">import</span> <span class="n">oset</span> <span class="k">as</span> <span class="n">OrderedSet</span>
+<span class="kn">from</span> <span class="nn">oset</span> <span class="kn">import</span> <span class="n">oset</span> <span class="k">as</span> <span class="n">OrderedSet</span>
 <span class="kn">import</span> <span class="nn">parmed</span> <span class="k">as</span> <span class="nn">pmd</span>
-<span class="kn">from</span> <span class="nn">parmed.periodic_table</span> <span class="k">import</span> <span class="n">AtomicNum</span><span class="p">,</span> <span class="n">element_by_name</span><span class="p">,</span> <span class="n">Mass</span><span class="p">,</span> <span class="n">Element</span>
-<span class="kn">from</span> <span class="nn">six</span> <span class="k">import</span> <span class="n">integer_types</span><span class="p">,</span> <span class="n">string_types</span>
+<span class="kn">from</span> <span class="nn">parmed.periodic_table</span> <span class="kn">import</span> <span class="n">AtomicNum</span><span class="p">,</span> <span class="n">element_by_name</span><span class="p">,</span> <span class="n">Mass</span><span class="p">,</span> <span class="n">Element</span>
+<span class="kn">from</span> <span class="nn">six</span> <span class="kn">import</span> <span class="n">integer_types</span><span class="p">,</span> <span class="n">string_types</span>
 
-<span class="kn">from</span> <span class="nn">mbuild.bond_graph</span> <span class="k">import</span> <span class="n">BondGraph</span>
-<span class="kn">from</span> <span class="nn">mbuild.box</span> <span class="k">import</span> <span class="n">Box</span>
-<span class="kn">from</span> <span class="nn">mbuild.exceptions</span> <span class="k">import</span> <span class="n">MBuildError</span>
-<span class="kn">from</span> <span class="nn">mbuild.utils.decorators</span> <span class="k">import</span> <span class="n">deprecated</span>
-<span class="kn">from</span> <span class="nn">mbuild.formats.xyz</span> <span class="k">import</span> <span class="n">read_xyz</span>
-<span class="kn">from</span> <span class="nn">mbuild.formats.json_formats</span> <span class="k">import</span> <span class="n">compound_to_json</span><span class="p">,</span> <span class="n">compound_from_json</span>
-<span class="kn">from</span> <span class="nn">mbuild.formats.hoomdxml</span> <span class="k">import</span> <span class="n">write_hoomdxml</span>
-<span class="kn">from</span> <span class="nn">mbuild.formats.lammpsdata</span> <span class="k">import</span> <span class="n">write_lammpsdata</span>
-<span class="kn">from</span> <span class="nn">mbuild.formats.gsdwriter</span> <span class="k">import</span> <span class="n">write_gsd</span>
-<span class="kn">from</span> <span class="nn">mbuild.formats.par_writer</span> <span class="k">import</span> <span class="n">write_par</span>
-<span class="kn">from</span> <span class="nn">mbuild.formats.cassandramcf</span> <span class="k">import</span> <span class="n">write_mcf</span>
-<span class="kn">from</span> <span class="nn">mbuild.periodic_kdtree</span> <span class="k">import</span> <span class="n">PeriodicCKDTree</span>
-<span class="kn">from</span> <span class="nn">mbuild.utils.io</span> <span class="k">import</span> <span class="n">run_from_ipython</span><span class="p">,</span> <span class="n">import_</span>
-<span class="kn">from</span> <span class="nn">mbuild.utils.jsutils</span> <span class="k">import</span> <span class="n">overwrite_nglview_default</span>
-<span class="kn">from</span> <span class="nn">mbuild.coordinate_transform</span> <span class="k">import</span> <span class="n">_translate</span><span class="p">,</span> <span class="n">_rotate</span>
+<span class="kn">from</span> <span class="nn">mbuild.bond_graph</span> <span class="kn">import</span> <span class="n">BondGraph</span>
+<span class="kn">from</span> <span class="nn">mbuild.box</span> <span class="kn">import</span> <span class="n">Box</span>
+<span class="kn">from</span> <span class="nn">mbuild.exceptions</span> <span class="kn">import</span> <span class="n">MBuildError</span>
+<span class="kn">from</span> <span class="nn">mbuild.utils.decorators</span> <span class="kn">import</span> <span class="n">deprecated</span>
+<span class="kn">from</span> <span class="nn">mbuild.formats.xyz</span> <span class="kn">import</span> <span class="n">read_xyz</span>
+<span class="kn">from</span> <span class="nn">mbuild.formats.json_formats</span> <span class="kn">import</span> <span class="n">compound_to_json</span><span class="p">,</span> <span class="n">compound_from_json</span>
+<span class="kn">from</span> <span class="nn">mbuild.formats.hoomdxml</span> <span class="kn">import</span> <span class="n">write_hoomdxml</span>
+<span class="kn">from</span> <span class="nn">mbuild.formats.lammpsdata</span> <span class="kn">import</span> <span class="n">write_lammpsdata</span>
+<span class="kn">from</span> <span class="nn">mbuild.formats.gsdwriter</span> <span class="kn">import</span> <span class="n">write_gsd</span>
+<span class="kn">from</span> <span class="nn">mbuild.formats.par_writer</span> <span class="kn">import</span> <span class="n">write_par</span>
+<span class="kn">from</span> <span class="nn">mbuild.formats.cassandramcf</span> <span class="kn">import</span> <span class="n">write_mcf</span>
+<span class="kn">from</span> <span class="nn">mbuild.periodic_kdtree</span> <span class="kn">import</span> <span class="n">PeriodicCKDTree</span>
+<span class="kn">from</span> <span class="nn">mbuild.utils.io</span> <span class="kn">import</span> <span class="n">run_from_ipython</span><span class="p">,</span> <span class="n">import_</span>
+<span class="kn">from</span> <span class="nn">mbuild.utils.jsutils</span> <span class="kn">import</span> <span class="n">overwrite_nglview_default</span>
+<span class="kn">from</span> <span class="nn">mbuild.coordinate_transform</span> <span class="kn">import</span> <span class="n">_translate</span><span class="p">,</span> <span class="n">_rotate</span>
 
 
 <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="n">filename_or_object</span><span class="p">,</span> <span class="n">relative_to_module</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">compound</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">coords_only</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
@@ -434,7 +434,7 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subcompounds</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">charge</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subcompounds</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">charge</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
                  <span class="n">periodicity</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">port_particle</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">Compound</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 
@@ -938,7 +938,7 @@
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Preprocessing and validating input type</span>
-        <span class="kn">from</span> <span class="nn">mbuild.port</span> <span class="k">import</span> <span class="n">Port</span>
+        <span class="kn">from</span> <span class="nn">mbuild.port</span> <span class="kn">import</span> <span class="n">Port</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">objs_to_remove</span><span class="p">,</span> <span class="s1">&#39;__iter__&#39;</span><span class="p">):</span>
             <span class="n">objs_to_remove</span> <span class="o">=</span> <span class="p">[</span><span class="n">objs_to_remove</span><span class="p">]</span>
         <span class="n">objs_to_remove</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">objs_to_remove</span><span class="p">)</span>
@@ -1055,7 +1055,7 @@
 <span class="sd">            A list of all ports referenced by the Compound</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="kn">from</span> <span class="nn">mbuild.port</span> <span class="k">import</span> <span class="n">Port</span>
+        <span class="kn">from</span> <span class="nn">mbuild.port</span> <span class="kn">import</span> <span class="n">Port</span>
         <span class="k">return</span> <span class="p">[</span><span class="n">port</span> <span class="k">for</span> <span class="n">port</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">labels</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
                 <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">port</span><span class="p">,</span> <span class="n">Port</span><span class="p">)]</span></div>
 
@@ -1068,7 +1068,7 @@
 <span class="sd">            A list of all Ports referenced by this Compound and its successors</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="kn">from</span> <span class="nn">mbuild.port</span> <span class="k">import</span> <span class="n">Port</span>
+        <span class="kn">from</span> <span class="nn">mbuild.port</span> <span class="kn">import</span> <span class="n">Port</span>
         <span class="k">return</span> <span class="p">[</span><span class="n">successor</span> <span class="k">for</span> <span class="n">successor</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">successors</span><span class="p">()</span>
                 <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">successor</span><span class="p">,</span> <span class="n">Port</span><span class="p">)]</span></div>
 
@@ -1081,7 +1081,7 @@
 <span class="sd">            A list of all unoccupied ports referenced by the Compound</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="kn">from</span> <span class="nn">mbuild.port</span> <span class="k">import</span> <span class="n">Port</span>
+        <span class="kn">from</span> <span class="nn">mbuild.port</span> <span class="kn">import</span> <span class="n">Port</span>
         <span class="k">return</span> <span class="p">[</span><span class="n">port</span> <span class="k">for</span> <span class="n">port</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">labels</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
                 <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">port</span><span class="p">,</span> <span class="n">Port</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">port</span><span class="o">.</span><span class="n">used</span><span class="p">]</span></div>
 
@@ -1176,7 +1176,7 @@
 <span class="sd">            The pair of Particles to remove the bond between</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="kn">from</span> <span class="nn">mbuild.port</span> <span class="k">import</span> <span class="n">Port</span>
+        <span class="kn">from</span> <span class="nn">mbuild.port</span> <span class="kn">import</span> <span class="n">Port</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">bond_graph</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">bond_graph</span><span class="o">.</span><span class="n">has_edge</span><span class="p">(</span>
                 <span class="o">*</span><span class="n">particle_pair</span><span class="p">):</span>
             <span class="n">warn</span><span class="p">(</span><span class="s2">&quot;Bond between </span><span class="si">{}</span><span class="s2"> and </span><span class="si">{}</span><span class="s2"> doesn&#39;t exist!&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="n">particle_pair</span><span class="p">))</span>
@@ -1495,7 +1495,7 @@
 <span class="sd">            Visualize Ports in addition to Particles</span>
 <span class="sd">            &quot;&quot;&quot;</span>
         <span class="n">nglview</span> <span class="o">=</span> <span class="n">import_</span><span class="p">(</span><span class="s1">&#39;nglview&#39;</span><span class="p">)</span>
-        <span class="kn">from</span> <span class="nn">mdtraj.geometry.sasa</span> <span class="k">import</span> <span class="n">_ATOMIC_RADII</span>
+        <span class="kn">from</span> <span class="nn">mdtraj.geometry.sasa</span> <span class="kn">import</span> <span class="n">_ATOMIC_RADII</span>
         <span class="n">remove_digits</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">x</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">i</span><span class="o">.</span><span class="n">isdigit</span><span class="p">()</span>
                                               <span class="ow">or</span> <span class="n">i</span> <span class="o">==</span> <span class="s1">&#39;_&#39;</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">particle</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">particles</span><span class="p">():</span>
@@ -1788,9 +1788,9 @@
         <span class="n">ff</span> <span class="o">=</span> <span class="n">foyer</span><span class="o">.</span><span class="n">Forcefield</span><span class="p">(</span><span class="n">forcefield_files</span><span class="o">=</span><span class="n">forcefield_files</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">forcefield_name</span><span class="p">)</span>
         <span class="n">to_parmed</span> <span class="o">=</span> <span class="n">ff</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">to_parmed</span><span class="p">)</span>
 
-        <span class="kn">from</span> <span class="nn">simtk.openmm.app.simulation</span> <span class="k">import</span> <span class="n">Simulation</span>
-        <span class="kn">from</span> <span class="nn">simtk.openmm.app.pdbreporter</span> <span class="k">import</span> <span class="n">PDBReporter</span>
-        <span class="kn">from</span> <span class="nn">simtk.openmm.openmm</span> <span class="k">import</span> <span class="n">LangevinIntegrator</span>
+        <span class="kn">from</span> <span class="nn">simtk.openmm.app.simulation</span> <span class="kn">import</span> <span class="n">Simulation</span>
+        <span class="kn">from</span> <span class="nn">simtk.openmm.app.pdbreporter</span> <span class="kn">import</span> <span class="n">PDBReporter</span>
+        <span class="kn">from</span> <span class="nn">simtk.openmm.openmm</span> <span class="kn">import</span> <span class="n">LangevinIntegrator</span>
         <span class="kn">import</span> <span class="nn">simtk.unit</span> <span class="k">as</span> <span class="nn">u</span>
 
         <span class="n">system</span> <span class="o">=</span> <span class="n">to_parmed</span><span class="o">.</span><span class="n">createSystem</span><span class="p">()</span> <span class="c1"># Create an OpenMM System</span>
@@ -2311,7 +2311,7 @@
 <span class="sd">        mdtraj.Topology : Details on the mdtraj Topology object</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="kn">from</span> <span class="nn">mdtraj.core.topology</span> <span class="k">import</span> <span class="n">Topology</span>
+        <span class="kn">from</span> <span class="nn">mdtraj.core.topology</span> <span class="kn">import</span> <span class="n">Topology</span>
 
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">chains</span><span class="p">,</span> <span class="n">string_types</span><span class="p">):</span>
             <span class="n">chains</span> <span class="o">=</span> <span class="p">[</span><span class="n">chains</span><span class="p">]</span>
@@ -2895,9 +2895,9 @@
 <span class="sd">        -------</span>
 <span class="sd">        intermol_system : intermol.system.System</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="kn">from</span> <span class="nn">intermol.atom</span> <span class="k">import</span> <span class="n">Atom</span> <span class="k">as</span> <span class="n">InterMolAtom</span>
-        <span class="kn">from</span> <span class="nn">intermol.molecule</span> <span class="k">import</span> <span class="n">Molecule</span>
-        <span class="kn">from</span> <span class="nn">intermol.system</span> <span class="k">import</span> <span class="n">System</span>
+        <span class="kn">from</span> <span class="nn">intermol.atom</span> <span class="kn">import</span> <span class="n">Atom</span> <span class="k">as</span> <span class="n">InterMolAtom</span>
+        <span class="kn">from</span> <span class="nn">intermol.molecule</span> <span class="kn">import</span> <span class="n">Molecule</span>
+        <span class="kn">from</span> <span class="nn">intermol.system</span> <span class="kn">import</span> <span class="n">System</span>
         <span class="kn">import</span> <span class="nn">simtk.unit</span> <span class="k">as</span> <span class="nn">u</span>
 
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">molecule_types</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
@@ -2960,8 +2960,8 @@
 <span class="sd">        This method takes an intermol system and adds a</span>
 <span class="sd">        parent compound, including its particles and bonds, to it.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="kn">from</span> <span class="nn">intermol.moleculetype</span> <span class="k">import</span> <span class="n">MoleculeType</span>
-        <span class="kn">from</span> <span class="nn">intermol.forces.bond</span> <span class="k">import</span> <span class="n">Bond</span> <span class="k">as</span> <span class="n">InterMolBond</span>
+        <span class="kn">from</span> <span class="nn">intermol.moleculetype</span> <span class="kn">import</span> <span class="n">MoleculeType</span>
+        <span class="kn">from</span> <span class="nn">intermol.forces.bond</span> <span class="kn">import</span> <span class="n">Bond</span> <span class="k">as</span> <span class="n">InterMolBond</span>
 
         <span class="n">molecule_type</span> <span class="o">=</span> <span class="n">MoleculeType</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">parent</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
         <span class="n">intermol_system</span><span class="o">.</span><span class="n">add_molecule_type</span><span class="p">(</span><span class="n">molecule_type</span><span class="p">)</span>
@@ -2973,7 +2973,7 @@
             <span class="n">intermol_bond</span> <span class="o">=</span> <span class="n">InterMolBond</span><span class="p">(</span><span class="n">atom1</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">atom2</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
             <span class="n">molecule_type</span><span class="o">.</span><span class="n">bonds</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">intermol_bond</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">selection</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">selection</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">selection</span><span class="p">,</span> <span class="n">integer_types</span><span class="p">):</span>
             <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">particles</span><span class="p">())[</span><span class="n">selection</span><span class="p">]</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">selection</span><span class="p">,</span> <span class="n">string_types</span><span class="p">):</span>
@@ -2981,7 +2981,7 @@
                 <span class="k">raise</span> <span class="n">MBuildError</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">[</span><span class="se">\&#39;</span><span class="si">{}</span><span class="se">\&#39;</span><span class="s1">] does not exist.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span><span class="n">selection</span><span class="p">))</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">labels</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">selection</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">descr</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="s1">&#39;&lt;&#39;</span><span class="p">)</span>
         <span class="n">descr</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span><span class="p">)</span>
 
