@@ -192,9 +192,8 @@
 <span class="kn">from</span> <span class="nn">mbuild.formats.lammpsdata</span> <span class="kn">import</span> <span class="n">write_lammpsdata</span>
 <span class="kn">from</span> <span class="nn">mbuild.formats.gsdwriter</span> <span class="kn">import</span> <span class="n">write_gsd</span>
 <span class="kn">from</span> <span class="nn">mbuild.formats.par_writer</span> <span class="kn">import</span> <span class="n">write_par</span>
-<span class="kn">from</span> <span class="nn">mbuild.formats.cassandramcf</span> <span class="kn">import</span> <span class="n">write_mcf</span>
 <span class="kn">from</span> <span class="nn">mbuild.periodic_kdtree</span> <span class="kn">import</span> <span class="n">PeriodicCKDTree</span>
-<span class="kn">from</span> <span class="nn">mbuild.utils.io</span> <span class="kn">import</span> <span class="n">run_from_ipython</span><span class="p">,</span> <span class="n">import_</span>
+<span class="kn">from</span> <span class="nn">mbuild.utils.io</span> <span class="kn">import</span> <span class="n">run_from_ipython</span><span class="p">,</span> <span class="n">import_</span><span class="p">,</span> <span class="n">has_networkx</span>
 <span class="kn">from</span> <span class="nn">mbuild.utils.jsutils</span> <span class="kn">import</span> <span class="n">overwrite_nglview_default</span>
 <span class="kn">from</span> <span class="nn">mbuild.coordinate_transform</span> <span class="kn">import</span> <span class="n">_translate</span><span class="p">,</span> <span class="n">_rotate</span>
 
@@ -2076,8 +2075,10 @@
                   <span class="s1">&#39;.gsd&#39;</span><span class="p">:</span> <span class="n">write_gsd</span><span class="p">,</span>
                   <span class="s1">&#39;.lammps&#39;</span><span class="p">:</span> <span class="n">write_lammpsdata</span><span class="p">,</span>
                   <span class="s1">&#39;.lmp&#39;</span><span class="p">:</span> <span class="n">write_lammpsdata</span><span class="p">,</span>
-                  <span class="s1">&#39;.par&#39;</span><span class="p">:</span> <span class="n">write_par</span><span class="p">,</span>
-                  <span class="s1">&#39;.mcf&#39;</span><span class="p">:</span> <span class="n">write_mcf</span><span class="p">}</span>
+                  <span class="s1">&#39;.par&#39;</span><span class="p">:</span> <span class="n">write_par</span><span class="p">,}</span>
+        <span class="k">if</span> <span class="n">has_networkx</span><span class="p">:</span>
+            <span class="kn">from</span> <span class="nn">mbuild.formats.cassandramcf</span> <span class="kn">import</span> <span class="n">write_mcf</span>
+            <span class="n">savers</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;.mcf&#39;</span><span class="p">:</span> <span class="n">write_mcf</span><span class="p">})</span>
 
         <span class="k">try</span><span class="p">:</span>
             <span class="n">saver</span> <span class="o">=</span> <span class="n">savers</span><span class="p">[</span><span class="n">extension</span><span class="p">]</span>
