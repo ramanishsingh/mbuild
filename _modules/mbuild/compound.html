@@ -162,9 +162,7 @@
            <div itemprop="articleBody">
             
   <h1>Source code for mbuild.compound</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">division</span>
-
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;load&#39;</span><span class="p">,</span> <span class="s1">&#39;clone&#39;</span><span class="p">,</span> <span class="s1">&#39;Compound&#39;</span><span class="p">,</span> <span class="s1">&#39;Particle&#39;</span><span class="p">]</span>
+<span></span><span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;load&#39;</span><span class="p">,</span> <span class="s1">&#39;clone&#39;</span><span class="p">,</span> <span class="s1">&#39;Compound&#39;</span><span class="p">,</span> <span class="s1">&#39;Particle&#39;</span><span class="p">]</span>
 
 <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">OrderedDict</span><span class="p">,</span> <span class="n">defaultdict</span><span class="p">,</span> <span class="n">Iterable</span>
 <span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">deepcopy</span>
@@ -180,7 +178,6 @@
 <span class="kn">from</span> <span class="nn">oset</span> <span class="kn">import</span> <span class="n">oset</span> <span class="k">as</span> <span class="n">OrderedSet</span>
 <span class="kn">import</span> <span class="nn">parmed</span> <span class="k">as</span> <span class="nn">pmd</span>
 <span class="kn">from</span> <span class="nn">parmed.periodic_table</span> <span class="kn">import</span> <span class="n">AtomicNum</span><span class="p">,</span> <span class="n">element_by_name</span><span class="p">,</span> <span class="n">Mass</span><span class="p">,</span> <span class="n">Element</span>
-<span class="kn">from</span> <span class="nn">six</span> <span class="kn">import</span> <span class="n">integer_types</span><span class="p">,</span> <span class="n">string_types</span>
 
 <span class="kn">from</span> <span class="nn">mbuild.bond_graph</span> <span class="kn">import</span> <span class="n">BondGraph</span>
 <span class="kn">from</span> <span class="nn">mbuild.box</span> <span class="kn">import</span> <span class="n">Box</span>
@@ -438,7 +435,7 @@
         <span class="nb">super</span><span class="p">(</span><span class="n">Compound</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 
         <span class="k">if</span> <span class="n">name</span><span class="p">:</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">string_types</span><span class="p">):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
                     <span class="s1">&#39;Compound.name should be a string. You passed &#39;</span>
                     <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
@@ -770,10 +767,10 @@
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">discrete_bodies</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">discrete_bodies</span><span class="p">,</span> <span class="n">string_types</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">discrete_bodies</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
                 <span class="n">discrete_bodies</span> <span class="o">=</span> <span class="p">[</span><span class="n">discrete_bodies</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">rigid_particles</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">rigid_particles</span><span class="p">,</span> <span class="n">string_types</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">rigid_particles</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
                 <span class="n">rigid_particles</span> <span class="o">=</span> <span class="p">[</span><span class="n">rigid_particles</span><span class="p">]</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">max_rigid_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -864,7 +861,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Support batch add via lists, tuples and sets.</span>
         <span class="k">if</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">new_child</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">)</span> <span class="ow">and</span>
-                <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">new_child</span><span class="p">,</span> <span class="n">string_types</span><span class="p">)):</span>
+                <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">new_child</span><span class="p">,</span> <span class="nb">str</span><span class="p">)):</span>
             <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">new_child</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">child</span><span class="p">,</span> <span class="n">reset_rigid_ids</span><span class="o">=</span><span class="n">reset_rigid_ids</span><span class="p">)</span>
             <span class="k">return</span>
@@ -2314,12 +2311,12 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="kn">from</span> <span class="nn">mdtraj.core.topology</span> <span class="kn">import</span> <span class="n">Topology</span>
 
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">chains</span><span class="p">,</span> <span class="n">string_types</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">chains</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
             <span class="n">chains</span> <span class="o">=</span> <span class="p">[</span><span class="n">chains</span><span class="p">]</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">chains</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">set</span><span class="p">)):</span>
             <span class="n">chains</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">chains</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">residues</span><span class="p">,</span> <span class="n">string_types</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">residues</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
             <span class="n">residues</span> <span class="o">=</span> <span class="p">[</span><span class="n">residues</span><span class="p">]</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">residues</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">set</span><span class="p">)):</span>
             <span class="n">residues</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">residues</span><span class="p">)</span>
@@ -2521,7 +2518,7 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">residues</span> <span class="ow">and</span> <span class="n">infer_residues</span><span class="p">:</span>
             <span class="n">residues</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">([</span><span class="n">child</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">]))</span>
 
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">residues</span><span class="p">,</span> <span class="n">string_types</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">residues</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
             <span class="n">residues</span> <span class="o">=</span> <span class="p">[</span><span class="n">residues</span><span class="p">]</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">residues</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">set</span><span class="p">)):</span>
             <span class="n">residues</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">residues</span><span class="p">)</span>
@@ -2716,7 +2713,7 @@
 
         <span class="k">if</span> <span class="ow">not</span> <span class="n">residues</span> <span class="ow">and</span> <span class="n">infer_residues</span><span class="p">:</span>
             <span class="n">residues</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">([</span><span class="n">child</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">]))</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">residues</span><span class="p">,</span> <span class="n">string_types</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">residues</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
             <span class="n">residues</span> <span class="o">=</span> <span class="p">[</span><span class="n">residues</span><span class="p">]</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">residues</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">set</span><span class="p">)):</span>
             <span class="n">residues</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">residues</span><span class="p">)</span>
@@ -2975,9 +2972,9 @@
             <span class="n">molecule_type</span><span class="o">.</span><span class="n">bonds</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">intermol_bond</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">selection</span><span class="p">):</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">selection</span><span class="p">,</span> <span class="n">integer_types</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">selection</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
             <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">particles</span><span class="p">())[</span><span class="n">selection</span><span class="p">]</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">selection</span><span class="p">,</span> <span class="n">string_types</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">selection</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">selection</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">labels</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="n">MBuildError</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">[</span><span class="se">\&#39;</span><span class="si">{}</span><span class="se">\&#39;</span><span class="s1">] does not exist.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span><span class="n">selection</span><span class="p">))</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">labels</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">selection</span><span class="p">)</span>
