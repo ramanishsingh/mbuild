@@ -616,6 +616,34 @@
 
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">([</span><span class="n">alpha</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">gamma</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
 
+    <span class="k">def</span> <span class="nf">_sanitize_populate_args</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">):</span>
+
+        <span class="n">error_dict</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="s1">&#39;X&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span> <span class="s1">&#39;Y&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="s1">&#39;Z&#39;</span><span class="p">}</span>
+
+        <span class="c1"># Make sure neither x, y, z input is None</span>
+        <span class="k">if</span> <span class="kc">None</span> <span class="ow">in</span> <span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Attempt to replicate None times. &#39;</span>
+                             <span class="s1">&#39;None is not an acceptable replication &#39;</span>
+                             <span class="s1">&#39;amount, 1 is the default.&#39;</span><span class="p">)</span>
+
+        <span class="c1"># Try to convert x, y, and z to int, raise a ValueError if fail</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+            <span class="n">z</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Cannot convert replication amounts into &#39;</span>
+                             <span class="s1">&#39;integers. x= </span><span class="si">{}</span><span class="s1">, y= </span><span class="si">{}</span><span class="s1">, z= </span><span class="si">{}</span><span class="s1"> needs to &#39;</span>
+                             <span class="s1">&#39;be an int.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">))</span>
+
+        <span class="k">for</span> <span class="n">replication_amount</span><span class="p">,</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">],</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">replication_amount</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Incorrect populate value: </span><span class="si">{}</span><span class="s1"> : </span><span class="si">{}</span><span class="s1"> is &lt; 1. &#39;</span>
+                                 <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">error_dict</span><span class="p">[</span><span class="n">index</span><span class="p">],</span>
+                                         <span class="n">replication_amount</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span>
+
 <div class="viewcode-block" id="Lattice.populate"><a class="viewcode-back" href="../../recipes.html#mbuild.lattice.Lattice.populate">[docs]</a>    <span class="k">def</span> <span class="nf">populate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">compound_dict</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Expand lattice and create compound from lattice.</span>
 
@@ -648,29 +676,7 @@
 
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="n">error_dict</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="s1">&#39;X&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span> <span class="s1">&#39;Y&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="s1">&#39;Z&#39;</span><span class="p">}</span>
-
-        <span class="c1"># Make sure neither x, y, z input is None</span>
-        <span class="k">if</span> <span class="kc">None</span> <span class="ow">in</span> <span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">]:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Attempt to replicate None times. &#39;</span>
-                             <span class="s1">&#39;None is not an acceptable replication &#39;</span>
-                             <span class="s1">&#39;amount, 1 is the default.&#39;</span><span class="p">)</span>
-
-        <span class="c1"># Try to convert x, y, and z to int, raise a ValueError if fail</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">x</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-            <span class="n">y</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
-            <span class="n">z</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
-        <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Cannot convert replication amounts into &#39;</span>
-                             <span class="s1">&#39;integers. x= </span><span class="si">{}</span><span class="s1">, y= </span><span class="si">{}</span><span class="s1">, z= </span><span class="si">{}</span><span class="s1"> needs to &#39;</span>
-                             <span class="s1">&#39;be an int.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">))</span>
-
-        <span class="k">for</span> <span class="n">replication_amount</span><span class="p">,</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">],</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)):</span>
-            <span class="k">if</span> <span class="n">replication_amount</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Incorrect populate value: </span><span class="si">{}</span><span class="s1"> : </span><span class="si">{}</span><span class="s1"> is &lt; 1. &#39;</span>
-                                 <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">error_dict</span><span class="p">[</span><span class="n">index</span><span class="p">],</span>
-                                         <span class="n">replication_amount</span><span class="p">))</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sanitize_populate_args</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="n">z</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="p">((</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">compound_dict</span><span class="p">,</span> <span class="nb">dict</span><span class="p">))</span> <span class="ow">or</span> <span class="p">(</span><span class="n">compound_dict</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)):</span>
             <span class="k">pass</span>
@@ -747,8 +753,34 @@
         <span class="n">tolerance</span> <span class="o">=</span> <span class="mf">1e-12</span>
         <span class="n">ret_lattice</span><span class="o">.</span><span class="n">xyz_with_ports</span><span class="p">[</span><span class="n">ret_lattice</span><span class="o">.</span><span class="n">xyz_with_ports</span> <span class="o">&lt;=</span> <span class="n">tolerance</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.</span>
 
-        <span class="k">return</span> <span class="n">ret_lattice</span></div></div>
+        <span class="k">return</span> <span class="n">ret_lattice</span></div>
 
+<div class="viewcode-block" id="Lattice.get_populated_box"><a class="viewcode-back" href="../../recipes.html#mbuild.lattice.Lattice.get_populated_box">[docs]</a>    <span class="k">def</span> <span class="nf">get_populated_box</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return a mbuild.Box representing the periodic boundaries of a</span>
+<span class="sd">        populated mbuild.Lattice. This is meant to be called in parallel</span>
+<span class="sd">        with, and using the same arguments of, a call to</span>
+<span class="sd">        mb.Lattice.populate().</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        x : int, optional, default=1</span>
+<span class="sd">            How many iterations in the x direction.</span>
+<span class="sd">        y : int, optional, default=1</span>
+<span class="sd">            How many iterations in the y direction.</span>
+<span class="sd">        z : int, optional, default=1</span>
+<span class="sd">            How many iterations in the z direction.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sanitize_populate_args</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span>
+
+        <span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lattice_spacing</span>
+
+        <span class="k">return</span> <span class="n">mb</span><span class="o">.</span><span class="n">Box</span><span class="p">(</span>
+            <span class="n">lengths</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">([</span><span class="n">a</span> <span class="o">*</span> <span class="n">x</span><span class="p">,</span> <span class="n">b</span> <span class="o">*</span> <span class="n">y</span><span class="p">,</span> <span class="n">c</span> <span class="o">*</span> <span class="n">z</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">),</span>
+            <span class="n">angles</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">angles</span><span class="p">)</span>
+        <span class="p">)</span></div></div>
 </pre></div>
 
            </div>

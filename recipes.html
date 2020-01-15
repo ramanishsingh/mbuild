@@ -489,6 +489,34 @@ Locations of all lattice points in cell using fractional coordinates.</p>
 </tbody>
 </table>
 <dl class="method">
+<dt id="mbuild.lattice.Lattice.get_populated_box">
+<code class="descname">get_populated_box</code><span class="sig-paren">(</span><em>self</em>, <em>x=1</em>, <em>y=1</em>, <em>z=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/lattice.html#Lattice.get_populated_box"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.lattice.Lattice.get_populated_box" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a mbuild.Box representing the periodic boundaries of a
+populated mbuild.Lattice. This is meant to be called in parallel
+with, and using the same arguments of, a call to
+mb.Lattice.populate().</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>x</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int, optional, default=1</span></dt>
+<dd><p class="first last">How many iterations in the x direction.</p>
+</dd>
+<dt><strong>y</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int, optional, default=1</span></dt>
+<dd><p class="first last">How many iterations in the y direction.</p>
+</dd>
+<dt><strong>z</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int, optional, default=1</span></dt>
+<dd><p class="first last">How many iterations in the z direction.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="mbuild.lattice.Lattice.populate">
 <code class="descname">populate</code><span class="sig-paren">(</span><em>self</em>, <em>compound_dict=None</em>, <em>x=1</em>, <em>y=1</em>, <em>z=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/lattice.html#Lattice.populate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.lattice.Lattice.populate" title="Permalink to this definition">¶</a></dt>
 <dd><p>Expand lattice and create compound from lattice.</p>
