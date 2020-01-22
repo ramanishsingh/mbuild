@@ -243,10 +243,10 @@ manually into a HOOMD input script.</p>
 <span id="default-data-file-format-for-lammps"></span><h3>Default data file format for LAMMPS<a class="headerlink" href="#module-mbuild.formats.lammpsdata" title="Permalink to this headline">¶</a></h3>
 <dl class="function">
 <dt id="mbuild.formats.lammpsdata.write_lammpsdata">
-<code class="descclassname">mbuild.formats.lammpsdata.</code><code class="descname">write_lammpsdata</code><span class="sig-paren">(</span><em>structure</em>, <em>filename</em>, <em>atom_style='full'</em>, <em>detect_forcefield_style=True</em>, <em>nbfix_in_data_file=True</em>, <em>use_urey_bradleys=False</em>, <em>use_rb_torsions=True</em>, <em>use_dihedrals=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/formats/lammpsdata.html#write_lammpsdata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.formats.lammpsdata.write_lammpsdata" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">mbuild.formats.lammpsdata.</code><code class="descname">write_lammpsdata</code><span class="sig-paren">(</span><em>structure</em>, <em>filename</em>, <em>atom_style='full'</em>, <em>unit_style='real'</em>, <em>detect_forcefield_style=True</em>, <em>nbfix_in_data_file=True</em>, <em>use_urey_bradleys=False</em>, <em>use_rb_torsions=True</em>, <em>use_dihedrals=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbuild/formats/lammpsdata.html#write_lammpsdata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mbuild.formats.lammpsdata.write_lammpsdata" title="Permalink to this definition">¶</a></dt>
 <dd><p>Output a LAMMPS data file.</p>
-<p>Outputs a LAMMPS data file in the ‘full’ atom style format. Assumes use
-of ‘real’ units. See <a class="reference external" href="http://lammps.sandia.gov/doc/atom_style.html">http://lammps.sandia.gov/doc/atom_style.html</a> for
+<p>Outputs a LAMMPS data file in the ‘full’ atom style format. Default units are 
+‘real’ units. See <a class="reference external" href="http://lammps.sandia.gov/doc/atom_style.html">http://lammps.sandia.gov/doc/atom_style.html</a> for
 more information on atom styles.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -264,6 +264,12 @@ more information on atom styles.</p>
 styles are currently supported: ‘full’, ‘atomic’, ‘charge’, ‘molecular’
 see <a class="reference external" href="http://lammps.sandia.gov/doc/atom_style.html">http://lammps.sandia.gov/doc/atom_style.html</a> for more
 information on atom styles.</p>
+</dd>
+<dt><strong>unit_style: str</strong></dt>
+<dd><p class="first last">Defines to unit style to be save in a LAMMPS data file.  Defaults to ‘real’ units.
+Current styles are supported: ‘real’, ‘lj’
+see <a class="reference external" href="https://lammps.sandia.gov/doc/99/units.html">https://lammps.sandia.gov/doc/99/units.html</a> for more information
+on unit styles</p>
 </dd>
 <dt><strong>detect_forcefield_style: boolean</strong></dt>
 <dd><p class="first last">If True, format lammpsdata parameters based on the contents of 
