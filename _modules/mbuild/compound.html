@@ -290,6 +290,20 @@
             <span class="n">compound</span> <span class="o">=</span> <span class="n">read_xyz</span><span class="p">(</span><span class="n">filename_or_object</span><span class="p">,</span> <span class="n">compound</span><span class="o">=</span><span class="n">compound</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">compound</span>
 
+    <span class="k">if</span> <span class="n">extension</span> <span class="o">==</span> <span class="s1">&#39;.sdf&#39;</span><span class="p">:</span>
+        <span class="n">pybel</span> <span class="o">=</span> <span class="n">import_</span><span class="p">(</span><span class="s1">&#39;pybel&#39;</span><span class="p">)</span>
+        <span class="n">pybel_mol</span> <span class="o">=</span> <span class="n">pybel</span><span class="o">.</span><span class="n">readfile</span><span class="p">(</span><span class="s1">&#39;sdf&#39;</span><span class="p">,</span> <span class="n">filename_or_object</span><span class="p">)</span>
+        <span class="c1"># pybel returns a generator, so we grab the first molecule of a list of len 1</span>
+        <span class="c1"># Raise ValueError user if there are more molecules</span>
+        <span class="n">pybel_mol</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">pybel_mol</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">pybel_mol</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">compound</span><span class="o">.</span><span class="n">from_pybel</span><span class="p">(</span><span class="n">pybel_mol</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">compound</span><span class="o">.</span><span class="n">from_pybel</span><span class="p">(</span><span class="n">pybel_mol</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;More than one pybel molecule in file, more than one pybel &quot;</span>
+                 <span class="s2">&quot;molecule is not supported, using </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename_or_object</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">compound</span>
+
     <span class="k">if</span> <span class="n">use_parmed</span><span class="p">:</span>
         <span class="n">warn</span><span class="p">(</span>
             <span class="s2">&quot;use_parmed set to True.  Bonds may be inferred from inter-particle &quot;</span>
@@ -2119,6 +2133,20 @@
                 <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;rigid_bodies&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
                         <span class="n">p</span><span class="o">.</span><span class="n">rigid_id</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">particles</span><span class="p">()]</span>
             <span class="n">saver</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">filename</span><span class="p">,</span> <span class="n">structure</span><span class="o">=</span><span class="n">structure</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="n">extension</span> <span class="o">==</span> <span class="s1">&#39;.sdf&#39;</span><span class="p">:</span>
+            <span class="n">pybel</span> <span class="o">=</span> <span class="n">import_</span><span class="p">(</span><span class="s1">&#39;pybel&#39;</span><span class="p">)</span>
+            <span class="n">new_compound</span> <span class="o">=</span> <span class="n">Compound</span><span class="p">()</span>
+            <span class="c1"># Convert pmd.Structure to mb.Compound</span>
+            <span class="n">new_compound</span><span class="o">.</span><span class="n">from_parmed</span><span class="p">(</span><span class="n">structure</span><span class="p">)</span>
+            <span class="c1"># Convert mb.Compound to pybel molecule</span>
+            <span class="n">pybel_molecule</span> <span class="o">=</span> <span class="n">new_compound</span><span class="o">.</span><span class="n">to_pybel</span><span class="p">()</span>
+            <span class="c1"># Write out pybel molecule to SDF file</span>
+            <span class="n">output_sdf</span> <span class="o">=</span> <span class="n">pybel</span><span class="o">.</span><span class="n">Outputfile</span><span class="p">(</span><span class="s2">&quot;sdf&quot;</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span>
+                    <span class="n">overwrite</span><span class="o">=</span><span class="n">overwrite</span><span class="p">)</span>
+            <span class="n">output_sdf</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">pybel_molecule</span><span class="p">)</span>
+            <span class="n">output_sdf</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
         <span class="k">else</span><span class="p">:</span>  <span class="c1"># ParmEd supported saver.</span>
             <span class="n">structure</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="n">overwrite</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
