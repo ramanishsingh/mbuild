@@ -183,7 +183,7 @@
 <span class="kn">from</span> <span class="nn">mbuild.box</span> <span class="kn">import</span> <span class="n">Box</span>
 <span class="kn">from</span> <span class="nn">mbuild.exceptions</span> <span class="kn">import</span> <span class="n">MBuildError</span>
 <span class="kn">from</span> <span class="nn">mbuild.utils.decorators</span> <span class="kn">import</span> <span class="n">deprecated</span>
-<span class="kn">from</span> <span class="nn">mbuild.formats.xyz</span> <span class="kn">import</span> <span class="n">read_xyz</span>
+<span class="kn">from</span> <span class="nn">mbuild.formats.xyz</span> <span class="kn">import</span> <span class="n">read_xyz</span><span class="p">,</span> <span class="n">write_xyz</span>
 <span class="kn">from</span> <span class="nn">mbuild.formats.json_formats</span> <span class="kn">import</span> <span class="n">compound_to_json</span><span class="p">,</span> <span class="n">compound_from_json</span>
 <span class="kn">from</span> <span class="nn">mbuild.formats.hoomdxml</span> <span class="kn">import</span> <span class="n">write_hoomdxml</span>
 <span class="kn">from</span> <span class="nn">mbuild.formats.lammpsdata</span> <span class="kn">import</span> <span class="n">write_lammpsdata</span>
@@ -2069,16 +2069,13 @@
 <span class="sd">        --------</span>
 <span class="sd">        formats.gsdwrite.write_gsd : Write to GSD format</span>
 <span class="sd">        formats.hoomdxml.write_hoomdxml : Write to Hoomd XML format</span>
+<span class="sd">        formats.xyzwriter.write_xyz : Write to XYZ format</span>
 <span class="sd">        formats.lammpsdata.write_lammpsdata : Write to LAMMPS data format</span>
 <span class="sd">        formats.cassandramcf.write_mcf : Write to Cassandra MCF format</span>
 <span class="sd">        formats.json_formats.compound_to_json : Write to a json file</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">extension</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">filename</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-        <span class="k">if</span> <span class="n">extension</span> <span class="o">==</span> <span class="s1">&#39;.xyz&#39;</span><span class="p">:</span>
-            <span class="n">traj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_trajectory</span><span class="p">(</span><span class="n">show_ports</span><span class="o">=</span><span class="n">show_ports</span><span class="p">)</span>
-            <span class="n">traj</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
-            <span class="k">return</span>
 
         <span class="k">if</span> <span class="n">extension</span> <span class="o">==</span> <span class="s1">&#39;.json&#39;</span><span class="p">:</span>
             <span class="n">compound_to_json</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
@@ -2089,6 +2086,7 @@
         <span class="c1"># Savers supported by mbuild.formats</span>
         <span class="n">savers</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;.hoomdxml&#39;</span><span class="p">:</span> <span class="n">write_hoomdxml</span><span class="p">,</span>
                   <span class="s1">&#39;.gsd&#39;</span><span class="p">:</span> <span class="n">write_gsd</span><span class="p">,</span>
+                  <span class="s1">&#39;.xyz&#39;</span><span class="p">:</span> <span class="n">write_xyz</span><span class="p">,</span>
                   <span class="s1">&#39;.lammps&#39;</span><span class="p">:</span> <span class="n">write_lammpsdata</span><span class="p">,</span>
                   <span class="s1">&#39;.lmp&#39;</span><span class="p">:</span> <span class="n">write_lammpsdata</span><span class="p">,</span>
                   <span class="s1">&#39;.par&#39;</span><span class="p">:</span> <span class="n">write_par</span><span class="p">,}</span>
