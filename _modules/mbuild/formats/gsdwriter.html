@@ -212,14 +212,14 @@
     <span class="k">if</span> <span class="n">shift_coords</span><span class="p">:</span>
         <span class="n">xyz</span> <span class="o">=</span> <span class="n">coord_shift</span><span class="p">(</span><span class="n">xyz</span><span class="p">,</span> <span class="n">structure</span><span class="o">.</span><span class="n">box</span><span class="p">[:</span><span class="mi">3</span><span class="p">])</span>
 
-    <span class="n">gsd_file</span> <span class="o">=</span> <span class="n">gsd</span><span class="o">.</span><span class="n">hoomd</span><span class="o">.</span><span class="n">Snapshot</span><span class="p">()</span>
+    <span class="n">gsd_snapshot</span> <span class="o">=</span> <span class="n">gsd</span><span class="o">.</span><span class="n">hoomd</span><span class="o">.</span><span class="n">Snapshot</span><span class="p">()</span>
 
-    <span class="n">gsd_file</span><span class="o">.</span><span class="n">configuration</span><span class="o">.</span><span class="n">step</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">gsd_file</span><span class="o">.</span><span class="n">configuration</span><span class="o">.</span><span class="n">dimensions</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="n">gsd_snapshot</span><span class="o">.</span><span class="n">configuration</span><span class="o">.</span><span class="n">step</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">gsd_snapshot</span><span class="o">.</span><span class="n">configuration</span><span class="o">.</span><span class="n">dimensions</span> <span class="o">=</span> <span class="mi">3</span>
 
     <span class="c1"># Write box information</span>
     <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">structure</span><span class="o">.</span><span class="n">box</span><span class="p">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">6</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">90</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">90</span><span class="p">])):</span>
-        <span class="n">gsd_file</span><span class="o">.</span><span class="n">configuration</span><span class="o">.</span><span class="n">box</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">structure</span><span class="o">.</span><span class="n">box</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span> <span class="o">/</span> <span class="n">ref_distance</span><span class="p">,</span>
+        <span class="n">gsd_snapshot</span><span class="o">.</span><span class="n">configuration</span><span class="o">.</span><span class="n">box</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">structure</span><span class="o">.</span><span class="n">box</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span> <span class="o">/</span> <span class="n">ref_distance</span><span class="p">,</span>
                                                 <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">3</span><span class="p">)))</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="n">structure</span><span class="o">.</span><span class="n">box</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span> <span class="o">/</span> <span class="n">ref_distance</span>
@@ -232,44 +232,46 @@
         <span class="n">yz</span> <span class="o">=</span> <span class="p">(</span><span class="n">b</span><span class="o">*</span><span class="n">c</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span> <span class="o">-</span> <span class="n">xy</span><span class="o">*</span><span class="n">xz</span><span class="p">)</span> <span class="o">/</span> <span class="n">ly</span>
         <span class="n">lz</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">c</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">xz</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">yz</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
 
-        <span class="n">gsd_file</span><span class="o">.</span><span class="n">configuration</span><span class="o">.</span><span class="n">box</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">lx</span><span class="p">,</span> <span class="n">ly</span><span class="p">,</span> <span class="n">lz</span><span class="p">,</span> <span class="n">xy</span><span class="p">,</span> <span class="n">xz</span><span class="p">,</span> <span class="n">yz</span><span class="p">])</span>
+        <span class="n">gsd_snapshot</span><span class="o">.</span><span class="n">configuration</span><span class="o">.</span><span class="n">box</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">lx</span><span class="p">,</span> <span class="n">ly</span><span class="p">,</span> <span class="n">lz</span><span class="p">,</span> <span class="n">xy</span><span class="p">,</span> <span class="n">xz</span><span class="p">,</span> <span class="n">yz</span><span class="p">])</span>
 
-    <span class="n">_write_particle_information</span><span class="p">(</span><span class="n">gsd_file</span><span class="p">,</span> <span class="n">structure</span><span class="p">,</span> <span class="n">xyz</span><span class="p">,</span> <span class="n">ref_distance</span><span class="p">,</span>
+    <span class="n">_write_particle_information</span><span class="p">(</span><span class="n">gsd_snapshot</span><span class="p">,</span> <span class="n">structure</span><span class="p">,</span> <span class="n">xyz</span><span class="p">,</span> <span class="n">ref_distance</span><span class="p">,</span>
             <span class="n">ref_mass</span><span class="p">,</span> <span class="n">ref_energy</span><span class="p">,</span> <span class="n">rigid_bodies</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">write_special_pairs</span><span class="p">:</span>
-        <span class="n">_write_pair_information</span><span class="p">(</span><span class="n">gsd_file</span><span class="p">,</span> <span class="n">structure</span><span class="p">)</span>
+        <span class="n">_write_pair_information</span><span class="p">(</span><span class="n">gsd_snapshot</span><span class="p">,</span> <span class="n">structure</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">structure</span><span class="o">.</span><span class="n">bonds</span><span class="p">:</span>
-        <span class="n">_write_bond_information</span><span class="p">(</span><span class="n">gsd_file</span><span class="p">,</span> <span class="n">structure</span><span class="p">)</span>
+        <span class="n">_write_bond_information</span><span class="p">(</span><span class="n">gsd_snapshot</span><span class="p">,</span> <span class="n">structure</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">structure</span><span class="o">.</span><span class="n">angles</span><span class="p">:</span>
-        <span class="n">_write_angle_information</span><span class="p">(</span><span class="n">gsd_file</span><span class="p">,</span> <span class="n">structure</span><span class="p">)</span>
+        <span class="n">_write_angle_information</span><span class="p">(</span><span class="n">gsd_snapshot</span><span class="p">,</span> <span class="n">structure</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">structure</span><span class="o">.</span><span class="n">rb_torsions</span><span class="p">:</span>
-        <span class="n">_write_dihedral_information</span><span class="p">(</span><span class="n">gsd_file</span><span class="p">,</span> <span class="n">structure</span><span class="p">)</span>
+        <span class="n">_write_dihedral_information</span><span class="p">(</span><span class="n">gsd_snapshot</span><span class="p">,</span> <span class="n">structure</span><span class="p">)</span>
 
 
-    <span class="n">gsd</span><span class="o">.</span><span class="n">hoomd</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">gsd_file</span><span class="p">)</span></div>
+    <span class="k">with</span> <span class="n">gsd</span><span class="o">.</span><span class="n">hoomd</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">gsd_file</span><span class="p">:</span>
+        <span class="n">gsd_file</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">gsd_snapshot</span><span class="p">)</span></div>
 
-<span class="k">def</span> <span class="nf">_write_particle_information</span><span class="p">(</span><span class="n">gsd_file</span><span class="p">,</span> <span class="n">structure</span><span class="p">,</span> <span class="n">xyz</span><span class="p">,</span> <span class="n">ref_distance</span><span class="p">,</span>
+
+<span class="k">def</span> <span class="nf">_write_particle_information</span><span class="p">(</span><span class="n">gsd_snapshot</span><span class="p">,</span> <span class="n">structure</span><span class="p">,</span> <span class="n">xyz</span><span class="p">,</span> <span class="n">ref_distance</span><span class="p">,</span>
         <span class="n">ref_mass</span><span class="p">,</span> <span class="n">ref_energy</span><span class="p">,</span> <span class="n">rigid_bodies</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Write out the particle information.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">gsd_file</span><span class="o">.</span><span class="n">particles</span><span class="o">.</span><span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">structure</span><span class="o">.</span><span class="n">atoms</span><span class="p">)</span>
-    <span class="n">gsd_file</span><span class="o">.</span><span class="n">particles</span><span class="o">.</span><span class="n">position</span> <span class="o">=</span> <span class="n">xyz</span> <span class="o">/</span> <span class="n">ref_distance</span>
+    <span class="n">gsd_snapshot</span><span class="o">.</span><span class="n">particles</span><span class="o">.</span><span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">structure</span><span class="o">.</span><span class="n">atoms</span><span class="p">)</span>
+    <span class="n">gsd_snapshot</span><span class="o">.</span><span class="n">particles</span><span class="o">.</span><span class="n">position</span> <span class="o">=</span> <span class="n">xyz</span> <span class="o">/</span> <span class="n">ref_distance</span>
 
     <span class="n">types</span> <span class="o">=</span> <span class="p">[</span><span class="n">atom</span><span class="o">.</span><span class="n">name</span> <span class="k">if</span> <span class="n">atom</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span> <span class="k">else</span> <span class="n">atom</span><span class="o">.</span><span class="n">type</span>
              <span class="k">for</span> <span class="n">atom</span> <span class="ow">in</span> <span class="n">structure</span><span class="o">.</span><span class="n">atoms</span><span class="p">]</span>
 
     <span class="n">unique_types</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">types</span><span class="p">))</span>
     <span class="n">unique_types</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">natural_sort</span><span class="p">)</span>
-    <span class="n">gsd_file</span><span class="o">.</span><span class="n">particles</span><span class="o">.</span><span class="n">types</span> <span class="o">=</span> <span class="n">unique_types</span>
+    <span class="n">gsd_snapshot</span><span class="o">.</span><span class="n">particles</span><span class="o">.</span><span class="n">types</span> <span class="o">=</span> <span class="n">unique_types</span>
 
     <span class="n">typeids</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">unique_types</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">types</span><span class="p">])</span>
-    <span class="n">gsd_file</span><span class="o">.</span><span class="n">particles</span><span class="o">.</span><span class="n">typeid</span> <span class="o">=</span> <span class="n">typeids</span>
+    <span class="n">gsd_snapshot</span><span class="o">.</span><span class="n">particles</span><span class="o">.</span><span class="n">typeid</span> <span class="o">=</span> <span class="n">typeids</span>
 
     <span class="n">masses</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">atom</span><span class="o">.</span><span class="n">mass</span> <span class="k">for</span> <span class="n">atom</span> <span class="ow">in</span> <span class="n">structure</span><span class="o">.</span><span class="n">atoms</span><span class="p">])</span>
     <span class="n">masses</span><span class="p">[</span><span class="n">masses</span><span class="o">==</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span>
-    <span class="n">gsd_file</span><span class="o">.</span><span class="n">particles</span><span class="o">.</span><span class="n">mass</span> <span class="o">=</span> <span class="n">masses</span> <span class="o">/</span> <span class="n">ref_mass</span>
+    <span class="n">gsd_snapshot</span><span class="o">.</span><span class="n">particles</span><span class="o">.</span><span class="n">mass</span> <span class="o">=</span> <span class="n">masses</span> <span class="o">/</span> <span class="n">ref_mass</span>
 
     <span class="n">charges</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">atom</span><span class="o">.</span><span class="n">charge</span> <span class="k">for</span> <span class="n">atom</span> <span class="ow">in</span> <span class="n">structure</span><span class="o">.</span><span class="n">atoms</span><span class="p">])</span>
     <span class="n">e0</span> <span class="o">=</span> <span class="mf">2.39725e-4</span>
@@ -278,18 +280,18 @@
 <span class="sd">    where e is the elementary charge</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="n">charge_factor</span> <span class="o">=</span> <span class="p">(</span><span class="mf">4.0</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">e0</span><span class="o">*</span><span class="n">ref_distance</span><span class="o">*</span><span class="n">ref_energy</span><span class="p">)</span><span class="o">**</span><span class="mf">0.5</span>
-    <span class="n">gsd_file</span><span class="o">.</span><span class="n">particles</span><span class="o">.</span><span class="n">charge</span> <span class="o">=</span> <span class="n">charges</span> <span class="o">/</span> <span class="n">charge_factor</span>
+    <span class="n">gsd_snapshot</span><span class="o">.</span><span class="n">particles</span><span class="o">.</span><span class="n">charge</span> <span class="o">=</span> <span class="n">charges</span> <span class="o">/</span> <span class="n">charge_factor</span>
 
     <span class="k">if</span> <span class="n">rigid_bodies</span><span class="p">:</span>
         <span class="n">rigid_bodies</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span> <span class="k">if</span> <span class="n">body</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">body</span> <span class="k">for</span> <span class="n">body</span> <span class="ow">in</span> <span class="n">rigid_bodies</span><span class="p">]</span>
-    <span class="n">gsd_file</span><span class="o">.</span><span class="n">particles</span><span class="o">.</span><span class="n">body</span> <span class="o">=</span> <span class="n">rigid_bodies</span>
+    <span class="n">gsd_snapshot</span><span class="o">.</span><span class="n">particles</span><span class="o">.</span><span class="n">body</span> <span class="o">=</span> <span class="n">rigid_bodies</span>
 
-<span class="k">def</span> <span class="nf">_write_pair_information</span><span class="p">(</span><span class="n">gsd_file</span><span class="p">,</span> <span class="n">structure</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">_write_pair_information</span><span class="p">(</span><span class="n">gsd_snapshot</span><span class="p">,</span> <span class="n">structure</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Write the special pairs in the system.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    gsd_file :</span>
+<span class="sd">    gsd_snapshot :</span>
 <span class="sd">        The file object of the GSD file being written</span>
 <span class="sd">    structure : parmed.Structure</span>
 <span class="sd">        Parmed structure object holding system information</span>
@@ -306,24 +308,24 @@
                     <span class="n">pair_types</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ps</span><span class="p">)</span>
                 <span class="n">pair_typeid</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pair_types</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">ps</span><span class="p">))</span>
                 <span class="n">pairs</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">ai</span><span class="o">.</span><span class="n">idx</span><span class="p">,</span> <span class="n">aj</span><span class="o">.</span><span class="n">idx</span><span class="p">))</span>
-    <span class="n">gsd_file</span><span class="o">.</span><span class="n">pairs</span><span class="o">.</span><span class="n">types</span> <span class="o">=</span> <span class="n">pair_types</span>
-    <span class="n">gsd_file</span><span class="o">.</span><span class="n">pairs</span><span class="o">.</span><span class="n">typeid</span> <span class="o">=</span> <span class="n">pair_typeid</span>
-    <span class="n">gsd_file</span><span class="o">.</span><span class="n">pairs</span><span class="o">.</span><span class="n">group</span> <span class="o">=</span> <span class="n">pairs</span>
-    <span class="n">gsd_file</span><span class="o">.</span><span class="n">pairs</span><span class="o">.</span><span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">pairs</span><span class="p">)</span>
+    <span class="n">gsd_snapshot</span><span class="o">.</span><span class="n">pairs</span><span class="o">.</span><span class="n">types</span> <span class="o">=</span> <span class="n">pair_types</span>
+    <span class="n">gsd_snapshot</span><span class="o">.</span><span class="n">pairs</span><span class="o">.</span><span class="n">typeid</span> <span class="o">=</span> <span class="n">pair_typeid</span>
+    <span class="n">gsd_snapshot</span><span class="o">.</span><span class="n">pairs</span><span class="o">.</span><span class="n">group</span> <span class="o">=</span> <span class="n">pairs</span>
+    <span class="n">gsd_snapshot</span><span class="o">.</span><span class="n">pairs</span><span class="o">.</span><span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">pairs</span><span class="p">)</span>
 
-<span class="k">def</span> <span class="nf">_write_bond_information</span><span class="p">(</span><span class="n">gsd_file</span><span class="p">,</span> <span class="n">structure</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">_write_bond_information</span><span class="p">(</span><span class="n">gsd_snapshot</span><span class="p">,</span> <span class="n">structure</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Write the bonds in the system.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    gsd_file :</span>
+<span class="sd">    gsd_snapshot :</span>
 <span class="sd">        The file object of the GSD file being written</span>
 <span class="sd">    structure : parmed.Structure</span>
 <span class="sd">        Parmed structure object holding system information</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">gsd_file</span><span class="o">.</span><span class="n">bonds</span><span class="o">.</span><span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">structure</span><span class="o">.</span><span class="n">bonds</span><span class="p">)</span>
+    <span class="n">gsd_snapshot</span><span class="o">.</span><span class="n">bonds</span><span class="o">.</span><span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">structure</span><span class="o">.</span><span class="n">bonds</span><span class="p">)</span>
 
     <span class="n">unique_bond_types</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">bond</span> <span class="ow">in</span> <span class="n">structure</span><span class="o">.</span><span class="n">bonds</span><span class="p">:</span>
@@ -337,7 +339,7 @@
             <span class="n">bond_type</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="n">t1</span><span class="p">,</span> <span class="n">t2</span><span class="p">)),</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
         <span class="n">unique_bond_types</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">bond_type</span><span class="p">)</span>
     <span class="n">unique_bond_types</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">unique_bond_types</span><span class="p">),</span> <span class="n">key</span><span class="o">=</span><span class="n">natural_sort</span><span class="p">)</span>
-    <span class="n">gsd_file</span><span class="o">.</span><span class="n">bonds</span><span class="o">.</span><span class="n">types</span> <span class="o">=</span> <span class="n">unique_bond_types</span>
+    <span class="n">gsd_snapshot</span><span class="o">.</span><span class="n">bonds</span><span class="o">.</span><span class="n">types</span> <span class="o">=</span> <span class="n">unique_bond_types</span>
 
     <span class="n">bond_typeids</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">bond_groups</span> <span class="o">=</span> <span class="p">[]</span>
@@ -353,22 +355,22 @@
         <span class="n">bond_typeids</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">unique_bond_types</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">bond_type</span><span class="p">))</span>
         <span class="n">bond_groups</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">bond</span><span class="o">.</span><span class="n">atom1</span><span class="o">.</span><span class="n">idx</span><span class="p">,</span> <span class="n">bond</span><span class="o">.</span><span class="n">atom2</span><span class="o">.</span><span class="n">idx</span><span class="p">))</span>
 
-    <span class="n">gsd_file</span><span class="o">.</span><span class="n">bonds</span><span class="o">.</span><span class="n">typeid</span> <span class="o">=</span> <span class="n">bond_typeids</span>
-    <span class="n">gsd_file</span><span class="o">.</span><span class="n">bonds</span><span class="o">.</span><span class="n">group</span> <span class="o">=</span> <span class="n">bond_groups</span>
+    <span class="n">gsd_snapshot</span><span class="o">.</span><span class="n">bonds</span><span class="o">.</span><span class="n">typeid</span> <span class="o">=</span> <span class="n">bond_typeids</span>
+    <span class="n">gsd_snapshot</span><span class="o">.</span><span class="n">bonds</span><span class="o">.</span><span class="n">group</span> <span class="o">=</span> <span class="n">bond_groups</span>
 
-<span class="k">def</span> <span class="nf">_write_angle_information</span><span class="p">(</span><span class="n">gsd_file</span><span class="p">,</span> <span class="n">structure</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">_write_angle_information</span><span class="p">(</span><span class="n">gsd_snapshot</span><span class="p">,</span> <span class="n">structure</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Write the angles in the system.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    gsd_file :</span>
+<span class="sd">    gsd_snapshot :</span>
 <span class="sd">        The file object of the GSD file being written</span>
 <span class="sd">    structure : parmed.Structure</span>
 <span class="sd">        Parmed structure object holding system information</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">gsd_file</span><span class="o">.</span><span class="n">angles</span><span class="o">.</span><span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">structure</span><span class="o">.</span><span class="n">angles</span><span class="p">)</span>
+    <span class="n">gsd_snapshot</span><span class="o">.</span><span class="n">angles</span><span class="o">.</span><span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">structure</span><span class="o">.</span><span class="n">angles</span><span class="p">)</span>
 
     <span class="n">unique_angle_types</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">angle</span> <span class="ow">in</span> <span class="n">structure</span><span class="o">.</span><span class="n">angles</span><span class="p">:</span>
@@ -377,7 +379,7 @@
         <span class="n">angle_type</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="n">t1</span><span class="p">,</span> <span class="n">t2</span><span class="p">,</span> <span class="n">t3</span><span class="p">)))</span>
         <span class="n">unique_angle_types</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">angle_type</span><span class="p">)</span>
     <span class="n">unique_angle_types</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">unique_angle_types</span><span class="p">),</span> <span class="n">key</span><span class="o">=</span><span class="n">natural_sort</span><span class="p">)</span>
-    <span class="n">gsd_file</span><span class="o">.</span><span class="n">angles</span><span class="o">.</span><span class="n">types</span> <span class="o">=</span> <span class="n">unique_angle_types</span>
+    <span class="n">gsd_snapshot</span><span class="o">.</span><span class="n">angles</span><span class="o">.</span><span class="n">types</span> <span class="o">=</span> <span class="n">unique_angle_types</span>
 
     <span class="n">angle_typeids</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">angle_groups</span> <span class="o">=</span> <span class="p">[]</span>
@@ -389,22 +391,22 @@
         <span class="n">angle_groups</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">angle</span><span class="o">.</span><span class="n">atom1</span><span class="o">.</span><span class="n">idx</span><span class="p">,</span> <span class="n">angle</span><span class="o">.</span><span class="n">atom2</span><span class="o">.</span><span class="n">idx</span><span class="p">,</span>
                              <span class="n">angle</span><span class="o">.</span><span class="n">atom3</span><span class="o">.</span><span class="n">idx</span><span class="p">))</span>
 
-    <span class="n">gsd_file</span><span class="o">.</span><span class="n">angles</span><span class="o">.</span><span class="n">typeid</span> <span class="o">=</span> <span class="n">angle_typeids</span>
-    <span class="n">gsd_file</span><span class="o">.</span><span class="n">angles</span><span class="o">.</span><span class="n">group</span> <span class="o">=</span> <span class="n">angle_groups</span>
+    <span class="n">gsd_snapshot</span><span class="o">.</span><span class="n">angles</span><span class="o">.</span><span class="n">typeid</span> <span class="o">=</span> <span class="n">angle_typeids</span>
+    <span class="n">gsd_snapshot</span><span class="o">.</span><span class="n">angles</span><span class="o">.</span><span class="n">group</span> <span class="o">=</span> <span class="n">angle_groups</span>
 
-<span class="k">def</span> <span class="nf">_write_dihedral_information</span><span class="p">(</span><span class="n">gsd_file</span><span class="p">,</span> <span class="n">structure</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">_write_dihedral_information</span><span class="p">(</span><span class="n">gsd_snapshot</span><span class="p">,</span> <span class="n">structure</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Write the dihedrals in the system.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    gsd_file :</span>
+<span class="sd">    gsd_snapshot :</span>
 <span class="sd">        The file object of the GSD file being written</span>
 <span class="sd">    structure : parmed.Structure</span>
 <span class="sd">        Parmed structure object holding system information</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">gsd_file</span><span class="o">.</span><span class="n">dihedrals</span><span class="o">.</span><span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">structure</span><span class="o">.</span><span class="n">rb_torsions</span><span class="p">)</span>
+    <span class="n">gsd_snapshot</span><span class="o">.</span><span class="n">dihedrals</span><span class="o">.</span><span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">structure</span><span class="o">.</span><span class="n">rb_torsions</span><span class="p">)</span>
 
     <span class="n">unique_dihedral_types</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">dihedral</span> <span class="ow">in</span> <span class="n">structure</span><span class="o">.</span><span class="n">rb_torsions</span><span class="p">:</span>
@@ -416,7 +418,7 @@
             <span class="n">dihedral_type</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="n">t4</span><span class="p">,</span> <span class="n">t3</span><span class="p">,</span> <span class="n">t2</span><span class="p">,</span> <span class="n">t1</span><span class="p">)))</span>
         <span class="n">unique_dihedral_types</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">dihedral_type</span><span class="p">)</span>
     <span class="n">unique_dihedral_types</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">unique_dihedral_types</span><span class="p">),</span> <span class="n">key</span><span class="o">=</span><span class="n">natural_sort</span><span class="p">)</span>
-    <span class="n">gsd_file</span><span class="o">.</span><span class="n">dihedrals</span><span class="o">.</span><span class="n">types</span> <span class="o">=</span> <span class="n">unique_dihedral_types</span>
+    <span class="n">gsd_snapshot</span><span class="o">.</span><span class="n">dihedrals</span><span class="o">.</span><span class="n">types</span> <span class="o">=</span> <span class="n">unique_dihedral_types</span>
 
     <span class="n">dihedral_typeids</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">dihedral_groups</span> <span class="o">=</span> <span class="p">[]</span>
@@ -431,8 +433,8 @@
         <span class="n">dihedral_groups</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">dihedral</span><span class="o">.</span><span class="n">atom1</span><span class="o">.</span><span class="n">idx</span><span class="p">,</span> <span class="n">dihedral</span><span class="o">.</span><span class="n">atom2</span><span class="o">.</span><span class="n">idx</span><span class="p">,</span>
                                 <span class="n">dihedral</span><span class="o">.</span><span class="n">atom3</span><span class="o">.</span><span class="n">idx</span><span class="p">,</span> <span class="n">dihedral</span><span class="o">.</span><span class="n">atom4</span><span class="o">.</span><span class="n">idx</span><span class="p">))</span>
 
-    <span class="n">gsd_file</span><span class="o">.</span><span class="n">dihedrals</span><span class="o">.</span><span class="n">typeid</span> <span class="o">=</span> <span class="n">dihedral_typeids</span>
-    <span class="n">gsd_file</span><span class="o">.</span><span class="n">dihedrals</span><span class="o">.</span><span class="n">group</span> <span class="o">=</span> <span class="n">dihedral_groups</span>
+    <span class="n">gsd_snapshot</span><span class="o">.</span><span class="n">dihedrals</span><span class="o">.</span><span class="n">typeid</span> <span class="o">=</span> <span class="n">dihedral_typeids</span>
+    <span class="n">gsd_snapshot</span><span class="o">.</span><span class="n">dihedrals</span><span class="o">.</span><span class="n">group</span> <span class="o">=</span> <span class="n">dihedral_groups</span>
 </pre></div>
 
            </div>
