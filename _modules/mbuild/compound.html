@@ -2640,8 +2640,10 @@
                 <span class="k">if</span> <span class="ow">not</span> <span class="n">val</span><span class="p">:</span>
                     <span class="n">box_vec_max</span><span class="p">[</span><span class="n">dim</span><span class="p">]</span> <span class="o">+=</span> <span class="mf">0.25</span>
                     <span class="n">box_vec_min</span><span class="p">[</span><span class="n">dim</span><span class="p">]</span> <span class="o">-=</span> <span class="mf">0.25</span>
-            <span class="n">box</span><span class="o">.</span><span class="n">mins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">box_vec_min</span><span class="p">)</span>
+            <span class="c1"># In rare cases `AssertionError` will be raised if `mins` is set before `maxs`</span>
+            <span class="c1"># As a result, set `maxs` before `mins`</span>
             <span class="n">box</span><span class="o">.</span><span class="n">maxs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">box_vec_max</span><span class="p">)</span>
+            <span class="n">box</span><span class="o">.</span><span class="n">mins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">box_vec_min</span><span class="p">)</span>
 
         <span class="n">box_vector</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">box</span><span class="o">.</span><span class="n">angles</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
