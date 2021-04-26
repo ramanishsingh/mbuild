@@ -1,12 +1,16 @@
+from collections import defaultdict
+from copy import deepcopy
+import numpy as np
 import os
+from pathlib import Path
 import sys
 from warnings import warn
-from pathlib import Path
-from collections import defaultdict
-import numpy as np
 
 import parmed as pmd
-from parmed.periodic_table import AtomicNum, element_by_name, Mass, Element
+from ele import (
+    element_from_symbol, element_from_atomic_number, element_from_name
+)
+from ele.exceptions import ElementError
 
 import mbuild as mb
 from mbuild.box import Box
@@ -17,7 +21,8 @@ from mbuild.formats.hoomdxml import write_hoomdxml
 from mbuild.formats.lammpsdata import write_lammpsdata
 from mbuild.formats.gsdwriter import write_gsd
 from mbuild.formats.par_writer import write_par
-from mbuild.utils.io import import_, has_networkx, has_openbabel, has_mdtraj
+from mbuild.utils.io import (import_, has_networkx, has_openbabel,
+                             has_mdtraj, has_rdkit)
 
 
 def load(filename_or_object,
@@ -55,21 +60,31 @@ def load(filename_or_object,
     rigid : bool, optional, default=False
         Treat the compound as a rigid body
     backend : str, optional, default=None
-        Backend used to load structure from file. If not specified, a default
-        backend (extension specific) will be used.
+        Backend used to load structure from file or string. If not specified,
+        a default backend (extension specific) will be used.
     smiles: bool, optional, default=False
-        Use Open Babel to parse filename as a SMILES string
-        or file containing a SMILES string.
+        Use RDKit or OpenBabel to parse filename as a SMILES string
+        or file containing a SMILES string. If this is set to True, `rdkit`
+        is the default backend.
     infer_hierarchy : bool, optional, default=True
         If True, infer hierarchy from chains and residues
     ignore_box_warn : bool, optional, default=False
         If True, ignore warning if no box is present.
+        Defaults to True when loading from SMILES
     **kwargs : keyword arguments
-        Key word arguments passed to mdTraj for loading.
+        Key word arguments passed to mdTraj, RDKit, or pybel for loading.
 
     Returns
     -------
     compound : mb.Compound
+
+    NOTES
+    -----
+    If `smiles` is `True`, either `rdkit` (default) or `pybel` can be used,
+    but RDkit is the only option of these that allows the user to specify a
+    random number seed to reproducibly generate the same starting structure.
+    This is NOT possible with `openbabel`, use `rdkit` if you need
+    control over starting structure's position (recommended).
     """
     # First check if we are loading from an object
     if not isinstance(filename_or_object, str):
@@ -83,11 +98,15 @@ def load(filename_or_object,
         )
     # Second check if we are loading SMILES strings
     elif smiles:
+        # Ignore the box info for SMILES (its never there)
+        ignore_box_warn = True
         return load_smiles(
             smiles_or_filename=filename_or_object,
             compound=compound,
             infer_hierarchy=infer_hierarchy,
-            ignore_box_warn=ignore_box_warn
+            ignore_box_warn=ignore_box_warn,
+            backend=backend,
+            **kwargs
         )
     # Last, if none of the above, load from file
     else:
@@ -178,11 +197,15 @@ def load_object(obj,
 def load_smiles(smiles_or_filename,
                 compound=None,
                 infer_hierarchy=True,
-                ignore_box_warn=False):
+                ignore_box_warn=False,
+                backend='rdkit',
+                coords_only=False,
+                **kwargs):
     """Helper function to load a SMILES string
 
-    Loading SMILES string from a string, a list, or a file using pybel.
-    Must have pybel packages installed.
+    Loading SMILES string from a string, a list, or a file using RDKit by
+    default.
+    Must have rdkit or pybel packages installed.
 
     Parameters
     ----------
@@ -193,44 +216,86 @@ def load_smiles(smiles_or_filename,
     infer_hierarchy : bool, optional, default=True
     ignore_box_warn : bool, optional, default=False
         If True, ignore warning if no box is present.
+    coords_only : bool, optional, default=False
+        Only load the coordinates into a provided compound.
+    backend : str, optional, default='rdkit'
+        The smiles loading backend, either 'rdkit' or 'pybel'
+
 
     Returns
     -------
     compound : mb.Compound
 
     """
-    # Will try to support list of smiles strings in the future
-    pybel = import_('pybel')
-
     # Initialize an mb.Compound if none is provided
     if not compound:
         compound = mb.Compound()
 
-    # First we try treating filename_or_object as a SMILES string
-    try:
-        mymol = pybel.readstring("smi", smiles_or_filename)
-    # Now we treat it as a filename
-    except(OSError, IOError):
-        # For now, we only support reading in a single smiles molecule,
-        # but pybel returns a generator, so we get the first molecule
-        # and warn the user if there is more
+    test_path = Path(smiles_or_filename)
 
-        mymol_generator = pybel.readfile("smi", smiles_or_filename)
-        mymol_list = list(mymol_generator)
-        if len(mymol_list) == 1:
-            mymol = mymol_list[0]
+    # Will try to support list of smiles strings in the future
+    if backend is None:
+        backend = 'rdkit'
+
+    if backend == 'rdkit':
+        rdkit = import_('rdkit')
+        from rdkit import Chem
+        from rdkit.Chem import AllChem
+        if test_path.exists():
+            # assuming this is a smi file now
+            mymol = Chem.SmilesMolSupplier(smiles_or_filename)
+            if not mymol:
+                raise ValueError('Provided smiles string or file was invalid. '
+                                 'Refer to the above RDKit error messages for '
+                                 'additional information.')
+            mol_list = [mol for mol in mymol]
+            if len(mol_list) == 1:
+                rdmol = mymol[0]
+            else:
+                rdmol = mymol[0]
+                warn(
+                    "More than one SMILES string in file, more than one SMILES "
+                    "string is not supported, using {}".format(
+                        Chem.MolToSmiles(rdmol)))
         else:
-            mymol = mymol_list[0]
-            warn("More than one SMILES string in file, more than one SMILES "
-                 "string is not supported, using {}".format(mymol.write("smi")))
-    mymol.make3D()
+            rdmol = Chem.MolFromSmiles(smiles_or_filename)
 
-    return from_pybel(
-        pybel_mol=mymol,
-        compound=compound,
-        infer_hierarchy=infer_hierarchy,
-        ignore_box_warn=ignore_box_warn
-    )
+        seed = kwargs.get('smiles_seed', 0)
+
+        return from_rdkit(rdkit_mol=rdmol,
+                          compound=compound,
+                          coords_only=coords_only,
+                          smiles_seed=seed)
+    elif backend == 'pybel':
+        pybel = import_('pybel')
+        # First we try treating filename_or_object as a SMILES string
+        try:
+            mymol = pybel.readstring("smi", smiles_or_filename)
+        # Now we treat it as a filename
+        except(OSError, IOError):
+            # For now, we only support reading in a single smiles molecule,
+            # but pybel returns a generator, so we get the first molecule
+            # and warn the user if there is more
+
+            mymol_generator = pybel.readfile("smi", smiles_or_filename)
+            mymol_list = list(mymol_generator)
+            if len(mymol_list) == 1:
+                mymol = mymol_list[0]
+            else:
+                mymol = mymol_list[0]
+                warn(
+                    "More than one SMILES string in file, more than one SMILES "
+                    "string is not supported, using {}".format(
+                        mymol.write("smi")))
+        mymol.make3D()
+        return from_pybel(
+            pybel_mol=mymol,
+            compound=compound,
+            infer_hierarchy=infer_hierarchy,
+            ignore_box_warn=ignore_box_warn)
+    else:
+        raise ValueError(f"Expected SMILES loading backend 'rdkit' or "
+                         f"'pybel'. Was provided: {backend}")
 
 
 def load_file(filename,
@@ -354,7 +419,7 @@ def load_file(filename,
                 raise ValueError('More than one pybel molecule in file, '
                                  'more than one pybel molecule is not supported')
 
-        # text file detected, asssume contain smiles string
+        # text file detected, assume contain smiles string
         elif extension == '.txt':
             warn('.txt file detected, loading as a SMILES string')
             # Fail-safe measure
@@ -421,8 +486,11 @@ def from_parmed(structure,
     if compound and coords_only:
         if len(structure.atoms) != compound.n_particles:
             raise ValueError(
-                'Number of atoms in {structure} does not '
-                '{compound}'.formats(**locals())
+                'Number of atoms in {} does not '
+                'match {}'
+                'Structure: {} atoms'
+                'Compound: {} atoms'
+                .format(structure, compound, len(structure.atoms), compound.n_particles)
             )
         atoms_particles = zip(
             structure.atoms,
@@ -472,8 +540,12 @@ def from_parmed(structure,
             for atom in residue.atoms:
                 pos = np.array([atom.xx,
                                 atom.xy,
-                                atom.xz]) / 10
-                new_atom = mb.Particle(name=str(atom.name), pos=pos)
+                                atom.xz]) / 10 # Angstrom to nm
+                try:
+                    element = element_from_atomic_number(atom.atomic_number)
+                except ElementError:
+                    element = None
+                new_atom = mb.Particle(name=str(atom.name), pos=pos, element=element)
                 parent_compound.add(new_atom, label='{0}[$]'.format(atom.name))
                 atom_mapping[atom] = new_atom
 
@@ -565,9 +637,16 @@ def from_trajectory(traj,
             else:
                 parent_cmpd = chain_compound
             for atom in res.atoms:
+                try:
+                    element = element_from_atomic_number(
+                        atom.element.atomic_number
+                    )
+                except ElementError:
+                    element = None
                 new_atom = mb.Particle(
                     name=str(atom.name),
-                    pos=traj.xyz[frame, atom.index]
+                    pos=traj.xyz[frame, atom.index],
+                    element=element,
                 )
                 parent_cmpd.add(
                     new_atom,
@@ -603,8 +682,8 @@ def from_pybel(pybel_mol,
     compound : mb.Compound, optional, default=None
         The host mbuild Compound.
     use_element : bool, optional, default=True
-        If True, construct mb Particles based on the pybel Atom's element.
-        If False, construcs mb Particles based on the pybel Atom's type.
+        If True, construct mb.Particle names based on the pybel Atom's element.
+        If False, constructs mb.Particle names based on the pybel Atom's type.
     coords_only : bool, optional, default=False
         Set preexisting atoms in compound to coordinates given
         by structure. Note: Not yet implemented, included only
@@ -639,10 +718,12 @@ def from_pybel(pybel_mol,
     # pybel atoms are 1-indexed, coordinates in Angstrom
     for atom in pybel_mol.atoms:
         xyz = np.array(atom.coords)/10
+        try:
+            element = element_from_atomic_number(atom.atomicnum)
+        except ElementError:
+            element = None
         if use_element:
-            try:
-                temp_name = Element[atom.atomicnum]
-            except KeyError:
+            if element is None:
                 warn(
                     "No element detected for atom at index "
                     "{} with number {}, type {}".format(
@@ -652,9 +733,11 @@ def from_pybel(pybel_mol,
                     )
                 )
                 temp_name = atom.type
+            else:
+                temp_name = element.symbol
         else:
             temp_name = atom.type
-        temp = mb.Particle(name=temp_name, pos=xyz)
+        temp = mb.Particle(name=temp_name, pos=xyz, element=element)
         if infer_hierarchy and hasattr(atom, 'residue'):
             # Is there a safer way to check for res?
             if atom.residue.idx not in resindex_to_cmpd:
@@ -689,6 +772,70 @@ def from_pybel(pybel_mol,
 #             include storing it in .periodicity or writing a separate function
 #             that returns the box.
     return compound
+
+
+def from_rdkit(rdkit_mol,
+               compound=None,
+               coords_only=False,
+               smiles_seed=0):
+    """Return an mbuild Compound based on a smiles string using RDKit.
+
+    Parameters
+    ---------
+    rdkit_mol : rdkit.Chem.rdchem.Mol
+        RDKit mol to generate an mBuild compound
+    compound : mb.Compound, optional, default=None
+        The host mbuild Compound.
+    coords_only : bool, optional, default=False
+        Set preexisting atoms in compound to coordinates given
+        by structure. Note: Not yet implemented, included only
+        for parity with other conversion functions.
+    smiles_seed : int, optional, default=0
+        Random number seed for PRNG, set to -1 for non-deterministic behavior
+
+    Returns
+    -------
+    mbuild.Compound
+
+    NOTES
+    -----
+    Option `coords_only` currently is not implemented, it is only provided to
+        maintain parity with other conversion methods.
+
+    """
+    from rdkit import Chem
+    from rdkit.Chem import AllChem
+
+    mymol = Chem.AddHs(rdkit_mol)
+    if AllChem.EmbedMolecule(mymol, randomSeed=smiles_seed) != 0:
+        raise MBuildError(f"RDKit was unable to generate 3D coordinates for "
+                          f"{mymol}. Refer to the RDKit error messages for "
+                          f"possible fixes. You can also install openbabel "
+                          f"and use the backend='pybel' instead")
+    AllChem.UFFOptimizeMolecule(mymol)
+    single_mol = mymol.GetConformer(0)
+    # convert from Angstroms to nanometers
+    xyz = single_mol.GetPositions() / 10
+
+    if compound is None:
+        comp = mb.Compound()
+    else:
+        comp = compound
+
+    for i, atom in enumerate(mymol.GetAtoms()):
+        part = mb.Particle(name=atom.GetSymbol(),
+                           element=element_from_atomic_number(
+                               atom.GetAtomicNum()),
+                           pos=xyz[i])
+        comp.add(part)
+
+    for bond in mymol.GetBonds():
+        comp.add_bond([
+                       comp[bond.GetBeginAtomIdx()],
+                       comp[bond.GetEndAtomIdx()]
+                       ])
+
+    return comp
 
 
 def save(compound,
@@ -879,12 +1026,11 @@ def to_parmed(compound,
     ----------
     compound : mb.Compound
         mbuild Compound that need to be converted.
-    box : mb.Box, optional, default=compound.boundingbox (with buffer)
+    box : mb.Box, optional, default=None
         Box information to be used when converting to a `Structure`.
-        If 'None', a bounding box is used with 0.25nm buffers at
-        each face to avoid overlapping atoms, unless `compound.periodicity`
-        is not None, in which case those values are used for the
-        box lengths.
+        If 'None' and the box attribute is set, the box is used with
+        0.25nm buffers at each face to avoid overlapping atoms. Otherwise
+        the boundingbox is used with the same 0.25nm buffers.
     title : str, optional, default=compound.name
         Title/name of the ParmEd Structure
     residues : str of list of str
@@ -960,29 +1106,27 @@ def to_parmed(compound,
             if current_residue not in structure.residues:
                 structure.residues.append(current_residue)
 
-            atomic_number = None
-            name = ''.join(char for char in atom.name if not char.isdigit())
-            try:
-                atomic_number = AtomicNum[atom.name.capitalize()]
-            except KeyError:
-                element = element_by_name(atom.name.capitalize())
-                if name not in guessed_elements:
-                    warn(
-                        'Guessing that "{}" is element: "{}"'.format(
-                            atom, element))
-                    guessed_elements.add(name)
+            # If we have an element attribute assigned this is easy
+            if atom.element is not None:
+                atomic_number = atom.element.atomic_number
+                mass = atom.element.mass
+            # Else we try to infer from the name
             else:
-                element = atom.name.capitalize()
+                element = _infer_element_from_compound(atom, guessed_elements)
+                if element is not None:
+                    atomic_number = element.atomic_number
+                    mass = element.mass
+                else:
+                    atomic_number = 0
+                    mass = 0.0
 
-            atomic_number = atomic_number or AtomicNum[element]
-            mass = Mass[element]
             pmd_atom = pmd.Atom(
                 atomic_number=atomic_number,
                 name=atom.name,
                 mass=mass,
                 charge=atom.charge
             )
-            pmd_atom.xx, pmd_atom.xy, pmd_atom.xz = atom.pos * 10  # Angstroms
+            pmd_atom.xx, pmd_atom.xy, pmd_atom.xz = atom.pos * 10.0  # nm to Angstroms
 
         residue = atom_residue_map[atom]
         structure.add_atom(
@@ -1002,17 +1146,21 @@ def to_parmed(compound,
         structure.bonds.append(bond)
     # pad box with .25nm buffers
     if box is None:
-        box = compound.boundingbox
-        box_vec_max = box.maxs.tolist()
-        box_vec_min = box.mins.tolist()
-        for dim, val in enumerate(compound.periodicity):
-            if val:
-                box_vec_max[dim] = val
-                box_vec_min[dim] = 0.0
-            if not val:
-                box_vec_max[dim] += 0.25
-                box_vec_min[dim] -= 0.25
-        box = Box(mins=box_vec_min, maxs=box_vec_max)
+        if compound.box is not None:
+            box = deepcopy(compound.box)
+        else:
+            box = deepcopy(compound.boundingbox)
+            maxs = np.zeros(3)
+            mins = np.zeros(3)
+            # if periodicty is set, use it before bounding box
+            nonzero_inds = np.where(compound.periodicity != 0)
+            zero_inds = np.where(compound.periodicity == 0)
+            maxs[nonzero_inds] = compound.periodicity[nonzero_inds]
+            # if using bounding box, pad by 0.25 nm
+            maxs[zero_inds] = box.maxs[zero_inds] + 0.25
+            mins[zero_inds] = box.mins[zero_inds] - 0.25
+            box.maxs = maxs
+            box.mins = mins
 
     box_vector = np.empty(6)
     if box.angles is not None:
@@ -1185,10 +1333,17 @@ def _to_topology(compound,
         atom_residue_map[atom] = current_residue
 
         # Add the actual atoms
-        try:
-            elem = get_by_symbol(atom.name)
-        except KeyError:
-            elem = get_by_symbol("VS")
+        if atom.element is not None:
+            try:
+                elem = get_by_symbol(atom.element.symbol)
+            except KeyError:
+                elem = get_by_symbol("VS")
+        else:
+            try:
+                elem = get_by_symbol(atom.name)
+            except KeyError:
+                elem = get_by_symbol("VS")
+
         at = top.add_atom(atom.name, elem, atom_residue_map[atom])
         at.charge = atom.charge
         atom_mapping[atom] = at
@@ -1255,6 +1410,7 @@ def to_pybel(compound,
 
     mol = openbabel.OBMol()
     particle_to_atom_index = {}
+    guessed_elements = set()
 
     if not residues and infer_residues:
         residues = list(set([child.name for child in compound.children]))
@@ -1296,12 +1452,14 @@ def to_pybel(compound,
         if part.port_particle:
             temp.SetAtomicNum(0)
         else:
-            try:
-                temp.SetAtomicNum(AtomicNum[part.name.capitalize()])
-            except KeyError:
-                warn("Could not infer atomic number from "
-                     "{}, setting to 0".format(part.name))
-                temp.SetAtomicNum(0)
+            if part.element is not None:
+                temp.SetAtomicNum(part.element.atomic_number)
+            else:
+                element = _infer_element_from_compound(part, guessed_elements)
+                if element is not None:
+                    temp.SetAtomicNum(element.atomic_number)
+                else:
+                    temp.SetAtomicNum(0)
 
         temp.SetVector(*(part.xyz[0]*10))
         particle_to_atom_index[part] = i
@@ -1436,18 +1594,17 @@ def to_intermol(compound, molecule_types=None):  # pragma: no cover
     if isinstance(molecule_types, list):
         molecule_types = tuple(molecule_types)
     elif molecule_types is None:
-        molecule_types = (type(compound),)
+        molecule_types = (compound.name,)
     intermol_system = System()
 
     last_molecule_compound = None
     for atom_index, atom in enumerate(compound.particles()):
         for parent in atom.ancestors():
             # Don't want inheritance via isinstance().
-            if type(parent) in molecule_types:
+            if parent.name in molecule_types:
                 # Check if we have encountered this molecule type before.
                 if parent.name not in intermol_system.molecule_types:
-                    compound._add_intermol_molecule_type(
-                        intermol_system, parent)
+                    _add_intermol_molecule_type(intermol_system, parent)
                 if parent != last_molecule_compound:
                     last_molecule_compound = parent
                     last_molecule = Molecule(name=parent.name)
@@ -1476,7 +1633,7 @@ def _add_intermol_molecule_type(intermol_system, parent):  # pragma: no cover
     parent compound, including its particles and bonds, to it.
     """
     from intermol.moleculetype import MoleculeType
-    from intermol.forces.bond import Bond as InterMolBond
+    from intermol.forces.abstract_bond_type import AbstractBondType as InterMolBond
 
     molecule_type = MoleculeType(name=parent.name)
     intermol_system.add_molecule_type(molecule_type)
@@ -1486,4 +1643,48 @@ def _add_intermol_molecule_type(intermol_system, parent):  # pragma: no cover
 
     for atom1, atom2 in parent.bonds():
         intermol_bond = InterMolBond(atom1.index, atom2.index)
-        molecule_type.bonds.add(intermol_bond)
+        molecule_type.bond_forces.add(intermol_bond)
+
+
+def _infer_element_from_compound(compound, guessed_elements):
+    """Infer the element from the compound name
+
+    Parameters
+    ----------
+    compound : mbuild.Compound
+        the compound to infer the element for
+    guessed_elements : list
+        a list of the already-guessed-elements
+
+    Returns
+    -------
+    element : ele.Element or None
+    """
+
+    try:
+        element = element_from_symbol(compound.name)
+    except ElementError:
+        try:
+            element = element_from_name(compound.name)
+            warn_msg = (
+                "No element attribute associated with '{}'; "
+                "Guessing that '{}' is element '{}'".format(
+                    compound,
+                    compound,
+                    element
+                )
+            )
+        except ElementError:
+            element = None
+            warn_msg = (
+                "No element attribute associated with '{}'; "
+                "and no matching elements found based upon the "
+                "compound name. Setting atomic number to zero.".format(
+                    compound,
+                )
+            )
+        if compound.name not in guessed_elements:
+            warn(warn_msg)
+            guessed_elements.add(compound.name)
+
+    return element

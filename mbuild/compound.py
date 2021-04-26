@@ -6,21 +6,23 @@ import itertools
 import ele
 import numpy as np
 
-from collections import OrderedDict, Iterable
+from collections import OrderedDict
+from collections.abc import Iterable
 from copy import deepcopy
 from warnings import warn
 from oset import oset as OrderedSet
+from ele.element import Element, element_from_symbol, element_from_name
+from ele.exceptions import ElementError
 
-from ele.element import Element
 
 from mbuild import conversion
 from mbuild.bond_graph import BondGraph
 from mbuild.box import Box
 from mbuild.exceptions import MBuildError
-from mbuild.utils.decorators import deprecated
 from mbuild.periodic_kdtree import PeriodicCKDTree
 from mbuild.utils.io import run_from_ipython, import_
 from mbuild.utils.jsutils import overwrite_nglview_default
+from mbuild.utils.exceptions import RemovedFuncError
 from mbuild.coordinate_transform import _translate, _rotate
 
 
@@ -1377,11 +1379,10 @@ class Compound(object):
             particle.pos += (np.random.rand(3,) - 0.5) / 100
         self._update_port_locations(xyz_init)
 
-    warning_message = 'Please use Compound.energy_minimize()'
 
-    @deprecated(warning_message)
     def energy_minimization(self, forcefield='UFF', steps=1000, **kwargs):
-        self.energy_minimize(forcefield=forcefield, steps=steps, **kwargs)
+        raise RemovedFuncError('Compound.energy_minimization()',
+        'Compound.energy_minimize()', '0.8.1', '0.11.0')
 
     def energy_minimize(self, forcefield='UFF', steps=1000, **kwargs):
         """Perform an energy minimization on a Compound
@@ -1727,15 +1728,21 @@ class Compound(object):
         """
 
         openbabel = import_('openbabel')
-        md = import_('mdtraj')
-        from mdtraj.core.element import get_by_symbol
         for particle in self.particles():
-            try:
-                get_by_symbol(particle.name)
-            except KeyError:
-                raise MBuildError("Element name {} not recognized. Cannot "
-                                  "perform minimization."
-                                  "".format(particle.name))
+            if particle.element is None:
+                try:
+                    element_from_symbol(particle.name)
+                except ElementError:
+                    try:
+                        element_from_name(particle.name)
+                    except ElementError:
+                        raise MBuildError(
+                            "No element assigned to {}; element could not be"
+                            "inferred from particle name {}. Cannot perform"
+                            "an energy minimization.".format(
+                                particle, particle.name
+                            )
+                        )
 
         obConversion = openbabel.OBConversion()
         obConversion.SetInAndOutFormats("mol2", "pdb")
@@ -2131,7 +2138,8 @@ class Compound(object):
         mbuild.conversion.to_intermol
 
         """
-        return conversion.to_intermol(compound=self, molecule_types=None)
+        return conversion.to_intermol(compound=self,
+                                      molecule_types=molecule_types)
 
     def get_smiles(self):
         """Get SMILES string for compound

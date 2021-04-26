@@ -8,6 +8,7 @@ import pytest
 import mbuild as mb
 from mbuild.exceptions import MBuildError
 from mbuild.utils.geometry import calc_dihedral
+from mbuild.utils.exceptions import RemovedFuncError
 from mbuild.utils.io import (get_fn,
                              import_,
                              has_foyer,
@@ -15,9 +16,18 @@ from mbuild.utils.io import (get_fn,
                              has_intermol,
                              has_openbabel,
                              has_networkx,
-                             has_py3Dmol,
-                             has_nglview)
+                             has_rdkit,
+                             has_py3Dmol)
 from mbuild.tests.base_test import BaseTest
+
+
+try:
+    import nglview
+    has_nglview = True
+    del nglview
+except ImportError:
+    has_nglview = False
+
 
 class TestCompound(BaseTest):
 
@@ -488,12 +498,12 @@ class TestCompound(BaseTest):
     @pytest.mark.skipif(not has_openbabel, reason="Open Babel package not installed")
     def test_reload(self):
         # Create a compound and write it to file.
-        p3ht1= mb.load('CCCCCCC1=C(SC(=C1)C)C', smiles=True)
+        p3ht1= mb.load('CCCCCCC1=C(SC(=C1)C)C', smiles=True, backend='pybel')
         p3ht1.save("p3ht1.pdb")
 
         # Create another compound, rotate it and write it to file.
-        p3ht2 = mb.load('CCCCCCC1=C(SC(=C1)C)C', smiles=True)
-        mb.rotate(p3ht2, np.pi / 2, [0, 0, 1])
+        p3ht2 = mb.load('CCCCCCC1=C(SC(=C1)C)C', smiles=True, backend='pybel')
+        p3ht2.rotate(np.pi / 2, [0, 0, 1])
         p3ht2.save("p3ht2.pdb")
 
         # Load p3ht2.pdb into p3ht1, modifying the atom positions of p3ht1.
@@ -656,7 +666,7 @@ class TestCompound(BaseTest):
         intermol_system = compound.to_intermol()
         assert len(intermol_system.molecule_types) == 1
         assert 'Compound' in intermol_system.molecule_types
-        assert len(intermol_system.molecule_types['Compound'].bonds) == 9
+        assert len(intermol_system.molecule_types['Compound'].bond_forces) == 9
 
         assert len(intermol_system.molecule_types['Compound'].molecules) == 1
         molecules = list(intermol_system.molecule_types['Compound'].molecules)
@@ -667,13 +677,14 @@ class TestCompound(BaseTest):
         # 2 distinct Ethane objects.
         compound = mb.Compound([ethane, mb.clone(ethane), h2o])
 
-        molecule_types = [type(ethane), type(h2o)]
+        molecule_types = [ethane.name, h2o.name]
         intermol_system = compound.to_intermol(molecule_types=molecule_types)
         assert len(intermol_system.molecule_types) == 2
         assert 'Ethane' in intermol_system.molecule_types
         assert 'H2O' in intermol_system.molecule_types
-        assert len(intermol_system.molecule_types['Ethane'].bonds) == 7
-        assert len(intermol_system.molecule_types['H2O'].bonds) == 2
+
+        assert len(intermol_system.molecule_types['Ethane'].bond_forces) == 7
+        assert len(intermol_system.molecule_types['H2O'].bond_forces) == 2
 
         assert len(intermol_system.molecule_types['Ethane'].molecules) == 2
         ethanes = list(intermol_system.molecule_types['Ethane'].molecules)
@@ -721,7 +732,7 @@ class TestCompound(BaseTest):
     def test_fillbox_then_parmed(self):
         # This test would fail with the old to_parmed code (pre PR #699)
 
-        bead = mb.Compound(name="Bead")
+        bead = mb.Compound(name="Ar")
         box = mb.Box(mins=(2,2,2), maxs=(3,3,3))
         bead_box = mb.fill_box(bead, 100, box)
         bead_box_in_pmd = bead_box.to_parmed()
@@ -859,42 +870,52 @@ class TestCompound(BaseTest):
 
     @pytest.mark.skipif(not has_openbabel, reason="Open Babel package not installed")
     def test_energy_minimization(self, octane):
-        octane.energy_minimization()
+        with pytest.raises(RemovedFuncError):
+            octane.energy_minimization()
+
+    @pytest.mark.skipif(not has_openbabel, reason="Open Babel package not installed")
+    def test_energy_minimize(self, octane):
+        octane.energy_minimize()
 
     @pytest.mark.skipif(has_openbabel, reason="Open Babel package is installed")
-    def test_energy_minimization_openbabel_warn(self, octane):
+    def test_energy_minimize_openbabel_warn(self, octane):
         with pytest.raises(MBuildError):
-            octane.energy_minimization()
+            octane.energy_minimize()
 
     @pytest.mark.skipif(not has_openbabel, reason="Open Babel package not installed")
-    def test_energy_minimization_ff(self, octane):
+    def test_energy_minimize_ff(self, octane):
         for ff in ['UFF', 'GAFF', 'MMFF94', 'MMFF94s', 'Ghemical']:
-            octane.energy_minimization(forcefield=ff)
+            octane.energy_minimize(forcefield=ff)
         with pytest.raises(IOError):
-            octane.energy_minimization(forcefield='fakeFF')
+            octane.energy_minimize(forcefield='fakeFF')
 
     @pytest.mark.skipif(not has_openbabel, reason="Open Babel package not installed")
-    def test_energy_minimization_algorithm(self, octane):
+    def test_energy_minimize_algorithm(self, octane):
         for algorithm in ['cg', 'steep', 'md']:
-            octane.energy_minimization(algorithm=algorithm)
+            octane.energy_minimize(algorithm=algorithm)
         with pytest.raises(MBuildError):
-            octane.energy_minimization(algorithm='fakeAlg')
+            octane.energy_minimize(algorithm='fakeAlg')
 
     @pytest.mark.skipif(not has_openbabel, reason="Open Babel package not installed")
-    def test_energy_minimization_non_element(self, octane):
+    def test_energy_minimize_non_element(self, octane):
+        for particle in octane.particles():
+            particle.element = None
+        # Pass with element inference from names
+        octane.energy_minimize()
         for particle in octane.particles():
             particle.name = 'Q'
+        # Fail once names don't match elements
         with pytest.raises(MBuildError):
-            octane.energy_minimization()
+            octane.energy_minimize()
 
     @pytest.mark.skipif(not has_openbabel, reason="Open Babel package not installed")
-    def test_energy_minimization_ports(self, octane):
+    def test_energy_minimize_ports(self, octane):
         distances = np.round([octane.min_periodic_distance(port.pos, port.anchor.pos)
                               for port in octane.all_ports()], 5)
         orientations = np.round([port.pos - port.anchor.pos
                                  for port in octane.all_ports()], 5)
 
-        octane.energy_minimization()
+        octane.energy_minimize()
 
         updated_distances = np.round([octane.min_periodic_distance(port.pos,
                                                                    port.anchor.pos)
@@ -979,12 +1000,12 @@ class TestCompound(BaseTest):
             assert np.isclose(angle1, angle2, atol=1e-6)
 
     def test_smarts_from_string(self):
-        p3ht = mb.load('CCCCCCC1=C(SC(=C1)C)C', smiles=True)
+        p3ht = mb.load('CCCCCCC1=C(SC(=C1)C)C', smiles=True, backend='pybel')
         assert p3ht.n_bonds == 33
         assert p3ht.n_particles == 33
 
     def test_smarts_from_file(self):
-        p3ht = mb.load(get_fn('p3ht.smi'), smiles=True)
+        p3ht = mb.load(get_fn('p3ht.smi'), smiles=True, backend='pybel')
         assert p3ht.n_bonds == 33
         assert p3ht.n_particles == 33
 
@@ -1153,11 +1174,34 @@ class TestCompound(BaseTest):
         #            chol.unitcell.GetC()/10],
         #        rtol=1e-3)
 
+    @pytest.mark.parametrize('test_smiles', [
+        "CCO",
+        "CCCCCCCC",
+        "c1ccccc1",
+        "CC(=O)Oc1ccccc1C(=O)O"
+    ])
+    @pytest.mark.skipif(not has_rdkit, reason="RDKit is not installed")
+    def test_from_rdkit_smiles(self, test_smiles):
+        pos = list()
+        for _ in range(3):
+            cmpd = mb.load(test_smiles, smiles=True, backend='rdkit', seed=29)
+            pos.append(cmpd.xyz)
+        assert (np.diff(np.vstack(pos).reshape(len(pos), -1), axis=0) == 0).all()
+
+    @pytest.mark.parametrize('bad_smiles', [
+        "F[P-](F)(F)(F)(F)F",
+    ])
+    @pytest.mark.skipif(not has_rdkit, reason='RDKit is not installed')
+    def test_incorrect_rdkit_smiles(self, bad_smiles):
+        with pytest.raises(MBuildError, match=r'RDKit was unable to generate '
+                                              r'3D coordinates'):
+            mb.load(bad_smiles, smiles=True, backend='rdkit', seed=29)
+
     @pytest.mark.skipif(not has_openbabel, reason="Pybel is not installed")
     def test_get_smiles(self):
         test_strings = ["CCO", "CCCCCCCC", "c1ccccc1", "CC(=O)Oc1ccccc1C(=O)O"]
         for test_string in test_strings:
-            my_cmp = mb.load(test_string, smiles=True)
+            my_cmp = mb.load(test_string, smiles=True, backend='pybel')
             assert my_cmp.get_smiles() == test_string
 
     def test_sdf(self, methane):
@@ -1288,3 +1332,8 @@ class TestCompound(BaseTest):
                 c.element for c in container.particles_by_element("sod")
             ]
 
+    @pytest.mark.parametrize('backend', ['pybel', 'rdkit'])
+    def test_elements_from_smiles(self, backend):
+        mol = mb.load("COC", smiles=True, backend=backend)
+        for particle in mol.particles():
+            assert particle.element is not None
